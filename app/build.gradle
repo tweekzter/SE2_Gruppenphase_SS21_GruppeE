@@ -1,5 +1,6 @@
 plugins {
     id 'com.android.application'
+    id 'jacoco'
 }
 
 android {
@@ -28,6 +29,23 @@ android {
     }
 }
 
+task jacocoTestReport(type: JacocoReport, dependsOn: 'testDebugUnitTest') {
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+    def debugTree = fileTree(dir: "${buildDir}/intermediates/javac/debug", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories.from = files([mainSrc])
+    classDirectories.from = files([debugTree])
+    executionData.from = files("${buildDir}/jacoco/testDebugUnitTest.exec")
+}
+
+
 dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
@@ -36,4 +54,5 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'com.esotericsoftware:kryonet:2.22.0-RC1'
 }
