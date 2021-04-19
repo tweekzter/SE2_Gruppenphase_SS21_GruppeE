@@ -27,7 +27,5 @@ public class MenuActivity extends AppCompatActivity {
 
     public void openSettingsFragment(){
         System.out.println("opening settings fragment");
-
-        getSupportFragmentManager().beginTransaction().add(R.id.container, new SettingsFragment()).commit();
     }
 }
