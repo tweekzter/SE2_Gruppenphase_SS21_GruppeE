@@ -15,22 +15,11 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        try
-//        {
-            this.getSupportActionBar().hide();
-//        }
-//        catch (NullPointerException e){}
-
+        this.getSupportActionBar().hide();
 
         setContentView(R.layout.activity_welcome);
 
         gettingStartedButton = findViewById(R.id.button_getStarted);
-//        gettingStartedButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
 
         gettingStartedButton.setOnClickListener((View v) -> {
             openMenuActivity();
