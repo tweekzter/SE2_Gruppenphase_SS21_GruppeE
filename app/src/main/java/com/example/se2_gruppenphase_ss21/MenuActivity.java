@@ -8,7 +8,7 @@ import android.widget.Button;
 
 public class MenuActivity extends AppCompatActivity {
 
-    Button settingsButton;
+//    Button settingsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,14 +18,16 @@ public class MenuActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_menu);
 
-        settingsButton = findViewById(R.id.button_settings);
+//        settingsButton = findViewById(R.id.button_settings);
+//
+//        settingsButton.setOnClickListener((View v) -> {
+//            openSettingsFragment();
+//        });
 
-        settingsButton.setOnClickListener((View v) -> {
-            openSettingsFragment();
-        });
+        getSupportFragmentManager().beginTransaction().add(R.id.container, new MenuFragment()).commit();
     }
 
-    public void openSettingsFragment(){
-        System.out.println("opening settings fragment");
-    }
+//    public void openSettingsFragment(){
+//        System.out.println("opening settings fragment");
+//    }
 }
