@@ -9,7 +9,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SE2_Gruppenphase_SS21">
-        <activity android:name=".RulesActivity"></activity>
         <activity android:name=".MenuActivity" />
         <activity android:name=".WelcomeActivity">
             <intent-filter>

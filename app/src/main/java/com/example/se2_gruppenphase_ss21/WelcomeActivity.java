@@ -26,7 +26,7 @@ public class WelcomeActivity extends AppCompatActivity {
         });
     }
 
-    public void openMenuActivity(){
+    public void openMenuActivity() {
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }

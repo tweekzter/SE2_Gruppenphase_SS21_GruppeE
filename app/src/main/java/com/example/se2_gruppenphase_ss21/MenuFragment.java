@@ -64,23 +64,20 @@ public class MenuFragment extends Fragment {
 
         Button rulesButton = view.findViewById(R.id.button_rules);
         rulesButton.setOnClickListener((View v) -> {
-            getParentFragmentManager().beginTransaction().replace(R.id.container, new Rules2Fragment()).addToBackStack( "tag" ).commit();
+            getParentFragmentManager().beginTransaction().replace(R.id.container, new RulesFragment()).addToBackStack("tag").commit();
         });
 
         Button settingsButton = view.findViewById(R.id.button_settings);
         settingsButton.setOnClickListener((View v) -> {
-            getParentFragmentManager().beginTransaction().replace(R.id.container, new SettingsFragment()).addToBackStack( "tag" ).commit();
+            getParentFragmentManager().beginTransaction().replace(R.id.container, new SettingsFragment()).addToBackStack("tag").commit();
         });
 
         Button startGameButton = view.findViewById(R.id.button_startGame);
         startGameButton.setOnClickListener((View v) -> {
-            getParentFragmentManager().beginTransaction().replace(R.id.container, new StartGameFragment()).addToBackStack( "tag" ).commit();
+            getParentFragmentManager().beginTransaction().replace(R.id.container, new StartGameFragment()).addToBackStack("tag").commit();
         });
 
         return view;
     }
 
-//    public void openRulesFragment(){
-//        getParentFragmentManager().beginTransaction().replace(R.id.container, new Rules2Fragment()).addToBackStack( "tag" ).commit();
-//    }
 }
