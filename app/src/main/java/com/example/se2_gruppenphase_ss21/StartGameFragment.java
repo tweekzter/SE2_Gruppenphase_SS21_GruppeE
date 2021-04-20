@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +61,23 @@ public class StartGameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_start_game, container, false);
+        View view = inflater.inflate(R.layout.fragment_start_game, container, false);
+
+        Button localGameButton = view.findViewById(R.id.button_localGame);
+        localGameButton.setOnClickListener((View v) -> {
+            String name = getUsername(view);
+        });
+
+        Button onlineGameButton = view.findViewById(R.id.button_onlineGame);
+        onlineGameButton.setOnClickListener((View v) -> {
+            String name = getUsername(view);
+        });
+
+        return view;
+    }
+
+    public String getUsername(View view) {
+        EditText username = view.findViewById(R.id.editTextUserName);
+        return username.getText().toString();
     }
 }
