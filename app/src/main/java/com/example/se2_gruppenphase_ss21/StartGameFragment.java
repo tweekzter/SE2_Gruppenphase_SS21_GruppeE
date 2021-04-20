@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,12 +66,20 @@ public class StartGameFragment extends Fragment {
 
         Button localGameButton = view.findViewById(R.id.button_localGame);
         localGameButton.setOnClickListener((View v) -> {
-            String name = getUsername(view);
+            String userName = getUsername(view);
+            if (userName != null) {
+                //TODO: start local server
+                System.out.println(userName +"local!!!!!!!!!!!!!");
+            }
         });
 
         Button onlineGameButton = view.findViewById(R.id.button_onlineGame);
         onlineGameButton.setOnClickListener((View v) -> {
-            String name = getUsername(view);
+            String userName = getUsername(view);
+            if (userName != null) {
+                //TODO: start remote server
+                System.out.println(userName +"online!!!!!!!!!!!!!");
+            }
         });
 
         return view;
@@ -78,6 +87,12 @@ public class StartGameFragment extends Fragment {
 
     public String getUsername(View view) {
         EditText username = view.findViewById(R.id.editTextUserName);
+
+        if (username.getText().toString().equals("")) {
+            Toast.makeText(getActivity(), "you did not enter a name!", Toast.LENGTH_SHORT).show();
+            return null;
+        }
+
         return username.getText().toString();
     }
 }
