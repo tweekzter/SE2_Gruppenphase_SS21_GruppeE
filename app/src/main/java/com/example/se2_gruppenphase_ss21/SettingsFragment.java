@@ -1,5 +1,8 @@
 package com.example.se2_gruppenphase_ss21;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +10,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +19,14 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class SettingsFragment extends Fragment {
+
+    private static String MY_PREFS = "switch_prefs";
+    private static String SWITCH_STATUS = "switch_status";
+
+    boolean switch_status;
+
+    SharedPreferences myPreferences;
+    SharedPreferences.Editor myEditor;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -59,6 +72,34 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+
+        Switch soundSwitch = view.findViewById(R.id.switch_sound);
+
+        myPreferences = getActivity().getSharedPreferences(MY_PREFS, Context.MODE_PRIVATE);
+        myEditor = getActivity().getSharedPreferences(MY_PREFS, Context.MODE_PRIVATE).edit();
+        switch_status = myPreferences.getBoolean(SWITCH_STATUS, true);
+        soundSwitch.setChecked(switch_status);
+
+        soundSwitch.setOnCheckedChangeListener((CompoundButton compoundButton, boolean isChecked) -> {
+            AudioManager amanager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
+
+            if (isChecked) {
+                amanager.setStreamMute(AudioManager.STREAM_NOTIFICATION, false);
+
+                myEditor.putBoolean(SWITCH_STATUS, true);
+                myEditor.apply();
+                soundSwitch.setChecked(true);
+            } else {
+                amanager.setStreamMute(AudioManager.STREAM_NOTIFICATION, true);
+
+                myEditor.putBoolean(SWITCH_STATUS, false);
+                myEditor.apply();
+                soundSwitch.setChecked(false);
+            }
+        });
+
+        return view;
     }
+
 }
