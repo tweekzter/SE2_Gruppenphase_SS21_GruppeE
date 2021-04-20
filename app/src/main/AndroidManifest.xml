@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SE2_Gruppenphase_SS21">
         <activity android:name=".MenuActivity" />
-        <activity android:name=".WelcomeActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
