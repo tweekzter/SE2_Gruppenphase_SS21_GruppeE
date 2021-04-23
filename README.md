@@ -1,5 +1,5 @@
 # SE2 Gruppenphase SS21
-[![Build Status](https://travis-ci.com/AlGrade/SE2_Gruppenphase_SS21.svg?branch=master)](https://travis-ci.com/AlGrade/SE2_Gruppenphase_SS21)
+[![Build Status](https://travis-ci.com/AlGrade/SE2_Gruppenphase_SS21_GruppeE.svg?branch=master)](https://travis-ci.com/AlGrade/SE2_Gruppenphase_SS21_GruppeE)
 
 Rollen: 
 
