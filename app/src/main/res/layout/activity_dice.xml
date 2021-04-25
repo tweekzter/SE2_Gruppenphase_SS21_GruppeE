@@ -7,15 +7,46 @@
     android:background="@drawable/game_background"
     tools:context=".Dice">
 
-  <Button
-      android:id="@+id/button4"
-      android:layout_width="10dp"
-      android:layout_height="200dp"
-      android:layout_marginEnd="24dp"
-      android:layout_marginBottom="16dp"
-      android:text="Button"
+  <ImageView
+      android:id="@+id/diceresult"
+      android:layout_width="209dp"
+      android:layout_height="143dp"
+      android:layout_marginStart="16dp"
+      android:layout_marginEnd="16dp"
+      android:layout_marginBottom="420dp"
+      android:scaleType="centerInside"
+      android:src="@drawable/elefant"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      tools:visibility="visible" />
+      app:layout_constraintStart_toStartOf="parent" />
 
+  <Button
+      android:id="@+id/roll_button"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="432dp"
+      android:layout_marginEnd="16dp"
+      android:text="Würfle"
+      android:textColorLink="@android:color/holo_red_light"
+      app:backgroundTint="@android:color/holo_red_light"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.486"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+  <TextView
+      android:id="@+id/Ergebnis"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:layout_marginTop="68dp"
+      android:layout_marginEnd="16dp"
+      android:text="Welche Bausteine wirst du erhalten?"
+      android:textAlignment="center"
+      android:textColor="@color/black"
+      android:textSize="30sp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
