@@ -61,8 +61,10 @@ public class GameServer extends Thread {
                 e.printStackTrace();
             } catch (GameLogicException gle) {
                 try {
-                    client.sendString(gle.getMessage());
-                    client.close();
+                    if(client != null) {
+                        client.sendString(gle.getMessage());
+                        client.close();
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -104,9 +106,10 @@ public class GameServer extends Thread {
                 }
 
                 try {
-                    sleep(2 * 1000);
+                    sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
             }
         }).start();

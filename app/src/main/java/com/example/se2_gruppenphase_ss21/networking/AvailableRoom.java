@@ -26,7 +26,9 @@ public class AvailableRoom {
         return String.format("%s:%d %s (%d/%d)", address, port, name, currentPlayers, maxPlayers);
     }
 
-    public boolean equals(AvailableRoom room) {
+    @Override
+    public boolean equals(Object o) {
+        AvailableRoom room = (AvailableRoom) o;
         return getPort() == room.getPort() && getAddress().equals(room.getAddress()) && getName().equals(room.getName());
     }
 

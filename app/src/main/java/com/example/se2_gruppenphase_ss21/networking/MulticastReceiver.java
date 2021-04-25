@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class MulticastReceiver {
-    private static final long TIMEOUT = 1000 * 10;
+    private static final int TIMEOUT = 1000 * 10;
 
     private static CopyOnWriteArrayList<AvailableRoom> rooms = new CopyOnWriteArrayList<>();
 
@@ -54,6 +54,7 @@ public class MulticastReceiver {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
             }
         }).start();
