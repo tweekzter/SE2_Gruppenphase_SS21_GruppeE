@@ -2,6 +2,8 @@ package com.example.se2_gruppenphase_ss21.networking.server;
 
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
 import com.example.se2_gruppenphase_ss21.networking.MulticastReceiver;
+import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
+import com.example.se2_gruppenphase_ss21.networking.server.logic.GameLogicException;
 
 import java.io.IOException;
 
@@ -13,10 +15,24 @@ public class ExternalServer {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-        GameServer server = new GameServer();
+        GameServer server = new GameServer(6789);
         server.createRoom("TestRoom", 8);
         server.createRoom("SecondRoom", 4);
+        server.setDynamicRoomCreation(false);
         server.start();
+
+        try {
+            GameClient client = new GameClient("127.0.0.1", 6789, "TestRoom", "SomeUser");
+            client.connect();
+        }catch (GameLogicException e) {
+            e.printStackTrace();
+        }
+        try {
+            GameClient client2 = new GameClient("127.0.0.1", 6789, "NotARoom", "SomeUser");
+            client2.connect();
+        }catch (GameLogicException e) {
+            e.printStackTrace();
+        }
 
         MulticastReceiver.startListen();
         while (true) {
