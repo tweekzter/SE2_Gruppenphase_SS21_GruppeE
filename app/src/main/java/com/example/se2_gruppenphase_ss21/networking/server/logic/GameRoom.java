@@ -53,7 +53,41 @@ public class GameRoom {
 
     public void removeUser(GameClientHandler handler) {
         handlers.remove(handler);
-        broadcastMessage("disconnect " + handler.getNickname());
+        broadcastMessage("disconnect_user " + handler.getNickname());
+    }
+
+    public void broadcastUserList() {
+        String[] nicks = listNicknames();
+        StringBuilder sb = new StringBuilder("user_list ");
+        for(int i = 0; i < nicks.length; i++) {
+            sb.append(nicks[i]);
+            if (i != nicks.length - 1) {
+                sb.append(",");
+            }
+        }
+
+        broadcastMessage(sb.toString());
+    }
+
+    public void broadcastReadyCount() {
+        if(state == GameRoomState.WAITING) {
+            broadcastMessage("users_ready " + usersReady() + "," + handlers.size());
+        }
+    }
+
+    public int usersReady() {
+        int count = 0;
+        for(GameClientHandler handler : handlers) {
+            count += handler.isReady() ? 1 : 0;
+        }
+        return count;
+    }
+
+    public void broadcastIfGameStart() {
+        if((handlers.size() == maxUsers || usersReady() == handlers.size()) && state == GameRoomState.WAITING) {
+            state = GameRoomState.PLAYING;
+            broadcastMessage("game_start");
+        }
     }
 
     public String[] listNicknames() {
