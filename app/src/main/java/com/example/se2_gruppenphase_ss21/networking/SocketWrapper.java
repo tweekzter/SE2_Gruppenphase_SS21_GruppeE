@@ -10,6 +10,11 @@ public class SocketWrapper {
     private DataInputStream in;
     private DataOutputStream out;
 
+    /**
+     * A simple Wrapper for a Socket, that enables reading and writing data from and to the Socket.
+     * @param socket the original Socket
+     * @throws IOException
+     */
     public SocketWrapper(Socket socket) throws IOException {
         this.socket = socket;
         this.in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
@@ -22,7 +27,6 @@ public class SocketWrapper {
 
     /**
      * Send a specified string. This method auto-flushes the underlying BufferedStream.
-     *
      * @param msg the string to be sent
      * @throws IOException
      */
@@ -31,6 +35,11 @@ public class SocketWrapper {
         out.flush();
     }
 
+    /**
+     * Reads a string from the underlying Socket.
+     * @return the read string
+     * @throws IOException
+     */
     public String readString() throws IOException {
         return in.readUTF();
     }

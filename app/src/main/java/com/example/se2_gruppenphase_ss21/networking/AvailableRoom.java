@@ -11,8 +11,19 @@ public class AvailableRoom {
     private InetAddress address;
     private long receivedAt;
 
+    /**
+     * Creates a Available-Room from a given 4 line string that contains port, name, currentPlayers, maxPlayers
+     * and the given address. Also saves the current time as the received time.
+     * @param packet 4 line string with information about the room
+     * @param address address of the room
+     */
     public AvailableRoom(String packet, InetAddress address) {
         String[] lines = packet.split("\n");
+
+        if(lines.length < 4) {
+            throw new IllegalArgumentException("Cannot create room from " + lines.length + " line string");
+        }
+
         this.port = Integer.parseInt(lines[0]);
         this.name = lines[1];
         this.currentPlayers = Integer.parseInt(lines[2]);

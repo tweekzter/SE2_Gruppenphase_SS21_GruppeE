@@ -17,6 +17,10 @@ public class MulticastReceiver {
 
     private MulticastReceiver(){}
 
+    /**
+     * Start listening for available games on the local network.
+     * Starts a new thread, so it can easily be called from Main-Thread.
+     */
     public static void startListen() {
         new Thread(() -> {
             try {
@@ -44,6 +48,9 @@ public class MulticastReceiver {
         startTimeoutCleaner();
     }
 
+    /**
+     * Cleanup received Rooms after they are older than the timeout.
+     */
     private static void startTimeoutCleaner() {
         new Thread(() -> {
             while (true) {
@@ -63,6 +70,10 @@ public class MulticastReceiver {
         }).start();
     }
 
+    /**
+     * Receive a list of available rooms on the network.
+     * @return the list of rooms
+     */
     public static List<AvailableRoom> getRooms() {
         return new ArrayList<>(rooms);
     }
