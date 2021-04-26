@@ -7,8 +7,8 @@ import java.io.IOException;
 public class GameClientHandler {
 
     private SocketWrapper client;
-
     private String nickname;
+    private boolean isReady;
 
     public GameClientHandler(SocketWrapper client, String nickname) {
         this.client = client;
@@ -19,11 +19,20 @@ public class GameClientHandler {
         new Thread(() -> {
             try {
                 client.sendString("ok");
-
+                room.broadcastUserList();
+                room.broadcastIfGameStart();
                 while(true) {
                     String fromUser = client.readString();
-
-                    System.out.println("Message from user: " + fromUser);
+                    String[] params = fromUser.split("\\s");
+                    switch (params[0]) {
+                        case "ready":
+                            isReady = Boolean.parseBoolean(params[1]);
+                            room.broadcastReadyCount();
+                            room.broadcastIfGameStart();
+                            break;
+                        default:
+                            System.err.printf("Received invalid message from client %s\n", fromUser);
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -38,5 +47,9 @@ public class GameClientHandler {
 
     public String getNickname() {
         return nickname;
+    }
+
+    public boolean isReady() {
+        return isReady;
     }
 }
