@@ -25,62 +25,10 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/textViewRules1"
+                android:id="@+id/textViewRules"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Das Legefeld"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textViewRules2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Zu Beginn jeder Runde wird jedem Spieler eines aus 36 Spielbrettern zugewiesen. Jedes Spielbrett besitzt ein einzigartiges Legemuster. Dazu gibt es 12 verschiedene Bausteine - in vier 3er Gruppen aufgeteilt."
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/textViewRules3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Spielablauf"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textViewRules4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Ein Spieler würfelt pro Runde. Das Ergebnis bestimmt, welche der 3er Gruppen an Bausteinen dem Spieler zur Verfügung stehen.  Sobald der Timer zu laufen beginnt, hat jeder Spieler 60 Sekunden Zeit um seine Bausteine so am Spielbrett zu platzieren, dass diese sich mit dem vorgegebenen Legemuster genau decken.  Der Spieler, der als erstes fertig ist, bekommt einen blauen Saphir und darf einen Edelstein aus einem Beutel ziehen. Der Zweite erhält einen braunen Bernstein und darf ebenfalls einen Edelstein aus dem Beutel ziehen. Der Dritte und Vierte Spieler erhalten keinen gesonderten Edelstein, dürfen aber ebenfalls einmal aus dem Beutel ziehen."
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/textViewRules5"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Ergebnis"
-                android:textColor="#FFFFFF"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textViewRules6"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Nach der letzten Runde werden über die Anzahl und Gewichtung (Farbe) der Edelsteine die Punkte jedes Spielers ermittelt und so die Platzierung bestimmt."
-                android:textColor="#FFFFFF"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/textViewRules7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="false"
-                android:text="@string/list"
+                android:text="@string/rules"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp" />
 
