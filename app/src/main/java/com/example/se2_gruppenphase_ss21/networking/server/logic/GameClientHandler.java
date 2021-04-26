@@ -31,7 +31,7 @@ public class GameClientHandler {
                             room.broadcastIfGameStart();
                             break;
                         default:
-                            System.err.printf("Received invalid message from client %s\n", fromUser);
+                            System.err.printf("Received invalid message from client %s%n", fromUser);
                     }
                 }
             } catch (IOException e) {

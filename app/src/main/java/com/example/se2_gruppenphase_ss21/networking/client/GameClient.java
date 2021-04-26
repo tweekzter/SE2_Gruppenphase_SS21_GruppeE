@@ -35,14 +35,10 @@ public class GameClient {
      * @throws IOException
      */
     public GameClient(String hostname, int port, String roomName, String nickname) throws IOException {
-        try {
-            Socket s = new Socket(hostname, port);
-            this.socket = new SocketWrapper(s);
-            this.nickname = nickname;
-            this.roomName = roomName;
-        }catch (IOException e) {
-            throw e;
-        }
+        Socket s = new Socket(hostname, port);
+        this.socket = new SocketWrapper(s);
+        this.nickname = nickname;
+        this.roomName = roomName;
     }
 
     /**
@@ -51,18 +47,14 @@ public class GameClient {
      * @throws IOException thrown if joining wasn't successful
      */
     public void connect() throws IOException, GameLogicException {
-        try {
-            socket.sendString(roomName);
-            socket.sendString(nickname);
+        socket.sendString(roomName);
+        socket.sendString(nickname);
 
-            String resp = socket.readString();
-            if (!resp.equals("ok")) {
-                throw new GameLogicException(resp);
-            }
-            isConnected = true;
-        }catch (IOException e) {
-            throw e;
+        String resp = socket.readString();
+        if (!resp.equals("ok")) {
+            throw new GameLogicException(resp);
         }
+        isConnected = true;
     }
 
     /**
@@ -96,8 +88,8 @@ public class GameClient {
                             listener.receiveUserList(nicknames);
                             break;
                         case "disconnect_user":
-                            String nickname = params[1];
-                            listener.userDisconnect(nickname);
+                            String name = params[1];
+                            listener.userDisconnect(name);
                             break;
                         default:
                             listener.unknownMessage(fromServer);
