@@ -95,7 +95,7 @@ public class GameServer extends Thread {
                                 rooms.get(roomName).userCount(),
                                 rooms.get(roomName).maxUsers());
 
-                        byte[] buffer = msg.toString().getBytes(StandardCharsets.UTF_8);
+                        byte[] buffer = msg.getBytes(StandardCharsets.UTF_8);
                         DatagramPacket packet = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(MULTICAST_ADDRESS), BROADCAST_PORT);
                         datagramSocket.send(packet);
                     }

@@ -7,12 +7,15 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class MulticastReceiver {
     private static final int TIMEOUT = 1000 * 10;
 
     private static CopyOnWriteArrayList<AvailableRoom> rooms = new CopyOnWriteArrayList<>();
+
+    private MulticastReceiver(){}
 
     public static void startListen() {
         new Thread(() -> {
@@ -60,7 +63,7 @@ public class MulticastReceiver {
         }).start();
     }
 
-    public static ArrayList<AvailableRoom> getRooms() {
+    public static List<AvailableRoom> getRooms() {
         return new ArrayList<>(rooms);
     }
 }

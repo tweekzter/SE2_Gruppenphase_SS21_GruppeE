@@ -1,11 +1,12 @@
 package com.example.se2_gruppenphase_ss21.networking;
 
 import java.net.InetAddress;
-import java.nio.charset.StandardCharsets;
 
 public class AvailableRoom {
 
-    private int port, currentPlayers, maxPlayers;
+    private int port;
+    private int currentPlayers;
+    private int maxPlayers;
     private String name;
     private InetAddress address;
     private long receivedAt;
