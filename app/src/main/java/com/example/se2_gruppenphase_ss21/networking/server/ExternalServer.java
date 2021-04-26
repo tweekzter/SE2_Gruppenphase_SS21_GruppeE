@@ -31,6 +31,7 @@ public class ExternalServer {
             GameClient client2 = new GameClient("127.0.0.1", 6789, "NotARoom", "SomeUser");
             client2.connect();
         }catch (GameLogicException e) {
+            //Expected
             e.printStackTrace();
         }
 
@@ -39,7 +40,7 @@ public class ExternalServer {
             System.out.println("Multicast Rooms:");
 
             for(AvailableRoom room : MulticastReceiver.getRooms()) {
-                System.out.println(room + " - Age: " + (System.currentTimeMillis() - room.getReceivedAt()));
+                System.out.println(room + " - Age: " + room.getAge());
             }
 
             try {

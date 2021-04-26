@@ -55,7 +55,7 @@ public class MulticastReceiver {
         new Thread(() -> {
             while (true) {
                 for(AvailableRoom room : rooms) {
-                    if(room.getReceivedAt() + TIMEOUT <= System.currentTimeMillis()) {
+                    if(room.getAge() > TIMEOUT) {
                         rooms.remove(room);
                     }
                 }

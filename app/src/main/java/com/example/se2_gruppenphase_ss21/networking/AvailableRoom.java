@@ -67,4 +67,12 @@ public class AvailableRoom {
     public long getReceivedAt() {
         return receivedAt;
     }
+
+    /**
+     * Returns the time in millis elapsed since this was received
+     * @return time in millis
+     */
+    public int getAge() {
+        return (int) (System.currentTimeMillis() - receivedAt);
+    }
 }
