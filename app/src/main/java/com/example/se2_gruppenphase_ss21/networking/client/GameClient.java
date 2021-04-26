@@ -12,6 +12,9 @@ public class GameClient {
     private SocketWrapper socket;
     private String nickname;
     private String roomName;
+    private boolean isConnected;
+
+    private ServerMessageListener listener;
 
     /**
      * Create a GameClient from a received room info and a nickname.
@@ -53,11 +56,78 @@ public class GameClient {
             socket.sendString(nickname);
 
             String resp = socket.readString();
-            if(!resp.equals("ok")) {
+            if (!resp.equals("ok")) {
                 throw new GameLogicException(resp);
             }
+            isConnected = true;
         }catch (IOException e) {
             throw e;
         }
+    }
+
+    /**
+     * Starts the thread to receive messages from the server.
+     * Needs a Listener to be set via registerListener() first.
+     */
+    public void startReceiveLoop() {
+        if (listener == null) {
+            throw new RuntimeException("No listener registered");
+        }else if(!isConnected) {
+            throw new RuntimeException("The client is not connected to any room");
+        }
+
+        new Thread(() -> {
+            while (true) {
+                try {
+                    String fromServer = socket.readString();
+                    String[] params = fromServer.split("\\s");
+                    switch (params[0]) {
+                        case "game_start":
+                            listener.onGameStart();
+                            break;
+                        case "users_ready":
+                            String[] split = params[1].split(",");
+                            int current = Integer.parseInt(split[0]);
+                            int max = Integer.parseInt(split[1]);
+                            listener.readyCount(current, max);
+                            break;
+                        case "user_list":
+                            String[] nicknames = params[1].split(",");
+                            listener.receiveUserList(nicknames);
+                            break;
+                        case "disconnect_user":
+                            String nickname = params[1];
+                            listener.userDisconnect(nickname);
+                            break;
+                        default:
+                            listener.unknownMessage(fromServer);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    /**
+     * Tells the server whether this client is ready or not.
+     * @param isReady
+     * @throws IOException
+     */
+    public void sendReady(boolean isReady) throws IOException {
+        if (!isConnected) {
+            throw new RuntimeException("Client is not connected");
+        }
+
+        socket.sendString("ready " + isReady);
+    }
+
+    /**
+     * Sets a Listener to listen for messages from the server.
+     * Only one listener can be registered at a time so this overwrites any previously registered Listener.
+     * @param listener the Listener to be registered
+     */
+    public void registerListener(ServerMessageListener listener) {
+        this.listener = listener;
     }
 }
