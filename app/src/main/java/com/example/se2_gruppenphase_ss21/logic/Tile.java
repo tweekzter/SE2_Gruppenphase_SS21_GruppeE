@@ -34,17 +34,14 @@ public class Tile {
     private Map map;
     private Position hook;
     private boolean isAttached = false;
-    private boolean invertX = false;
+    private boolean invertX = true;
 
 
     /**
-     * Initializes a new Tile, associates it with a map and receives
-     * its shape via Positions as well.
-     * @param map
-     * @param pos
+     * Initializes a TILE and creates its shape with the given parameters.
+     * @param pos Shape coordinates
      */
-    public Tile(Map map, Position... pos) {
-        this.map = map;
+    public Tile(Position... pos) {
         for(Position p : pos)
             shape.add(p);
     }
@@ -87,8 +84,8 @@ public class Tile {
      * @param y y-coordinate of map-hook
      * @return true if placed - false if not
      */
-    public boolean attachToMap(int x, int y) {
-        return attachToMap(new Position(x,y));
+    public boolean attachToMap(Map map, int x, int y) {
+        return attachToMap(map, new Position(x,y));
     }
 
     /**
@@ -103,9 +100,10 @@ public class Tile {
      * @param posOnMap map-hook
      * @return true if placed - false if not
      */
-    public boolean attachToMap(Position posOnMap) {
+    public boolean attachToMap(Map map, Position posOnMap) {
         // absolute reference point of map
         hook = posOnMap;
+        this.map = map;
         // check if tile is allowed to be placed -> return false if not
         if(!checkPlaceable())
             return false;
@@ -136,6 +134,7 @@ public class Tile {
             map.clearBox(x, y);
         }
 
+        this.map = null;
         isAttached = false;
     }
 
