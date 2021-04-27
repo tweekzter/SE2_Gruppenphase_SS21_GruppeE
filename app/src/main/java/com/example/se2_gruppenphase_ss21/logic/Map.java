@@ -111,6 +111,8 @@ public class Map {
      * @return true if available - false if not
      */
     public boolean checkAvailable(int x, int y) {
+        if(y >= map.length || x >= map[0].length || y < 0 || x < 0)
+            return false;
         Box box = map[y][x];
         return box.isAvailable() && box.isField();
     }

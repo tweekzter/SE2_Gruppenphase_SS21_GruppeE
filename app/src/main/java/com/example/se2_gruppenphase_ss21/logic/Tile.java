@@ -110,9 +110,9 @@ public class Tile {
         if(!checkPlaceable())
             return false;
 
-        // associate tile on this map
+        // register tile on map
         map.addTile(this);
-        // place tile on the map at pos
+        // place tile on the map at posOnMap
         for(int i=0; i < shape.size(); i++) {
             int x = hook.x + shape.get(i).x;
             int y = hook.y + shape.get(i).y;
@@ -127,7 +127,9 @@ public class Tile {
     /**
      * Detaches this tile from the map.
      */
-    public void detachTileFromMap() {
+    public void detachFromMap() {
+        if(hook == null || !isAttached)
+            return;
         for(int i=0; i < shape.size(); i++) {
             int x = hook.x + shape.get(i).x;
             int y = hook.y + shape.get(i).y;
@@ -162,7 +164,7 @@ public class Tile {
     }
 
     public void rotateRight() {
-        if(shape.size() == 0)
+        if(shape.size() == 0 || isAttached)
             return;
         int[] values = getInversionValues();
         int max = invertX ? shape.get(0).x : shape.get(0).y;

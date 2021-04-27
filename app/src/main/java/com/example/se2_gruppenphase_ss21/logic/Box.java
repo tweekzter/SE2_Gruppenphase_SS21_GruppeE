@@ -1,5 +1,7 @@
 package com.example.se2_gruppenphase_ss21.logic;
 
+import android.graphics.Color;
+
 /**
  * A BOX is the element that the MAP consists of.
  * A BOX can be part of the play field and can also be covered by a tile.
@@ -9,13 +11,13 @@ package com.example.se2_gruppenphase_ss21.logic;
 public class Box extends Position {
     private Tile tile;
     private boolean isField;
-    private int color;
+    private Color color;
 
     public Box(int x, int y) {
         super(x,y);
     }
 
-    public Box(int x, int y, int color) {
+    public Box(int x, int y, Color color) {
         super(x,y);
         this.color = color;
     }
@@ -40,11 +42,11 @@ public class Box extends Position {
         this.tile = tile;
     }
 
-    public int getColor() {
+    public Color getColor() {
         return color;
     }
 
-    public void setColor(int color) {
+    public void setColor(Color color) {
         this.color = color;
     }
 }
