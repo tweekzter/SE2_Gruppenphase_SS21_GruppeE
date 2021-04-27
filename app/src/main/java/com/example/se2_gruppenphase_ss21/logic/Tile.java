@@ -182,6 +182,7 @@ public class Tile {
         }
 
         invertCoordinates(values);
+        invertX = !invertX;
     }
 
     private void invertCoordinates(int[] values) {
