@@ -1,4 +1,4 @@
-package com.example.se2_gruppenphase_ss21;
+package com.example.se2_gruppenphase_ss21.menu;
 
 import android.os.Bundle;
 
@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.se2_gruppenphase_ss21.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -69,7 +71,7 @@ public class StartGameFragment extends Fragment {
             String userName = getUsername(view);
             if (userName != null) {
                 //TODO: start local server
-                System.out.println(userName +"local!!!!!!!!!!!!!");
+                getParentFragmentManager().beginTransaction().replace(R.id.container, new LocalGameFragment()).addToBackStack("tag").commit();
             }
         });
 
@@ -78,7 +80,6 @@ public class StartGameFragment extends Fragment {
             String userName = getUsername(view);
             if (userName != null) {
                 //TODO: start remote server
-                System.out.println(userName +"online!!!!!!!!!!!!!");
             }
         });
 
