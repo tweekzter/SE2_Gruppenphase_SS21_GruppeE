@@ -11,4 +11,10 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-</resources>
+    <string name="rules"><b>Das Legefeld</b>\n\nZu Beginn jeder Runde wird jedem Spieler eines aus 36 Spielbrettern zugewiesen. Jedes Spielbrett besitzt ein einzigartiges Legemuster. Dazu gibt es 12 verschiedene Bausteine - in vier 3er Gruppen aufgeteilt.\n\n<b>Spielablauf</b>\n\nEin Spieler würfelt pro Runde. Das Ergebnis bestimmt, welche der 3er Gruppen an Bausteinen dem Spieler zur Verfügung stehen.\n\nSobald der Timer zu laufen beginnt, hat jeder Spieler 60 Sekunden Zeit um seine Bausteine so am Spielbrett zu platzieren, dass diese sich mit dem vorgegebenen Legemuster genau decken.\n\nDer Spieler, der als erstes fertig ist, bekommt einen blauen Saphir und darf einen Edelstein aus einem Beutel ziehen. Der Zweite erhält einen braunen Bernstein und darf ebenfalls einen Edelstein aus dem Beutel ziehen. Der Dritte und Vierte Spieler erhalten keinen gesonderten Edelstein, dürfen aber ebenfalls einmal aus dem Beutel ziehen.\n\n<b>Ergebnis</b>\n\nNach der letzten Runde werden über die Anzahl und Gewichtung (Farbe) der Edelsteine die Punkte jedes Spielers ermittelt und so die Platzierung bestimmt.\n\n
+        <li><b>Rot:</b> 4 Punkte</li>\n
+        <li><b>Blau:</b> 3 Punkte</li>\n
+        <li><b>Grün:</b> 2 Punkte</li>\n
+        <li><b>Braun:</b> 1 Punkt</li>\n
+    </string>
+    </resources>
