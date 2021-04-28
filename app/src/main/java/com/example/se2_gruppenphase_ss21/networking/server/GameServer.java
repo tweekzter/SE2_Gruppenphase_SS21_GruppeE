@@ -140,4 +140,8 @@ public class GameServer extends Thread {
             }
         }).start();
     }
+
+    public int getPort() {
+        return server.getLocalPort();
+    }
 }
