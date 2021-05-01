@@ -1,4 +1,4 @@
-package com.example.se2_gruppenphase_ss21.logic;
+package com.example.se2_gruppenphase_ss21.logic.tetris;
 
 /**
  * A POSITION is the most basic element.

@@ -1,4 +1,4 @@
-package com.example.se2_gruppenphase_ss21.logic;
+package com.example.se2_gruppenphase_ss21.logic.tetris;
 
 import java.util.ArrayList;
 
@@ -91,7 +91,7 @@ public class Map {
      * @param x x-coordinate of the box
      * @param y y-coordinate of the box
      */
-    public void coverBox(Tile tile, int x, int y) {
+    void coverBox(Tile tile, int x, int y) {
         map[y][x].setTile(tile);
     }
 
@@ -100,7 +100,7 @@ public class Map {
      * @param x x-coordinate of the box
      * @param y y-coordinate of the box
      */
-    public void clearBox(int x, int y) {
+    void clearBox(int x, int y) {
         map[y][x].setTile(null);
     }
 
@@ -110,7 +110,7 @@ public class Map {
      * @param y y-coordinate of the box
      * @return true if available - false if not
      */
-    public boolean checkAvailable(int x, int y) {
+    boolean checkAvailable(int x, int y) {
         // coordinate outside of map
         if(y >= map.length || x >= map[0].length || y < 0 || x < 0)
             return false;
@@ -123,7 +123,7 @@ public class Map {
      * Add TILE to attached tiles.
      * @param tile
      */
-    public void addTile(Tile tile) {
+    void addTile(Tile tile) {
         tiles.add(tile);
     }
 

@@ -1,4 +1,4 @@
-package com.example.se2_gruppenphase_ss21.logic;
+package com.example.se2_gruppenphase_ss21.logic.tetris;
 
 import java.util.ArrayList;
 
@@ -162,59 +162,64 @@ public class Tile {
         return true;
     }
 
+    /**
+     * Rotates the TILE clockwise.
+     * Has no effect if TILE is already attached to a MAP.
+     */
     public void rotateRight() {
         if(shape.size() == 0 || isAttached)
             return;
-        int[] values = getInversionValues();
+
         int max = invertX ? shape.get(0).x : shape.get(0).y;
         int min = max;
 
-        for(int val : values) {
-            max = Math.max(val, max);
-            min = Math.min(val, min);
+        for(Position pos : shape) {
+            if(invertX) {
+                max = Math.max(pos.x, max);
+                min = Math.min(pos.x, min);
+            }
+            else {
+                max = Math.max(pos.y, max);
+                min = Math.min(pos.y, min);
+            }
         }
 
-        for(int i=0; i < values.length; i++) {
-            int upperDiff = max - values[i];
-            int lowerDiff = values[i] - min;
-            values[i] = upperDiff < lowerDiff ? min + upperDiff : max - lowerDiff;
-        }
+        invertAxis(min, max);
 
-        invertCoordinates(values);
         invertX = !invertX;
     }
 
-    private void invertCoordinates(int[] values) {
-        if(invertX) {
-            for(int i = 0; i < values.length; i++)
-                shape.get(i).x = values[i];
-        }
-        else {
-            for(int i=0; i < values.length; i++)
-                shape.get(i).y = values[i];
+    private void invertAxis(int min, int max) {
+        for(Position pos : shape) {
+            if(invertX) {
+                int upperDiff = max - pos.x;
+                int lowerDiff = pos.x - min;
+                pos.x = upperDiff < lowerDiff ? min + upperDiff : max - lowerDiff;
+            }
+            else {
+                int upperDiff = max - pos.y;
+                int lowerDiff = pos.y - min;
+                pos.y = upperDiff < lowerDiff ? min + upperDiff : max - lowerDiff;
+            }
         }
     }
 
-    private int[] getInversionValues() {
-        int[] values = new int[shape.size()];
-        if(invertX) {
-            for(int i=0; i < shape.size(); i++) {
-                values[i] = shape.get(i).x;
-            }
-        }
-        else {
-            for(int i=0; i < shape.size(); i++) {
-                values[i] = shape.get(i).y;
-            }
-        }
-        return values;
+    /**
+     * Rotates the TILE counter-clockwise.
+     * Has no effect if TILE is already attached to a MAP.
+     */
+    public void rotateLeft() {
+        // just call rotateRight() with inverted axis-order
+        invertX = !invertX;
+        rotateRight();
+        invertX = !invertX;
     }
 
     /**
      * Sets the absolute position of the map on which this TILE is inserted (with shape Position 0,0).
      * @param hook absolute position of map where tile is placed
      */
-    public void setHook(Position hook) {
+    void setHook(Position hook) {
         this.hook = hook;
     }
 
@@ -222,16 +227,18 @@ public class Tile {
      * Get the absolute position of the MAP where tile will be placed (with shape Position 0,0).
      * @return the absolute hook position of the MAP.
      */
-    public Position getHook() {
+    Position getHook() {
         return hook;
     }
 
     /**
      * Set the map associated with this tile.
+     * This will detach the current TILE from the map of course.
      * @param map the map associated with this tile
      */
     public void setMap(Map map) {
         this.map = map;
+        isAttached = false;
     }
 
     /**
