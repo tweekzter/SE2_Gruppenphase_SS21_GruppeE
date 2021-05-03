@@ -22,5 +22,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         newGameButton.setOnClickListener((View v) ->{
             getSupportFragmentManager().beginTransaction().replace(R.id.container, new StartGameFragment()).addToBackStack("tag").commit();
         });
+        //Test Playerlist to see the design of the ListView
+
     }
 }
