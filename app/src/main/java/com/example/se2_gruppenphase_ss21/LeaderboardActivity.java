@@ -1,13 +1,9 @@
 package com.example.se2_gruppenphase_ss21;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.se2_gruppenphase_ss21.networking.PlayerArrayAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,14 +18,14 @@ public class LeaderboardActivity extends AppCompatActivity {
 
         this.getSupportActionBar().hide();
 
-        setContentView(R.layout.activity_menu);
+        setContentView(R.layout.fragment_leaderboard);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.container, new LeaderboardFragment()).commit();
+        //getSupportFragmentManager().beginTransaction().add(R.id.container, new LeaderboardFragment()).commit();
 
-        Button newGameButton = findViewById(R.id.button_newGame);
+        /*Button newGameButton = findViewById(R.id.button_newGame);
         newGameButton.setOnClickListener((View v) ->{
             getSupportFragmentManager().beginTransaction().replace(R.id.container, new StartGameFragment()).addToBackStack("tag").commit();
-        });
+        });*/
 
         listView = (ListView) findViewById(R.id.listView);
         playerArrayAdapter = new PlayerArrayAdapter(getApplicationContext(), R.layout.listview_row_layout);
@@ -40,7 +36,8 @@ public class LeaderboardActivity extends AppCompatActivity {
             String playername = playerData[1];
             String points = playerData[2];
 
-            Player player = new Player(Integer.parseInt(position), playername, points);
+            Player player = new Player(position, playername, points);
+
             playerArrayAdapter.add(player);
         }
     }

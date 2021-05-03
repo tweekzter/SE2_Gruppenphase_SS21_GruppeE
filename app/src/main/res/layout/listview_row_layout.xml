@@ -11,18 +11,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
         android:paddingTop="10dp"
-        android:paddingLeft="10dp"/>
+        android:paddingRight="10dp"
+        android:text="1"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/playerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/position"
         android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/position"
         android:paddingTop="10dp"
-        android:text="Cherry"/>
+        android:text="Testperson1"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/points"
@@ -31,5 +34,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:paddingTop="10dp"
-        android:paddingRight="10dp"/>
+        android:paddingRight="10dp"
+        android:text="4 Punkte"
+        android:textSize="18sp" />
 </RelativeLayout>
