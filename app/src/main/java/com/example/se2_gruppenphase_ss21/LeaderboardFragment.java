@@ -4,8 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
+
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link LeaderboardFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
 
 public class LeaderboardFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
