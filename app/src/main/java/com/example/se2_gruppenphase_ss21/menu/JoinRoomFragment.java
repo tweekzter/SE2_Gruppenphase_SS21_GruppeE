@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.se2_gruppenphase_ss21.R;
+import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
 import com.example.se2_gruppenphase_ss21.networking.MulticastReceiver;
 
 import java.util.List;
@@ -57,7 +58,11 @@ public class JoinRoomFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
+        MulticastReceiver.startListen();
+        List<AvailableRoom> rooms = MulticastReceiver.getRooms();
+        for (Object r : rooms) {
+            System.out.println(r);
+        }
     }
 
     @Override
