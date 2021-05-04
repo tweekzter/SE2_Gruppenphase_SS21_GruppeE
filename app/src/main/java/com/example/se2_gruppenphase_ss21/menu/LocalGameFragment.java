@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.se2_gruppenphase_ss21.R;
 
@@ -35,15 +36,13 @@ public class LocalGameFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment LocalGameFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LocalGameFragment newInstance(String param1, String param2) {
+    public static LocalGameFragment newInstance(String param1) {
         LocalGameFragment fragment = new LocalGameFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,6 +60,20 @@ public class LocalGameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_local_game, container, false);
+        View view = inflater.inflate(R.layout.fragment_local_game, container, false);
+
+        String userName =  getArguments().getString(ARG_PARAM1);
+
+        Button createRoomButton = view.findViewById(R.id.button_createRoom);
+        createRoomButton.setOnClickListener((View v) -> {
+            //TODO: open createRoom Fragment with userName
+        });
+
+        Button joinRoomButton = view.findViewById(R.id.button_joinRoom);
+        joinRoomButton.setOnClickListener((View v) -> {
+            //TODO: open joinRoomFragment with userName as param.
+        });
+
+        return view;
     }
 }

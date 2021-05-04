@@ -71,7 +71,9 @@ public class StartGameFragment extends Fragment {
             String userName = getUsername(view);
             if (userName != null) {
                 //TODO: start local server
-                getParentFragmentManager().beginTransaction().replace(R.id.container, new LocalGameFragment()).addToBackStack("tag").commit();
+//                getParentFragmentManager().beginTransaction().replace(R.id.container, new LocalGameFragment()).addToBackStack("tag").commit();
+                getParentFragmentManager().beginTransaction().replace(R.id.container, LocalGameFragment.newInstance(userName)).addToBackStack("tag").commit();
+
             }
         });
 
