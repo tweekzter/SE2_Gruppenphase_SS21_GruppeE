@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.se2_gruppenphase_ss21.R;
+import com.example.se2_gruppenphase_ss21.networking.MulticastReceiver;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -72,6 +73,7 @@ public class StartGameFragment extends Fragment {
             if (userName != null) {
 //                getParentFragmentManager().beginTransaction().replace(R.id.container, new LocalGameFragment()).addToBackStack("tag").commit();
                 getParentFragmentManager().beginTransaction().replace(R.id.container, LocalGameFragment.newInstance(userName)).addToBackStack("tag").commit();
+                MulticastReceiver.startListen();
 
             }
         });

@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
@@ -57,18 +59,46 @@ public class JoinRoomFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        MulticastReceiver.startListen();
-        List<AvailableRoom> rooms = MulticastReceiver.getRooms();
-        for (Object r : rooms) {
-            System.out.println(r);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_join_room, container, false);
+        View view = inflater.inflate(R.layout.fragment_join_room, container, false);
+
+        updateRooms(view);
+
+        return view;
+    }
+
+    public void updateRooms(View view) {
+
+//        LinearLayout layout = (LinearLayout) findViewById
+
+        List<AvailableRoom> rooms = MulticastReceiver.getRooms();
+
+//        LinearLayout layout = getView().findViewById(R.id.rootlayout);
+
+        LinearLayout layout = view.findViewById(R.id.rootlayout);
+
+//        Button newbtn;
+//
+//        newbtn = new Button(getContext());
+//        newbtn.setText(rooms.get(0).toString());
+//
+//        layout.addView(newbtn);
+
+
+
+        for (Object r : rooms) {
+            // System.out.println(r);
+            Button newbtn;
+
+            newbtn = new Button(getContext());
+            newbtn.setText(r.toString());
+
+            layout.addView(newbtn);
+        }
     }
 }

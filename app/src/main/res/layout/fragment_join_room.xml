@@ -6,5 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".menu.StartGameFragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rootlayout"
+        android:orientation="vertical"
+
+        ></LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

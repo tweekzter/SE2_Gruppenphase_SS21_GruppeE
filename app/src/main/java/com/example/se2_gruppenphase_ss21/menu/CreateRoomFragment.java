@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.se2_gruppenphase_ss21.R;
+import com.example.se2_gruppenphase_ss21.networking.MulticastReceiver;
 import com.example.se2_gruppenphase_ss21.networking.server.GameServer;
 
 import java.io.IOException;
@@ -93,5 +94,6 @@ public class CreateRoomFragment extends Fragment {
         localServer.setDynamicRoomCreation(false);
         localServer.createRoom(roomName, maxUser);
         localServer.start();
+//        MulticastReceiver.startListen();
     }
 }
