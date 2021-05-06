@@ -135,12 +135,12 @@ public class GameClient {
         socket.sendString("roll " + result);
     }
 
-    public void sendPuzzleOver(int remaining, boolean didFinish) throws IOException {
+    public void sendPuzzleOver(int millisRemaining, boolean didFinish) throws IOException {
         if (!isConnected) {
             throw new RuntimeException("Client is not connected");
         }
 
-        socket.sendString("finish_puzzle " + (didFinish ? remaining : -1));
+        socket.sendString("finish_puzzle " + (didFinish ? millisRemaining : -1));
     }
 
     /**

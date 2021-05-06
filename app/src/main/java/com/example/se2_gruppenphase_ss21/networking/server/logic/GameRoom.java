@@ -129,6 +129,7 @@ public class GameRoom {
 
                 GameClientHandler diceRoller = handlers.get(round % handlers.size());
                 broadcastMessage("roll_request " + diceRoller.getNickname());
+                diceRoller.resetRoll();
                 int rollResult;
                 while (true) {
                     if(!handlers.contains(diceRoller)) {
