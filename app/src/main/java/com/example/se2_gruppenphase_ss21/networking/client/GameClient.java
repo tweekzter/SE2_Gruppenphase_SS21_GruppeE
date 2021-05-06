@@ -130,6 +130,14 @@ public class GameClient {
         socket.sendString("roll " + result);
     }
 
+    public void sendPuzzleOver(int remaining, boolean didFinish) throws IOException {
+        if (!isConnected) {
+            throw new RuntimeException("Client is not connected");
+        }
+
+        socket.sendString("finish_puzzle " + (didFinish ? remaining : -1));
+    }
+
     /**
      * Sets a Listener to listen for messages from the server.
      * Only one listener can be registered at a time so this overwrites any previously registered Listener.
