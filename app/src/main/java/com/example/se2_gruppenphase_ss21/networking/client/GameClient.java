@@ -2,6 +2,7 @@ package com.example.se2_gruppenphase_ss21.networking.client;
 
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
 import com.example.se2_gruppenphase_ss21.networking.SocketWrapper;
+import com.example.se2_gruppenphase_ss21.networking.server.GameServer;
 import com.example.se2_gruppenphase_ss21.networking.server.logic.GameLogicException;
 
 import java.io.IOException;
@@ -15,6 +16,10 @@ public class GameClient {
     private boolean isConnected;
 
     private ServerMessageListener listener;
+
+    public GameClient(GameServer server, String roomName, String nickname) throws IOException {
+        this("127.0.0.1", server.getPort(), roomName, nickname);
+    }
 
     /**
      * Create a GameClient from a received room info and a nickname.
