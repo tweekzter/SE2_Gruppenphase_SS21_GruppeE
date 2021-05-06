@@ -91,6 +91,14 @@ public class GameClient {
                             String name = params[1];
                             listener.userDisconnect(name);
                             break;
+                        case "roll_request":
+                            String nick = params[1];
+                            listener.rollRequest(nick);
+                            break;
+                        case "roll_result":
+                            int result = Integer.parseInt(params[1]);
+                            listener.rollResult(result);
+                            break;
                         default:
                             listener.unknownMessage(fromServer);
                     }
@@ -112,6 +120,14 @@ public class GameClient {
         }
 
         socket.sendString("ready " + isReady);
+    }
+
+    public void sendRollResult(int result) throws IOException {
+        if (!isConnected) {
+            throw new RuntimeException("Client is not connected");
+        }
+
+        socket.sendString("roll " + result);
     }
 
     /**

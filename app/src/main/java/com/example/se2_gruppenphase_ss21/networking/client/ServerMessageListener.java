@@ -31,6 +31,18 @@ public interface ServerMessageListener {
     public void receiveUserList(String[] nicknames);
 
     /**
+     * Called when a specified user is requested to roll the dice
+     * @param nick
+     */
+    public void rollRequest(String nick);
+
+    /**
+     * Called when a dice roll result is received
+     * @param result
+     */
+    public void rollResult(int result);
+
+    /**
      * Called when a message is received from the server that is not known.
      * @param message
      */

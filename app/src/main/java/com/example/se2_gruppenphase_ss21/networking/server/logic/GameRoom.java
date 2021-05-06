@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 public class GameRoom {
     private static final int DEFAULT_MAX_USERS = 4;
+    private static final int ROUND_COUNT = 9;
 
     private ArrayList<GameClientHandler> handlers = new ArrayList<>();
 
@@ -87,6 +88,7 @@ public class GameRoom {
         if((handlers.size() == maxUsers || usersReady() == handlers.size()) && state == GameRoomState.WAITING) {
             state = GameRoomState.PLAYING;
             broadcastMessage("game_start");
+            startGameLoop();
         }
     }
 
@@ -115,5 +117,42 @@ public class GameRoom {
 
     public int maxUsers() {
         return maxUsers;
+    }
+
+    public void startGameLoop() {
+        new Thread(() -> {
+            int round = 0;
+            while (true) {
+                if(round >= ROUND_COUNT) {
+                    break;
+                }
+
+                GameClientHandler diceRoller = handlers.get(round % handlers.size());
+                broadcastMessage("roll_request " + diceRoller.getNickname());
+                int rollResult;
+                while (true) {
+                    if(!handlers.contains(diceRoller)) {
+                        rollResult = (int) (Math.random() * 6 + 1);
+                        break;
+                    }else if(diceRoller.hasRolled()) {
+                        rollResult = diceRoller.getRollResult();
+                    }
+
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        Thread.currentThread().interrupt();
+                    }
+                }
+
+                broadcastMessage("roll_result " + rollResult);
+
+
+                round++;
+            }
+
+            //Round end
+        }).start();
     }
 }

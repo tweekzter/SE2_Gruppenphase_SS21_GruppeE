@@ -77,12 +77,13 @@ public class ExternalServer {
             e.printStackTrace();
         }
 
+
         MulticastReceiver.startListen();
         while (true) {
             System.out.println("Multicast Rooms:");
 
             for(AvailableRoom room : MulticastReceiver.getRooms()) {
-                System.out.println(room + " - Age: " + room.getAge());
+                //System.out.println(room + " - Age: " + room.getAge());
             }
 
             try {

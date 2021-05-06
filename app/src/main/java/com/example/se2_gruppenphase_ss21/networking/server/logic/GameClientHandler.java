@@ -9,6 +9,7 @@ public class GameClientHandler {
     private SocketWrapper client;
     private String nickname;
     private boolean isReady;
+    private int rollResult;
 
     public GameClientHandler(SocketWrapper client, String nickname) {
         this.client = client;
@@ -29,6 +30,9 @@ public class GameClientHandler {
                             isReady = Boolean.parseBoolean(params[1]);
                             room.broadcastReadyCount();
                             room.broadcastIfGameStart();
+                            break;
+                        case "roll":
+                            rollResult = Integer.parseInt(params[1]);
                             break;
                         default:
                             System.err.printf("Received invalid message from client %s%n", fromUser);
@@ -51,5 +55,17 @@ public class GameClientHandler {
 
     public boolean isReady() {
         return isReady;
+    }
+
+    public void resetRoll() {
+        rollResult = -1;
+    }
+
+    public boolean hasRolled() {
+        return rollResult != -1;
+    }
+
+    public int getRollResult() {
+        return rollResult;
     }
 }
