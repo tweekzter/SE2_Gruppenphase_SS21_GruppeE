@@ -94,6 +94,5 @@ public class CreateRoomFragment extends Fragment {
         localServer.setDynamicRoomCreation(false);
         localServer.createRoom(roomName, maxUser);
         localServer.start();
-//        MulticastReceiver.startListen();
     }
 }

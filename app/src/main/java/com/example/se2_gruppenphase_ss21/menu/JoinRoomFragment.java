@@ -13,7 +13,11 @@ import android.widget.LinearLayout;
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
 import com.example.se2_gruppenphase_ss21.networking.MulticastReceiver;
+import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
+import com.example.se2_gruppenphase_ss21.networking.client.ServerMessageListener;
+import com.example.se2_gruppenphase_ss21.networking.server.logic.GameLogicException;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -22,6 +26,33 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class JoinRoomFragment extends Fragment {
+
+    ServerMessageListener listener = new ServerMessageListener() {
+        @Override
+        public void readyCount(int current, int max) {
+
+        }
+
+        @Override
+        public void onGameStart() {
+
+        }
+
+        @Override
+        public void userDisconnect(String nickname) {
+
+        }
+
+        @Override
+        public void receiveUserList(String[] nicknames) {
+
+        }
+
+        @Override
+        public void unknownMessage(String message) {
+
+        }
+    };
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -67,12 +98,14 @@ public class JoinRoomFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_join_room, container, false);
 
-        updateRooms(view);
+        String userName = getArguments().getString(ARG_PARAM1);
+
+        updateRooms(view, userName);
 
         return view;
     }
 
-    public void updateRooms(View view) {
+    public void updateRooms(View view, String userName) {
 
 //        LinearLayout layout = (LinearLayout) findViewById
 
@@ -90,15 +123,58 @@ public class JoinRoomFragment extends Fragment {
 //        layout.addView(newbtn);
 
 
-
-        for (Object r : rooms) {
+        for (AvailableRoom r : rooms) {
             // System.out.println(r);
             Button newbtn;
 
             newbtn = new Button(getContext());
             newbtn.setText(r.toString());
+            newbtn.setOnClickListener((View v) -> {
+
+//                GameClient client = null;
+//                try {
+//                    client = new GameClient(r, "nickname");
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                try {
+//                    client.connect();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                } catch (GameLogicException e) {
+//                    e.printStackTrace();
+//                }
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        GameClient client = null;
+                        try {
+                            client = new GameClient(r, userName);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        try {
+                            client.connect();
+                            client.registerListener(listener); //TODO: implement the interface
+                            client.startReceiveLoop();
+//                            client.sendReady(true);
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (GameLogicException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+
+
+            });
 
             layout.addView(newbtn);
         }
     }
 }
+
