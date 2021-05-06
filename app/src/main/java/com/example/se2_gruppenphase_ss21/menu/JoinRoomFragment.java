@@ -27,32 +27,32 @@ import java.util.List;
  */
 public class JoinRoomFragment extends Fragment {
 
-    ServerMessageListener listener = new ServerMessageListener() {
-        @Override
-        public void readyCount(int current, int max) {
-
-        }
-
-        @Override
-        public void onGameStart() {
-
-        }
-
-        @Override
-        public void userDisconnect(String nickname) {
-
-        }
-
-        @Override
-        public void receiveUserList(String[] nicknames) {
-
-        }
-
-        @Override
-        public void unknownMessage(String message) {
-
-        }
-    };
+//    ServerMessageListener listener = new ServerMessageListener() {
+//        @Override
+//        public void readyCount(int current, int max) {
+//
+//        }
+//
+//        @Override
+//        public void onGameStart() {
+//
+//        }
+//
+//        @Override
+//        public void userDisconnect(String nickname) {
+//
+//        }
+//
+//        @Override
+//        public void receiveUserList(String[] nicknames) {
+//
+//        }
+//
+//        @Override
+//        public void unknownMessage(String message) {
+//
+//        }
+//    };
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -131,45 +131,31 @@ public class JoinRoomFragment extends Fragment {
             newbtn.setText(r.toString());
             newbtn.setOnClickListener((View v) -> {
 
-//                GameClient client = null;
-//                try {
-//                    client = new GameClient(r, "nickname");
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        GameClient client = null;
+//                        try {
+//                            client = new GameClient(r, userName);
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
 //
-//                try {
-//                    client.connect();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                } catch (GameLogicException e) {
-//                    e.printStackTrace();
-//                }
+//                        try {
+//                            client.connect();
+//                            client.registerListener(listener); //TODO: implement the interface
+//                            client.startReceiveLoop();
+////                            client.sendReady(true);
+//
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        } catch (GameLogicException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }).start();
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        GameClient client = null;
-                        try {
-                            client = new GameClient(r, userName);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        try {
-                            client.connect();
-                            client.registerListener(listener); //TODO: implement the interface
-                            client.startReceiveLoop();
-//                            client.sendReady(true);
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (GameLogicException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).start();
-
+                getParentFragmentManager().beginTransaction().replace(R.id.container, RoomFragment.newInstance(userName, r)).addToBackStack("tag").commit();
 
             });
 
