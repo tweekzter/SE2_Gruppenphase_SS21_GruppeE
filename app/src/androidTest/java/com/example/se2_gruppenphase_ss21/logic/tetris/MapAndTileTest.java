@@ -4,8 +4,6 @@ import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -30,8 +28,9 @@ public class MapAndTileTest {
                 { false, false, false, false }
         };
 
-        Map.loadMaps(appContext.getAssets());
-        assertArrayEquals(expected, Map.getMapByID(0));
+        Map map = new Map();
+        map.loadMaps(appContext.getAssets());
+        assertArrayEquals(expected, map.getMapByID(1));
     }
 
     @Test
@@ -43,7 +42,8 @@ public class MapAndTileTest {
                 { true,  false, false, false, false }
         };
 
-        Map.loadMaps(appContext.getAssets());
-        assertArrayEquals(expected, Map.getMapByID(2));
+        Map map = new Map();
+        map.loadMaps(appContext.getAssets());
+        assertArrayEquals(expected, map.getMapByID(3));
     }
 }

@@ -36,14 +36,7 @@ public class Map {
     private Box[][] map;
     private int x, y;
     private ArrayList<Tile> tiles = new ArrayList<>();
-    private static ArrayList<ArrayList<ArrayList<Boolean>>> mapPool = new ArrayList<>();
-    // @TODO replace this prototype map with an existing map
-    private static boolean[][] standardMap = {
-            { false, false, false, false },
-            { false, true,  true,  false },
-            { false, true,  true,  false },
-            { false, true,  true,  false }
-    };
+    private StructureLoader mapPool;
 
     /**
      * Default constructor, creating a 6x5 map (like the modeled UBONGO version)
@@ -168,64 +161,12 @@ public class Map {
         return map[y][x];
     }
 
-    public static void loadMaps(AssetManager mgr) {
-        // if already loaded -> unload first
-        if(mapPool.size() != 0)
-            clearMapPool();
-
-        try {
-            InputStream is = mgr.open("mapPool.cfg");
-            Scanner scanner = new Scanner(is);
-            char[] line;
-            int mapCount = 0;
-            int y = 0;
-            mapPool.add(new ArrayList<>());
-            while(scanner.hasNext()) {
-                String l = scanner.nextLine();
-                if(l.length() == 0)
-                    continue;
-                if(l.charAt(0) == '#') {
-                    mapCount++;
-                    y = 0;
-                    mapPool.add(new ArrayList<>());
-                    continue;
-                }
-                mapPool.get(mapCount).add(new ArrayList<>());
-                line = l.toCharArray();
-                for(char c : line) {
-                    if(c == 'O' || c == 'o')
-                        mapPool.get(mapCount).get(y).add(true);
-                    else
-                        mapPool.get(mapCount).get(y).add(false);
-                }
-                y++;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void loadMaps(AssetManager mgr) {
+        mapPool = new StructureLoader(mgr);
     }
 
-    public static boolean[][] getMapByID(int id) {
-        if(mapPool.size() == 0)
-            return standardMap;
-
-        int ySize = mapPool.get(id).size();
-        int xSize = mapPool.get(id).get(0).size();
-        boolean[][] map = new boolean[ySize][xSize];
-
-        for(int y=0; y < ySize; y++) {
-            for(int x=0; (x < xSize) && (x < mapPool.get(id).get(y).size()); x++) {
-                map[y][x] = mapPool.get(id).get(y).get(x);
-            }
-        }
-        return map;
-    }
-
-    /**
-     * Clears the current MapPool by assigning an empty one.
-     */
-    public static void clearMapPool() {
-        mapPool = new ArrayList<>();
+    public boolean[][] getMapByID(int id) {
+        return mapPool.getStructureByID(id);
     }
 }
 
