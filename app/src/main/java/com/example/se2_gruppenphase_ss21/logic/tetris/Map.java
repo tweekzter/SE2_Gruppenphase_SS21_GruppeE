@@ -2,19 +2,12 @@ package com.example.se2_gruppenphase_ss21.logic.tetris;
 
 import android.content.res.AssetManager;
 
-import com.example.se2_gruppenphase_ss21.MainActivity;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Scanner;
 import java.util.ArrayList;
 
 /**
  * Representation of MAP
  *
- * !! PLEASE do not make fundamental changes to the logic, without coordinating with the others !!
+ * !! PLEASE do not make fundamental changes to the logic, without coordinating with the team !!
  *
  * A MAP represents a rectangular field and consists of
  * -> a play field (area where tiles can be placed on)
@@ -36,7 +29,6 @@ public class Map {
     private Box[][] map;
     private int x, y;
     private ArrayList<Tile> tiles = new ArrayList<>();
-    private StructureLoader mapPool;
 
     /**
      * Default constructor, creating a 6x5 map (like the modeled UBONGO version)
@@ -161,12 +153,20 @@ public class Map {
         return map[y][x];
     }
 
-    public void loadMaps(AssetManager mgr) {
-        mapPool = new StructureLoader(mgr);
-    }
-
-    public boolean[][] getMapByID(int id) {
-        return mapPool.getStructureByID(id);
+    /**
+     * Sets up the this MAP with a map from the pool.
+     * The pool is represented by a JSON file (structures.json in assets).
+     * It contains all maps of the game.
+     *
+     * The category stands for the maps dimensions. Standard is "5x6".
+     *
+     * @param mgr AssetManager needed to read JSON file
+     * @param id ID of the map
+     * @param category map dimensions (for example "5x6")
+     */
+    public void setMapByID(AssetManager mgr, int id, String category) {
+        boolean[][] map = StructureLoader.getStructure(mgr, id, "map", category);
+        setUpMap(map);
     }
 }
 

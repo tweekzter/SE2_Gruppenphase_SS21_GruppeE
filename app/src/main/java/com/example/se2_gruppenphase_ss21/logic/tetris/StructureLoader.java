@@ -1,15 +1,31 @@
 package com.example.se2_gruppenphase_ss21.logic.tetris;
 
 import android.content.res.AssetManager;
+import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Scanner;
 
+/**
+ * Loader class for JSON data structure file.
+ *
+ * !! PLEASE do not make fundamental changes to the logic, without coordinating with the team !!
+ *
+ * The JSON file contains a pool of data structures used.
+ * It is basically structured in TYPE (map or tile), CATEGORY (in case of MAP this represents
+ * the dimensions, for example 5x6 or "standard" for TILES) and the specific ID of the structure.
+ * TILES could be extended by an "extended" category,
+ * in case you would want a larger set of TILES for a game mode.
+ *
+ * @author Manuel Simon #00326348
+ */
 class StructureLoader {
-    private ArrayList<ArrayList<ArrayList<Boolean>>> pool = new ArrayList<>();
-    private AssetManager mgr;
-    // @TODO replace this prototype map with an existing map
+    private static String json;
+    // a default structure that will be used, whenever problems occur
     private static boolean[][] standardStructure = {
             { false, false, false, false },
             { false, true,  true,  false },
@@ -17,79 +33,72 @@ class StructureLoader {
             { false, false, false, false }
     };
 
-    StructureLoader(AssetManager mgr) {
-        this.mgr = mgr;
-        load();
-    }
+    /**
+     * Searches and returns the structure by ID, type and category in form of a two dimensional
+     * boolean array.
+     *
+     * True representing a valid field and false a non-valid field.
+     *
+     * @param mgr AssetManager needed to read JSON file
+     * @param id the ID of the structure
+     * @param type type of the structure (for example "map" or "tile")
+     * @param category category of the structure (for example the dimension "5x6")
+     * @return
+     */
+    static boolean[][] getStructure(AssetManager mgr, int id, String type, String category) {
+        if(json == null)
+            loadStructurePool(mgr);
 
-    void load() {
-        if(!pool.isEmpty())
-            clearPool();
-
+        boolean[][] structure = null;
         try {
-            InputStream is = mgr.open("mapPool.cfg");
-            Scanner scanner = new Scanner(is);
-            int poolCount = 0;
-            int y = 0;
-            pool.add(new ArrayList<>());
-
-            while (scanner.hasNext()) {
-                String l = scanner.nextLine();
-                l = l.trim();
-
-                if (l.length() == 0)
-                    continue;
-                if (l.charAt(0) == '#') {
-                    poolCount++;
-                    y = 0;
-                    pool.add(new ArrayList<>());
-                    continue;
+            JSONObject obj = new JSONObject(json);
+            JSONObject tp = obj.getJSONObject(type);
+            JSONArray cat = tp.getJSONArray(category);
+            for(int i=0; i < cat.length(); i++) {
+                JSONObject struct = cat.getJSONObject(i);
+                if (struct.getInt("id") == id) {
+                    JSONArray line = struct.getJSONArray("shape");
+                    for (int y = 0; y < line.length(); y++) {
+                        JSONArray row = line.getJSONArray(y);
+                        for (int x = 0; x < row.length(); x++) {
+                            if (structure == null)
+                                structure = new boolean[line.length()][row.length()];
+                            structure[y][x] = row.getBoolean(x);
+                        }
+                    }
                 }
-
-                pool.get(poolCount).add(new ArrayList<>());
-                char[] line = l.toCharArray();
-                for (char c : line) {
-                    if (c == 'O' || c == 'o')
-                        pool.get(poolCount).get(y).add(true);
-                    else
-                        pool.get(poolCount).get(y).add(false);
-                }
-                y++;
             }
 
-            is.close();
-            scanner.close();
-        }
-        catch (Exception e) {
+            if(structure == null || structure[0] == null)
+                throw new NullPointerException();
+
+        } catch (JSONException e) {
             e.printStackTrace();
-            // in case of IO Exception - fill mapPool with standard map
-            pool.add(new ArrayList<>());
-            for(int y=0; y < standardStructure.length; y++) {
-                pool.get(0).add(new ArrayList<>());
-                for(int x=0; x < standardStructure[y].length; x++) {
-                    pool.get(0).get(y).add(standardStructure[y][x]);
-                }
-            }
-        }
-    }
-
-    boolean[][] getStructureByID(int id) {
-        if(pool.size() == 0 || id >= pool.size())
             return standardStructure;
-
-        int ySize = pool.get(id).size();
-        int xSize = pool.get(id).get(0).size();
-        boolean[][] map = new boolean[ySize][xSize];
-
-        for(int y=0; y < ySize; y++) {
-            for(int x=0; (x < xSize) && (x < pool.get(id).get(y).size()); x++) {
-                map[y][x] = pool.get(id).get(y).get(x);
-            }
+        } catch(NullPointerException ex) {
+            Log.e("Structure", "loading failed - invalid ID");
+            return standardStructure;
         }
-        return map;
+
+        return structure;
     }
 
-    void clearPool() {
-        pool = new ArrayList<>();
+    /**
+     * Loads the actual JSON file.
+     *
+     * @param mgr AssetManager needed to read JSON file.
+     */
+    private static void loadStructurePool(AssetManager mgr) {
+        try {
+            InputStream is = mgr.open("structures.json");
+            byte[] buffer = new byte[is.available()];
+            is.read(buffer);
+            is.close();
+
+            json = new String(buffer, "UTF-8");
+        }
+        catch(IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

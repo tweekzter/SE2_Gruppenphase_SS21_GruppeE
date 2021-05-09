@@ -1,13 +1,6 @@
 package com.example.se2_gruppenphase_ss21.logic.tetris;
 
-import android.content.Context;
-
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.Scanner;
-
-import static org.junit.Assert.*;
 
 public class MapAndTileTests {
     @Test

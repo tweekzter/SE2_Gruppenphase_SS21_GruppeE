@@ -1,11 +1,13 @@
 package com.example.se2_gruppenphase_ss21.logic.tetris;
 
+import android.content.res.AssetManager;
+
 import java.util.ArrayList;
 
 /**
  * Representation of a TILE.
  *
- * !! PLEASE do not make fundamental changes to the logic, without coordinating with the others !!
+ * !! PLEASE do not make fundamental changes to the logic, without coordinating with the team !!
  *
  * The shape of a TILE is defined by Position data.
  * These positions are relative to a self defined reference point (0,0).
@@ -265,6 +267,60 @@ public class Tile {
      */
     public boolean isAttached() {
         return isAttached;
+    }
+
+    /**
+     * Sets up the TILE with a tile from the pool.
+     * The pool is represented by a JSON file containing all the structures.
+     *
+     * @param mgr AssetManager needed to read JSON file
+     * @param id ID of tile in pool
+     * @param category tile category (default: "standard")
+     */
+    public void setTileByID(AssetManager mgr, int id, String category) {
+        if(!shape.isEmpty())
+            shape = new ArrayList<>();
+
+        boolean[][] shape = StructureLoader.getStructure(mgr, id, "tile", category);
+        int midY = shape.length / 2;
+        int midX = shape[0].length / 2;
+        for(int y=0; y < shape.length; y++) {
+            for(int x=0; x < shape[y].length; x++) {
+                if(shape[y][x])
+                    addPoint(x-midX,y-midY);
+            }
+        }
+    }
+
+    /**
+     * Centers a tile symmetrically around 0,0 so that it can be placed centric
+     * around the insertion point on a MAP.
+     */
+    public void centerTile() {
+        if(shape.isEmpty())
+            return;
+
+        int maxX = shape.get(0).x;
+        int minX = maxX;
+        int maxY = shape.get(0).y;
+        int minY = maxY;
+        for(Position val : shape) {
+            maxX = Math.max(maxX, val.x);
+            minX = Math.min(minX, val.x);
+            maxY = Math.max(maxY, val.y);
+            minY = Math.min(minY, val.y);
+        }
+
+        int diffX = (maxX < 0) ? (minX * -1) - (maxX * -1) : maxX - minX;
+        int diffY = (maxY < 0) ? (minY * -1) - (maxY * -1) : maxY - minY;
+
+        int offsetX = (maxX - diffX / 2) * -1;
+        int offsetY = (maxY - diffY / 2) * -1;
+
+        for(Position val : shape) {
+            val.x = val.x + offsetX;
+            val.y = val.y + offsetY;
+        }
     }
 }
 
