@@ -1,6 +1,7 @@
 package com.example.se2_gruppenphase_ss21.networking.server.logic;
 
 import com.example.se2_gruppenphase_ss21.networking.SocketWrapper;
+import com.example.se2_gruppenphase_ss21.networking.Util;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -127,10 +128,13 @@ public class GameRoom {
                     break;
                 }
 
+                for(GameClientHandler handler : handlers)
+                    handler.resetForNextRound();
+
                 GameClientHandler diceRoller = handlers.get(round % handlers.size());
                 broadcastMessage("roll_request " + diceRoller.getNickname());
-                diceRoller.resetRoll();
                 int rollResult;
+                //Wait for user to roll or disconnect
                 while (true) {
                     if(!handlers.contains(diceRoller)) {
                         rollResult = (int) (Math.random() * 6 + 1);
@@ -139,16 +143,13 @@ public class GameRoom {
                         rollResult = diceRoller.getRollResult();
                     }
 
-                    try {
-                        Thread.sleep(200);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                        Thread.currentThread().interrupt();
-                    }
+                    Util.sleep(0, 200);
                 }
 
                 broadcastMessage("roll_result " + rollResult);
-
+                Util.sleep(5, 0);
+                broadcastMessage("begin_puzzle " + (System.currentTimeMillis() + (60 * 1000)));
+                Util.sleep(60, 0);
 
                 round++;
             }

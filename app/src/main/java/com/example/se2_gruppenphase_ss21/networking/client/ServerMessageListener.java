@@ -14,7 +14,7 @@ public interface ServerMessageListener {
     public void readyCount(int current, int max);
 
     /**
-     * Called when the server starts the game.
+     * Called once when the server starts the game.
      */
     public void onGameStart();
 
@@ -31,7 +31,7 @@ public interface ServerMessageListener {
     public void receiveUserList(String[] nicknames);
 
     /**
-     * Called when a specified user is requested to roll the dice
+     * Called when a round begins specified user is requested to roll the dice
      * @param nick
      */
     public void rollRequest(String nick);

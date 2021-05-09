@@ -135,12 +135,16 @@ public class GameClient {
         socket.sendString("roll " + result);
     }
 
-    public void sendPuzzleOver(int millisRemaining, boolean didFinish) throws IOException {
+    /**
+     * Ubongo!
+     * @throws IOException
+     */
+    public void puzzleDone() throws IOException {
         if (!isConnected) {
             throw new RuntimeException("Client is not connected");
         }
 
-        socket.sendString("finish_puzzle " + (didFinish ? millisRemaining : -1));
+        socket.sendString("finish_puzzle");
     }
 
     /**

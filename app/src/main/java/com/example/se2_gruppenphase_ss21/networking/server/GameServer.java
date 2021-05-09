@@ -2,6 +2,7 @@ package com.example.se2_gruppenphase_ss21.networking.server;
 
 import android.annotation.SuppressLint;
 import com.example.se2_gruppenphase_ss21.networking.SocketWrapper;
+import com.example.se2_gruppenphase_ss21.networking.Util;
 import com.example.se2_gruppenphase_ss21.networking.server.logic.GameLogicException;
 import com.example.se2_gruppenphase_ss21.networking.server.logic.GameRoom;
 
@@ -131,12 +132,7 @@ public class GameServer extends Thread {
                     e.printStackTrace();
                 }
 
-                try {
-                    sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                    Thread.currentThread().interrupt();
-                }
+                Util.sleep(2, 0);
             }
         }).start();
     }
