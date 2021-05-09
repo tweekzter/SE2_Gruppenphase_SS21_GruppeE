@@ -113,7 +113,7 @@ public class JoinRoomFragment extends Fragment {
 
 //        LinearLayout layout = getView().findViewById(R.id.rootlayout);
 
-        LinearLayout layout = view.findViewById(R.id.rootlayout);
+        LinearLayout layout = view.findViewById(R.id.layoutJoinRoom);
 
 //        Button newbtn;
 //
