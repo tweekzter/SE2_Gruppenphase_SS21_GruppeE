@@ -35,6 +35,8 @@ public class GameRoom {
             throw new GameLogicException("Room already full");
         } else if (hasNickname(nickname)) {
             throw new GameLogicException("Nickname taken");
+        } else if (nickname.contains(",") || nickname.contains(":") || nickname.contains("&") || nickname.contains(";")) {
+            throw new GameLogicException("Nickname contains forbidden characters \",:&;\"");
         } else {
             GameClientHandler handler = new GameClientHandler(client, nickname);
             handler.startGameLoop(this);
@@ -148,8 +150,9 @@ public class GameRoom {
 
                 broadcastMessage("roll_result " + rollResult);
                 Util.sleep(5, 0);
-                broadcastMessage("begin_puzzle " + (System.currentTimeMillis() + (60 * 1000)));
-                Util.sleep(60, 0);
+                long finishUntil = System.currentTimeMillis() + (60 * 1000);
+                broadcastMessage("begin_puzzle " + finishUntil);
+                Util.sleep(0, finishUntil - System.currentTimeMillis());
 
                 round++;
             }
