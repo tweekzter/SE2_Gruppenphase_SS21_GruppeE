@@ -21,8 +21,7 @@ public class MapAndTileTest {
 
     @Test
     public void testLoadTile() {
-        Tile tile = new Tile();
-        tile.setTileByID(appContext.getAssets(), -1, "standard");
+        Tile tile = new Tile(appContext.getAssets(), -1, "standard");
         Position[] shape = tile.getShape();
 
         assertEquals(-1, shape[0].x); assertEquals(-2, shape[0].y);
