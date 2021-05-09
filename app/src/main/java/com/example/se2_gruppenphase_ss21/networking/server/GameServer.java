@@ -1,6 +1,5 @@
 package com.example.se2_gruppenphase_ss21.networking.server;
 
-import android.annotation.SuppressLint;
 import com.example.se2_gruppenphase_ss21.networking.SocketWrapper;
 import com.example.se2_gruppenphase_ss21.networking.Util;
 import com.example.se2_gruppenphase_ss21.networking.server.logic.GameLogicException;
@@ -115,7 +114,6 @@ public class GameServer extends Thread {
                     DatagramSocket datagramSocket = new DatagramSocket();
 
                     for(String roomName : rooms.keySet()) {
-                        @SuppressLint("DefaultLocale")
                         String msg = String.format("%d\n%s\n%d\n%d",
                                 server.getLocalPort(),
                                 roomName,
