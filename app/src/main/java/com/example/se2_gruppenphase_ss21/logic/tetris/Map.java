@@ -27,27 +27,26 @@ import java.util.ArrayList;
  */
 public class Map {
     private Box[][] map;
-    private int x, y;
     private ArrayList<Tile> tiles = new ArrayList<>();
 
     /**
-     * Default constructor, creating a 6x5 map (like the modeled UBONGO version)
+     * Default constructor, creating an empty map
      */
     public Map() {
-        map = new Box[6][5];
-        this.x = 5;
-        this.y = 6;
+        super();
     }
 
     /**
-     * Creating a custom x by y map.
-     * @param x horizontal length
-     * @param y vertical length
+     * Creates a MAP with the given shape.
+     * @param field shape of the map.
      */
-    public Map(int x, int y) {
-        this.x = x;
-        this.y = y;
-        map = new Box[y][x];
+    public Map(boolean[][] field) {
+        setUpMap(field);
+    }
+
+    public Map(AssetManager mgr, int id, String category) {
+        boolean[][] field = StructureLoader.getStructure(mgr, id, "map", category);
+        setUpMap(field);
     }
 
     /**
@@ -75,8 +74,12 @@ public class Map {
      * @param field the setup array - true for a valid field, false for invalid
      */
     public void setUpMap(boolean[][] field) {
-        if(field == null || field.length != y || field[0].length != x)
-            return;
+        if(field == null)
+            field = StructureLoader.getStandardStructure();
+
+        int y = field.length;
+        int x = field[0].length;
+        map = new Box[y][x];
 
         for(int i=0; i < field.length; i++) {
             for(int j=0; j < field[i].length; j++) {

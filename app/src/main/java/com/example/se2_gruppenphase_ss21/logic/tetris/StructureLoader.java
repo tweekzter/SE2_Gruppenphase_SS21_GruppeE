@@ -101,4 +101,8 @@ class StructureLoader {
             ex.printStackTrace();
         }
     }
+
+    static boolean[][] getStandardStructure() {
+        return standardStructure;
+    }
 }

@@ -3,6 +3,10 @@ package com.example.se2_gruppenphase_ss21.logic.tetris;
 import org.junit.Test;
 
 public class MapAndTileTests {
+
+    /**
+     * visual test
+     */
     @Test
     public void testMapAndTile() {
         Map map = new Map();

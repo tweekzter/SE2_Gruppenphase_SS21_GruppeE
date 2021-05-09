@@ -36,7 +36,7 @@ public class MapAndTileTest {
 
     @Test
     public void testGetStructure() {
-        boolean[][] result = StructureLoader.getStructure(appContext.getAssets(), 1, "map", "5x6");
+        boolean[][] result = StructureLoader.getStructure(appContext.getAssets(), -1, "map", "5x6");
 
         boolean[][] expected = {
                 { false, false, false, false },
