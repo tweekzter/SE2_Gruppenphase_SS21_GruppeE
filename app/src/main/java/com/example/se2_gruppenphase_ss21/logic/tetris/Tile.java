@@ -40,12 +40,28 @@ public class Tile {
 
 
     /**
+     * Default constructor. Creating an empty TILE.
+     */
+    public Tile() {
+        super();
+    }
+    /**
      * Initializes a TILE and creates its shape with the given parameters.
      * @param pos Shape coordinates
      */
     public Tile(Position... pos) {
         for(Position p : pos)
             shape.add(p);
+    }
+
+    /**
+     * Initializes a TILE with the shape of the tile with given ID.
+     * @param mgr AssetManager to load pool file
+     * @param id ID of TILE in pool
+     * @param category category (for example "standard")
+     */
+    public Tile(AssetManager mgr, int id, String category) {
+        setTileByID(mgr, id, category);
     }
 
 
