@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Loader class for JSON data structure file.
@@ -34,6 +35,13 @@ class StructureLoader {
     };
 
     /**
+     * Utility class - no instantiation intended.
+     */
+    private StructureLoader() {
+        super();
+    }
+
+    /**
      * Searches and returns the structure by ID, type and category in form of a two dimensional
      * boolean array.
      *
@@ -46,22 +54,24 @@ class StructureLoader {
      * @return
      */
     static boolean[][] getStructure(AssetManager mgr, int id, String type, String category) {
-        if(json == null)
-            loadStructurePool(mgr);
 
         boolean[][] structure = null;
+
         try {
+            if(json == null)
+                loadStructurePool(mgr);
+
             JSONObject obj = new JSONObject(json);
             JSONObject tp = obj.getJSONObject(type);
             JSONArray cat = tp.getJSONArray(category);
             for(int i=0; i < cat.length(); i++) {
                 JSONObject struct = cat.getJSONObject(i);
-                if (struct.getInt("id") == id) {
+                if(struct.getInt("id") == id) {
                     JSONArray line = struct.getJSONArray("shape");
-                    for (int y = 0; y < line.length(); y++) {
+                    for(int y = 0; y < line.length(); y++) {
                         JSONArray row = line.getJSONArray(y);
-                        for (int x = 0; x < row.length(); x++) {
-                            if (structure == null)
+                        for(int x = 0; x < row.length(); x++) {
+                            if(structure == null)
                                 structure = new boolean[line.length()][row.length()];
                             structure[y][x] = row.getBoolean(x);
                         }
@@ -70,13 +80,10 @@ class StructureLoader {
             }
 
             if(structure == null || structure[0] == null)
-                throw new NullPointerException();
+                throw new NullPointerException("loading structure failed");
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return standardStructure;
-        } catch(NullPointerException ex) {
-            Log.e("Structure", "loading failed - invalid ID");
+        } catch(JSONException | NullPointerException | IOException ex) {
+            Log.e("pool", ex.toString());
             return standardStructure;
         }
 
@@ -88,18 +95,16 @@ class StructureLoader {
      *
      * @param mgr AssetManager needed to read JSON file.
      */
-    private static void loadStructurePool(AssetManager mgr) {
-        try {
-            InputStream is = mgr.open("structures.json");
-            byte[] buffer = new byte[is.available()];
-            is.read(buffer);
-            is.close();
+    private static void loadStructurePool(AssetManager mgr) throws IOException {
+        InputStream is = mgr.open("structures.json");
+        int size = is.available();
+        byte[] buffer = new byte[size];
+        int read = is.read(buffer);
+        if(size != read)
+            throw new IOException("failure at reading correct file size");
+        is.close();
 
-            json = new String(buffer, "UTF-8");
-        }
-        catch(IOException ex) {
-            ex.printStackTrace();
-        }
+        json = new String(buffer, StandardCharsets.UTF_8);
     }
 
     static boolean[][] getStandardStructure() {

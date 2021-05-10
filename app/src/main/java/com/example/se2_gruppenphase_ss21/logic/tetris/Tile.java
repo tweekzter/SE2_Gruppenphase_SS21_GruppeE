@@ -152,6 +152,7 @@ public class Tile {
             map.clearBox(x, y);
         }
 
+        this.map.removeTile(this);
         this.map = null;
         isAttached = false;
     }

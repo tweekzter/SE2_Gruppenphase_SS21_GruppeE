@@ -8,8 +8,8 @@ package com.example.se2_gruppenphase_ss21.logic.tetris;
  * @author Manuel Simon #00326348
  */
 public class Position {
-    public int x;
-    public int y;
+    protected int x;
+    protected int y;
 
     public Position(int x, int y) {
         this.x = x;

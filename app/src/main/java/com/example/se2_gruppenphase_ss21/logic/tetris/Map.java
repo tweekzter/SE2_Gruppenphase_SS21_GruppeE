@@ -26,7 +26,7 @@ import java.util.ArrayList;
  * @author Manuel Simon #00326348
  */
 public class Map {
-    private Box[][] map;
+    private Box[][] boxMap;
     private ArrayList<Tile> tiles = new ArrayList<>();
 
     /**
@@ -44,6 +44,12 @@ public class Map {
         setUpMap(field);
     }
 
+    /**
+     * Creates a MAP with the shape of a map of the pool.
+     * @param mgr AssetManager to read pool file.
+     * @param id ID of map to be loaded.
+     * @param category category of map (dimension, for example: "5x6")
+     */
     public Map(AssetManager mgr, int id, String category) {
         boolean[][] field = StructureLoader.getStructure(mgr, id, "map", category);
         setUpMap(field);
@@ -79,13 +85,13 @@ public class Map {
 
         int y = field.length;
         int x = field[0].length;
-        map = new Box[y][x];
+        boxMap = new Box[y][x];
 
         for(int i=0; i < field.length; i++) {
             for(int j=0; j < field[i].length; j++) {
                 Box box = new Box(i,j);
                 box.setField(field[i][j]);
-                map[i][j] = box;
+                boxMap[i][j] = box;
             }
         }
     }
@@ -97,7 +103,7 @@ public class Map {
      * @param y y-coordinate of the box
      */
     void coverBox(Tile tile, int x, int y) {
-        map[y][x].setTile(tile);
+        boxMap[y][x].setTile(tile);
     }
 
     /**
@@ -106,7 +112,7 @@ public class Map {
      * @param y y-coordinate of the box
      */
     void clearBox(int x, int y) {
-        map[y][x].setTile(null);
+        boxMap[y][x].setTile(null);
     }
 
     /**
@@ -117,10 +123,10 @@ public class Map {
      */
     boolean checkAvailable(int x, int y) {
         // coordinate outside of map
-        if(y >= map.length || x >= map[0].length || y < 0 || x < 0)
+        if(y >= boxMap.length || x >= boxMap[0].length || y < 0 || x < 0)
             return false;
 
-        Box box = map[y][x];
+        Box box = boxMap[y][x];
         return box.isAvailable() && box.isField();
     }
 
@@ -133,11 +139,20 @@ public class Map {
     }
 
     /**
+     * Removes the given TILE from the list of attached TILES.
+     * @param tile the TILE to be removed
+     * @return true if found and removed, otherwise false
+     */
+    boolean removeTile(Tile tile) {
+        return tiles.remove(tile);
+    }
+
+    /**
      * Checks if riddle is solved. Therefore every play field box needs to be covered by a tile.
      * @return true if riddle is solved, otherwise false.
      */
     public boolean checkSolved() {
-        for(Box[] line : map) {
+        for(Box[] line : boxMap) {
             for(Box box : line) {
                 if(box.isField() && box.isAvailable())
                     return false;
@@ -153,7 +168,7 @@ public class Map {
      * @return The Box at given coordinates.
      */
     public Box getBox(int x, int y) {
-        return map[y][x];
+        return boxMap[y][x];
     }
 
     /**
@@ -168,8 +183,8 @@ public class Map {
      * @param category map dimensions (for example "5x6")
      */
     public void setMapByID(AssetManager mgr, int id, String category) {
-        boolean[][] map = StructureLoader.getStructure(mgr, id, "map", category);
-        setUpMap(map);
+        boolean[][] field = StructureLoader.getStructure(mgr, id, "map", category);
+        setUpMap(field);
     }
 }
 
