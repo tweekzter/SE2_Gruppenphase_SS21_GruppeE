@@ -44,7 +44,7 @@
       android:layout_marginTop="520dp"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:srcCompat="@drawable/brown" />
+       />
 
   <ImageView
       android:id="@+id/tile2"
@@ -55,7 +55,7 @@
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
       app:layout_constraintVertical_bias="0.819"
-      app:srcCompat="@drawable/blue" />
+       />
 
   <ImageView
       android:id="@+id/tile3"
@@ -65,5 +65,5 @@
       android:layout_marginTop="480dp"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:srcCompat="@drawable/brownishyellow" />
+     />
 </androidx.constraintlayout.widget.ConstraintLayout>
