@@ -7,18 +7,19 @@
     android:background="@drawable/game_background"
     tools:context=".Dice">
 
+
   <ImageView
       android:id="@+id/diceresult"
       android:layout_width="209dp"
       android:layout_height="143dp"
       android:layout_marginStart="16dp"
       android:layout_marginEnd="16dp"
-      android:layout_marginBottom="420dp"
       android:scaleType="centerInside"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent" />
-
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.311" />
 
   <TextView
       android:id="@+id/Ergebnis"
@@ -34,4 +35,35 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
+
+  <ImageView
+      android:id="@+id/tile1"
+      android:layout_width="61dp"
+      android:layout_height="128dp"
+      android:layout_marginStart="52dp"
+      android:layout_marginTop="520dp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:srcCompat="@drawable/brown" />
+
+  <ImageView
+      android:id="@+id/tile2"
+      android:layout_width="104dp"
+      android:layout_height="182dp"
+      android:layout_marginStart="144dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.819"
+      app:srcCompat="@drawable/blue" />
+
+  <ImageView
+      android:id="@+id/tile3"
+      android:layout_width="96dp"
+      android:layout_height="221dp"
+      android:layout_marginStart="268dp"
+      android:layout_marginTop="480dp"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:srcCompat="@drawable/brownishyellow" />
 </androidx.constraintlayout.widget.ConstraintLayout>
