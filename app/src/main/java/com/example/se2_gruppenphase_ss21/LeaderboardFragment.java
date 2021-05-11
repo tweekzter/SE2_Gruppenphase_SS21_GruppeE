@@ -5,8 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +27,10 @@ public class LeaderboardFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+
+    private PlayerArrayAdapter playerArrayAdapter;
+    private ListView listView;
 
     public LeaderboardFragment() {
         // Required empty public constructor
@@ -60,7 +68,61 @@ public class LeaderboardFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
+        Button newGameButton = view.findViewById(R.id.buttonQuitGame);
+        newGameButton.setOnClickListener((View v) ->{
+            getParentFragmentManager().beginTransaction().add(R.id.container, new MenuFragment()).commit();
+        });
+
+        listView = (ListView) view.findViewById(R.id.listView);
+        playerArrayAdapter = new PlayerArrayAdapter(view.getContext(), R.layout.listview_row_layout);
+        listView.setAdapter(playerArrayAdapter);
+        List<String[]> playerList = readData();
+        for(String[] playerData:playerList){
+            String position = playerData[0];
+            String playername = playerData[1];
+            String points = playerData[2];
+
+            Player player = new Player(position, playername, points);
+
+            playerArrayAdapter.add(player);
+        }
 
         return view;
+    }
+    //TODO: Edit to use for real players
+    //List of player to test the design of the ListView
+    private List<String[]> readData() {
+        List<String[]> resultList = new ArrayList<String[]>();
+        String[] player1 = new String[3];
+        player1[0] = "1";
+        player1[1] = "Testperson1";
+        player1[2] = "4 Punkte";
+        resultList.add(player1);
+
+        String[] player2 = new String[3];
+        player2[0] = "2";
+        player2[1] = "Testperson2";
+        player2[2] = "3 Punkte";
+        resultList.add(player2);
+
+        String[] player3 = new String[3];
+        player3[0] = "3";
+        player3[1] = "Testperson3";
+        player3[2] = "2 Punkte";
+        resultList.add(player3);
+
+        String[] player4 = new String[3];
+        player4[0] = "4";
+        player4[1] = "Testperson4";
+        player4[2] = "1 Punkte";
+        resultList.add(player4);
+
+        String[] player5 = new String[3];
+        player5[0] = "5";
+        player5[1] = "Testperson5";
+        player5[2] = "0 Punkte";
+        resultList.add(player5);
+
+        return resultList;
     }
 }
