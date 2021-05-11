@@ -70,7 +70,7 @@ public class LeaderboardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
         Button newGameButton = view.findViewById(R.id.buttonQuitGame);
         newGameButton.setOnClickListener((View v) ->{
-            getParentFragmentManager().beginTransaction().add(R.id.container, new MenuFragment()).commit();
+            getParentFragmentManager().beginTransaction().replace(R.id.container, new MenuFragment()).addToBackStack("tag").commit();
         });
 
         listView = (ListView) view.findViewById(R.id.listView);
@@ -89,6 +89,8 @@ public class LeaderboardFragment extends Fragment {
 
         return view;
     }
+
+
     //TODO: Edit to use for real players
     //List of player to test the design of the ListView
     private List<String[]> readData() {

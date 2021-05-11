@@ -21,7 +21,5 @@ public class LeaderboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         getSupportFragmentManager().beginTransaction().add(R.id.container, new LeaderboardFragment()).commit();
-
-
     }
 }
