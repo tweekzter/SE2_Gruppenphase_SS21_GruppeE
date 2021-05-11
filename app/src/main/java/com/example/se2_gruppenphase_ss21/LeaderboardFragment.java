@@ -68,8 +68,8 @@ public class LeaderboardFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
-        Button newGameButton = view.findViewById(R.id.buttonQuitGame);
-        newGameButton.setOnClickListener((View v) ->{
+        Button quitGameButton = view.findViewById(R.id.buttonQuitGame);
+        quitGameButton.setOnClickListener((View v) ->{
             getParentFragmentManager().beginTransaction().replace(R.id.container, new MenuFragment()).addToBackStack("tag").commit();
         });
 

@@ -15,6 +15,7 @@
         android:paddingTop="10dp"
         android:paddingRight="10dp"
         android:text="1"
+        android:textColor="#FFFFFF"
         android:textSize="18sp" />
 
     <TextView
@@ -25,6 +26,7 @@
         android:layout_toRightOf="@+id/position"
         android:paddingTop="10dp"
         android:text="Testperson1"
+        android:textColor="#FFFFFF"
         android:textSize="18sp" />
 
     <TextView
@@ -36,5 +38,6 @@
         android:paddingTop="10dp"
         android:paddingRight="10dp"
         android:text="4 Punkte"
+        android:textColor="#FFFFFF"
         android:textSize="18sp" />
 </RelativeLayout>
