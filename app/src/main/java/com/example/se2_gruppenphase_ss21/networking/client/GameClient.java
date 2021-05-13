@@ -117,6 +117,8 @@ public class GameClient {
                                 String[] bar = p.split(":");
                                 placements.put(bar[0], Integer.parseInt(bar[1]));
                             }
+                            listener.placementsReceived(placements);
+                            break;
                         default:
                             listener.unknownMessage(fromServer);
                     }
