@@ -7,6 +7,8 @@ import com.example.se2_gruppenphase_ss21.networking.server.logic.GameLogicExcept
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameClient {
 
@@ -104,6 +106,17 @@ public class GameClient {
                             int result = Integer.parseInt(params[1]);
                             listener.rollResult(result);
                             break;
+                        case "begin_puzzle":
+                            long finishUntil = Long.parseLong(params[1]);
+                            listener.beginPuzzle(finishUntil);
+                            break;
+                        case "placements":
+                            String[] foo = params[1].split(";");
+                            Map<String, Integer> placements = new HashMap<>();
+                            for(String p : foo) {
+                                String[] bar = p.split(":");
+                                placements.put(bar[0], Integer.parseInt(bar[1]));
+                            }
                         default:
                             listener.unknownMessage(fromServer);
                     }

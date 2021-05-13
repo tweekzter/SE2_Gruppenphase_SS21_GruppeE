@@ -5,6 +5,9 @@ import com.example.se2_gruppenphase_ss21.networking.Util;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Handler;
 
 public class GameRoom {
     private static final int DEFAULT_MAX_USERS = 4;
@@ -154,10 +157,64 @@ public class GameRoom {
                 broadcastMessage("begin_puzzle " + finishUntil);
                 Util.sleep(0, finishUntil - System.currentTimeMillis());
 
+                Map<String, Integer> placements = calculatePlacements();
+                StringBuilder sb = new StringBuilder("placements ");
+                for(String nick : placements.keySet()) {
+                    sb.append(nick).append(":").append(placements.get(nick)).append(";");
+                }
+                broadcastMessage(sb.substring(0, sb.length() - 1));
+
+                Util.sleep(10, 0);
+
                 round++;
             }
 
             //Round end
         }).start();
+    }
+
+    private Map<String, Integer> calculatePlacements() {
+        Map<String, Long> tempMap = new HashMap<>();
+        Map<String, Integer> placementMap = new HashMap<>();
+
+        for(GameClientHandler handler : handlers) {
+            if(handler.getPuzzleFinishedAt() != -1) {
+                tempMap.put(handler.getNickname(), handler.getPuzzleFinishedAt());
+            }
+        }
+
+        for(GameClientHandler handler : handlers) {
+            if(handler.getPuzzleFinishedAt() == -1) {
+                placementMap.put(handler.getNickname(), tempMap.keySet().size() + 1);
+            }
+        }
+
+        int c = 1;
+        while (tempMap.keySet().size() != 0) {
+            String smallest = keyFromPairWithSmallestVal(tempMap);
+            tempMap.remove(smallest);
+            placementMap.put(smallest, c);
+            c++;
+        }
+
+        return placementMap;
+    }
+
+    private String keyFromPairWithSmallestVal(Map<String, Long> map) {
+        long smallest = Integer.MAX_VALUE;
+        String val = "";
+
+        if(map.keySet().size() == 0) {
+            throw new RuntimeException("map is empty");
+        }
+
+        for(String key : map.keySet()) {
+            if(map.get(key) < smallest) {
+                smallest = map.get(key);
+                val = key;
+            }
+        }
+
+        return val;
     }
 }
