@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Handler;
 
 public class GameRoom {
     private static final int DEFAULT_MAX_USERS = 4;
@@ -190,7 +189,7 @@ public class GameRoom {
         }
 
         int c = 1;
-        while (tempMap.keySet().size() != 0) {
+        while (!tempMap.keySet().isEmpty()) {
             String smallest = keyFromPairWithSmallestVal(tempMap);
             tempMap.remove(smallest);
             placementMap.put(smallest, c);
@@ -204,7 +203,7 @@ public class GameRoom {
         long smallest = Integer.MAX_VALUE;
         String val = "";
 
-        if(map.keySet().size() == 0) {
+        if(map.keySet().isEmpty()) {
             throw new RuntimeException("map is empty");
         }
 

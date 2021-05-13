@@ -1,11 +1,5 @@
 package com.example.se2_gruppenphase_ss21.networking.server;
 
-import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
-import com.example.se2_gruppenphase_ss21.networking.MulticastReceiver;
-import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
-import com.example.se2_gruppenphase_ss21.networking.client.ServerMessageListener;
-import com.example.se2_gruppenphase_ss21.networking.server.logic.GameLogicException;
-
 import java.io.IOException;
 
 public class ExternalServer {
