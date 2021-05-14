@@ -3,27 +3,22 @@ package com.example.se2_gruppenphase_ss21;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.drawable.AnimationDrawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.io.InputStream;
+import java.util.ArrayList;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 public class Dice extends AppCompatActivity {
@@ -49,6 +44,7 @@ public class Dice extends AppCompatActivity {
         imagesAnimationtiles = (AnimationDrawable) tile1.getBackground();
         imagesAnimationtiles2 = (AnimationDrawable) tile2.getBackground();
         imagesAnimationtiles3 = (AnimationDrawable) tile3.getBackground();
+
         imagesAnimation.start();
        imagesAnimationtiles.start();
         imagesAnimationtiles2.start();
@@ -126,61 +122,112 @@ public class Dice extends AppCompatActivity {
         ImageView tileone= findViewById(R.id.tile1);
         ImageView tiletwo = findViewById(R.id.tile2);
         ImageView tilethree = findViewById(R.id.tile3);
+        XmlPullParserFactory parserFactory;
+        try {
+            parserFactory = XmlPullParserFactory.newInstance();
+            XmlPullParser parser = parserFactory.newPullParser();
+            InputStream is = getAssets().open("solutions.xml");
+            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            parser.setInput(is, null);
+
+            String[] result = processParsing(parser, value);
+            System.out.println(result[0]);
+            System.out.println(result[1]);
+            System.out.println(result[2]);
+            System.out.println(value);
+            int test1 = getpicturetotilenumber(result[0],tileone);
+            int test2 = getpicturetotilenumber(result[1],tiletwo);
+            int test3 = getpicturetotilenumber(result[2],tilethree);
+            tileone.setBackgroundResource(test1);
+            tiletwo.setBackgroundResource(test2);
+            tilethree.setBackgroundResource(test3);
+        } catch (XmlPullParserException e) {
 
 
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = dbf.newDocumentBuilder();
-        Document document = db.parse(new File("solutions.xml"));
-        document.getDocumentElement().normalize();
-        System.out.println(document.getDocumentElement().getNodeName());
-        NodeList nodeList = document.getElementsByTagName("Lion");
-
-
-        NodeList node = nodeList.item(cardnumber).getChildNodes();
-
-        for(int j = 0; j<node.getLength(); j++){
-            Node childNode = node.item(j);
-            if("Tile".equals(childNode.getNodeName())){
-
-                getpicturetotilenumber(childNode.getAttributes().getNamedItem("first").getNodeValue(), tileone);
-                getpicturetotilenumber(childNode.getAttributes().getNamedItem("second").getNodeValue(), tiletwo);
-                getpicturetotilenumber(childNode.getAttributes().getNamedItem("third").getNodeValue(),tilethree);
-
-            }
+        } catch (IOException e) {
 
         }
 
-
     }
 
-    private void getpicturetotilenumber (String tilenumber, ImageView tilepicture) {
+    private int getpicturetotilenumber (String tilenumber, ImageView tilepicture) {
+
         switch (tilenumber) {
             case "1":
-                tilepicture.setBackgroundResource(R.drawable.red);
+                return R.drawable.red;
             case "2":
-                tilepicture.setBackgroundResource(R.drawable.yellow);
+               return R.drawable.yellow;
             case "3":
-                tilepicture.setBackgroundResource(R.drawable.brown);
+                return R.drawable.brown;
             case "4":
-                tilepicture.setBackgroundResource(R.drawable.darkgreen);
+               return R.drawable.darkgreen;
             case "5":
-                tilepicture.setBackgroundResource(R.drawable.greenl);
+               return R.drawable.greenl;
             case "6":
-                tilepicture.setBackgroundResource(R.drawable.redl);
+                return R.drawable.redl;
             case "7":
-                tilepicture.setBackgroundResource(R.drawable.turquoise);
+                return R.drawable.turquoise;
             case "8":
-                tilepicture.setBackgroundResource(R.drawable.brownishyellow);
+                return R.drawable.brownishyellow;
             case "9":
-                tilepicture.setBackgroundResource(R.drawable.darkred);
+               return R.drawable.darkred;
             case "10":
-                tilepicture.setBackgroundResource(R.drawable.black);
+              return R.drawable.black;
             case "11":
-                tilepicture.setBackgroundResource(R.drawable.blue);
+                return R.drawable.blue;
             case "12":
-                tilepicture.setBackgroundResource(R.drawable.darkblue);
+                return R.drawable.darkblue;
 
         }
 
+        return 0;
     }
-}
+
+    private String[] processParsing(XmlPullParser parser, String dice) throws XmlPullParserException, IOException {
+        ArrayList<String> numbers = new ArrayList<>();
+        int eventType = parser.getEventType();
+        boolean card = false;
+        boolean dicetype = false;
+        String[] tiles = new String[3];
+
+
+        while(eventType != XmlPullParser.END_DOCUMENT){
+
+
+            String eltName = null;
+            switch(eventType){
+                case XmlPullParser.START_TAG:
+                    eltName = parser.getName();
+
+                if("one".equals(eltName)) {
+                    System.out.println(eltName);
+                    card = true;
+                    eventType = parser.next();
+                    eltName = parser.getName();
+                }
+
+                if(dice.equals(eltName)&&card) {
+                    dicetype = true;
+                    eventType = parser.next();
+                    eltName = parser.getName();
+                }
+                if("Tile".equals(eltName)&&dicetype&&card){
+                    tiles[0] = parser.getAttributeValue(0);
+                    tiles[1] = parser.getAttributeValue(1);
+                   tiles[2] = parser.getAttributeValue(2);
+
+
+                                card = false;
+                                dicetype=false;
+                                return tiles;
+                }
+
+
+                break;
+                }
+            eventType = parser.next();
+            }
+        return null;
+    }
+
+    }
