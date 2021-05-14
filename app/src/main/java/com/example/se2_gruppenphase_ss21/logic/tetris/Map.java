@@ -165,10 +165,42 @@ public class Map {
      * Receive reference to the instance of Box at specified coordinates.
      * @param x x-coordinate of Box
      * @param y y-coordinate of Box
-     * @return The Box at given coordinates.
+     * @return The Box at given coordinates or null if no Box available
      */
     public Box getBox(int x, int y) {
+        if(boxMap == null || x >= boxMap.length || y >= boxMap[0].length)
+            return null;
         return boxMap[y][x];
+    }
+
+    /**
+     * Returns the maximum x coordinate
+     * @return maximum of x
+     */
+    public int getXmax() {
+        if(boxMap == null)
+            return 0;
+
+        return boxMap[0].length;
+    }
+
+    /**
+     * Returns the maximum y coordinate
+     * @return maximum of y
+     */
+    public int getYmax() {
+        if(boxMap == null)
+            return 0;
+
+        return boxMap.length;
+    }
+
+    /**
+     * Returns the a two dimensional array of Boxes representing this Maps fields.
+     * @return a two dimensional array of Boxes representing this Maps fields
+     */
+    public Box[][] getBoxMap() {
+        return boxMap;
     }
 
     /**
