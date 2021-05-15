@@ -1,5 +1,6 @@
 package com.example.se2_gruppenphase_ss21;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -69,6 +70,10 @@ public class StartGameFragment extends Fragment {
             String userName = getUsername(view);
             if (userName != null) {
                 //TODO: start local server
+                //this is only a testcase
+
+                opendice();
+                //ende
                 System.out.println(userName +"local!!!!!!!!!!!!!");
             }
         });
@@ -94,5 +99,10 @@ public class StartGameFragment extends Fragment {
         }
 
         return username.getText().toString();
+    }
+
+    public void opendice() {
+        Intent intent = new Intent( getActivity(),Dice.class);
+        startActivity(intent);
     }
 }
