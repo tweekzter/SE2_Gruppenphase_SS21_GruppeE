@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.se2_gruppenphase_ss21.R;
-import com.example.se2_gruppenphase_ss21.networking.MulticastReceiver;
 import com.example.se2_gruppenphase_ss21.networking.server.GameServer;
 
 import java.io.IOException;
@@ -65,6 +64,8 @@ public class CreateRoomFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        // get userName from arguments
         String userName = getArguments().getString(ARG_PARAM1);
         View view = inflater.inflate(R.layout.fragment_create_room, container, false);
 
@@ -72,6 +73,7 @@ public class CreateRoomFragment extends Fragment {
 
         Button startLocalServerButton = view.findViewById(R.id.button_startLocalServer);
         startLocalServerButton.setOnClickListener((View v) -> {
+
             EditText roomNameEditText = view.findViewById(R.id.editTextNameOfRoom);
             String roomName = roomNameEditText.getText().toString();
 
@@ -89,6 +91,12 @@ public class CreateRoomFragment extends Fragment {
         return view;
     }
 
+    /**
+     * starts a new game server
+     * @param roomName name of the created room
+     * @param maxUser number of max users that can participate in the game
+     * @throws IOException
+     */
     public void startServer(String roomName, int maxUser) throws IOException {
         GameServer localServer = new GameServer();
         localServer.setDynamicRoomCreation(false);
