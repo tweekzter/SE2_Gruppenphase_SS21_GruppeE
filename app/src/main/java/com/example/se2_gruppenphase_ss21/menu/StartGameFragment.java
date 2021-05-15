@@ -71,7 +71,7 @@ public class StartGameFragment extends Fragment {
         localGameButton.setOnClickListener((View v) -> {
             String userName = getUsername(view);
             if (userName != null) {
-//                getParentFragmentManager().beginTransaction().replace(R.id.container, new LocalGameFragment()).addToBackStack("tag").commit();
+                // open LocalGameFragment and pass userName as an argument
                 getParentFragmentManager().beginTransaction().replace(R.id.container, LocalGameFragment.newInstance(userName)).addToBackStack("tag").commit();
                 MulticastReceiver.startListen();
 
@@ -89,6 +89,11 @@ public class StartGameFragment extends Fragment {
         return view;
     }
 
+    /**
+     * returns userName from input fiels and and NULL if nothing is entered
+     * @param view
+     * @return userNmae input as String of NULL
+     */
     public String getUsername(View view) {
         EditText username = view.findViewById(R.id.editTextUserName);
 
