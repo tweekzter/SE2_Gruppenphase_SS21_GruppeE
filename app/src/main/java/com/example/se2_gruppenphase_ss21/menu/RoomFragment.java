@@ -2,15 +2,18 @@ package com.example.se2_gruppenphase_ss21.menu;
 
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.os.StrictMode;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
@@ -85,6 +88,9 @@ public class RoomFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_room, container, false);
 
+        TextView roomNameTextView = view.findViewById(R.id.textView_roomName);
+        roomNameTextView.setText(room.getName()+"\n current Players:");
+
         String userName = getArguments().getString(ARG_PARAM1);
 
         // create new Client
@@ -153,13 +159,31 @@ public class RoomFragment extends Fragment {
 
                 LinearLayout layout = view.findViewById(R.id.layoutRoom);
 
+                // reset layout that players don't appear many times
+                layout.removeAllViews();
+
+                // LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams((int)(150/3), LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                //LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams((int)(150/3), LinearLayout.LayoutParams.WRAP_CONTENT);
+                //layout.setLayoutParams(lp);
+
+
                 for (String n : nicknames) {
+
+//                    TextView player;
+//                    player = new TextView(getContext());
+//                    player.setText(n);
+//                    layout.addView(player);
+
                     Button newbtn;
 
                     newbtn = new Button(getContext());
                     newbtn.setText(n);
+                    newbtn.setClickable(false);
+
+                    // newbtn.setWidth(50);
+
                     layout.addView(newbtn);
-                    System.out.println(n);
 
                 }
             }
@@ -167,6 +191,10 @@ public class RoomFragment extends Fragment {
 
         handler.postDelayed(r, 1000);
     }
+//
+//    public String getRoomName(AvailableRoom room){
+//        room.
+//    }
 
 
 }
