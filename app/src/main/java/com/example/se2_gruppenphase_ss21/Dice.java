@@ -2,6 +2,7 @@ package com.example.se2_gruppenphase_ss21;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -141,6 +142,7 @@ public class Dice extends AppCompatActivity {
             tileone.setBackgroundResource(test1);
             tiletwo.setBackgroundResource(test2);
             tilethree.setBackgroundResource(test3);
+            opentiles();
         } catch (XmlPullParserException e) {
 
 
@@ -228,6 +230,10 @@ public class Dice extends AppCompatActivity {
             eventType = parser.next();
             }
         return null;
+    }
+    public void opentiles() {
+        Intent intent = new Intent(this,Tiles.class);
+        startActivity(intent);
     }
 
     }
