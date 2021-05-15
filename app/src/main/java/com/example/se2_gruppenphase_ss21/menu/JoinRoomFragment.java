@@ -13,11 +13,7 @@ import android.widget.LinearLayout;
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
 import com.example.se2_gruppenphase_ss21.networking.MulticastReceiver;
-import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
-import com.example.se2_gruppenphase_ss21.networking.client.ServerMessageListener;
-import com.example.se2_gruppenphase_ss21.networking.server.logic.GameLogicException;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -27,32 +23,6 @@ import java.util.List;
  */
 public class JoinRoomFragment extends Fragment {
 
-//    ServerMessageListener listener = new ServerMessageListener() {
-//        @Override
-//        public void readyCount(int current, int max) {
-//
-//        }
-//
-//        @Override
-//        public void onGameStart() {
-//
-//        }
-//
-//        @Override
-//        public void userDisconnect(String nickname) {
-//
-//        }
-//
-//        @Override
-//        public void receiveUserList(String[] nicknames) {
-//
-//        }
-//
-//        @Override
-//        public void unknownMessage(String message) {
-//
-//        }
-//    };
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -107,59 +77,27 @@ public class JoinRoomFragment extends Fragment {
 
     public void updateRooms(View view, String userName) {
 
-//        LinearLayout layout = (LinearLayout) findViewById
-
+        // list of all rooms that have been created
         List<AvailableRoom> rooms = MulticastReceiver.getRooms();
 
-//        LinearLayout layout = getView().findViewById(R.id.rootlayout);
-
+        // layout that will contain the created rooms
         LinearLayout layout = view.findViewById(R.id.layoutJoinRoom);
 
-//        Button newbtn;
-//
-//        newbtn = new Button(getContext());
-//        newbtn.setText(rooms.get(0).toString());
-//
-//        layout.addView(newbtn);
-
-
+        // for each available room a button will be generated
         for (AvailableRoom r : rooms) {
-            // System.out.println(r);
-            Button newbtn;
 
-            newbtn = new Button(getContext());
-            newbtn.setText(r.toString());
-            newbtn.setOnClickListener((View v) -> {
+            Button availableRoomButton;
 
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        GameClient client = null;
-//                        try {
-//                            client = new GameClient(r, userName);
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//
-//                        try {
-//                            client.connect();
-//                            client.registerListener(listener); //TODO: implement the interface
-//                            client.startReceiveLoop();
-////                            client.sendReady(true);
-//
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        } catch (GameLogicException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }).start();
+            availableRoomButton = new Button(getContext());
+            availableRoomButton.setText(r.toString());
+            availableRoomButton.setOnClickListener((View v) -> {
 
+                // open RoomFragment and pass the userName and the available room as an argument
                 getParentFragmentManager().beginTransaction().replace(R.id.container, RoomFragment.newInstance(userName, r)).addToBackStack("tag").commit();
 
             });
 
-            layout.addView(newbtn);
+            layout.addView(availableRoomButton);
         }
     }
 }

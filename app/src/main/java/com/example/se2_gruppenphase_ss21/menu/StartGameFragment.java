@@ -73,6 +73,8 @@ public class StartGameFragment extends Fragment {
             if (userName != null) {
                 // open LocalGameFragment and pass userName as an argument
                 getParentFragmentManager().beginTransaction().replace(R.id.container, LocalGameFragment.newInstance(userName)).addToBackStack("tag").commit();
+
+                // MulticastReceiver starts to listen
                 MulticastReceiver.startListen();
 
             }
