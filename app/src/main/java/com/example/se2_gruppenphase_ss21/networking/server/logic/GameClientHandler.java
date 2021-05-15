@@ -77,4 +77,8 @@ public class GameClientHandler {
     public long getPuzzleFinishedAt() {
         return finishedPuzzleAt;
     }
+
+    public void close() throws IOException {
+        client.close();
+    }
 }

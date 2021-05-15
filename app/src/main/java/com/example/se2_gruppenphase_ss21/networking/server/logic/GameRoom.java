@@ -168,6 +168,15 @@ public class GameRoom {
                 round++;
             }
 
+            for(GameClientHandler handler : handlers) {
+                try {
+                    handler.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            state = GameRoomState.RESTARTING;
+
             //Round end
         }).start();
     }
