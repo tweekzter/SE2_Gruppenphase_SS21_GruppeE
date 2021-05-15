@@ -62,16 +62,18 @@ public class LocalGameFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_local_game, container, false);
 
+        // get userName from arguments
         String userName =  getArguments().getString(ARG_PARAM1);
 
         Button createRoomButton = view.findViewById(R.id.button_createRoom);
         createRoomButton.setOnClickListener((View v) -> {
+            // open createRoomFragment and pass userName as argument
             getParentFragmentManager().beginTransaction().replace(R.id.container, CreateRoomFragment.newInstance(userName)).addToBackStack("tag").commit();
         });
 
         Button joinRoomButton = view.findViewById(R.id.button_joinRoom);
         joinRoomButton.setOnClickListener((View v) -> {
-            //TODO: open joinRoomFragment with userName as param.
+            // open joinRoomFragment with userName as argument.
             getParentFragmentManager().beginTransaction().replace(R.id.container, JoinRoomFragment.newInstance(userName)).addToBackStack("tag").commit();
         });
 
