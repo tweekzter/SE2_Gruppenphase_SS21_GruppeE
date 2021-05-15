@@ -42,7 +42,7 @@
         android:layout_width="95dp"
         android:layout_height="39dp"
         android:layout_marginStart="308dp"
-        android:layout_marginTop="604dp"
+        android:layout_marginTop="656dp"
         android:text="RIGHT"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -51,8 +51,8 @@
         android:id="@+id/button56"
         android:layout_width="95dp"
         android:layout_height="39dp"
-        android:layout_marginStart="192dp"
-        android:layout_marginTop="604dp"
+        android:layout_marginStart="196dp"
+        android:layout_marginTop="656dp"
         android:text="LEFT"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -61,16 +61,16 @@
         android:id="@+id/button55"
         android:layout_width="95dp"
         android:layout_height="39dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="604dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginTop="656dp"
         android:text="DOWN"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.gridlayout.widget.GridLayout
 
-        android:layout_width="343dp"
-        android:layout_height="261dp"
+        android:layout_width="347dp"
+        android:layout_height="296dp"
         android:layout_marginTop="320dp"
         android:horizontalSpacing="-30dp"
         android:verticalSpacing="-100dp"
@@ -218,7 +218,7 @@
             app:layout_gravity="fill_vertical" />
 
         <Button
-            android:id="@+id/button38"
+            android:id="@+id/sixteen"
             android:layout_width="69dp"
             android:layout_height="68dp"
             android:layout_marginBottom="-11.5dp"
@@ -227,7 +227,7 @@
             app:layout_gravity="fill_vertical" />
 
         <Button
-            android:id="@+id/button43"
+            android:id="@+id/seventeen"
             android:layout_width="69dp"
             android:layout_height="68dp"
             android:layout_marginBottom="-11.5dp"
@@ -236,7 +236,7 @@
             app:layout_gravity="fill_vertical" />
 
         <Button
-            android:id="@+id/button44"
+            android:id="@+id/eighteen"
             android:layout_width="69dp"
             android:layout_height="68dp"
             android:layout_marginBottom="-11.5dp"
@@ -245,7 +245,7 @@
             app:layout_gravity="fill_vertical" />
 
         <Button
-            android:id="@+id/button45"
+            android:id="@+id/nineteen"
             android:layout_width="69dp"
             android:layout_height="68dp"
             android:layout_marginBottom="-11.5dp"
@@ -254,7 +254,7 @@
             app:layout_gravity="fill_vertical" />
 
         <Button
-            android:id="@+id/button46"
+            android:id="@+id/twenty"
             android:layout_width="69dp"
             android:layout_height="68dp"
             android:layout_marginBottom="-11.5dp"
@@ -263,7 +263,7 @@
             app:layout_gravity="fill_vertical" />
 
         <Button
-            android:id="@+id/button47"
+            android:id="@+id/twentyone"
             android:layout_width="69dp"
             android:layout_height="68dp"
             android:layout_marginBottom="-11.5dp"
@@ -272,7 +272,7 @@
             app:layout_gravity="fill_vertical" />
 
         <Button
-            android:id="@+id/button42"
+            android:id="@+id/twentytwo"
             android:layout_width="69dp"
             android:layout_height="68dp"
             android:layout_marginBottom="-11.5dp"
@@ -281,7 +281,7 @@
             app:layout_gravity="fill_vertical" />
 
         <Button
-            android:id="@+id/button50"
+            android:id="@+id/twentythree"
             android:layout_width="69dp"
             android:layout_height="68dp"
             android:layout_marginBottom="-11.5dp"
@@ -290,7 +290,7 @@
             app:layout_gravity="fill_vertical" />
 
         <Button
-            android:id="@+id/button51"
+            android:id="@+id/twentyfour"
             android:layout_width="69dp"
             android:layout_height="68dp"
             android:layout_marginBottom="-11.5dp"
@@ -299,7 +299,7 @@
             app:layout_gravity="fill_vertical" />
 
         <Button
-            android:id="@+id/button52"
+            android:id="@+id/twentyfive"
             android:layout_width="69dp"
             android:layout_height="68dp"
             android:layout_marginBottom="-11.5dp"
@@ -314,7 +314,7 @@
         android:layout_width="62dp"
         android:layout_height="37dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="604dp"
+        android:layout_marginTop="656dp"
         android:text="UP"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -186,7 +186,7 @@ public class Dice extends AppCompatActivity {
     }
 
     private String[] processParsing(XmlPullParser parser, String dice) throws XmlPullParserException, IOException {
-        ArrayList<String> numbers = new ArrayList<>();
+
         int eventType = parser.getEventType();
         boolean card = false;
         boolean dicetype = false;
