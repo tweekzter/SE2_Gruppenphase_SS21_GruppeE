@@ -168,6 +168,7 @@ public class GameRoom {
                 round++;
             }
 
+            state = GameRoomState.RESTARTING;
             for(GameClientHandler handler : handlers) {
                 try {
                     handler.close();
@@ -175,7 +176,8 @@ public class GameRoom {
                     e.printStackTrace();
                 }
             }
-            state = GameRoomState.RESTARTING;
+            System.out.println("Room reset done!");
+            state = GameRoomState.WAITING;
 
             //Round end
         }).start();
