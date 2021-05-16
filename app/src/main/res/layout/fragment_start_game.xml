@@ -10,7 +10,7 @@
 
     <EditText
         android:id="@+id/editTextUserName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:textColorHint="@color/white"
@@ -29,7 +29,7 @@
 
     <Button
         android:id="@+id/button_localGame"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="local game"
         android:layout_marginTop="50dp"
@@ -42,7 +42,7 @@
 
     <Button
         android:id="@+id/button_onlineGame"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="online game"
         app:layout_constraintBottom_toBottomOf="parent"

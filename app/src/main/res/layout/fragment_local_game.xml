@@ -9,11 +9,24 @@
     tools:context=".menu.StartGameFragment">
 
     <Button
+        android:id="@+id/button_joinRoom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="join room"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="260dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.775" />
+
+    <Button
         android:id="@+id/button_createRoom"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="create room"
-        android:layout_marginTop="260dp"
+        android:layout_marginTop="50dp"
         android:layout_gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,17 +34,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.647" />
 
-    <Button
-        android:id="@+id/button_joinRoom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="join room"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.775" />
 
 </LinearLayout>

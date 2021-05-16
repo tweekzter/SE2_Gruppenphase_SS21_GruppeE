@@ -11,7 +11,7 @@
 
     <EditText
         android:id="@+id/editTextNameOfRoom"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:ems="10"
@@ -30,7 +30,7 @@
 
     <EditText
         android:id="@+id/editTextMaxUsers"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:ems="10"
@@ -49,7 +49,7 @@
 
     <Button
         android:id="@+id/button_startLocalServer"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:layout_gravity="center_horizontal"
