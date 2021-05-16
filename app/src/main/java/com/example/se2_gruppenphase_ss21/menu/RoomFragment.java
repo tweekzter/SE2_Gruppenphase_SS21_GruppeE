@@ -2,12 +2,10 @@ package com.example.se2_gruppenphase_ss21.menu;
 
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.os.StrictMode;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,7 +112,7 @@ public class RoomFragment extends Fragment {
 
                 @Override
                 public void onGameStart() {
-
+                    System.out.println("game started!!!!!!!!!!!!!!!!");
                 }
 
                 @Override
