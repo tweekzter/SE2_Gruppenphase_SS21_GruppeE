@@ -30,6 +30,7 @@ public class RoomFragment extends Fragment {
 
 
     static AvailableRoom room;
+    static boolean isReady = false;
 
     // Handler for creating post delay threads for updating ui
     Handler handler = new Handler();
@@ -87,7 +88,7 @@ public class RoomFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_room, container, false);
 
         TextView roomNameTextView = view.findViewById(R.id.textView_roomName);
-        roomNameTextView.setText(room.getName()+"\n current Players:");
+        roomNameTextView.setText(room.getName() + "\n\n current Players:");
 
         String userName = getArguments().getString(ARG_PARAM1);
 
@@ -107,7 +108,9 @@ public class RoomFragment extends Fragment {
             ServerMessageListener listener = new ServerMessageListener() {
                 @Override
                 public void readyCount(int current, int max) {
-
+                    if (isReady) {
+                        updateReady(current, max, view);
+                    }
                 }
 
                 @Override
@@ -133,8 +136,6 @@ public class RoomFragment extends Fragment {
 
             client.registerListener(listener);
             client.startReceiveLoop();
-//          client.sendReady(true);
-            // TODO: display roomname and users in this fragment... and num users and ready button; how to get users
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -142,57 +143,79 @@ public class RoomFragment extends Fragment {
             e.printStackTrace();
         }
 
+        Button startGameButton = view.findViewById(R.id.button_ready);
+        GameClient finalClient = client;
+        startGameButton.setOnClickListener((View v) -> {
+            try {
+                finalClient.sendReady(true);
+                isReady = true;
+                startGameButton.setVisibility(View.INVISIBLE);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
         return view;
     }
 
     /**
      * updates UI: shows a list of players that currently joined the room
+     *
      * @param nicknames all players that are in a given room
-     * @param view of the fragment
+     * @param view      of the fragment
      */
     public void updatePlayers(String[] nicknames, View view) {
 
-        final Runnable r = new Runnable() {
+        final Runnable runUpdatePlayers = new Runnable() {
             public void run() {
 
                 LinearLayout layout = view.findViewById(R.id.layoutRoom);
-
-                // reset layout that players don't appear many times
                 layout.removeAllViews();
-
-                // LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams((int)(150/3), LinearLayout.LayoutParams.WRAP_CONTENT);
-
-                //LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams((int)(150/3), LinearLayout.LayoutParams.WRAP_CONTENT);
-                //layout.setLayoutParams(lp);
-
 
                 for (String n : nicknames) {
 
-//                    TextView player;
-//                    player = new TextView(getContext());
-//                    player.setText(n);
-//                    layout.addView(player);
+                    Button user;
 
-                    Button newbtn;
-
-                    newbtn = new Button(getContext());
-                    newbtn.setText(n);
-                    newbtn.setClickable(false);
-
-                    // newbtn.setWidth(50);
-
-                    layout.addView(newbtn);
+                    user = new Button(getContext());
+                    user.setText(n);
+                    user.setClickable(false);
+                    layout.addView(user);
 
                 }
             }
         };
 
-        handler.postDelayed(r, 1000);
+        handler.postDelayed(runUpdatePlayers, 1000);
     }
-//
-//    public String getRoomName(AvailableRoom room){
-//        room.
-//    }
 
+    /**
+     * updates UI: shows how many users are ready
+     *
+     * @param current number of users that are currently ready
+     * @param max     number of users that are in the room
+     * @param view    of the fragment
+     */
+    public void updateReady(int current, int max, View view) {
+
+        final Runnable runUpdateReady = new Runnable() {
+            public void run() {
+
+                LinearLayout layout = view.findViewById(R.id.layoutRoom);
+                layout.removeAllViews();
+
+                layout.setPadding(450, 200, 450, 200);
+
+                Button readyData;
+                readyData = new Button(getContext());
+                readyData.setText(String.valueOf(current) + "/" + String.valueOf(max));
+                readyData.setClickable(false);
+                layout.addView(readyData);
+
+            }
+        };
+
+        handler.postDelayed(runUpdateReady, 1000);
+    }
 
 }
