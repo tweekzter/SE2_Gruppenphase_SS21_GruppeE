@@ -1,32 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginHorizontal="55dp"
     tools:context=".menu.StartGameFragment">
-
-    <Button
-        android:id="@+id/button_localGame"
-        android:layout_width="500px"
-        android:layout_height="wrap_content"
-        android:text="local game"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.647" />
-
-    <Button
-        android:id="@+id/button_onlineGame"
-        android:layout_width="500px"
-        android:layout_height="wrap_content"
-        android:text="online game"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.775" />
 
     <EditText
         android:id="@+id/editTextUserName"
@@ -37,11 +17,40 @@
         android:inputType="textPersonName"
         android:hint="choose your username"
         android:gravity="center_horizontal"
+        android:layout_marginTop="160dp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_gravity="center_horizontal"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.373" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/button_localGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="local game"
+        android:layout_marginTop="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintVertical_bias="0.647" />
+
+    <Button
+        android:id="@+id/button_onlineGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="online game"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintVertical_bias="0.775" />
+
+</LinearLayout>
