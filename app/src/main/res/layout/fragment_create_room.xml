@@ -8,7 +8,7 @@
 
     <Button
         android:id="@+id/button_startLocalServer"
-        android:layout_width="500px"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="create room"
         app:layout_constraintBottom_toBottomOf="parent"
