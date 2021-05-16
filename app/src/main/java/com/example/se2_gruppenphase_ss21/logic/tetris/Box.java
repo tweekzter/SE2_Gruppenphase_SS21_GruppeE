@@ -1,6 +1,5 @@
 package com.example.se2_gruppenphase_ss21.logic.tetris;
 
-import android.graphics.Color;
 
 /**
  * A BOX is the element that the MAP consists of.
@@ -11,43 +10,51 @@ import android.graphics.Color;
 public class Box extends Position {
     private Tile tile;
     private boolean isField;
-    private Color color;
 
     public Box(int x, int y) {
         super(x,y);
     }
 
-    public Box(int x, int y, Color color) {
-        super(x,y);
-        this.color = color;
-    }
-
+    /**
+     * Define this BOX as part of the play-field or a part of the surrounding.
+     * @param isField if part of play-field true, otherwise false
+     */
     public void setField(boolean isField) {
         this.isField = isField;
     }
 
+    /**
+     * Returns if this BOX is part of the play-field.
+     * @return true if part of the play-field - otherwise false.
+     */
     public boolean isField() {
         return isField;
     }
 
+    /**
+     * Indicates if this BOX is available to place a TILE on -
+     * in other words - not occupied by a TILE already.
+     *
+     * @return if BOX is available true, otherwise false.
+     */
     public boolean isAvailable() {
         return tile == null;
     }
 
+    /**
+     * Returns the TILE attached to this BOX.
+     * @return the TILE attached to this BOX.
+     */
     public Tile getTile() {
         return tile;
     }
 
+    /**
+     * Sets the TILE attached to this BOX.
+     * @param tile TILE attached to this BOX.
+     */
     public void setTile(Tile tile) {
         this.tile = tile;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
     }
 }
 

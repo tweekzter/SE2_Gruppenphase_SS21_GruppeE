@@ -181,7 +181,7 @@ public class Map {
     public int getMaxX() {
         if(boxMap == null)
             return 0;
-        return boxMap[0].length;
+        return boxMap[0].length-1;
     }
 
     /**
@@ -191,7 +191,7 @@ public class Map {
     public int getMaxY() {
         if(boxMap == null)
             return 0;
-        return boxMap.length;
+        return boxMap.length-1;
     }
 
     /**
