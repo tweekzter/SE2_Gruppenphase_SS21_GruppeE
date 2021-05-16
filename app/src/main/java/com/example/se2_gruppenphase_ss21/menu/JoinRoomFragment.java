@@ -89,7 +89,7 @@ public class JoinRoomFragment extends Fragment {
             Button availableRoomButton;
 
             availableRoomButton = new Button(getContext());
-            availableRoomButton.setText(r.toString());
+            availableRoomButton.setText(r.getName()+"    ("+r.getCurrentPlayers()+"/"+r.getMaxPlayers()+")");
             availableRoomButton.setOnClickListener((View v) -> {
 
                 // open RoomFragment and pass the userName and the available room as an argument
