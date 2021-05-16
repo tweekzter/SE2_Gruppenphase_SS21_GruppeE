@@ -176,6 +176,7 @@ public class GameRoom {
                     e.printStackTrace();
                 }
             }
+            handlers.clear();
             System.out.println("Room reset done!");
             state = GameRoomState.WAITING;
 
