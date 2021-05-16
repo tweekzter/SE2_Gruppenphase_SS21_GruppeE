@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.networking.server.GameServer;
@@ -66,9 +67,10 @@ public class CreateRoomFragment extends Fragment {
         // Inflate the layout for this fragment
 
         // get userName from arguments
-        String userName = getArguments().getString(ARG_PARAM1);
         View view = inflater.inflate(R.layout.fragment_create_room, container, false);
 
+        // get userName from arguments
+        String userName =  getArguments().getString(ARG_PARAM1);
 
 
         Button startLocalServerButton = view.findViewById(R.id.button_startLocalServer);
@@ -78,14 +80,17 @@ public class CreateRoomFragment extends Fragment {
             String roomName = roomNameEditText.getText().toString();
 
             EditText maxUsersEditText = view.findViewById(R.id.editTextMaxUsers);
-            //TODO: error handling when parsing string to int
-            int maxUsers = Integer.parseInt(maxUsersEditText.getText().toString());
 
             try {
+                int maxUsers = Integer.parseInt(maxUsersEditText.getText().toString());
                 startServer(roomName, maxUsers);
-            } catch (IOException e) {
+                Toast.makeText(getActivity(), "room successfully created!", Toast.LENGTH_SHORT).show();
+                getParentFragmentManager().beginTransaction().replace(R.id.container, LocalGameFragment.newInstance(userName)).addToBackStack("tag").commit();
+            } catch (Exception e) {
                 e.printStackTrace();
+                Toast.makeText(getActivity(), "please enter max players and name!", Toast.LENGTH_SHORT).show();
             }
+
         });
 
         return view;
@@ -93,8 +98,9 @@ public class CreateRoomFragment extends Fragment {
 
     /**
      * starts a new game server
+     *
      * @param roomName name of the created room
-     * @param maxUser number of max users that can participate in the game
+     * @param maxUser  number of max users that can participate in the game
      * @throws IOException
      */
     public void startServer(String roomName, int maxUser) throws IOException {
