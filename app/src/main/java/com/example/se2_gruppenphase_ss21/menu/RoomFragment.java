@@ -1,5 +1,6 @@
 package com.example.se2_gruppenphase_ss21.menu;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -115,7 +116,8 @@ public class RoomFragment extends Fragment {
 
                 @Override
                 public void onGameStart() {
-                    System.out.println("game started!!!!!!!!!!!!!!!!");
+                    Intent intent = new Intent(getActivity(), MockingGame.class);
+                    startActivity(intent);
                 }
 
                 @Override
