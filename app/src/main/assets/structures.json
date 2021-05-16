@@ -30,23 +30,151 @@
         "id": -1,
         "name": null,
         "shape": [
-          [ true,  false, false ],
+          [ false,  false, false ],
           [ false, true,  false ],
           [ true,  true,  true ],
-          [ false, true,  false ],
+          [ false, false,  false ],
           [ false, false, true ]
+        ]
+      },
+      {
+        "id": 0,
+        "name": null,
+        "shape": [
+          [ true, true ]
+
+        ]
+      },
+      {
+        "id": 1,
+        "name": null,
+        "shape": [
+
+          [ true, true ],
+          [ true, true ]
         ]
       },
       {
         "id": 2,
         "name": null,
         "shape": [
-          [ false, false, false, false ],
-          [ false, true,  true,  false ],
-          [ false, true,  true,  false ],
-          [ false, true,  true,  false ]
+
+          [ false, true, false ],
+          [ true, true, false]
+        ]
+      },
+      {
+        "id": 3,
+        "name": null,
+        "shape": [
+
+          [ true ],
+          [ true ],
+          [ true],
+          [ true ]
+        ]
+      },
+      {
+        "id": 4,
+        "name": null,
+        "shape": [
+
+          [ true, true, true],
+          [ false, true, true ]
+        ]
+      },
+      {
+        "id": 5,
+        "name": null,
+        "shape": [
+
+          [ false, true ],
+          [ false, true ],
+          [ true, true]
+
+          ]
+      },
+      {
+        "id": 6,
+        "name": null,
+        "shape": [
+
+          [ false, true ],
+          [ false, true ],
+          [ false, true ],
+          [ true, true]
+
+        ]
+      },
+      {
+        "id": 7,
+        "name": null,
+        "shape": [
+
+
+          [ false, true ],
+          [ true, true]
+
+        ]
+      },
+      {
+        "id": 8,
+        "name": null,
+        "shape": [
+
+
+          [true, false, false ],
+          [true, true, true],
+          [ false, false, true]
+
+        ]
+      },
+      {
+        "id": 9,
+        "name": null,
+        "shape": [
+
+
+          [false, true, false, false ],
+          [ true, true, true, true]
+
+
+        ]
+        },
+      {
+        "id": 10,
+        "name": null,
+        "shape": [
+
+
+
+          [true, true ]
+
+
+        ]
+      },
+      {
+        "id": 11,
+        "name": null,
+        "shape": [
+
+
+
+          [true, true, true]
+
+        ]},
+      {
+        "id": 8,
+        "name": null,
+        "shape": [
+
+
+          [false, true, true],
+          [true, true, false]
+
         ]
       }
+
     ]
   }
 }

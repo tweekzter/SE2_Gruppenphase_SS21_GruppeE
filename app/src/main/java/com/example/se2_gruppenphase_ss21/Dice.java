@@ -132,17 +132,18 @@ public class Dice extends AppCompatActivity {
             parser.setInput(is, null);
 
             String[] result = processParsing(parser, value);
-            System.out.println(result[0]);
-            System.out.println(result[1]);
-            System.out.println(result[2]);
-            System.out.println(value);
+
             int test1 = getpicturetotilenumber(result[0],tileone);
             int test2 = getpicturetotilenumber(result[1],tiletwo);
             int test3 = getpicturetotilenumber(result[2],tilethree);
             tileone.setBackgroundResource(test1);
             tiletwo.setBackgroundResource(test2);
             tilethree.setBackgroundResource(test3);
-            opentiles();
+            int[] pictures = new int[3];
+            pictures[0]= test1;
+            pictures[1]=test2;
+            pictures[2]=test3;
+            opentiles(pictures);
         } catch (XmlPullParserException e) {
 
 
@@ -231,8 +232,11 @@ public class Dice extends AppCompatActivity {
             }
         return null;
     }
-    public void opentiles() {
+    public void opentiles(int[] pictures) {
         Intent intent = new Intent(this,Tiles.class);
+        Bundle a = new Bundle();
+        a.putIntArray("key" , pictures);
+        intent.putExtras(a);
         startActivity(intent);
     }
 

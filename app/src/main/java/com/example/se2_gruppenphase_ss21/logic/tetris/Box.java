@@ -25,15 +25,15 @@ public class Box extends Position {
     public void setField(boolean isField) {
         this.isField = isField;
     }
-
+    //ist ein belegbares feld
     public boolean isField() {
         return isField;
     }
-
+    //ist von keinem stein belegt
     public boolean isAvailable() {
         return tile == null;
     }
-
+    //gibt baustein der gerade davon besetzt ist
     public Tile getTile() {
         return tile;
     }
