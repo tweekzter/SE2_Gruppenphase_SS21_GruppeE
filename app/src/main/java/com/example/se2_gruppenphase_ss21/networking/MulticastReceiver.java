@@ -60,12 +60,7 @@ public class MulticastReceiver {
                     }
                 }
 
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                    Thread.currentThread().interrupt();
-                }
+                Util.sleep(1, 0);
             }
         }).start();
     }

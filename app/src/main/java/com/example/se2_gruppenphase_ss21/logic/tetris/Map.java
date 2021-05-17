@@ -163,12 +163,35 @@ public class Map {
 
     /**
      * Receive reference to the instance of Box at specified coordinates.
+     * A BOX contains information like whether it is part of the play-field or not,
+     * if it is covered by a TILE, and if yes - by which.
+     *
      * @param x x-coordinate of Box
      * @param y y-coordinate of Box
      * @return The Box at given coordinates.
      */
     public Box getBox(int x, int y) {
         return boxMap[y][x];
+    }
+
+    /**
+     * Returns the max index of the x-coordinate.
+     * @return max index of x-coordinate
+     */
+    public int getMaxX() {
+        if(boxMap == null)
+            return 0;
+        return boxMap[0].length-1;
+    }
+
+    /**
+     * Returns the max index of the y-coordinate.
+     * @return max index of y-coordinate
+     */
+    public int getMaxY() {
+        if(boxMap == null)
+            return 0;
+        return boxMap.length-1;
     }
 
     /**

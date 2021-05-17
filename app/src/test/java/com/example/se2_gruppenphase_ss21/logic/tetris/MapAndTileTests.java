@@ -10,7 +10,7 @@ public class MapAndTileTests {
     @Test
     public void testMapAndTile() {
         Map map = new Map();
-        boolean[][] field = {
+        /*boolean[][] field = {
                 { false, true, true, false, false },
                 { false, true, true, true, false },
                 { false, true, true, true, false },
@@ -18,13 +18,24 @@ public class MapAndTileTests {
                 { false, false, false, true, false },
                 { false, false, false, true, false },
 
+        };*/
+        boolean[][] field = {
+                { true, true, true, true, true },
+                { true, true, true, true, true },
+                { true, true, true, true, true },
+                { true, true, true, true, true },
+                { true, true, true, true, true },
+                { true, true, true, true, true },
+
         };
+
         map.setUpMap(field);
 
         Position p1 = new Position(1,0);
         Position p2 = new Position(0,0);
         Position p3 = new Position(0,1);
-        Tile tile = new Tile(p1,p2,p3);
+        Position p4 = new Position(0,2);
+        Tile tile = new Tile(p1,p2,p3,p4);
         Tile tile2 = new Tile(p2, new Position(1,0));
         Tile tile3 = new Tile(new Position(2,0), new Position(2,2), new Position(3,2),
                 new Position(2,3), new Position(3,3), new Position(3,4), new Position(3,5));
@@ -62,6 +73,16 @@ public class MapAndTileTests {
         System.out.println(map.checkSolved());
         tile.detachFromMap();
         tile.rotateRight();
+        tile.attachToMap(map, 1,1);
+        displayMap(map);
+        System.out.println(map.checkSolved());tile.detachFromMap();
+        tile.detachFromMap();
+        tile.mirrorVertically();
+        tile.attachToMap(map, 1,1);
+        displayMap(map);
+        System.out.println(map.checkSolved());
+        tile.detachFromMap();
+        tile.mirrorHorizontally();
         tile.attachToMap(map, 1,1);
         displayMap(map);
         System.out.println(map.checkSolved());

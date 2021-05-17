@@ -2,10 +2,13 @@ package com.example.se2_gruppenphase_ss21.networking.client;
 
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
 import com.example.se2_gruppenphase_ss21.networking.SocketWrapper;
+import com.example.se2_gruppenphase_ss21.networking.server.GameServer;
 import com.example.se2_gruppenphase_ss21.networking.server.logic.GameLogicException;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GameClient {
 
@@ -15,6 +18,10 @@ public class GameClient {
     private boolean isConnected;
 
     private ServerMessageListener listener;
+
+    public GameClient(GameServer server, String roomName, String nickname) throws IOException {
+        this("127.0.0.1", server.getPort(), roomName, nickname);
+    }
 
     /**
      * Create a GameClient from a received room info and a nickname.
@@ -91,6 +98,27 @@ public class GameClient {
                             String name = params[1];
                             listener.userDisconnect(name);
                             break;
+                        case "roll_request":
+                            String nick = params[1];
+                            listener.rollRequest(nick);
+                            break;
+                        case "roll_result":
+                            int result = Integer.parseInt(params[1]);
+                            listener.rollResult(result);
+                            break;
+                        case "begin_puzzle":
+                            long finishUntil = Long.parseLong(params[1]);
+                            listener.beginPuzzle(finishUntil);
+                            break;
+                        case "placements":
+                            String[] foo = params[1].split(";");
+                            Map<String, Integer> placements = new HashMap<>();
+                            for(String p : foo) {
+                                String[] bar = p.split(":");
+                                placements.put(bar[0], Integer.parseInt(bar[1]));
+                            }
+                            listener.placementsReceived(placements);
+                            break;
                         default:
                             listener.unknownMessage(fromServer);
                     }
@@ -112,6 +140,26 @@ public class GameClient {
         }
 
         socket.sendString("ready " + isReady);
+    }
+
+    public void sendRollResult(int result) throws IOException {
+        if (!isConnected) {
+            throw new RuntimeException("Client is not connected");
+        }
+
+        socket.sendString("roll " + result);
+    }
+
+    /**
+     * Ubongo!
+     * @throws IOException
+     */
+    public void puzzleDone() throws IOException {
+        if (!isConnected) {
+            throw new RuntimeException("Client is not connected");
+        }
+
+        socket.sendString("finish_puzzle");
     }
 
     /**
