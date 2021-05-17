@@ -21,10 +21,24 @@ import java.io.InputStream;
 import java.sql.SQLOutput;
 import java.util.Arrays;
 
+
+//aufgabe fuer heute
+// einfuegen im feld
+//funktionalitaeten von buttons aktivieren deaktivieren
+//button loeschen einfuegen
+//button ubongo einfuegen
+
+
+
 public class Tiles extends AppCompatActivity {
     int [] drawables = new int[25];
-    Boolean[][] map;
+    boolean[][] map;
+    Map currentmap;
     Button[][] buttonarray;
+    Tile currenttile;
+    int currentpositionx=0;
+    int currentpositiony=0;
+    Position[] tilepositions;
 
 
     @Override
@@ -33,10 +47,12 @@ public class Tiles extends AppCompatActivity {
         setContentView(R.layout.activity_tiles);
         try {
             InputStream is = getAssets().open("maps.xml");
-            map = parsexml("two","cardnumber", is);
-            Map maps = new Map();
+            //holt sich daten aus xml für das aussehen der map
+            map= parsexml("two","cardnumber", is);
+            currentmap=new Map(map);
             fillbuttonarray();
-            
+
+            //hole die bausteine und fuege die bilder zu den bausteinen ein
             Bundle b = getIntent().getExtras();
             int[] pictures = b.getIntArray("key");
             ImageView firsttile = findViewById(R.id.firsttile);
@@ -45,7 +61,7 @@ public class Tiles extends AppCompatActivity {
             Tile tileone = new Tile(getApplicationContext().getAssets(), pictures[3], "standard");
             Tile tiletwo = new Tile(getApplicationContext().getAssets(), pictures[4], "standard");
             Tile tilethree = new Tile(getApplicationContext().getAssets(), pictures[5], "standard");
-            System.out.println(pictures[3]);
+
             firsttile.setBackgroundResource(pictures[0]);
             secondtile.setBackgroundResource(pictures[1]);
             thirdtile.setBackgroundResource(pictures[2]);
@@ -59,14 +75,21 @@ public class Tiles extends AppCompatActivity {
             firsttile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    movetiles(firsttile);
+                    movetiles(tileone, firsttile);
                 }
             });
 
             secondtile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    movetiles(secondtile);
+                    movetiles(tiletwo, secondtile);
+                }
+            });
+
+            thirdtile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    movetiles(tilethree, thirdtile);
                 }
             });
 
@@ -74,6 +97,7 @@ public class Tiles extends AppCompatActivity {
 
 
             fill();
+            //setzt die mapbuttons in die richtige farbe
             int count =0;
             Button tochange;
             for(int i=0; i<map.length;i++){
@@ -153,7 +177,7 @@ public class Tiles extends AppCompatActivity {
         drawables[24] = R.id.twentyfive;
 
     }
-    public static Boolean[][] parsexml(String value, String cardnumber, InputStream is){
+    public static boolean[][] parsexml(String value, String cardnumber, InputStream is){
         XmlPullParserFactory parserFactory;
         try {
             parserFactory = XmlPullParserFactory.newInstance();
@@ -162,7 +186,7 @@ public class Tiles extends AppCompatActivity {
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(is, null);
 
-            Boolean[][] result = processParsing(parser, value);
+            boolean[][] result = processParsing(parser, value);
             return result;
 
         } catch (XmlPullParserException e) {
@@ -175,11 +199,11 @@ public class Tiles extends AppCompatActivity {
     }
     //true=1=frei
     //false=0=belegt
-    protected static Boolean[][] processParsing(XmlPullParser parser, String value) throws XmlPullParserException, IOException {
+    protected static boolean[][] processParsing(XmlPullParser parser, String value) throws XmlPullParserException, IOException {
         int eventType = parser.getEventType();
         boolean card = false;
         boolean dicetype = false;
-        Boolean[][] map = new Boolean[5][5];
+        boolean[][] map = new boolean[5][5];
 
 
         while(eventType != XmlPullParser.END_DOCUMENT){
@@ -217,7 +241,7 @@ public class Tiles extends AppCompatActivity {
                             eltName = parser.getName();
 
                         }
-                        for(Boolean[] x : map){
+                        for(boolean[] x : map){
                             for(Boolean y: x){
                                 System.out.print(y);
                             }
@@ -233,10 +257,44 @@ public class Tiles extends AppCompatActivity {
         return null;
 
     }
-    private View.OnClickListener movetiles(ImageView test){
-        test.setBackgroundResource(0);
+    private View.OnClickListener movetiles(Tile tile, ImageView tileimage){
+        tileimage.setBackgroundResource(0);
+        if(currenttile!=null){
+            currenttile.attachToMap(currentmap, currentpositionx, currentpositiony);
+        }
+        currenttile = tile;
+        tilepositions=currenttile.getShape();
+        outerloop:
+        for(int i =0; i<5; i++){
+            for(int j= 0; j<5; j++){
+                if(checkifplacable(i,j, tilepositions)){
+                    colorbuttons(i,j, tilepositions);
+                    break outerloop;
+                }
+            }
+        }
+
 
 
         return null;
+    }
+
+    protected void colorbuttons(int x, int y, Position[] tiles){
+        for(int i =0; i<tiles.length; i++){
+            buttonarray[x+tiles[i].getX()][y+tiles[i].getY()].setBackgroundColor(Color.RED);
+        }
+
+    }
+
+    private boolean checkifplacable(int x, int y, Position[] tilepositions){
+        for(int i = 0; i< tilepositions.length; i++) {
+            if(x+tilepositions[i].getX()<0||y+tilepositions[i].getY()<0){
+                return false;
+            }
+            else if (!currentmap.getBox(x+tilepositions[i].getX(), y+tilepositions[i].getY()).isAvailable()) {
+                return false;
+            }
+        }
+        return true;
     }
 }
