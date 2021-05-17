@@ -1,6 +1,7 @@
 package com.example.se2_gruppenphase_ss21.logic.tetris;
 
 import android.content.res.AssetManager;
+import android.graphics.Color;
 
 import java.util.ArrayList;
 
@@ -36,7 +37,9 @@ public class Tile {
     private Map map;
     private Position hook;
     private boolean isAttached = false;
-    private boolean invertX = true;
+    private int color = Color.RED;
+    private static final int X_AXIS = 1;
+    private static final int Y_AXIS = 2;
 
 
     /**
@@ -189,28 +192,94 @@ public class Tile {
         if(shape.size() == 0 || isAttached)
             return;
 
-        int max = invertX ? shape.get(0).x : shape.get(0).y;
+        int max = shape.get(0).y;
         int min = max;
 
         for(Position pos : shape) {
-            if(invertX) {
-                max = Math.max(pos.x, max);
-                min = Math.min(pos.x, min);
-            }
-            else {
-                max = Math.max(pos.y, max);
-                min = Math.min(pos.y, min);
-            }
+            max = Math.max(pos.y, max);
+            min = Math.min(pos.y, min);
         }
 
-        invertAxis(min, max);
-
-        invertX = !invertX;
+        invertAxis(min, max, Y_AXIS);
+        switchAxis();
     }
 
-    private void invertAxis(int min, int max) {
+    /**
+     * Rotates the TILE counter-clockwise.
+     * Has no effect if TILE is already attached to a MAP.
+     */
+    public void rotateLeft() {
+        if(shape.size() == 0 || isAttached)
+            return;
+
+        int max = shape.get(0).x;
+        int min = max;
+
         for(Position pos : shape) {
-            if(invertX) {
+            max = Math.max(pos.x, max);
+            min = Math.min(pos.x, min);
+        }
+
+        invertAxis(min, max, X_AXIS);
+        switchAxis();
+    }
+
+    /**
+     * Mirrors the TILE vertically
+     */
+    public void mirrorVertically() {
+        if(shape.size() == 0 || isAttached)
+            return;
+
+        int max = shape.get(0).y;
+        int min = max;
+
+        for(Position pos : shape) {
+            max = Math.max(pos.y, max);
+            min = Math.min(pos.y, min);
+        }
+
+        invertAxis(min, max, Y_AXIS);
+    }
+
+    /**
+     * Mirrors the TILE horizontally
+     */
+    public void mirrorHorizontally() {
+        if(shape.size() == 0 || isAttached)
+            return;
+
+        int max = shape.get(0).x;
+        int min = max;
+
+        for(Position pos : shape) {
+            max = Math.max(pos.x, max);
+            min = Math.min(pos.x, min);
+        }
+
+        invertAxis(min, max, X_AXIS);
+    }
+
+    /**
+     * Switches the axis.
+     */
+    private void switchAxis() {
+        for(Position pos : shape) {
+            int tmp = pos.x;
+            pos.x = pos.y;
+            pos.y = tmp;
+        }
+    }
+
+    /**
+     * Inverts the the values on the specified axis.
+     * @param min min value of the specified axis
+     * @param max max value of the specified axis
+     * @param axis the axis to invert (X_AXIS / Y_AXIS)
+     */
+    private void invertAxis(int min, int max, int axis) {
+        for(Position pos : shape) {
+            if(axis == X_AXIS) {
                 int upperDiff = max - pos.x;
                 int lowerDiff = pos.x - min;
                 pos.x = upperDiff < lowerDiff ? min + upperDiff : max - lowerDiff;
@@ -221,17 +290,6 @@ public class Tile {
                 pos.y = upperDiff < lowerDiff ? min + upperDiff : max - lowerDiff;
             }
         }
-    }
-
-    /**
-     * Rotates the TILE counter-clockwise.
-     * Has no effect if TILE is already attached to a MAP.
-     */
-    public void rotateLeft() {
-        // just call rotateRight() with inverted axis-order
-        invertX = !invertX;
-        rotateRight();
-        invertX = !invertX;
     }
 
     /**
@@ -338,6 +396,22 @@ public class Tile {
             val.x = val.x + offsetX;
             val.y = val.y + offsetY;
         }
+    }
+
+    /**
+     * Gets the color of this TILE. (Use android.graphics.Color class)
+     * @return color of this TILE
+     */
+    public int getColor() {
+        return color;
+    }
+
+    /**
+     * Sets the Color of this TILE. (use android.graphics.Color class)
+     * @param color the color to set.
+     */
+    public void setColor(int color) {
+        this.color = color;
     }
 }
 

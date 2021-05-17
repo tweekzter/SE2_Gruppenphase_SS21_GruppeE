@@ -6,48 +6,33 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_marginHorizontal="55dp"
-    tools:context=".menu.MenuFragment">
-
+    tools:context=".menu.StartGameFragment">
 
     <Button
-        android:id="@+id/button_startGame"
+        android:id="@+id/button_joinRoom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="start game"
-        android:layout_marginTop="160dp"
+        android:text="join room"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="260dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_gravity="center_horizontal"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.325" />
+        app:layout_constraintVertical_bias="0.775" />
 
     <Button
-        android:id="@+id/button_settings"
+        android:id="@+id/button_createRoom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="settings"
+        android:text="create room"
         android:layout_marginTop="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.512" />
+        app:layout_constraintVertical_bias="0.647" />
 
-    <Button
-        android:id="@+id/button_rules"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="game rules"
-        android:layout_marginTop="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_gravity="center_horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.698" />
+
 </LinearLayout>
