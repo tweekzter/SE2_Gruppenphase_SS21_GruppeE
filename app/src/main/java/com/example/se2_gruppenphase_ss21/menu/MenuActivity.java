@@ -1,8 +1,10 @@
-package com.example.se2_gruppenphase_ss21;
+package com.example.se2_gruppenphase_ss21.menu;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.se2_gruppenphase_ss21.R;
 
 public class MenuActivity extends AppCompatActivity {
 
