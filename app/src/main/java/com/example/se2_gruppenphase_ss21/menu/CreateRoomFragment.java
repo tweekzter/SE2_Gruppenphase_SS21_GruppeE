@@ -70,7 +70,7 @@ public class CreateRoomFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_create_room, container, false);
 
         // get userName from arguments
-        String userName =  getArguments().getString(ARG_PARAM1);
+        String userName = getArguments().getString(ARG_PARAM1);
 
 
         Button startLocalServerButton = view.findViewById(R.id.button_startLocalServer);
@@ -83,9 +83,15 @@ public class CreateRoomFragment extends Fragment {
 
             try {
                 int maxUsers = Integer.parseInt(maxUsersEditText.getText().toString());
-                startServer(roomName, maxUsers);
-                Toast.makeText(getActivity(), "room successfully created!", Toast.LENGTH_SHORT).show();
-                getParentFragmentManager().beginTransaction().replace(R.id.container, LocalGameFragment.newInstance(userName)).addToBackStack("tag").commit();
+
+                if (maxUsers <= 1) {
+                    Toast.makeText(getActivity(), "room should have at least two players!", Toast.LENGTH_SHORT).show();
+                } else {
+                    startServer(roomName, maxUsers);
+                    Toast.makeText(getActivity(), "room successfully created!", Toast.LENGTH_SHORT).show();
+                    getParentFragmentManager().beginTransaction().replace(R.id.container, LocalGameFragment.newInstance(userName)).addToBackStack("tag").commit();
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
                 Toast.makeText(getActivity(), "please enter max players and name!", Toast.LENGTH_SHORT).show();
