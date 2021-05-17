@@ -139,10 +139,13 @@ public class Dice extends AppCompatActivity {
             tileone.setBackgroundResource(test1);
             tiletwo.setBackgroundResource(test2);
             tilethree.setBackgroundResource(test3);
-            int[] pictures = new int[3];
+            int[] pictures = new int[6];
             pictures[0]= test1;
             pictures[1]=test2;
             pictures[2]=test3;
+            pictures[3] = Integer.parseInt(result[0]);
+            pictures[4] = Integer.parseInt(result[1]);
+            pictures[5] = Integer.parseInt(result[2]);
             opentiles(pictures);
         } catch (XmlPullParserException e) {
 
@@ -202,7 +205,7 @@ public class Dice extends AppCompatActivity {
                 case XmlPullParser.START_TAG:
                     eltName = parser.getName();
 
-                if("one".equals(eltName)) {
+                if("two".equals(eltName)) {
                     System.out.println(eltName);
                     card = true;
                     eventType = parser.next();
