@@ -49,7 +49,7 @@ public class LeaderboardFragment extends Fragment {
      * @return A new instance of fragment Rules1Fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LeaderboardFragment newInstance(String param1, String param2) {
+    public static LeaderboardFragment newInstance(String param1) {
         LeaderboardFragment fragment = new LeaderboardFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
