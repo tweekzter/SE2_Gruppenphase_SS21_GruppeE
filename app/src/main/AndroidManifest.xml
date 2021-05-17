@@ -13,8 +13,8 @@
         android:theme="@style/Theme.SE2_Gruppenphase_SS21">
         <activity android:name=".menu.MockingGame"/>
         <activity android:name=".menu.MenuActivity" />
-        <activity android:name=".menu.LeaderboardActivity"/>
-        <activity android:name=".menu.MainActivity">
+        <activity android:name=".menu.MainActivity"/>
+        <activity android:name=".menu.LeaderboardActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
