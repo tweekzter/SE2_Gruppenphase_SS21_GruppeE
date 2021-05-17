@@ -3,6 +3,7 @@ package com.example.se2_gruppenphase_ss21.menu;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -32,6 +33,7 @@ public class RoomFragment extends Fragment {
 
     static AvailableRoom room;
     static boolean isReady = false;
+    GameClient client = null;
 
     // Handler for creating post delay threads for updating ui
     Handler handler = new Handler();
@@ -64,7 +66,6 @@ public class RoomFragment extends Fragment {
         args.putString(ARG_PARAM1, param1);
         room = availableRoom;
         fragment.setArguments(args);
-        // String userName = param1;
         return fragment;
     }
 
@@ -94,7 +95,7 @@ public class RoomFragment extends Fragment {
         String userName = getArguments().getString(ARG_PARAM1);
 
         // create new Client
-        GameClient client = null;
+//        GameClient client = null;
 
         try {
             client = new GameClient(room, userName);
@@ -155,6 +156,18 @@ public class RoomFragment extends Fragment {
 
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        });
+
+
+        /**
+         * overrides behaviour of 'back-button'; client should be removed from room when clicking back button
+         */
+        requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // TODO: client.disconnect()
+                getParentFragmentManager().beginTransaction().replace(R.id.container, JoinRoomFragment.newInstance(userName)).commit();
             }
         });
 
