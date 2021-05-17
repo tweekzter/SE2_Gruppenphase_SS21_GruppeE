@@ -11,9 +11,9 @@
         android:roundIcon="@mipmap/icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SE2_Gruppenphase_SS21">
-        <activity android:name=".MenuActivity" />
-        <activity android:name=".LeaderboardActivity"/>
-        <activity android:name=".MainActivity">
+        <activity android:name=".menu.MenuActivity" />
+        <activity android:name=".menu.LeaderboardActivity"/>
+        <activity android:name=".menu.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,14 +1,10 @@
-package com.example.se2_gruppenphase_ss21;
+package com.example.se2_gruppenphase_ss21.menu;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.se2_gruppenphase_ss21.R;
 
 public class LeaderboardActivity extends AppCompatActivity {
 

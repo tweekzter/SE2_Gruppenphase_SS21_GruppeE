@@ -1,4 +1,4 @@
-package com.example.se2_gruppenphase_ss21;
+package com.example.se2_gruppenphase_ss21.menu;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +8,10 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
+
+import com.example.se2_gruppenphase_ss21.Player;
+import com.example.se2_gruppenphase_ss21.PlayerArrayAdapter;
+import com.example.se2_gruppenphase_ss21.R;
 
 import java.util.ArrayList;
 import java.util.List;
