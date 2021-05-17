@@ -22,6 +22,7 @@ import com.example.se2_gruppenphase_ss21.networking.client.ServerMessageListener
 import com.example.se2_gruppenphase_ss21.networking.server.logic.GameLogicException;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -129,6 +130,26 @@ public class RoomFragment extends Fragment {
                 @Override
                 public void receiveUserList(String[] nicknames) {
                     updatePlayers(nicknames, view);
+                }
+
+                @Override
+                public void rollRequest(String nick) {
+
+                }
+
+                @Override
+                public void rollResult(int result) {
+
+                }
+
+                @Override
+                public void beginPuzzle(long finishUntil) {
+
+                }
+
+                @Override
+                public void placementsReceived(Map<String, Integer> placements) {
+
                 }
 
                 @Override
