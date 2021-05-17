@@ -13,8 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerArrayAdapter extends ArrayAdapter<Player> {
-    private static final String TAG = "PlayerArrayAdapter";
-    private List<Player> playerList = new ArrayList<Player>();
+    private List<Player> playerList = new ArrayList<>();
 
     static class PlayerViewHolder{
         TextView position;
