@@ -8,49 +8,55 @@
     android:layout_marginHorizontal="55dp"
     tools:context=".menu.StartGameFragment">
 
+
     <EditText
-        android:id="@+id/editTextUserName"
+        android:id="@+id/editTextNameOfRoom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:ems="10"
-        android:textColorHint="@color/white"
-        android:inputType="textPersonName"
-        android:hint="choose your username"
         android:gravity="center_horizontal"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="90dp"
+        android:hint="name of room"
+        android:inputType="textPersonName"
         android:textColor="@color/white"
+        android:textColorHint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_gravity="center_horizontal"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.373" />
+        app:layout_constraintVertical_bias="0.236" />
 
-    <Button
-        android:id="@+id/button_localGame"
+    <EditText
+        android:id="@+id/editTextMaxUsers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="local game"
-        android:layout_marginTop="50dp"
+        android:layout_gravity="center_horizontal"
+        android:ems="10"
+        android:gravity="center_horizontal"
+        android:hint="max users"
+        android:layout_marginTop="80dp"
+        android:inputType="number"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.434" />
+
+    <Button
+        android:id="@+id/button_startLocalServer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_gravity="center_horizontal"
+        android:text="create room"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_gravity="center_horizontal"
         app:layout_constraintVertical_bias="0.647" />
-
-    <Button
-        android:id="@+id/button_onlineGame"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="online game"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="50dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_gravity="center_horizontal"
-        app:layout_constraintVertical_bias="0.775" />
-
 </LinearLayout>

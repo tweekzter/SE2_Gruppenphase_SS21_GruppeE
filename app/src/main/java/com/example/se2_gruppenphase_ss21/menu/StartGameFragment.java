@@ -1,4 +1,4 @@
-package com.example.se2_gruppenphase_ss21;
+package com.example.se2_gruppenphase_ss21.menu;
 
 import android.os.Bundle;
 
@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.se2_gruppenphase_ss21.R;
+import com.example.se2_gruppenphase_ss21.networking.MulticastReceiver;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,8 +71,12 @@ public class StartGameFragment extends Fragment {
         localGameButton.setOnClickListener((View v) -> {
             String userName = getUsername(view);
             if (userName != null) {
-                //TODO: start local server
-                System.out.println(userName +"local!!!!!!!!!!!!!");
+                // open LocalGameFragment and pass userName as an argument
+                getParentFragmentManager().beginTransaction().replace(R.id.container, LocalGameFragment.newInstance(userName)).addToBackStack("tag").commit();
+
+                // MulticastReceiver starts to listen
+                MulticastReceiver.startListen();
+
             }
         });
 
@@ -78,13 +85,17 @@ public class StartGameFragment extends Fragment {
             String userName = getUsername(view);
             if (userName != null) {
                 //TODO: start remote server
-                System.out.println(userName +"online!!!!!!!!!!!!!");
             }
         });
 
         return view;
     }
 
+    /**
+     * returns userName from input fiels and and NULL if nothing is entered
+     * @param view
+     * @return userNmae input as String of NULL
+     */
     public String getUsername(View view) {
         EditText username = view.findViewById(R.id.editTextUserName);
 
