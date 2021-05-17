@@ -16,6 +16,7 @@ import com.example.se2_gruppenphase_ss21.R;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link LeaderboardFragment#newInstance} factory method to
@@ -45,7 +46,6 @@ public class LeaderboardFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment Rules1Fragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -53,7 +53,6 @@ public class LeaderboardFragment extends Fragment {
         LeaderboardFragment fragment = new LeaderboardFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -77,6 +76,73 @@ public class LeaderboardFragment extends Fragment {
             getParentFragmentManager().beginTransaction().replace(R.id.container, new MenuFragment()).addToBackStack("tag").commit();
         });
 
+        Button nextGameButton = view.findViewById(R.id.buttonNextRound);
+        nextGameButton.setOnClickListener((View v) ->{
+            //TODO: Change Fragment
+            getParentFragmentManager().beginTransaction().replace(R.id.container, new RoomFragment()).addToBackStack("tag").commit();
+        });
+
+        //TODO Get client and room and change the code to the design like Roomfragment
+
+        /*ServerMessageListener listener = new ServerMessageListener() {
+            @Override
+            public void readyCount(int current, int max) {
+
+            }
+
+            @Override
+            public void onGameStart() {
+
+            }
+
+            @Override
+            public void userDisconnect(String nickname) {
+
+            }
+
+            @Override
+            public void receiveUserList(String[] nicknames) {
+                listView = (ListView) view.findViewById(R.id.listView);
+                playerArrayAdapter = new PlayerArrayAdapter(view.getContext(), R.layout.listview_row_layout);
+                listView.setAdapter(playerArrayAdapter);
+                List<String[]> playerList = readData(nicknames);
+                for(String[] playerData:playerList){
+                    String position = playerData[0];
+                    String playername = playerData[1];
+                    String points = playerData[2];
+
+                    Player player = new Player(position, playername, points);
+
+                    playerArrayAdapter.add(player);
+                }
+            }
+
+            @Override
+            public void rollRequest(String nick) {
+
+            }
+
+            @Override
+            public void rollResult(int result) {
+
+            }
+
+            @Override
+            public void beginPuzzle(long finishUntil) {
+
+            }
+
+            @Override
+            public void placementsReceived(Map<String, Integer> placements) {
+
+            }
+
+            @Override
+            public void unknownMessage(String message) {
+
+            }
+        };*/
+
         listView = (ListView) view.findViewById(R.id.listView);
         playerArrayAdapter = new PlayerArrayAdapter(view.getContext(), R.layout.listview_row_layout);
         listView.setAdapter(playerArrayAdapter);
@@ -96,9 +162,17 @@ public class LeaderboardFragment extends Fragment {
 
 
     //TODO: Edit to use for real players
-    //List of player to test the design of the ListView
+    //List of players
     private List<String[]> readData() {
         List<String[]> resultList = new ArrayList<String[]>();
+
+        /*for (int i = 0; i < nicknames.length; i++) {
+            String[] player = new String[3];
+            player[0] = Integer.toString(i);
+            player[1] = nicknames[i];
+            player[2] = "0 Punkte";
+            resultList.add(player);
+        }*/
         String[] player1 = new String[3];
         player1[0] = "1";
         player1[1] = "Testperson1";
