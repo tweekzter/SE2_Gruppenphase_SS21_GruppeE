@@ -8,7 +8,7 @@
     tools:context=".Tiles">
 
     <Button
-        android:id="@+id/button59"
+        android:id="@+id/turnleft"
         android:layout_width="99dp"
         android:layout_height="56dp"
         android:layout_marginStart="156dp"
@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button58"
+        android:id="@+id/turnrigth"
         android:layout_width="99dp"
         android:layout_height="56dp"
         android:layout_marginStart="32dp"
@@ -38,7 +38,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button57"
+        android:id="@+id/tileright"
         android:layout_width="95dp"
         android:layout_height="39dp"
         android:layout_marginStart="300dp"
@@ -48,7 +48,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button56"
+        android:id="@+id/tileleft"
         android:layout_width="95dp"
         android:layout_height="39dp"
         android:layout_marginStart="184dp"
@@ -58,7 +58,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button55"
+        android:id="@+id/tiledown"
         android:layout_width="95dp"
         android:layout_height="39dp"
         android:layout_marginStart="80dp"
@@ -310,7 +310,7 @@
     </androidx.gridlayout.widget.GridLayout>
 
     <Button
-        android:id="@+id/button54"
+        android:id="@+id/tileup"
         android:layout_width="62dp"
         android:layout_height="37dp"
         android:layout_marginStart="4dp"

@@ -103,6 +103,7 @@ public class Tile {
      * @return true if placed - false if not
      */
     public boolean attachToMap(Map map, int x, int y) {
+        System.out.println("Attached to map");
         return attachToMap(map, new Position(x,y));
     }
 

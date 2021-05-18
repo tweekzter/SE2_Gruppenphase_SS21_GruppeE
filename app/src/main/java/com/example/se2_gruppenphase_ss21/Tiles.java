@@ -260,6 +260,9 @@ public class Tiles extends AppCompatActivity {
     private View.OnClickListener movetiles(Tile tile, ImageView tileimage){
         tileimage.setBackgroundResource(0);
         if(currenttile!=null){
+
+            currentpositiony=0;
+            currentpositionx=0;
             currenttile.attachToMap(currentmap, currentpositionx, currentpositiony);
         }
         currenttile = tile;
@@ -268,7 +271,10 @@ public class Tiles extends AppCompatActivity {
         for(int i =0; i<5; i++){
             for(int j= 0; j<5; j++){
                 if(checkifplacable(i,j, tilepositions)){
+
                     colorbuttons(i,j, tilepositions);
+                    currentpositionx=i;
+                    currentpositiony = j;
                     break outerloop;
                 }
             }
@@ -279,9 +285,15 @@ public class Tiles extends AppCompatActivity {
         return null;
     }
 
+
+
     protected void colorbuttons(int x, int y, Position[] tiles){
         for(int i =0; i<tiles.length; i++){
-            buttonarray[x+tiles[i].getX()][y+tiles[i].getY()].setBackgroundColor(Color.RED);
+            if(tiles.length<=3){
+            buttonarray[x+tiles[i].getX()][y+tiles[i].getY()].setBackgroundColor(Color.RED);}
+            if(tiles.length>3){
+                buttonarray[x+tiles[i].getX()][y+tiles[i].getY()].setBackgroundColor(Color.BLUE);
+            }
         }
 
     }
@@ -296,5 +308,72 @@ public class Tiles extends AppCompatActivity {
             }
         }
         return true;
+    }
+
+    private void addonclicklistener(){
+        Button up = findViewById(R.id.tileup);
+        Button down = findViewById(R.id.tiledown);
+        Button left = findViewById(R.id.tileleft);
+        Button right = findViewById(R.id.tileright);
+        Button turnright = findViewById(R.id.turnrigth);
+        Button turnleft = findViewById(R.id.turnleft);
+        up.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                movetileup();
+            }
+        });
+        down.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                movetiledown();
+            }
+        });
+        left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                movetileleft();
+            }
+        });
+
+        right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                movetileright();
+            }
+        });
+        turnleft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                turntileleft();
+            }
+        });
+
+        turnright.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                turntileright();
+            }
+        });
+
+    }
+    private void movetileup(){
+
+    }
+    private void movetiledown(){
+
+    }
+    private void movetileleft(){
+
+    }
+    private void movetileright(){
+
+    }
+
+    private void turntileright(){
+
+    }
+    private void turntileleft(){
+
     }
 }
