@@ -12,10 +12,14 @@ import androidx.fragment.app.Fragment;
 import com.example.se2_gruppenphase_ss21.Player;
 import com.example.se2_gruppenphase_ss21.PlayerArrayAdapter;
 import com.example.se2_gruppenphase_ss21.R;
+import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
+import com.example.se2_gruppenphase_ss21.networking.MulticastReceiver;
+import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
+import com.example.se2_gruppenphase_ss21.networking.client.ServerMessageListener;
+import com.example.se2_gruppenphase_ss21.networking.server.GameServer;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,7 +53,7 @@ public class LeaderboardFragment extends Fragment {
      * @return A new instance of fragment Rules1Fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LeaderboardFragment newInstance(String leaderboardparam1) {
+    public static LeaderboardFragment newInstance(String leaderboardparam1, AvailableRoom room) {
         LeaderboardFragment fragment = new LeaderboardFragment();
         Bundle args = new Bundle();
         args.putString(LEADERBOARD_ARG_PARAM1, leaderboardparam1);
@@ -78,75 +82,16 @@ public class LeaderboardFragment extends Fragment {
 
         Button nextGameButton = view.findViewById(R.id.buttonNextRound);
         nextGameButton.setOnClickListener((View v) ->{
-            //TODO: Change Fragment
             getParentFragmentManager().beginTransaction().replace(R.id.container, new RoomFragment()).addToBackStack("tag").commit();
         });
 
-        //TODO Get client and room and change the code to the design like Roomfragment
-
-        /*ServerMessageListener listener = new ServerMessageListener() {
-            @Override
-            public void readyCount(int current, int max) {
-
-            }
-
-            @Override
-            public void onGameStart() {
-
-            }
-
-            @Override
-            public void userDisconnect(String nickname) {
-
-            }
-
-            @Override
-            public void receiveUserList(String[] nicknames) {
-                listView = (ListView) view.findViewById(R.id.listView);
-                playerArrayAdapter = new PlayerArrayAdapter(view.getContext(), R.layout.listview_row_layout);
-                listView.setAdapter(playerArrayAdapter);
-                List<String[]> playerList = readData(nicknames);
-                for(String[] playerData:playerList){
-                    String position = playerData[0];
-                    String playername = playerData[1];
-                    String points = playerData[2];
-
-                    Player player = new Player(position, playername, points);
-
-                    playerArrayAdapter.add(player);
-                }
-            }
-
-            @Override
-            public void rollRequest(String nick) {
-
-            }
-
-            @Override
-            public void rollResult(int result) {
-
-            }
-
-            @Override
-            public void beginPuzzle(long finishUntil) {
-
-            }
-
-            @Override
-            public void placementsReceived(Map<String, Integer> placements) {
-
-            }
-
-            @Override
-            public void unknownMessage(String message) {
-
-            }
-        };*/
+        //To Do: Listener and Array for the server nicknames
 
         listView = (ListView) view.findViewById(R.id.listView);
         playerArrayAdapter = new PlayerArrayAdapter(view.getContext(), R.layout.listview_row_layout);
         listView.setAdapter(playerArrayAdapter);
-        List<String[]> playerList = readData();
+        String[] nicknames = {"Test1", "Test2"};
+        List<String[]> playerList = readData(nicknames);
         for(String[] playerData:playerList){
             String position = playerData[0];
             String playername = playerData[1];
@@ -160,49 +105,18 @@ public class LeaderboardFragment extends Fragment {
         return view;
     }
 
-
-    //TODO: Edit to use for real players
     //List of players
-    private List<String[]> readData() {
+    private List<String[]> readData(String[] nicknames) {
         List<String[]> resultList = new ArrayList<String[]>();
-
-        /*for (int i = 0; i < nicknames.length; i++) {
+        int points = 4;
+        for (int i = 0; i < nicknames.length; i++) {
             String[] player = new String[3];
-            player[0] = Integer.toString(i);
+            player[0] = Integer.toString(i+1);
             player[1] = nicknames[i];
-            player[2] = "0 Punkte";
+            player[2] = points + " Punkte";
+            if(points>=0) points--;
             resultList.add(player);
-        }*/
-        String[] player1 = new String[3];
-        player1[0] = "1";
-        player1[1] = "Testperson1";
-        player1[2] = "4 Punkte";
-        resultList.add(player1);
-
-        String[] player2 = new String[3];
-        player2[0] = "2";
-        player2[1] = "Testperson2";
-        player2[2] = "3 Punkte";
-        resultList.add(player2);
-
-        String[] player3 = new String[3];
-        player3[0] = "3";
-        player3[1] = "Testperson3";
-        player3[2] = "2 Punkte";
-        resultList.add(player3);
-
-        String[] player4 = new String[3];
-        player4[0] = "4";
-        player4[1] = "Testperson4";
-        player4[2] = "1 Punkte";
-        resultList.add(player4);
-
-        String[] player5 = new String[3];
-        player5[0] = "5";
-        player5[1] = "Testperson5";
-        player5[2] = "0 Punkte";
-        resultList.add(player5);
-
+        }
         return resultList;
     }
 }
