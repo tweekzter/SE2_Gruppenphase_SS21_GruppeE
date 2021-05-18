@@ -11,8 +11,9 @@
         android:id="@+id/listView"
         android:layout_width="357dp"
         android:layout_height="454dp"
-        android:layout_marginStart="54dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="90dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,10 +22,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="79dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
         android:layout_marginBottom="95dp"
         android:text="Next Round"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonQuitGame"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/listView" />
 
@@ -32,11 +34,11 @@
         android:id="@+id/buttonQuitGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginEnd="83dp"
         android:layout_marginBottom="95dp"
         android:text="Quit Game"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/buttonNextRound"
         app:layout_constraintTop_toBottomOf="@+id/listView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

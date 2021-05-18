@@ -81,6 +81,8 @@ public class LeaderboardFragment extends Fragment {
             getParentFragmentManager().beginTransaction().replace(R.id.container, new RoomFragment()).addToBackStack("tag").commit();
         });
 
+        //To Do: Listener and Array for the server nicknames
+
         listView = (ListView) view.findViewById(R.id.listView);
         playerArrayAdapter = new PlayerArrayAdapter(view.getContext(), R.layout.listview_row_layout);
         listView.setAdapter(playerArrayAdapter);
