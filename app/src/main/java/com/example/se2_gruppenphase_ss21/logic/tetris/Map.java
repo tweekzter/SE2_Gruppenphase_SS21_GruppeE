@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  * A MAP represents a rectangular field and consists of
  * -> a play field (area where tiles can be placed on)
- * -> not eligible surroundings to fill up the gaps of the rectangle
+ * -> surrounding area
  *
  * The functionality of this class includes:
  * -> setting up the play field
@@ -97,7 +97,7 @@ public class Map {
     }
 
     /**
-     * Covers a specific box on the map with a TILE.
+     * Covers a specific box on the map with the given TILE.
      * @param tile the tile to cover box with
      * @param x x-coordinate of the box
      * @param y y-coordinate of the box
@@ -107,7 +107,7 @@ public class Map {
     }
 
     /**
-     * Clears coverage of a specific box on the map.
+     * Clears any tile from the specified box on the map.
      * @param x x-coordinate of the box
      * @param y y-coordinate of the box
      */
@@ -136,6 +136,12 @@ public class Map {
      */
     void addTile(Tile tile) {
         tiles.add(tile);
+    }
+
+    public Tile[] getTile() {
+        Tile[] t = new Tile[tiles.size()];
+        tiles.toArray(t);
+        return t;
     }
 
     /**
