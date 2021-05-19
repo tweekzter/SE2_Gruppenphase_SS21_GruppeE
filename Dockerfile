@@ -1,8 +1,8 @@
-FROM openjdk:11
+FROM openjdk:11-jdk-slim
 
 WORKDIR /server
 
-COPY ./app/src/main/java/com ./
+COPY ./app/src/main/java ./
 
 RUN cd com/example/se2_gruppenphase_ss21/networking && \
     javac *.java client/*.java server/*.java server/logic/*.java
