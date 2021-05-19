@@ -174,6 +174,9 @@ public class Tile {
      * @return true if it can be placed - false if not
      */
     public boolean checkPlaceable(Position offset) {
+        if(map == null)
+            return false;
+
         for(Position pos : shape) {
             int x = offset.x + pos.x;
             int y = offset.y + pos.y;
@@ -331,9 +334,9 @@ public class Tile {
      * @return shape array
      */
     public Position[] getShape() {
-        Position[] shape = new Position[this.shape.size()];
-        this.shape.toArray(shape);
-        return shape;
+        Position[] s = new Position[shape.size()];
+        shape.toArray(s);
+        return s;
     }
 
     /**

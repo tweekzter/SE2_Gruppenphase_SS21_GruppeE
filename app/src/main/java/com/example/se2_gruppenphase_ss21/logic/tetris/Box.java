@@ -2,7 +2,7 @@ package com.example.se2_gruppenphase_ss21.logic.tetris;
 
 
 /**
- * A BOX is the element that the MAP consists of.
+ * A BOX is the fundamental element that a MAP consists of.
  * A BOX can be part of the play field and can also be covered by a tile.
  *
  * @author Manuel Simon #00326348
