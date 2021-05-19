@@ -258,6 +258,8 @@ public class Tiles extends AppCompatActivity {
 
     }
     private View.OnClickListener movetiles(Tile tile, ImageView tileimage){
+        addonclicklistener();
+
         tileimage.setBackgroundResource(0);
         if(currenttile!=null){
 
@@ -299,6 +301,7 @@ public class Tiles extends AppCompatActivity {
     }
 
     private boolean checkifplacable(int x, int y, Position[] tilepositions){
+        currenttile.setMap(currentmap);
         for(int i = 0; i< tilepositions.length; i++) {
             if(x+tilepositions[i].getX()<0||y+tilepositions[i].getY()<0){
                 return false;
@@ -358,12 +361,19 @@ public class Tiles extends AppCompatActivity {
 
     }
     private void movetileup(){
+        if(checkifplacable(currentpositionx, currentpositiony-1, tilepositions)){
+            colorbuttons(currentpositionx, currentpositiony-1, tilepositions);
+                currentpositiony--;
+
+        }
 
     }
     private void movetiledown(){
 
+
     }
     private void movetileleft(){
+
 
     }
     private void movetileright(){
