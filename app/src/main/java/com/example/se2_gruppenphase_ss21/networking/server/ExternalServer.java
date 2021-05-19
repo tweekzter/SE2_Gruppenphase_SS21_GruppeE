@@ -10,7 +10,10 @@ public class ExternalServer {
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-        GameServer server = new GameServer(6789);
+        int port = 6789;
+
+        System.out.printf("Starting External Server on port %d%n", port);
+        GameServer server = new GameServer(port);
         server.start();
     }
 }
