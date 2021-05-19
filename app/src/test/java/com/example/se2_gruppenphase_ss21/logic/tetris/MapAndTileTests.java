@@ -89,10 +89,12 @@ public class MapAndTileTests {
         displayMap(map);
         System.out.println(map.checkSolved());
 
-        Tile collide = new Tile(new Position(-1,0), new Position(0,0),
+        Tile collide = new Tile(new Position(0,0),
                 new Position(1,0));
 
-        System.out.println("Does this work? "+collide.attachToMap(map, new Position(2,1)));
+        System.out.println("Does this work? "+collide.attachToMap(map, new Position(0,0)));
+        displayMap(map);
+
         for (Position pos : tile.getShape()) {
             System.out.print(pos.x + ", ");
             System.out.print(pos.y + "\n");

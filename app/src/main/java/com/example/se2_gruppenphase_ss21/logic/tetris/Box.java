@@ -33,12 +33,20 @@ public class Box extends Position {
 
     /**
      * Indicates if this BOX is available to place a TILE on -
-     * in other words - not occupied by a TILE already.
+     * in other words - not occupied by a TILE already and part of the play field.
      *
      * @return if BOX is available true, otherwise false.
      */
     public boolean isAvailable() {
-        return tile == null;
+        return tile == null && isField;
+    }
+
+    /**
+     * Returns if this BOX is occupied by a TILE.
+     * @return true if occupied by a TILE, otherwise false;
+     */
+    public boolean occupiedByTile() {
+        return tile != null;
     }
 
     /**

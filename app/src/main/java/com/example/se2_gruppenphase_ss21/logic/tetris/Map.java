@@ -83,15 +83,15 @@ public class Map {
         if(field == null)
             field = StructureLoader.getStandardStructure();
 
-        int y = field.length;
-        int x = field[0].length;
-        boxMap = new Box[y][x];
+        int ySize = field.length;
+        int xSize = field[0].length;
+        boxMap = new Box[ySize][xSize];
 
-        for(int i=0; i < field.length; i++) {
-            for(int j=0; j < field[i].length; j++) {
-                Box box = new Box(i,j);
-                box.setField(field[i][j]);
-                boxMap[i][j] = box;
+        for(int y=0; y < field.length; y++) {
+            for(int x=0; x < field[y].length; x++) {
+                Box box = new Box(y,x);
+                box.setField(field[y][x]);
+                boxMap[y][x] = box;
             }
         }
     }
