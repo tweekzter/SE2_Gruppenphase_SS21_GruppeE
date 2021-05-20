@@ -1,5 +1,7 @@
 package com.example.se2_gruppenphase_ss21.networking.client;
 
+import java.util.Map;
+
 public class ServerMessageListenerImpl implements ServerMessageListener {
     @Override
     public void readyCount(int current, int max) {
@@ -22,6 +24,26 @@ public class ServerMessageListenerImpl implements ServerMessageListener {
         for(String nick : nicknames) {
             System.out.println(nick);
         }
+    }
+
+    @Override
+    public void rollRequest(String nick) {
+
+    }
+
+    @Override
+    public void rollResult(int result) {
+
+    }
+
+    @Override
+    public void beginPuzzle(long finishUntil) {
+
+    }
+
+    @Override
+    public void placementsReceived(Map<String, Integer> placements) {
+
     }
 
     @Override

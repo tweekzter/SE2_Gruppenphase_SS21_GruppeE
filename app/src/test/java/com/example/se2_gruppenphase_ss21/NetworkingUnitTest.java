@@ -1,7 +1,5 @@
 package com.example.se2_gruppenphase_ss21;
 
-import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
-import com.example.se2_gruppenphase_ss21.networking.MulticastReceiver;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 import com.example.se2_gruppenphase_ss21.networking.client.ServerMessageListener;
 import com.example.se2_gruppenphase_ss21.networking.client.ServerMessageListenerImpl;
