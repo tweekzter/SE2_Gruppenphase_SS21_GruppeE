@@ -119,7 +119,7 @@ public class Tile {
      * respective boxes (absolute position of the map boxes is calculated by using the hook point).
      *
      * @param posOnMap map-hook
-     * @return true if placed - false if not
+     * @return true if successful - false if not
      */
     public boolean attachToMap(Map map, Position posOnMap) {
         // absolute reference point of map

@@ -92,7 +92,7 @@ public class MapAndTileTests {
         Tile collide = new Tile(new Position(0,0),
                 new Position(1,0));
 
-        System.out.println("Does this work? "+collide.attachToMap(map, new Position(0,0)));
+        System.out.println("Does this work? "+collide.attachToMap(map, new Position(1,0)));
         displayMap(map);
 
         for (Position pos : tile.getShape()) {
