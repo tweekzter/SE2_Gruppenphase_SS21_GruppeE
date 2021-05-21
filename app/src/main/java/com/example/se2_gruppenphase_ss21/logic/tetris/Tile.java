@@ -195,7 +195,7 @@ public class Tile {
         if(shape.size() == 0 || isAttached)
             return;
 
-        invertAxis(Y_AXIS);
+        invertY();
         switchAxis();
     }
 
@@ -207,7 +207,7 @@ public class Tile {
         if(shape.size() == 0 || isAttached)
             return;
 
-        invertAxis(X_AXIS);
+        invertX();
         switchAxis();
     }
 
@@ -218,7 +218,7 @@ public class Tile {
         if(shape.size() == 0 || isAttached)
             return;
 
-        invertAxis(Y_AXIS);
+        invertY();
     }
 
     /**
@@ -228,7 +228,7 @@ public class Tile {
         if(shape.size() == 0 || isAttached)
             return;
 
-        invertAxis(X_AXIS);
+        invertX();
     }
 
     /**
@@ -243,78 +243,39 @@ public class Tile {
     }
 
     /**
-     * Inverts the the values on the specified axis.
-     * @param axis the axis to invert (X_AXIS / Y_AXIS)
+     * Inverts the x-axis coordinates of the shape Positions
      */
-    private void invertAxis(int axis) {
-        if(axis == X_AXIS) {
-            int max = getMaxX();
-            int min = getMinX();
-
-            for(Position pos : shape) {
-                int upperDiff = max - pos.x;
-                int lowerDiff = pos.x - min;
-                pos.x = upperDiff < lowerDiff ? min + upperDiff : max - lowerDiff;
-            }
-        }
-        else {
-            int max = getMaxY();
-            int min = getMinY();
-
-            for(Position pos : shape) {
-                int upperDiff = max - pos.y;
-                int lowerDiff = pos.y - min;
-                pos.y = upperDiff < lowerDiff ? min + upperDiff : max - lowerDiff;
-            }
-        }
-    }
-
-    /**
-     * Returns the maximum value of the shape on the x axis.
-     * @return maximum value of x axis
-     */
-    private int getMaxX() {
+    private void invertX() {
         int max = shape.get(0).x;
-        for (Position pos : shape)
+        int min = max;
+        for (Position pos : shape) {
             max = Math.max(pos.x, max);
-
-        return max;
-    }
-
-    /**
-     * Returns the maximum value of the shape on the y axis.
-     * @return maximum value of y axis
-     */
-    private int getMaxY() {
-        int max = shape.get(0).y;
-        for (Position pos : shape)
-            max = Math.max(pos.y, max);
-
-        return max;
-    }
-
-    /**
-     * Returns the minimum value of the shape on the specified axis.
-     * @return minimum value of x axis
-     */
-    private int getMinX() {
-        int min = shape.get(0).x;
-        for (Position pos : shape)
             min = Math.min(pos.x, min);
+        }
 
-        return min;
+        for(Position pos : shape) {
+            int upperDiff = max - pos.x;
+            int lowerDiff = pos.x - min;
+            pos.x = upperDiff < lowerDiff ? min + upperDiff : max - lowerDiff;
+        }
     }
 
     /**
-     * Returns the minimum value of the shape on the y axis.
-     * @return minimum value of y axis
+     * Inverts the y-axis coordinates of the shape Positions
      */
-    private int getMinY() {
-        int min = shape.get(0).y;
-        for (Position pos : shape)
+    private void invertY() {
+        int max = shape.get(0).y;
+        int min = max;
+        for (Position pos : shape) {
+            max = Math.max(pos.y, max);
             min = Math.min(pos.y, min);
+        }
 
-        return min;
+        for(Position pos : shape) {
+            int upperDiff = max - pos.y;
+            int lowerDiff = pos.y - min;
+            pos.y = upperDiff < lowerDiff ? min + upperDiff : max - lowerDiff;
+        }
     }
 
     /**
