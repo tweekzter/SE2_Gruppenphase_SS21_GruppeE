@@ -195,15 +195,7 @@ public class Tile {
         if(shape.size() == 0 || isAttached)
             return;
 
-        int max = shape.get(0).y;
-        int min = max;
-
-        for(Position pos : shape) {
-            max = Math.max(pos.y, max);
-            min = Math.min(pos.y, min);
-        }
-
-        invertAxis(min, max, Y_AXIS);
+        invertAxis(Y_AXIS);
         switchAxis();
     }
 
@@ -215,15 +207,7 @@ public class Tile {
         if(shape.size() == 0 || isAttached)
             return;
 
-        int max = shape.get(0).x;
-        int min = max;
-
-        for(Position pos : shape) {
-            max = Math.max(pos.x, max);
-            min = Math.min(pos.x, min);
-        }
-
-        invertAxis(min, max, X_AXIS);
+        invertAxis(X_AXIS);
         switchAxis();
     }
 
@@ -234,15 +218,7 @@ public class Tile {
         if(shape.size() == 0 || isAttached)
             return;
 
-        int max = shape.get(0).y;
-        int min = max;
-
-        for(Position pos : shape) {
-            max = Math.max(pos.y, max);
-            min = Math.min(pos.y, min);
-        }
-
-        invertAxis(min, max, Y_AXIS);
+        invertAxis(Y_AXIS);
     }
 
     /**
@@ -252,15 +228,7 @@ public class Tile {
         if(shape.size() == 0 || isAttached)
             return;
 
-        int max = shape.get(0).x;
-        int min = max;
-
-        for(Position pos : shape) {
-            max = Math.max(pos.x, max);
-            min = Math.min(pos.x, min);
-        }
-
-        invertAxis(min, max, X_AXIS);
+        invertAxis(X_AXIS);
     }
 
     /**
@@ -276,18 +244,34 @@ public class Tile {
 
     /**
      * Inverts the the values on the specified axis.
-     * @param min min value of the specified axis
-     * @param max max value of the specified axis
      * @param axis the axis to invert (X_AXIS / Y_AXIS)
      */
-    private void invertAxis(int min, int max, int axis) {
-        for(Position pos : shape) {
-            if(axis == X_AXIS) {
+    private void invertAxis(int axis) {
+        if(axis == X_AXIS) {
+            int max = shape.get(0).x;
+            int min = max;
+
+            for(Position pos : shape) {
+                max = Math.max(pos.x, max);
+                min = Math.min(pos.x, min);
+            }
+
+            for(Position pos : shape) {
                 int upperDiff = max - pos.x;
                 int lowerDiff = pos.x - min;
                 pos.x = upperDiff < lowerDiff ? min + upperDiff : max - lowerDiff;
             }
-            else {
+        }
+        else {
+            int max = shape.get(0).y;
+            int min = max;
+
+            for(Position pos : shape) {
+                max = Math.max(pos.y, max);
+                min = Math.min(pos.y, min);
+            }
+
+            for(Position pos : shape) {
                 int upperDiff = max - pos.y;
                 int lowerDiff = pos.y - min;
                 pos.y = upperDiff < lowerDiff ? min + upperDiff : max - lowerDiff;
