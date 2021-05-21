@@ -45,7 +45,7 @@ public class Box extends Position {
      * Returns if this BOX is occupied by a TILE.
      * @return true if occupied by a TILE, otherwise false;
      */
-    public boolean isCovered() {
+    public boolean isCoveredByTile() {
         return tile != null;
     }
 
