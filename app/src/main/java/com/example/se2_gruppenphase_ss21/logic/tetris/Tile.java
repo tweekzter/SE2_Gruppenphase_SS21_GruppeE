@@ -248,13 +248,8 @@ public class Tile {
      */
     private void invertAxis(int axis) {
         if(axis == X_AXIS) {
-            int max = shape.get(0).x;
-            int min = max;
-
-            for(Position pos : shape) {
-                max = Math.max(pos.x, max);
-                min = Math.min(pos.x, min);
-            }
+            int max = getMaxX();
+            int min = getMinX();
 
             for(Position pos : shape) {
                 int upperDiff = max - pos.x;
@@ -263,13 +258,8 @@ public class Tile {
             }
         }
         else {
-            int max = shape.get(0).y;
-            int min = max;
-
-            for(Position pos : shape) {
-                max = Math.max(pos.y, max);
-                min = Math.min(pos.y, min);
-            }
+            int max = getMaxY();
+            int min = getMinY();
 
             for(Position pos : shape) {
                 int upperDiff = max - pos.y;
@@ -277,6 +267,54 @@ public class Tile {
                 pos.y = upperDiff < lowerDiff ? min + upperDiff : max - lowerDiff;
             }
         }
+    }
+
+    /**
+     * Returns the maximum value of the shape on the x axis.
+     * @return maximum value of x axis
+     */
+    private int getMaxX() {
+        int max = shape.get(0).x;
+        for (Position pos : shape)
+            max = Math.max(pos.x, max);
+
+        return max;
+    }
+
+    /**
+     * Returns the maximum value of the shape on the y axis.
+     * @return maximum value of y axis
+     */
+    private int getMaxY() {
+        int max = shape.get(0).y;
+        for (Position pos : shape)
+            max = Math.max(pos.y, max);
+
+        return max;
+    }
+
+    /**
+     * Returns the minimum value of the shape on the specified axis.
+     * @return minimum value of x axis
+     */
+    private int getMinX() {
+        int min = shape.get(0).x;
+        for (Position pos : shape)
+            min = Math.min(pos.x, min);
+
+        return min;
+    }
+
+    /**
+     * Returns the minimum value of the shape on the y axis.
+     * @return minimum value of y axis
+     */
+    private int getMinY() {
+        int min = shape.get(0).y;
+        for (Position pos : shape)
+            min = Math.min(pos.y, min);
+
+        return min;
     }
 
     /**
