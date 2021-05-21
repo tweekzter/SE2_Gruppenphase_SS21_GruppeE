@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  ubongo-server:
+    build: ./
+    image: ubongo-server
+    container_name: ubongo-server
+    restart: unless-stopped
+    ports:
+      - 6789:6789
