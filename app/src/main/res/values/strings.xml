@@ -17,4 +17,7 @@
         <li><b>Grün:</b> 2 Punkte</li>\n
         <li><b>Braun:</b> 1 Punkt</li>\n
     </string>
+    <string name="cheating_dialog_fragment">Wollen Sie vielleicht schummeln?</string>
+    <string name="cheating_dialog_positive">Klar doch!</string>
+    <string name="cheating_dialog_cancel">Besser nicht!</string>
     </resources>
