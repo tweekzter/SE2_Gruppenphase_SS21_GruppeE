@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 public class LogicTest {
 
     /**
-     * visual test using Ubungo junior tile
+     * visual test using Ubungo tile
      */
     @Test
     public void testMapAndTile() {
