@@ -119,7 +119,7 @@ public class Tile {
      * respective boxes (absolute position of the map boxes is calculated by using the hook point).
      *
      * @param posOnMap map-hook
-     * @return true if placed - false if not
+     * @return true if successful - false if not
      */
     public boolean attachToMap(Map map, Position posOnMap) {
         // absolute reference point of map
@@ -195,15 +195,7 @@ public class Tile {
         if(shape.size() == 0 || isAttached)
             return;
 
-        int max = shape.get(0).y;
-        int min = max;
-
-        for(Position pos : shape) {
-            max = Math.max(pos.y, max);
-            min = Math.min(pos.y, min);
-        }
-
-        invertAxis(min, max, Y_AXIS);
+        invertY();
         switchAxis();
     }
 
@@ -215,15 +207,7 @@ public class Tile {
         if(shape.size() == 0 || isAttached)
             return;
 
-        int max = shape.get(0).x;
-        int min = max;
-
-        for(Position pos : shape) {
-            max = Math.max(pos.x, max);
-            min = Math.min(pos.x, min);
-        }
-
-        invertAxis(min, max, X_AXIS);
+        invertX();
         switchAxis();
     }
 
@@ -234,15 +218,7 @@ public class Tile {
         if(shape.size() == 0 || isAttached)
             return;
 
-        int max = shape.get(0).y;
-        int min = max;
-
-        for(Position pos : shape) {
-            max = Math.max(pos.y, max);
-            min = Math.min(pos.y, min);
-        }
-
-        invertAxis(min, max, Y_AXIS);
+        invertY();
     }
 
     /**
@@ -252,15 +228,7 @@ public class Tile {
         if(shape.size() == 0 || isAttached)
             return;
 
-        int max = shape.get(0).x;
-        int min = max;
-
-        for(Position pos : shape) {
-            max = Math.max(pos.x, max);
-            min = Math.min(pos.x, min);
-        }
-
-        invertAxis(min, max, X_AXIS);
+        invertX();
     }
 
     /**
@@ -275,23 +243,38 @@ public class Tile {
     }
 
     /**
-     * Inverts the the values on the specified axis.
-     * @param min min value of the specified axis
-     * @param max max value of the specified axis
-     * @param axis the axis to invert (X_AXIS / Y_AXIS)
+     * Inverts the x-axis coordinates of the shape Positions
      */
-    private void invertAxis(int min, int max, int axis) {
+    private void invertX() {
+        int max = shape.get(0).x;
+        int min = max;
+        for (Position pos : shape) {
+            max = Math.max(pos.x, max);
+            min = Math.min(pos.x, min);
+        }
+
         for(Position pos : shape) {
-            if(axis == X_AXIS) {
-                int upperDiff = max - pos.x;
-                int lowerDiff = pos.x - min;
-                pos.x = upperDiff < lowerDiff ? min + upperDiff : max - lowerDiff;
-            }
-            else {
-                int upperDiff = max - pos.y;
-                int lowerDiff = pos.y - min;
-                pos.y = upperDiff < lowerDiff ? min + upperDiff : max - lowerDiff;
-            }
+            int upperDiff = max - pos.x;
+            int lowerDiff = pos.x - min;
+            pos.x = upperDiff < lowerDiff ? min + upperDiff : max - lowerDiff;
+        }
+    }
+
+    /**
+     * Inverts the y-axis coordinates of the shape Positions
+     */
+    private void invertY() {
+        int max = shape.get(0).y;
+        int min = max;
+        for (Position pos : shape) {
+            max = Math.max(pos.y, max);
+            min = Math.min(pos.y, min);
+        }
+
+        for(Position pos : shape) {
+            int upperDiff = max - pos.y;
+            int lowerDiff = pos.y - min;
+            pos.y = upperDiff < lowerDiff ? min + upperDiff : max - lowerDiff;
         }
     }
 
@@ -307,7 +290,7 @@ public class Tile {
      * Get the absolute position of the MAP where tile will be placed (with shape Position 0,0).
      * @return the absolute hook position of the MAP.
      */
-    Position getHook() {
+    public Position getHook() {
         return hook;
     }
 

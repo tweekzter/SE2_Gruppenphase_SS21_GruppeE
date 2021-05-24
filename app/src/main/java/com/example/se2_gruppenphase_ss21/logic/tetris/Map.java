@@ -127,7 +127,7 @@ public class Map {
             return false;
 
         Box box = boxMap[y][x];
-        return box.isAvailable() && box.isField();
+        return box.isAvailable();
     }
 
     /**
@@ -160,7 +160,7 @@ public class Map {
     public boolean checkSolved() {
         for(Box[] line : boxMap) {
             for(Box box : line) {
-                if(box.isField() && box.isAvailable())
+                if(box.isAvailable())
                     return false;
             }
         }
