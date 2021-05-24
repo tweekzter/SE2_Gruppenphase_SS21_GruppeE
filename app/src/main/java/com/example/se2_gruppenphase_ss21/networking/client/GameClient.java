@@ -178,12 +178,12 @@ public class GameClient {
      * Ubongo!
      * @throws IOException
      */
-    public void puzzleDone() throws IOException {
+    public void puzzleDone(boolean bluff) throws IOException {
         if (!isConnected) {
             throw new RuntimeException("Client is not connected");
         }
 
-        socket.sendString("finish_puzzle");
+        socket.sendString("finish_puzzle " + bluff);
     }
 
     /**

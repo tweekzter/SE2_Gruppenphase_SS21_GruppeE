@@ -104,6 +104,7 @@ public class GameServer extends Thread {
      */
     public void createRoom(String name, int maxUser) {
         GameRoom room = new GameRoom(maxUser);
+        System.out.printf("Created Room %s with capacity of %d\n", name, maxUser);
         rooms.put(name, room);
     }
 
