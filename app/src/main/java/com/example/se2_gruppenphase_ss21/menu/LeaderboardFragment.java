@@ -1,6 +1,8 @@
 package com.example.se2_gruppenphase_ss21.menu;
 
 import android.os.Bundle;
+
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +15,6 @@ import com.example.se2_gruppenphase_ss21.Player;
 import com.example.se2_gruppenphase_ss21.PlayerArrayAdapter;
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
-import com.example.se2_gruppenphase_ss21.networking.MulticastReceiver;
-import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
-import com.example.se2_gruppenphase_ss21.networking.client.ServerMessageListener;
-import com.example.se2_gruppenphase_ss21.networking.server.GameServer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +38,8 @@ public class LeaderboardFragment extends Fragment {
 
     private PlayerArrayAdapter playerArrayAdapter;
     private ListView listView;
+    static AvailableRoom room;
+    static String[] nicknameslist = null;
 
     public LeaderboardFragment() {
         // Required empty public constructor
@@ -49,21 +49,26 @@ public class LeaderboardFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param leaderboardparam1 Parameter 1.
+     * @param param1 Parameter 1.
      * @return A new instance of fragment Rules1Fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LeaderboardFragment newInstance(String leaderboardparam1, AvailableRoom room) {
+    public static LeaderboardFragment newInstance(String param1, AvailableRoom availableRoom, String[] nicknames) {
         LeaderboardFragment fragment = new LeaderboardFragment();
         Bundle args = new Bundle();
-        args.putString(LEADERBOARD_ARG_PARAM1, leaderboardparam1);
+        args.putString(LEADERBOARD_ARG_PARAM1, param1);
+        room = availableRoom;
+        nicknameslist = nicknames;
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             leaderboardmParam1 = getArguments().getString(LEADERBOARD_ARG_PARAM1);
             leaderboardmParam2 = getArguments().getString(LEADERBOARD_ARG_PARAM2);
@@ -80,18 +85,20 @@ public class LeaderboardFragment extends Fragment {
             getParentFragmentManager().beginTransaction().replace(R.id.container, new MenuFragment()).addToBackStack("tag").commit();
         });
 
-        Button nextGameButton = view.findViewById(R.id.buttonNextRound);
-        nextGameButton.setOnClickListener((View v) ->{
-            getParentFragmentManager().beginTransaction().replace(R.id.container, new RoomFragment()).addToBackStack("tag").commit();
-        });
 
         //To Do: Listener and Array for the server nicknames
+        String userName = getArguments().getString(LEADERBOARD_ARG_PARAM1);
+
+        Button nextGameButton = view.findViewById(R.id.buttonNextRound);
+        nextGameButton.setOnClickListener((View v) ->{
+            getParentFragmentManager().beginTransaction().replace(R.id.container, RoomFragment.newInstance(userName, room)).addToBackStack("tag").commit();
+        });
 
         listView = (ListView) view.findViewById(R.id.listView);
         playerArrayAdapter = new PlayerArrayAdapter(view.getContext(), R.layout.listview_row_layout);
         listView.setAdapter(playerArrayAdapter);
-        String[] nicknames = {"Test1", "Test2"};
-        List<String[]> playerList = readData(nicknames);
+
+        List<String[]> playerList = readData(nicknameslist);
         for(String[] playerData:playerList){
             String position = playerData[0];
             String playername = playerData[1];
@@ -101,13 +108,13 @@ public class LeaderboardFragment extends Fragment {
 
             playerArrayAdapter.add(player);
         }
-
         return view;
     }
 
     //List of players
     private List<String[]> readData(String[] nicknames) {
         List<String[]> resultList = new ArrayList<String[]>();
+        if (nicknames != null){
         int points = 4;
         for (int i = 0; i < nicknames.length; i++) {
             String[] player = new String[3];
@@ -116,6 +123,7 @@ public class LeaderboardFragment extends Fragment {
             player[2] = points + " Punkte";
             if(points>=0) points--;
             resultList.add(player);
+        }
         }
         return resultList;
     }

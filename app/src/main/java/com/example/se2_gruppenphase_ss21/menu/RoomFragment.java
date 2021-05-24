@@ -35,6 +35,7 @@ public class RoomFragment extends Fragment {
     static AvailableRoom room;
     static boolean isReady = false;
     GameClient client = null;
+    String[] nicknameslist;
 
     // Handler for creating post delay threads for updating ui
     Handler handler = new Handler();
@@ -118,8 +119,10 @@ public class RoomFragment extends Fragment {
 
                 @Override
                 public void onGameStart() {
-                    Intent intent = new Intent(getActivity(), MockingGame.class);
-                    startActivity(intent);
+                    /*Intent intent = new Intent(getActivity(), MockingGame.class);
+                    startActivity(intent);*/
+                    //TODO:Delete it after the game is ready
+                    getParentFragmentManager().beginTransaction().replace(R.id.container, LeaderboardFragment.newInstance(userName, room, nicknameslist)).addToBackStack("tag").commit();
                 }
 
                 @Override
@@ -208,7 +211,7 @@ public class RoomFragment extends Fragment {
 
                 LinearLayout layout = view.findViewById(R.id.layoutRoom);
                 layout.removeAllViews();
-
+                nicknameslist = nicknames;
                 for (String n : nicknames) {
 
                     Button user;
