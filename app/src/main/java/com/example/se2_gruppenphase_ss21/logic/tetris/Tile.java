@@ -290,7 +290,7 @@ public class Tile {
      * Get the absolute position of the MAP where tile will be placed (with shape Position 0,0).
      * @return the absolute hook position of the MAP.
      */
-    Position getHook() {
+    public Position getHook() {
         return hook;
     }
 

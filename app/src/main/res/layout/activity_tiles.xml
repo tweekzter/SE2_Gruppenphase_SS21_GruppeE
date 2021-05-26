@@ -19,12 +19,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button60"
+        android:id="@+id/mirror"
         android:layout_width="99dp"
         android:layout_height="56dp"
         android:layout_marginStart="280dp"
         android:layout_marginTop="256dp"
-        android:text="UBONGO"
+        android:text="MIRROR"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
