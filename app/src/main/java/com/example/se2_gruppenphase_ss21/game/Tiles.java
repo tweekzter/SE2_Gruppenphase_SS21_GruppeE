@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -18,6 +17,7 @@ import com.example.se2_gruppenphase_ss21.logic.tetris.Tile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 
 public class Tiles extends AppCompatActivity {
@@ -29,6 +29,7 @@ public class Tiles extends AppCompatActivity {
     boolean[][] map;
     Map currentmap;
     Button[][] buttonarray;
+    int[] pictures;
 
     Tile[][] tilearray = new Tile[5][5];
 
@@ -48,7 +49,7 @@ public class Tiles extends AppCompatActivity {
             //hole die bausteine und fuege die bilder zu den bausteinen ein
 
             Bundle b = getIntent().getExtras();
-            int[] pictures = b.getIntArray("key");
+            pictures = b.getIntArray("key");
             ImageView firsttile = findViewById(R.id.firsttile);
             ImageView secondtile = findViewById(R.id.secondtile);
             ImageView thirdtile = findViewById(R.id.thirdtile);
@@ -74,6 +75,7 @@ public class Tiles extends AppCompatActivity {
 
 
         } catch (IOException e) {
+            e.printStackTrace();
 
         }
 
@@ -83,10 +85,8 @@ public class Tiles extends AppCompatActivity {
     //befuellt das tile array. tylearray dient dazu zu überprüfen ob an stelle x,y ein baustein liegt und wenn ja welcher
     protected void filltylearray(){
         Tile empty = new Tile();
-        for(int i = 0; i< tilearray.length; i++){
-            for(int j = 0; j< tilearray[i].length; j++){
-                tilearray[i][j]=empty;
-            }
+        for (Tile[] tiles : tilearray) {
+            Arrays.fill(tiles, empty);
         }
 
     }
@@ -98,7 +98,7 @@ public class Tiles extends AppCompatActivity {
                 // hier eventuell ein oder einfügen wenn die farbe eines gewissen tiles entspricht
                 //durch buttonarray ersetzten
                 if(tilearray[i][j].getShape().length<=0){
-                    if(map[i][j]==true){
+                    if(map[i][j]){
                         buttonarray[i][j].setBackgroundColor(Color.WHITE);
 
 
@@ -145,9 +145,10 @@ public class Tiles extends AppCompatActivity {
     }
     //onclicklistener when user clicks on a button checks if there is a tile on this coordination
     private void activateonclicklisteneronmapbuttons(){
-        for(int i = 0; i<buttonarray.length; i++){
-            for(int j = 0; j<buttonarray[i].length; j++){
-                buttonarray[i][j].setOnClickListener(v -> gettilefromid(v.getId()));
+        for (Button[] buttons : buttonarray) {
+            for (Button button : buttons) {
+                System.out.println("tile was klicked");
+                button.setOnClickListener(v -> gettilefromid(v.getId()));
             }
         }
     }
@@ -155,7 +156,7 @@ public class Tiles extends AppCompatActivity {
     //true=1=frei
     //false=0=belegt
 
-    private View.OnClickListener movetiles(Tile tile, ImageView tileimage, int color){
+    private void movetiles(Tile tile, ImageView tileimage, int color){
         addonclicklistener();
 
 
@@ -184,7 +185,6 @@ public class Tiles extends AppCompatActivity {
             }
         }
 
-        return null;
     }
 
     private void placetilesintilesarray(Tile tile, int x, int y){
@@ -200,6 +200,7 @@ public class Tiles extends AppCompatActivity {
         for(int i = 0; i<buttonarray.length; i++){
             for(int j = 0; j<buttonarray[i].length; j++){
                 if(buttonarray[i][j].getId()==id){
+                    System.out.println("Id found");
                     checkifthereisatile( i,  j);
                 }
             }
@@ -212,25 +213,27 @@ public class Tiles extends AppCompatActivity {
 
     private void checkifthereisatile(int i, int j){
         if(tilearray[i][j].getShape().length<=0){
-            System.out.println("On this place there is no tile");
-        }else {
-            currenttile.attachToMap(currentmap, currentpositionx, currentpositiony);
 
-            placetilesintilesarray(currenttile, currentpositionx, currentpositiony);
+        }else {
+            if(currenttile!=null) {
+                currenttile.attachToMap(currentmap, currentpositionx, currentpositiony);
+                placetilesintilesarray(currenttile, currentpositionx, currentpositiony);
+            }
             currenttile = tilearray[i][j];
+
             tilepositions= currenttile.getShape();
             currentpositionx = currenttile.getHook().getX();
             currentpositiony = currenttile.getHook().getY();
-
-            System.out.println(currentpositionx+currentpositiony);
+            detatchfromtilearray();
+            System.out.println(currentpositionx+"+" +currentpositiony);
 
         }
     }
 
 
     protected void colorbuttons(int x, int y, Position[] tiles){
-        for(int i =0; i<tiles.length; i++){
-            buttonarray[y+tiles[i].getY()][x+tiles[i].getX()].setBackgroundColor(currenttile.getColor());
+        for (Position tile : tiles) {
+            buttonarray[y + tile.getY()][x + tile.getX()].setBackgroundColor(currenttile.getColor());
         }
     }
 
@@ -239,11 +242,11 @@ public class Tiles extends AppCompatActivity {
 
     private boolean checkifplacable(int x, int y, Position[] tilepositions){
         currenttile.setMap(currentmap);
-        for(int i = 0; i< tilepositions.length; i++) {
-            if(x+tilepositions[i].getX()<0||y+tilepositions[i].getY()<0||x+tilepositions[i].getX()>=5||y+tilepositions[i].getY()>=5){
+        for (Position tileposition : tilepositions) {
+            if (x + tileposition.getX() < 0 || y + tileposition.getY() < 0 || x + tileposition.getX() >= 5 || y + tileposition.getY() >= 5) {
                 return false;
-            }
-            else if (tilearray[y+tilepositions[i].getY()][x+tilepositions[i].getX()].getShape().length>0) {
+            } else if (tilearray[y + tileposition.getY()][x + tileposition.getX()].getShape().length > 0) {
+                System.out.println("condition 246 went wrong");
                 return false;
             }
         }
@@ -258,6 +261,7 @@ public class Tiles extends AppCompatActivity {
         Button turnright = findViewById(R.id.turnrigth);
         Button turnleft = findViewById(R.id.turnleft);
         Button mirror  = findViewById(R.id.mirror);
+        Button remove = findViewById(R.id.removetile);
 
         up.setOnClickListener(v -> movetileup());
         down.setOnClickListener(v -> movetiledown());
@@ -266,6 +270,7 @@ public class Tiles extends AppCompatActivity {
         turnleft.setOnClickListener(v -> turntileleft());
         turnright.setOnClickListener(v -> turntileright());
         mirror.setOnClickListener(v -> mirror());
+        remove.setOnClickListener(v -> removetile());
 
     }
 
@@ -294,9 +299,13 @@ public class Tiles extends AppCompatActivity {
     }
     private void movetileleft(){
         if(checkifplacable(currentpositionx-1, currentpositiony, tilepositions)){
+            System.out.println("its placable");
             drawmap();
             colorbuttons(currentpositionx-1, currentpositiony, tilepositions);
             currentpositionx--;
+
+        } else{
+            System.out.println("its not placable");
 
         }
 
@@ -340,6 +349,38 @@ public class Tiles extends AppCompatActivity {
         if(checkifplacable(currentpositionx,currentpositiony,tilepositions)){
             drawmap();
             colorbuttons(currentpositionx,currentpositiony,tilepositions);
+        }
+    }
+
+    private void removetile(){
+        int color = currenttile.getColor();
+        if(color == Color.BLUE){
+            ImageView firsttile = findViewById(R.id.firsttile);
+            firsttile.setBackgroundResource(pictures[0]);
+            Tile tileone = new Tile(getApplicationContext().getAssets(), pictures[3], "standard");
+            firsttile.setOnClickListener(v -> movetiles(tileone,firsttile, Color.BLUE));
+        } else if(color == Color.GREEN){
+            ImageView secondtile = findViewById(R.id.secondtile);
+            secondtile.setBackgroundResource(pictures[1]);
+            Tile tiletwo = new Tile(getApplicationContext().getAssets(), pictures[4], "standard");
+            secondtile.setOnClickListener(v-> movetiles(tiletwo,secondtile,Color.GREEN));
+        } else if(color == Color.RED){
+            ImageView thirdtile = findViewById(R.id.thirdtile);
+            thirdtile.setBackgroundResource(pictures[2]);
+            Tile tilethree = new Tile(getApplicationContext().getAssets(), pictures[5], "standard");
+            thirdtile.setOnClickListener(v->movetiles(tilethree,thirdtile,Color.RED));
+        }
+        currenttile.detachFromMap();
+        detatchfromtilearray();
+        currenttile=null;
+        currentpositionx =0;
+        currentpositiony=0;
+        drawmap();
+    }
+    private void detatchfromtilearray(){
+        Tile empty = new Tile();
+        for(Position positions:currenttile.getShape()){
+            tilearray[currentpositiony+positions.getY()][currentpositionx+positions.getX()] = empty;
         }
     }
 }

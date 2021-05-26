@@ -8,7 +8,17 @@
     android:background="@drawable/game_background"
     tools:context=".game.Tiles">
 
-<Button
+    <Button
+        android:id="@+id/removetile"
+        android:layout_width="96dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="180dp"
+        android:text="REMOVE FROM MAP"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
         android:id="@+id/turnleft"
         android:layout_width="99dp"
         android:layout_height="56dp"
@@ -43,7 +53,7 @@
         android:layout_width="95dp"
         android:layout_height="39dp"
         android:layout_marginStart="300dp"
-        android:layout_marginTop="624dp"
+        android:layout_marginTop="628dp"
         android:text="RIGHT"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -53,7 +63,7 @@
         android:layout_width="95dp"
         android:layout_height="39dp"
         android:layout_marginStart="184dp"
-        android:layout_marginTop="624dp"
+        android:layout_marginTop="628dp"
         android:text="LEFT"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -283,8 +293,8 @@
 
         <Button
             android:id="@+id/twentythree"
-            android:layout_width="69dp"
-            android:layout_height="68dp"
+            android:layout_width="66dp"
+            android:layout_height="85dp"
             android:layout_marginBottom="-11.5dp"
             android:textColorLink="#F3EFEF"
             app:backgroundTint="#000000"
@@ -323,17 +333,18 @@
     <ImageView
         android:id="@+id/firsttile"
         android:layout_width="124dp"
-        android:layout_height="105dp"
+        android:layout_height="145dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/secondtile"
-        android:layout_width="127dp"
-        android:layout_height="137dp"
-        android:layout_marginStart="152dp"
+        android:layout_width="124dp"
+        android:layout_height="145dp"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
