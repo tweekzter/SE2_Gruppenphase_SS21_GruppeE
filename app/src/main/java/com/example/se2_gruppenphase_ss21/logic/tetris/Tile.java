@@ -38,8 +38,6 @@ public class Tile {
     private Position hook;
     private boolean isAttached = false;
     private int color = Color.RED;
-    private static final int X_AXIS = 1;
-    private static final int Y_AXIS = 2;
 
 
     /**
