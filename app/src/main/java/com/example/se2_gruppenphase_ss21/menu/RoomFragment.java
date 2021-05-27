@@ -18,10 +18,11 @@ import android.widget.TextView;
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
+import com.example.se2_gruppenphase_ss21.networking.client.listeners.GeneralGameListener;
+import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreGameListener;
 import com.example.se2_gruppenphase_ss21.networking.server.logic.GameLogicException;
 
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -95,8 +96,6 @@ public class RoomFragment extends Fragment {
         String userName = getArguments().getString(ARG_PARAM1);
 
         // create new Client
-//        GameClient client = null;
-
         try {
             client = new GameClient(room, userName);
         } catch (IOException e) {
@@ -105,6 +104,39 @@ public class RoomFragment extends Fragment {
 
         try {
             client.connect();
+
+            GeneralGameListener preGameListener = new PreGameListener() {
+                @Override
+                public void readyCount(int current, int max) {
+                    if (isReady) {
+                        updateReady(current, max, view);
+                    }
+                }
+
+                @Override
+                public void onGameStart() {
+                    Intent intent = new Intent(getActivity(), MockingGame.class);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void userDisconnect(String nickname) {
+
+                }
+
+                @Override
+                public void receiveUserList(String[] nicknames) {
+                    updatePlayers(nicknames, view);
+                }
+
+                @Override
+                public void unknownMessage(String message) {
+
+                }
+            };
+
+            client.registerListener(preGameListener);
+            client.startReceiveLoop();
 
             /* TODO FIXME
             // implementation of ServerMessageListener Interface that is used to respond to events that are noticed by server

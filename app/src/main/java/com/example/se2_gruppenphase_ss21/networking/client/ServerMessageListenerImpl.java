@@ -2,7 +2,7 @@ package com.example.se2_gruppenphase_ss21.networking.client;
 
 import java.util.Map;
 
-public class ServerMessageListenerImpl implements ServerMessageListener {
+/*public class ServerMessageListenerImpl implements ServerMessageListener {
     @Override
     public void readyCount(int current, int max) {
         System.out.println("Users ready (" + current + "/" + max + ")");
@@ -50,4 +50,4 @@ public class ServerMessageListenerImpl implements ServerMessageListener {
     public void unknownMessage(String message) {
         System.out.println("Received unknown message " + message);
     }
-}
+}*/
