@@ -1,8 +1,10 @@
 package com.example.se2_gruppenphase_ss21.networking.client;
 
+import com.example.se2_gruppenphase_ss21.networking.client.listeners.*;
+
 import java.util.Map;
 
-public class ServerMessageListenerImpl implements ServerMessageListener {
+public class ServerMessageListenerImpl implements GeneralGameListener, InRoundListener, PostRoundListener, PreGameListener, PreRoundListener {
     @Override
     public void readyCount(int current, int max) {
         System.out.println("Users ready (" + current + "/" + max + ")");
