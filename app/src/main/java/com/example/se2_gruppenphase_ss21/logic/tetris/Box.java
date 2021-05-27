@@ -9,6 +9,8 @@ package com.example.se2_gruppenphase_ss21.logic.tetris;
  */
 public class Box extends Position {
     private Tile tile;
+    // a tempTile is a Tile which does not
+    private Tile tempTile;
     private boolean isField;
 
     public Box(int x, int y) {
@@ -49,6 +51,10 @@ public class Box extends Position {
         return tile != null;
     }
 
+    public boolean isCoveredByTempTile() {
+        return tempTile != null;
+    }
+
     /**
      * Returns the TILE attached to this BOX.
      * @return the TILE attached to this BOX.
@@ -63,6 +69,22 @@ public class Box extends Position {
      */
     public void setTile(Tile tile) {
         this.tile = tile;
+    }
+
+    /**
+     * Returns the temporary TILE of this BOX.
+     * @return the temporarily placed TILE.
+     */
+    public Tile getTempTile() {
+        return tempTile;
+    }
+
+    /**
+     * Sets this BOX temporary TILE.
+     * @param tile the temporarily placed TILE.
+     */
+    public void setTempTile(Tile tile) {
+        tempTile = tile;
     }
 }
 
