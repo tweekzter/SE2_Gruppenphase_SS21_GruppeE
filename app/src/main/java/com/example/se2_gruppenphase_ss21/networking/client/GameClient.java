@@ -59,6 +59,7 @@ public class GameClient {
      * @throws IOException thrown if joining wasn't successful
      */
     public void connect() throws IOException, GameLogicException {
+        this.listeners = new ArrayList<>();
         socket.sendString(roomName);
         socket.sendString(nickname);
 

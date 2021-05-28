@@ -138,61 +138,7 @@ public class RoomFragment extends Fragment {
             client.registerListener(preGameListener);
             client.startReceiveLoop();
 
-            /* TODO FIXME
-            // implementation of ServerMessageListener Interface that is used to respond to events that are noticed by server
-            ServerMessageListener listener = new ServerMessageListener() {
-                @Override
-                public void readyCount(int current, int max) {
-                    if (isReady) {
-                        updateReady(current, max, view);
-                    }
-                }
 
-                @Override
-                public void onGameStart() {
-                    Intent intent = new Intent(getActivity(), MockingGame.class);
-                    startActivity(intent);
-                }
-
-                @Override
-                public void userDisconnect(String nickname) {
-
-                }
-
-                @Override
-                public void receiveUserList(String[] nicknames) {
-                    updatePlayers(nicknames, view);
-                }
-
-                @Override
-                public void rollRequest(String nick) {
-
-                }
-
-                @Override
-                public void rollResult(int result) {
-
-                }
-
-                @Override
-                public void beginPuzzle(long finishUntil) {
-
-                }
-
-                @Override
-                public void placementsReceived(Map<String, Integer> placements) {
-
-                }
-
-                @Override
-                public void unknownMessage(String message) {
-
-                }
-            };
-
-            client.registerListener(listener);
-            client.startReceiveLoop();
-            */
         } catch (IOException e) {
             e.printStackTrace();
         } catch (GameLogicException e) {
