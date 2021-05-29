@@ -196,7 +196,7 @@ public class Tile {
         for(Position pos : shape) {
             int x = hook.x + pos.x;
             int y = hook.y + pos.y;
-            map.clearBoxTemp(x,y);
+            map.clearBoxTemp(x,y,this);
         }
 
         isPlaced = false;
