@@ -130,8 +130,8 @@ public class Map {
      * @param x x-coordinate of the box
      * @param y y-coordinate of the box
      */
-    void clearBoxTemp(int x, int y) {
-        boxMap[y][x].setTempTile(null);
+    void clearBoxTemp(int x, int y, Tile tile) {
+        boxMap[y][x].removeTempTile(tile);
     }
 
     /**

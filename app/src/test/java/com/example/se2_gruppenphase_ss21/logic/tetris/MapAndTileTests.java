@@ -104,7 +104,14 @@ public class MapAndTileTests {
         temp.addPoint(1,0);
         System.out.println(temp.placeTempOnMap(map, new Position(3,3)));
         displayMap(map);
-
+        Tile temp2 = new Tile();
+        temp2.addPoint(0,0);
+        temp2.addPoint(0,1);
+        System.out.println(temp2.placeTempOnMap(map, new Position(4,2)));
+        displayMap(map);
+        temp2.removeTempFromMap();
+        System.out.println("****");
+        displayMap(map);
 
         for (Position pos : tile.getShape()) {
             System.out.print(pos.x + ", ");
