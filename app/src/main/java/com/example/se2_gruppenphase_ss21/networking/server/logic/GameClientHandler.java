@@ -45,7 +45,7 @@ public class GameClientHandler {
                     }
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                System.err.println(nickname + " disconnected");
                 room.removeUser(this);
             }
         }).start();

@@ -130,6 +130,9 @@ public class GameRoom {
             while (true) {
                 if(round >= ROUND_COUNT) {
                     break;
+                }else if(handlers.size() == 0) {
+                    System.err.println("Room was empty when trying to start round!");
+                    break;
                 }
 
                 for(GameClientHandler handler : handlers)
