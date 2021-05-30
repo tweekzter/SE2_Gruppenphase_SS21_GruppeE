@@ -131,60 +131,76 @@ public class GameRoom {
                 if(round >= ROUND_COUNT) {
                     break;
                 }else if(handlers.size() == 0) {
-                    System.err.println("Room was empty when trying to start round!");
+                    System.err.println("Room was empty when trying to start round, closing room!");
                     break;
                 }
 
                 for(GameClientHandler handler : handlers)
                     handler.resetForNextRound();
 
-                GameClientHandler diceRoller = handlers.get(round % handlers.size());
-                broadcastMessage("roll_request " + diceRoller.getNickname());
-                int rollResult;
-                //Wait for user to roll or disconnect
-                while (true) {
-                    if(!handlers.contains(diceRoller)) {
-                        rollResult = (int) (Math.random() * 6 + 1);
-                        break;
-                    }else if(diceRoller.hasRolled()) {
-                        rollResult = diceRoller.getRollResult();
-                    }
+                handleDiceRoll(round);
 
-                    Util.sleep(0, 200);
-                }
+                handlePuzzle();
 
-                broadcastMessage("roll_result " + rollResult);
-                Util.sleep(5, 0);
-                long finishUntil = System.currentTimeMillis() + (60 * 1000);
-                broadcastMessage("begin_puzzle " + finishUntil);
-                Util.sleep(0, finishUntil - System.currentTimeMillis());
-
-                Map<String, Integer> placements = calculatePlacements();
-                StringBuilder sb = new StringBuilder("placements ");
-                for(String nick : placements.keySet()) {
-                    sb.append(nick).append(":").append(placements.get(nick)).append(";");
-                }
-                broadcastMessage(sb.substring(0, sb.length() - 1));
-
-                Util.sleep(10, 0);
+                sendPlacements();
 
                 round++;
             }
 
-            state = GameRoomState.RESTARTING;
-            for(GameClientHandler handler : handlers) {
-                try {
-                    handler.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            handlers.clear();
-            System.out.println("Room reset done!");
-            state = GameRoomState.WAITING;
+            resetRoom();
 
             //Round end
         }).start();
+    }
+
+    private void sendPlacements() {
+        Map<String, Integer> placements = calculatePlacements();
+        StringBuilder sb = new StringBuilder("placements ");
+        for(String nick : placements.keySet()) {
+            sb.append(nick).append(":").append(placements.get(nick)).append(";");
+        }
+        broadcastMessage(sb.substring(0, sb.length() - 1));
+        Util.sleep(10, 0);
+    }
+
+    private void handlePuzzle() {
+        long finishUntil = System.currentTimeMillis() + (60 * 1000);
+        broadcastMessage("begin_puzzle " + finishUntil);
+        Util.sleep(0, finishUntil - System.currentTimeMillis());
+    }
+
+    private void handleDiceRoll(int round) {
+        GameClientHandler diceRoller = handlers.get(round % handlers.size());
+        broadcastMessage("roll_request " + diceRoller.getNickname());
+        int rollResult;
+        //Wait for user to roll or disconnect
+        while (true) {
+            if(!handlers.contains(diceRoller)) {
+                rollResult = (int) (Math.random() * 6 + 1);
+                break;
+            }else if(diceRoller.hasRolled()) {
+                rollResult = diceRoller.getRollResult();
+                break;
+            }
+
+            Util.sleep(0, 200);
+        }
+        broadcastMessage("roll_result " + rollResult);
+        Util.sleep(5, 0);
+    }
+
+    private void resetRoom() {
+        state = GameRoomState.RESTARTING;
+        for(GameClientHandler handler : handlers) {
+            try {
+                handler.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        handlers.clear();
+        System.out.println("Room reset done!");
+        state = GameRoomState.WAITING;
     }
 
     private Map<String, Integer> calculatePlacements() {
