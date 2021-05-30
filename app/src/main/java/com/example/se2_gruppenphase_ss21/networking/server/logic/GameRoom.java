@@ -2,6 +2,7 @@ package com.example.se2_gruppenphase_ss21.networking.server.logic;
 
 import com.example.se2_gruppenphase_ss21.networking.SocketWrapper;
 import com.example.se2_gruppenphase_ss21.networking.Util;
+import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -114,6 +115,15 @@ public class GameRoom {
         }
 
         return false;
+    }
+
+    public GameClientHandler getUserByNickname(String nickname) {
+        for(GameClientHandler handler : handlers) {
+            if(handler.getNickname().equals(nickname))
+                return handler;
+        }
+
+        return null;
     }
 
     public int userCount() {

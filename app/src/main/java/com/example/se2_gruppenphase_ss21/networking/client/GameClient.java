@@ -176,6 +176,7 @@ public class GameClient {
 
     /**
      * Ubongo!
+     * @param bluff indicates whether the puzzle was solved (true for cheating)
      * @throws IOException
      */
     public void puzzleDone(boolean bluff) throws IOException {
@@ -184,6 +185,14 @@ public class GameClient {
         }
 
         socket.sendString("finish_puzzle " + bluff);
+    }
+
+    public void accuseOfCheating(String nick) throws IOException {
+        if (!isConnected) {
+            throw new RuntimeException("Client is not connected");
+        }
+
+        socket.sendString("accuse " + nick);
     }
 
     /**

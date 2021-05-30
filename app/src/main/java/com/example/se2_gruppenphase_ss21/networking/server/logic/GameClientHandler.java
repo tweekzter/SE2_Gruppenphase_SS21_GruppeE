@@ -40,6 +40,14 @@ public class GameClientHandler {
                             finishedPuzzleAt = System.currentTimeMillis();
                             bluff = Boolean.parseBoolean(params[1]);
                             break;
+                        case "accuse":
+                            GameClientHandler accused = room.getUserByNickname(params[1]);
+                            if(accused.didBluff()) {
+
+                            }else {
+
+                            }
+                            break;
                         default:
                             System.err.printf("Received invalid message from client %s%n", fromUser);
                     }
