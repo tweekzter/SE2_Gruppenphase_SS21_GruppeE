@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cards>
+    <one>
+        <firstr firstc="0" secondc="1" thirdc="1" fourthc="0" fifth="0"></firstr>
+        <secondr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0" ></secondr>
+        <thirdr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
+        <fourthr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="1" fifth="0"></fifthr>
+        <sixtr firstc="0" secondc="0" thirdc="0" fourthc="1" fifth="0"></sixtr>
+    </one>
+    <two>
+        <firstr firstc="1" secondc="1" thirdc="1" fourthc="0" fifth="0"></firstr>
+        <secondr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></secondr>
+        <thirdr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="1"></thirdr>
+        <fourthr firstc="1" secondc="0" thirdc="0" fourthc="0" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </two>
+    <three>
+        <firstr firstc="0" secondc="1" thirdc="1" fourthc="0" fifth="0"></firstr>
+        <secondr firstc="0" secondc="1" thirdc="1" fourthc="0" fifth="0"></secondr>
+        <thirdr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
+        <fourthr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </three>
+    <four>
+        <firstr firstc="0" secondc="1" thirdc="1" fourthc="0" fifth="0"></firstr>
+        <secondr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></secondr>
+        <thirdr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></thirdr>
+        <fourthr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </four>
+    <five>
+        <firstr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></firstr>
+        <secondr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></secondr>
+        <thirdr firstc="0" secondc="0" thirdc="0" fourthc="1" fifth="1"></thirdr>
+        <fourthr firstc="0" secondc="0" thirdc="0" fourthc="1" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="1" fifth="0"></fifthr>
+    </five>
+    <six>
+        <firstr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="0"></firstr>
+        <secondr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></secondr>
+        <thirdr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
+        <fourthr firstc="0" secondc="1" thirdc="0" fourthc="1" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="1" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </six>
+    <seven>
+        <firstr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></firstr>
+        <secondr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></secondr>
+        <thirdr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="1"></thirdr>
+        <fourthr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </seven>
+    <eigth>
+        <firstr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></firstr>
+        <secondr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="0"></secondr>
+        <thirdr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
+        <fourthr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </eigth>
+    <nine>
+        <firstr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></firstr>
+        <secondr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></secondr>
+        <thirdr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
+        <fourthr firstc="1" secondc="0" thirdc="0" fourthc="0" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </nine>
+    <ten>
+        <firstr firstc="1" secondc="1" thirdc="0" fourthc="0" fifth="0"></firstr>
+        <secondr firstc="1" secondc="1" thirdc="1" fourthc="0" fifth="0"></secondr>
+        <thirdr firstc="1" secondc="1" thirdc="1" fourthc="0" fifth="0"></thirdr>
+        <fourthr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </ten>
+    <eleven>
+        <firstr firstc="1" secondc="1" thirdc="1" fourthc="0" fifth="0"></firstr>
+        <secondr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></secondr>
+        <thirdr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></thirdr>
+        <fourthr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></fourthr>
+        <fifthr firstc="0" secondc="1" thirdc="1" fourthc="0" fifth="0"></fifthr>
+    </eleven>
+    <twelve>
+        <firstr firstc="0" secondc="0" thirdc="1" fourthc="0" fifth="0"></firstr>
+        <secondr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></secondr>
+        <thirdr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
+        <fourthr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="1" fifth="0"></fifthr>
+    </twelve>
+    <thirteen>
+        <firstr firstc="1" secondc="1" thirdc="0" fourthc="0" fifth="0"></firstr>
+        <secondr firstc="1" secondc="1" thirdc="1" fourthc="0" fifth="0"></secondr>
+        <thirdr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
+        <fourthr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="1" fifth="0"></fifthr>
+    </thirteen>
+    <fourteen>
+        <firstr firstc="1" secondc="1" thirdc="0" fourthc="0" fifth="0"></firstr>
+        <secondr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></secondr>
+        <thirdr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
+        <fourthr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </fourteen>
+    <fifteen>
+        <firstr firstc="1" secondc="1" thirdc="1" fourthc="0" fifth="0"></firstr>
+        <secondr firstc="0" secondc="1" thirdc="1" fourthc="0" fifth="0"></secondr>
+        <thirdr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></thirdr>
+        <fourthr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </fifteen>
+    <sixteen>
+        <firstr firstc="1" secondc="1" thirdc="0" fourthc="0" fifth="0"></firstr>
+        <secondr firstc="1" secondc="1" thirdc="0" fourthc="0" fifth="0"></secondr>
+        <thirdr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
+        <fourthr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="1" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </sixteen>
+    <seventeen>
+        <firstr firstc="0" secondc="1" thirdc="1" fourthc="0" fifth="0"></firstr>
+        <secondr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></secondr>
+        <thirdr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="1"></thirdr>
+        <fourthr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="1"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </seventeen>
+    <eighteen>
+        <firstr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></firstr>
+        <secondr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></secondr>
+        <thirdr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="0"></thirdr>
+        <fourthr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="1" fourthc="0" fifth="0"></fifthr>
+    </eighteen>
+    <nineteen>
+        <firstr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></firstr>
+        <secondr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></secondr>
+        <thirdr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></thirdr>
+        <fourthr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </nineteen>
+    <twenty>
+        <firstr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="0"></firstr>
+        <secondr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></secondr>
+        <thirdr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="1"></thirdr>
+        <fourthr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="1"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </twenty>
+    <twentyone>
+        <firstr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="0"></firstr>
+        <secondr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="0"></secondr>
+        <thirdr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
+        <fourthr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></fifthr>
+    </twentyone>
+    <twentytwo>
+        <firstr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></firstr>
+        <secondr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></secondr>
+        <thirdr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
+        <fourthr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="0"></fifthr>
+    </twentytwo>
+    <twentythree>
+        <firstr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></firstr>
+        <secondr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></secondr>
+        <thirdr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></thirdr>
+        <fourthr firstc="0" secondc="0" thirdc="1" fourthc="0" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </twentythree>
+    <twentyfour>
+        <firstr firstc="0" secondc="1" thirdc="1" fourthc="0" fifth="0"></firstr>
+        <secondr firstc="1" secondc="1" thirdc="1" fourthc="0" fifth="0"></secondr>
+        <thirdr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
+        <fourthr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </twentyfour>
+    <twentyfive>
+        <firstr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></firstr>
+        <secondr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></secondr>
+        <thirdr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></thirdr>
+        <fourthr firstc="0" secondc="1" thirdc="0" fourthc="0" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="1" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </twentyfive>
+    <twentysix>
+        <firstr firstc="0" secondc="1" thirdc="0" fourthc="0" fifth="0"></firstr>
+        <secondr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></secondr>
+        <thirdr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
+        <fourthr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="0"></fifthr>
+    </twentysix>
+    <twentyseven>
+        <firstr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></firstr>
+        <secondr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></secondr>
+        <thirdr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
+        <fourthr firstc="0" secondc="1" thirdc="1" fourthc="0" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </twentyseven>
+    <twentyeigth>
+        <firstr firstc="0" secondc="1" thirdc="0" fourthc="0" fifth="0"></firstr>
+        <secondr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></secondr>
+        <thirdr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
+        <fourthr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="1" fourthc="0" fifth="0"></fifthr>
+        <sixtr firstc="0" secondc="0" thirdc="1" fourthc="0" fifth="0"></sixtr>
+    </twentyeigth>
+    <twentynine>
+        <firstr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></firstr>
+        <secondr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></secondr>
+        <thirdr firstc="0" secondc="1" thirdc="1" fourthc="0" fifth="0"></thirdr>
+        <fourthr firstc="0" secondc="1" thirdc="0" fourthc="0" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </twentynine>
+    <thirty>
+        <firstr firstc="0" secondc="1" thirdc="1" fourthc="0" fifth="0"></firstr>
+        <secondr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></secondr>
+        <thirdr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="1"></thirdr>
+        <fourthr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </thirty>
+    <thirtyone>
+        <firstr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></firstr>
+        <secondr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></secondr>
+        <thirdr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
+        <fourthr firstc="0" secondc="0" thirdc="1" fourthc="0" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </thirtyone>
+
+    <thirtytwo>
+        <firstr firstc="0" secondc="0" thirdc="1" fourthc="0" fifth="0"></firstr>
+        <secondr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="0"></secondr>
+        <thirdr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="1"></thirdr>
+        <fourthr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="1"></fifthr>
+    </thirtytwo>
+    <thirtythree>
+        <firstr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></firstr>
+        <secondr firstc="1" secondc="1" thirdc="1" fourthc="0" fifth="0"></secondr>
+        <thirdr firstc="1" secondc="1" thirdc="1" fourthc="0" fifth="0"></thirdr>
+        <fourthr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </thirtythree>
+    <thirtyfour>
+        <firstr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="0"></firstr>
+        <secondr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="0"></secondr>
+        <thirdr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="1"></thirdr>
+        <fourthr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
+    </thirtyfour>
+    <thirtyfive>
+        <firstr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="0"></firstr>
+        <secondr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></secondr>
+        <thirdr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
+        <fourthr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="1" fifth="0"></fifthr>
+    </thirtyfive>
+    <thirtysix>
+        <firstr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="0"></firstr>
+        <secondr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="0"></secondr>
+        <thirdr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="0"></thirdr>
+        <fourthr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></fifthr>
+    </thirtysix>
+
+</cards>

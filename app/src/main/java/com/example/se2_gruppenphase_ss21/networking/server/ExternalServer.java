@@ -14,6 +14,7 @@ public class ExternalServer {
 
         System.out.printf("Starting External Server on port %d%n", port);
         GameServer server = new GameServer(port);
+        server.setDynamicRoomCreation(true);
         server.start();
     }
 }

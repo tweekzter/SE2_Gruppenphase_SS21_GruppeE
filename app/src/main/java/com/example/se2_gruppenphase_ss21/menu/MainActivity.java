@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.se2_gruppenphase_ss21.R;
+import com.example.se2_gruppenphase_ss21.game.Dice;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,10 +28,22 @@ public class MainActivity extends AppCompatActivity {
         gettingStartedButton.setOnClickListener((View v) -> {
             openMenuActivity();
         });
+
+        //this is only for testing purposes
+
+        Button test = findViewById(R.id.testbutton);
+        test.setOnClickListener((View v) -> {
+            openGame();
+        });
     }
 
     public void openMenuActivity() {
         Intent intent = new Intent(this, MenuActivity.class);
+        startActivity(intent);
+    }
+
+    public void openGame(){
+        Intent intent = new Intent(this, Dice.class);
         startActivity(intent);
     }
 }

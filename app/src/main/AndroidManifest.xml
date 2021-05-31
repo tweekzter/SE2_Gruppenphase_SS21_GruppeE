@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/icon_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SE2_Gruppenphase_SS21">
-        <activity android:name=".menu.MockingGame"/>
+        <activity android:name=".game.Tiles"></activity>
+        <activity android:name=".game.Dice" />
+        <activity android:name=".menu.MockingGame" />
         <activity android:name=".menu.MenuActivity" />
         <activity android:name=".menu.MainActivity">
             <intent-filter>

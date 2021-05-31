@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
-import com.example.se2_gruppenphase_ss21.networking.client.ServerMessageListener;
 import com.example.se2_gruppenphase_ss21.networking.server.logic.GameLogicException;
 
 import java.io.IOException;
@@ -108,6 +107,7 @@ public class RoomFragment extends Fragment {
         try {
             client.connect();
 
+            /* TODO FIXME
             // implementation of ServerMessageListener Interface that is used to respond to events that are noticed by server
             ServerMessageListener listener = new ServerMessageListener() {
                 @Override
@@ -163,7 +163,7 @@ public class RoomFragment extends Fragment {
 
             client.registerListener(listener);
             client.startReceiveLoop();
-
+            */
         } catch (IOException e) {
             e.printStackTrace();
         } catch (GameLogicException e) {
