@@ -19,6 +19,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/ubongo"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="280dp"
+        android:layout_marginTop="180dp"
+        android:text="UBONGO"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
         android:id="@+id/turnleft"
         android:layout_width="99dp"
         android:layout_height="56dp"
@@ -44,7 +54,7 @@
         android:layout_height="56dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="256dp"
-        android:text="TURN RIGTH"
+        android:text="TURN RIGHT"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
