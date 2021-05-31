@@ -119,10 +119,8 @@ public class RoomFragment extends Fragment {
 
                 @Override
                 public void onGameStart() {
-                    /*Intent intent = new Intent(getActivity(), MockingGame.class);
-                    startActivity(intent);*/
-                    //TODO:Delete it after the game is ready
-                    getParentFragmentManager().beginTransaction().replace(R.id.container, LeaderboardFragment.newInstance(userName, room, nicknameslist)).addToBackStack("tag").commit();
+                    Intent intent = new Intent(getActivity(), MockingGame.class);
+                    startActivity(intent);
                 }
 
                 @Override

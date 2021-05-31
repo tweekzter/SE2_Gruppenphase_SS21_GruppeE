@@ -1,5 +1,6 @@
 package com.example.se2_gruppenphase_ss21.menu;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import android.os.StrictMode;
@@ -9,15 +10,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.se2_gruppenphase_ss21.Player;
 import com.example.se2_gruppenphase_ss21.PlayerArrayAdapter;
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
+import com.example.se2_gruppenphase_ss21.networking.client.ServerMessageListenerImpl;
+import com.example.se2_gruppenphase_ss21.networking.client.listeners.InRoundListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -98,7 +104,46 @@ public class LeaderboardFragment extends Fragment {
         playerArrayAdapter = new PlayerArrayAdapter(view.getContext(), R.layout.listview_row_layout);
         listView.setAdapter(playerArrayAdapter);
 
-        List<String[]> playerList = readData(nicknameslist);
+        //TODO: Edit it after ServerMessageListener is ready
+        Map<String, Integer> testmap = new HashMap<>();
+        testmap.put("Test1", 3);
+        testmap.put("Test2", 1);
+        testmap.put("Test3", 2);
+        InRoundListener listener = new InRoundListener() {
+            @Override
+            public void userDisconnect(String nickname) {
+
+            }
+
+            @Override
+            public void receiveUserList(String[] nicknames) {
+
+            }
+
+            @Override
+            public void unknownMessage(String message) {
+
+            }
+
+            @Override
+            public void beginPuzzle(long finishUntil) {
+
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            public void placementsReceived(Map<String, Integer> placements) {
+                List<Map.Entry<String, Integer>> list = new ArrayList<>(placements.entrySet());
+                list.sort(Map.Entry.comparingByValue());
+                Map<String, Integer> result = new HashMap<>();
+                for (Map.Entry<String, Integer> entry : list){
+                    result.put(entry.getKey(), entry.getValue());
+                }
+                placements = result;
+            }
+        };
+        listener.placementsReceived(testmap);
+
+        List<String[]> playerList = readData(testmap);
         for(String[] playerData:playerList){
             String position = playerData[0];
             String playername = playerData[1];
@@ -112,18 +157,20 @@ public class LeaderboardFragment extends Fragment {
     }
 
     //List of players
-    private List<String[]> readData(String[] nicknames) {
+    private List<String[]> readData(Map<String, Integer> map) {
         List<String[]> resultList = new ArrayList<String[]>();
-        if (nicknames != null){
-        int points = 4;
-        for (int i = 0; i < nicknames.length; i++) {
-            String[] player = new String[3];
-            player[0] = Integer.toString(i+1);
-            player[1] = nicknames[i];
-            player[2] = points + " Punkte";
-            if(points>=0) points--;
-            resultList.add(player);
-        }
+        if (map != null){
+            List<String> nicknames = new ArrayList<>(map.keySet());
+            List<Integer> placements = new ArrayList<>(map.values());
+            int points = 5;
+            for (int i = 0; i < map.size(); i++) {
+                String[] player = new String[3];
+                player[0] = Integer.toString(placements.get(i));
+                player[1] = nicknames.get(i);
+                player[2] = points + " Punkte";
+                if(points>=0) points--;
+                resultList.add(player);
+            }
         }
         return resultList;
     }
