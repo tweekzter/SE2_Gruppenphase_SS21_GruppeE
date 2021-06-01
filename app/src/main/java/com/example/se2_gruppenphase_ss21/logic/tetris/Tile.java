@@ -126,13 +126,14 @@ public class Tile {
             Log.e("tile", "Tile must be detached before attaching!");
             return false;
         }
-        // absolute reference point of map
-        hook = posOnMap;
+
         this.map = map;
         // check if tile is allowed to be placed
-        if(!checkPlaceable())
+        if(!checkPlaceable(posOnMap))
             return false;
 
+        // set absolute reference point of map
+        hook = posOnMap;
         // register tile on map
         map.addTile(this);
         // place tile on the map at posOnMap
