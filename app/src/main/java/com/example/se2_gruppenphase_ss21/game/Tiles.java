@@ -1,7 +1,10 @@
 package com.example.se2_gruppenphase_ss21.game;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -20,7 +23,8 @@ import java.io.InputStream;
 import java.util.Arrays;
 
 
-public class Tiles extends AppCompatActivity {
+public class Tiles extends AppCompatActivity
+                   implements CheatingDialogFragment.CheatingDialogListener {
     Tile currenttile;
     int currentpositionx=0;
     int currentpositiony=0;
@@ -262,6 +266,7 @@ public class Tiles extends AppCompatActivity {
         Button turnleft = findViewById(R.id.turnleft);
         Button mirror  = findViewById(R.id.mirror);
         Button remove = findViewById(R.id.removetile);
+        Button ubongo = findViewById(R.id.ubongo);
 
         up.setOnClickListener(v -> movetileup());
         down.setOnClickListener(v -> movetiledown());
@@ -271,6 +276,7 @@ public class Tiles extends AppCompatActivity {
         turnright.setOnClickListener(v -> turntileright());
         mirror.setOnClickListener(v -> mirror());
         remove.setOnClickListener(v -> removetile());
+        ubongo.setOnClickListener(v -> callUbongo());
 
     }
 
@@ -377,6 +383,28 @@ public class Tiles extends AppCompatActivity {
         currentpositiony=0;
         drawmap();
     }
+
+    public void showCheatingDialog() {
+        DialogFragment newFragment = new CheatingDialogFragment();
+        newFragment.show(getSupportFragmentManager(), "CheatingDialogFragment");
+    }
+
+    @Override
+    public void onCheatingPositiveClick(DialogFragment dialog) {
+
+    }
+
+    @Override
+    public void onCheatingCancelClick(DialogFragment dialog) {
+
+    }
+
+    private void callUbongo() {
+        if (!currentmap.checkSolved()) {
+            showCheatingDialog();
+        }
+    }
+
     private void detatchfromtilearray(){
         Tile empty = new Tile();
         for(Position positions:currenttile.getShape()){
