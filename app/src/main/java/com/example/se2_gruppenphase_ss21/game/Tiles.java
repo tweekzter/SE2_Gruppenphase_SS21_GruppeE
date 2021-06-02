@@ -13,14 +13,14 @@ import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Map;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Position;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Tile;
+import com.example.se2_gruppenphase_ss21.networking.client.listeners.InRoundListener;
 
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-
-public class Tiles extends AppCompatActivity {
+public class Tiles extends AppCompatActivity implements InRoundListener {
     Tile currenttile;
     int currentpositionx=0;
     int currentpositiony=0;
@@ -73,6 +73,11 @@ public class Tiles extends AppCompatActivity {
             //zeichnet die map
             drawmap();
 
+            // TODO: REMOVE when network connection stands - this is just for testing !!
+            // Adds the timer
+            TimerView timer = findViewById(R.id.timer);
+            timer.start(System.currentTimeMillis() + 60000);
+            // TODO: REMOVE until here
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -382,5 +387,35 @@ public class Tiles extends AppCompatActivity {
         for(Position positions:currenttile.getShape()){
             tilearray[currentpositiony+positions.getY()][currentpositionx+positions.getX()] = empty;
         }
+    }
+
+    /**
+     * Called by the server when the puzzle starts
+     * @param finishUntil the time until the puzzle should be finished
+     * @author Manuel Simon #00326348
+     */
+    public void beginPuzzle(long finishUntil) {
+        // setting up and starting the timer
+        TimerView timer = findViewById(R.id.timer);
+        timer.start(finishUntil);
+    }
+
+    public void placementsReceived(java.util.Map<String, Integer> placements) {
+        // TODO: implement in accordance with Sabrina!!
+    }
+
+    @Override
+    public void userDisconnect(String nickname) {
+        // TODO: implement
+    }
+
+    @Override
+    public void receiveUserList(String[] nicknames) {
+        // TODO: implement
+    }
+
+    @Override
+    public void unknownMessage(String message) {
+        // TODO: implement
     }
 }
