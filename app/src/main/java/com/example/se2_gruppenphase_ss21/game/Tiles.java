@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 
 import com.example.se2_gruppenphase_ss21.R;
@@ -67,6 +68,9 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
             ImageView firsttile = findViewById(R.id.firsttile);
             ImageView secondtile = findViewById(R.id.secondtile);
             ImageView thirdtile = findViewById(R.id.thirdtile);
+            firsttile.setVisibility(View.INVISIBLE);
+            secondtile.setVisibility(View.INVISIBLE);
+            thirdtile.setVisibility(View.INVISIBLE);
 
             Tile tileone = new Tile(getApplicationContext().getAssets(), pictures[3], "standard");
             Tile tiletwo = new Tile(getApplicationContext().getAssets(), pictures[4], "standard");
@@ -95,14 +99,9 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
             removetile = findViewById(R.id.removetile);
 
 
-            //zeichnet die map
-            drawmap();
-
-            // TODO: REMOVE when network connection stands - this is just for testing !!
-            // Adds the timer
-            TimerView timer = findViewById(R.id.timer);
-            timer.start(System.currentTimeMillis() + 60000);
-            // TODO: REMOVE until here
+            // TODO: RE-IMPLEMENT when network connection stands - this is just for testing !!
+            Button ubongo = findViewById(R.id.ubongo);
+            ubongo.setOnClickListener(v -> beginPuzzle(System.currentTimeMillis() + 60000));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -475,18 +474,29 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
      * @author Manuel Simon #00326348
      */
     public void beginPuzzle(long finishUntil) {
-        // setting up and starting the timer
+        findViewById(R.id.waitForServer).setVisibility(View.INVISIBLE);
+        // reveal map
+        drawmap();
+        findViewById(R.id.firsttile).setVisibility(View.VISIBLE);;
+        findViewById(R.id.secondtile).setVisibility(View.VISIBLE);;
+        findViewById(R.id.thirdtile).setVisibility(View.VISIBLE);;
+        // start timer
         TimerView timer = findViewById(R.id.timer);
         timer.start(finishUntil);
     }
 
+    /**
+     * Is called when the placements are received after the Puzzle is finished, marks the end of a round.
+     * Next roll request is received in approx. 10 seconds.
+     * @param placements
+     */
     public void placementsReceived(java.util.Map<String, Integer> placements) {
         // TODO: implement in accordance with Sabrina!!
     }
 
     @Override
     public void userDisconnect(String nickname) {
-        // TODO: implement
+        Toast.makeText(this, "Player "+nickname+" disconnected!", Toast.LENGTH_LONG);
     }
 
     @Override
@@ -496,6 +506,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
 
     @Override
     public void unknownMessage(String message) {
-        // TODO: implement
+        Toast.makeText(this, "Network error: "+message, Toast.LENGTH_LONG);
     }
 }
