@@ -1,10 +1,14 @@
 package com.example.se2_gruppenphase_ss21.game;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -20,7 +24,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-public class Tiles extends AppCompatActivity implements InRoundListener {
+public class Tiles extends AppCompatActivity implements InRoundListener, CheatingDialogFragment.CheatingDialogListener {
     Tile currenttile;
     int currentpositionx=0;
     int currentpositiony=0;
@@ -32,6 +36,16 @@ public class Tiles extends AppCompatActivity implements InRoundListener {
     int[] pictures;
 
     Tile[][] tilearray = new Tile[5][5];
+
+    Button up;
+    Button down;
+    Button left ;
+    Button right;
+
+    Button turnright;
+    Button turnleft;
+    Button mirror;
+    Button removetile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +83,17 @@ public class Tiles extends AppCompatActivity implements InRoundListener {
             secondtile.setOnClickListener(v -> movetiles(tiletwo, secondtile, Color.GREEN));
 
             thirdtile.setOnClickListener(v -> movetiles(tilethree, thirdtile, Color.RED));
+
+            up = findViewById(R.id.tileup);
+            down = findViewById(R.id.tiledown);
+            left = findViewById(R.id.tileleft);
+            right = findViewById(R.id.tileright);
+
+            turnright = findViewById(R.id.turnrigth);
+            turnleft = findViewById(R.id.turnleft);
+            mirror = findViewById(R.id.mirror);
+            removetile = findViewById(R.id.removetile);
+
 
             //zeichnet die map
             drawmap();
@@ -162,7 +187,9 @@ public class Tiles extends AppCompatActivity implements InRoundListener {
     //false=0=belegt
 
     private void movetiles(Tile tile, ImageView tileimage, int color){
+        setvisibilityofbuttonstrue();
         addonclicklistener();
+
 
 
         if(currenttile!=null){
@@ -223,6 +250,9 @@ public class Tiles extends AppCompatActivity implements InRoundListener {
             if(currenttile!=null) {
                 currenttile.attachToMap(currentmap, currentpositionx, currentpositiony);
                 placetilesintilesarray(currenttile, currentpositionx, currentpositiony);
+            }else{
+                setvisibilityofbuttonstrue();
+                addonclicklistener();
             }
             currenttile = tilearray[i][j];
 
@@ -259,14 +289,8 @@ public class Tiles extends AppCompatActivity implements InRoundListener {
     }
 
     private void addonclicklistener(){
-        Button up = findViewById(R.id.tileup);
-        Button down = findViewById(R.id.tiledown);
-        Button left = findViewById(R.id.tileleft);
-        Button right = findViewById(R.id.tileright);
-        Button turnright = findViewById(R.id.turnrigth);
-        Button turnleft = findViewById(R.id.turnleft);
-        Button mirror  = findViewById(R.id.mirror);
-        Button remove = findViewById(R.id.removetile);
+
+        Button ubongo = findViewById(R.id.ubongo);
 
         up.setOnClickListener(v -> movetileup());
         down.setOnClickListener(v -> movetiledown());
@@ -275,10 +299,42 @@ public class Tiles extends AppCompatActivity implements InRoundListener {
         turnleft.setOnClickListener(v -> turntileleft());
         turnright.setOnClickListener(v -> turntileright());
         mirror.setOnClickListener(v -> mirror());
-        remove.setOnClickListener(v -> removetile());
+        removetile.setOnClickListener(v -> removetile());
+        ubongo.setOnClickListener(v -> callUbongo());
 
     }
+    public void setvisibilityofbuttonstrue(){
+        up.setVisibility(View.VISIBLE);
+        down.setVisibility(View.VISIBLE);
+        left.setVisibility(View.VISIBLE);
+        right.setVisibility(View.VISIBLE);
+        mirror.setVisibility(View.VISIBLE);
+        turnleft.setVisibility(View.VISIBLE);
+        turnright.setVisibility(View.VISIBLE);
+        removetile.setVisibility(View.VISIBLE);
+    }
+    public void removeonclicklistener(){
+        up.setOnClickListener(null);
+        down.setOnClickListener(null);
+        left.setOnClickListener(null);
+        right.setOnClickListener(null);
+        turnleft.setOnClickListener(null);
+        turnright.setOnClickListener(null);
+        mirror.setOnClickListener(null);
+        removetile.setOnClickListener(null);
+    }
 
+    public void setvisibilityofbuttonsfalse(){
+        up.setVisibility(View.INVISIBLE);
+        down.setVisibility(View.INVISIBLE);
+        left.setVisibility(View.INVISIBLE);
+        right.setVisibility(View.INVISIBLE);
+        mirror.setVisibility(View.INVISIBLE);
+        turnleft.setVisibility(View.INVISIBLE);
+        turnright.setVisibility(View.INVISIBLE);
+        removetile.setVisibility(View.INVISIBLE);
+
+    }
     private void movetileup(){
         if(checkifplacable(currentpositionx, currentpositiony-1, tilepositions)){
             drawmap();
@@ -377,11 +433,35 @@ public class Tiles extends AppCompatActivity implements InRoundListener {
         }
         currenttile.detachFromMap();
         detatchfromtilearray();
+        removeonclicklistener();
+        setvisibilityofbuttonsfalse();
         currenttile=null;
         currentpositionx =0;
         currentpositiony=0;
         drawmap();
     }
+
+    public void showCheatingDialog() {
+        DialogFragment newFragment = new CheatingDialogFragment();
+        newFragment.show(getSupportFragmentManager(), "CheatingDialogFragment");
+    }
+
+    @Override
+    public void onCheatingPositiveClick(DialogFragment dialog) {
+
+    }
+
+    @Override
+    public void onCheatingCancelClick(DialogFragment dialog) {
+
+    }
+
+    private void callUbongo() {
+        if (!currentmap.checkSolved()) {
+            showCheatingDialog();
+        }
+    }
+
     private void detatchfromtilearray(){
         Tile empty = new Tile();
         for(Position positions:currenttile.getShape()){
