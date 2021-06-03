@@ -123,10 +123,11 @@ public class Dice extends AppCompatActivity {
         ImageView tiletwo = findViewById(R.id.tile2);
         ImageView tilethree = findViewById(R.id.tile3);
         XmlPullParserFactory parserFactory;
+        InputStream is = null;
         try {
             parserFactory = XmlPullParserFactory.newInstance();
             XmlPullParser parser = parserFactory.newPullParser();
-            InputStream is = getAssets().open("solutions.xml");
+            is = getAssets().open("solutions.xml");
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(is, null);
 
@@ -151,6 +152,9 @@ public class Dice extends AppCompatActivity {
 
         } catch (IOException e) {
 
+        } finally {
+            if(is != null)
+                is.close();
         }
 
     }

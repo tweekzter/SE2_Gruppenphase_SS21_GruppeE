@@ -8,6 +8,7 @@ import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -68,9 +69,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
             ImageView firsttile = findViewById(R.id.firsttile);
             ImageView secondtile = findViewById(R.id.secondtile);
             ImageView thirdtile = findViewById(R.id.thirdtile);
-            firsttile.setVisibility(View.INVISIBLE);
-            secondtile.setVisibility(View.INVISIBLE);
-            thirdtile.setVisibility(View.INVISIBLE);
 
             Tile tileone = new Tile(getApplicationContext().getAssets(), pictures[3], "standard");
             Tile tiletwo = new Tile(getApplicationContext().getAssets(), pictures[4], "standard");
