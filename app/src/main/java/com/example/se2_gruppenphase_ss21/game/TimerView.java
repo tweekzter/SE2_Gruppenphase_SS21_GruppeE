@@ -102,10 +102,12 @@ public class TimerView extends View {
      * @param finishUntil time until the timer finishes
      */
     public void start(long finishUntil) {
+
         long totalTime = finishUntil - System.currentTimeMillis();
         Thread timer = new Thread(() -> {
             // Handler is not necessary in this case, but it's good practise
             Handler handler = new Handler(Looper.getMainLooper());
+
             while(System.currentTimeMillis() < finishUntil) {
                 handler.post(() -> {
                     long remainTime = finishUntil - System.currentTimeMillis();
@@ -115,13 +117,15 @@ public class TimerView extends View {
                     angleSpan = -360f * ((float)remainTime / (float)totalTime);
                     invalidate();
                 });
+
                 try {
                     Thread.sleep(delta);
-                } catch (InterruptedException e) {
-                    Log.e("timer", "error at Thread.sleep");
+                } catch (InterruptedException ex) {
+                    Log.e("timer", ex.toString());
                 }
             }
         });
+
         timer.start();
     }
 
