@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/game_background"
+
     tools:context=".game.Tiles">
 
     <Button
@@ -15,8 +16,10 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="180dp"
         android:text="REMOVE FROM MAP"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <Button
         android:id="@+id/ubongo"
@@ -35,8 +38,10 @@
         android:layout_marginStart="156dp"
         android:layout_marginTop="256dp"
         android:text="TURN LEFT"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <Button
         android:id="@+id/mirror"
@@ -45,8 +50,10 @@
         android:layout_marginStart="280dp"
         android:layout_marginTop="256dp"
         android:text="MIRROR"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+       />
 
     <Button
         android:id="@+id/turnrigth"
@@ -55,8 +62,10 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="256dp"
         android:text="TURN RIGHT"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+       />
 
     <Button
         android:id="@+id/tileright"
@@ -65,8 +74,10 @@
         android:layout_marginStart="300dp"
         android:layout_marginTop="628dp"
         android:text="RIGHT"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <Button
         android:id="@+id/tileleft"
@@ -75,8 +86,10 @@
         android:layout_marginStart="184dp"
         android:layout_marginTop="628dp"
         android:text="LEFT"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+         />
 
     <Button
         android:id="@+id/tiledown"
@@ -85,8 +98,10 @@
         android:layout_marginStart="80dp"
         android:layout_marginTop="628dp"
         android:text="DOWN"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+         />
 
     <androidx.gridlayout.widget.GridLayout
 
@@ -303,7 +318,7 @@
 
         <Button
             android:id="@+id/twentythree"
-            android:layout_width="66dp"
+            android:layout_width="69dp"
             android:layout_height="85dp"
             android:layout_marginBottom="-11.5dp"
             android:textColorLink="#F3EFEF"
@@ -337,8 +352,10 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="628dp"
         android:text="UP"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <ImageView
         android:id="@+id/firsttile"
