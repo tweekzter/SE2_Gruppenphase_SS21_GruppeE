@@ -31,6 +31,7 @@ public class TimerView extends View {
     private final Paint paint;
     private RectF bounds;
     private float angleSpan = -360f;
+    private final int ALERT_TIME = 15000;
     // refresh-rate in ms - default of 50ms resembles 20fps
     private int delta = 50;
 
@@ -108,7 +109,7 @@ public class TimerView extends View {
             while(System.currentTimeMillis() < finishUntil) {
                 handler.post(() -> {
                     long remainTime = finishUntil - System.currentTimeMillis();
-                    if(remainTime < 15000)
+                    if(remainTime < ALERT_TIME)
                         setColor(Color.RED);
                     // update angleSpan with remaining time
                     angleSpan = -360f * ((float)remainTime / (float)totalTime);
