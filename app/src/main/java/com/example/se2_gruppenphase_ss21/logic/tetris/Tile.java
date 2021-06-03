@@ -2,6 +2,7 @@ package com.example.se2_gruppenphase_ss21.logic.tetris;
 
 import android.content.res.AssetManager;
 import android.graphics.Color;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -37,9 +38,8 @@ public class Tile {
     private Map map;
     private Position hook;
     private boolean isAttached = false;
+    private boolean isPlaced = false;
     private int color = Color.RED;
-    private static final int X_AXIS = 1;
-    private static final int Y_AXIS = 2;
 
 
     /**
@@ -122,19 +122,24 @@ public class Tile {
      * @return true if successful - false if not
      */
     public boolean attachToMap(Map map, Position posOnMap) {
-        // absolute reference point of map
-        hook = posOnMap;
+        if(isAttached) {
+            Log.e("tile", "Tile must be detached before attaching!");
+            return false;
+        }
+
         this.map = map;
-        // check if tile is allowed to be placed -> return false if not
-        if(!checkPlaceable())
+        // check if tile is allowed to be placed
+        if(!checkPlaceable(posOnMap))
             return false;
 
+        // set absolute reference point of map
+        hook = posOnMap;
         // register tile on map
         map.addTile(this);
         // place tile on the map at posOnMap
-        for(int i=0; i < shape.size(); i++) {
-            int x = hook.x + shape.get(i).x;
-            int y = hook.y + shape.get(i).y;
+        for(Position pos : shape) {
+            int x = hook.x + pos.x;
+            int y = hook.y + pos.y;
             map.coverBox(this, x, y);
         }
 
@@ -143,21 +148,91 @@ public class Tile {
         return true;
     }
 
+    public boolean placeTempOnMap(Map map, Position posOnMap) {
+        if(isAttached) {
+            Log.e("tile", "Tile must be detached before attaching!");
+            return false;
+        }
+
+        this.map = map;
+        if(collidesWithMapBorder(posOnMap))
+            return false;
+        if(isPlaced)
+            removeTempFromMap();
+        hook = posOnMap;
+        for(Position pos : shape) {
+            int x = hook.x + pos.x;
+            int y = hook.y + pos.y;
+            map.coverBoxTemp(this, x, y);
+        }
+
+        isPlaced = true;
+        return true;
+    }
+
     /**
      * Detaches this tile from the map.
      */
-    public void detachFromMap() {
+    public boolean detachFromMap() {
         if(hook == null || !isAttached)
-            return;
-        for(int i=0; i < shape.size(); i++) {
-            int x = hook.x + shape.get(i).x;
-            int y = hook.y + shape.get(i).y;
-            map.clearBox(x, y);
+            return false;
+        for(Position pos : shape) {
+            int x = hook.x + pos.x;
+            int y = hook.y + pos.y;
+            map.clearBox(x,y);
         }
 
-        this.map.removeTile(this);
-        this.map = null;
+        map.removeTile(this);
         isAttached = false;
+        return true;
+    }
+
+    /**
+     * Removes a temporarily placed TILE from the MAP.
+     * @return true if removed successfully, otherwise false.
+     */
+    public boolean removeTempFromMap() {
+        if(hook == null || isAttached || !isPlaced)
+            return false;
+        for(Position pos : shape) {
+            int x = hook.x + pos.x;
+            int y = hook.y + pos.y;
+            map.clearBoxTemp(x,y,this);
+        }
+
+        isPlaced = false;
+        return true;
+    }
+
+    /**
+     * Checks if the TILE collides with the MAP-border.
+     * Invalid fields or other TILES are not considered.
+     * This is solely for placement inside the field.
+     *
+     * @return true if TILE can be placed inside MAP, otherwise false.
+     */
+    public boolean collidesWithMapBorder() {
+        return collidesWithMapBorder(hook);
+    }
+
+    /**
+     * Checks if the TILE collides with the MAP-border.
+     * Invalid fields or other TILES are not considered.
+     * This is solely for placement inside the field.
+     *
+     * @param posOnMap position on MAP to place the TILE at
+     * @return true if TILE can be placed inside MAP, otherwise false.
+     */
+    public boolean collidesWithMapBorder(Position posOnMap) {
+        if(map == null)
+            return true;
+        for(Position pos : shape) {
+            int x = posOnMap.x + pos.x;
+            int y = posOnMap.y + pos.y;
+            if(x > map.getMaxX() || y > map.getMaxY())
+                return true;
+        }
+        return false;
     }
 
     /**
@@ -282,7 +357,9 @@ public class Tile {
      * Sets the absolute position of the map on which this TILE is inserted (with shape Position 0,0).
      * @param hook absolute position of map where tile is placed
      */
-    void setHook(Position hook) {
+    public void setHook(Position hook) {
+        if(isAttached)
+            detachFromMap();
         this.hook = hook;
     }
 

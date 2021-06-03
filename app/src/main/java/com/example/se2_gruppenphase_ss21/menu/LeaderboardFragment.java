@@ -13,10 +13,6 @@ import com.example.se2_gruppenphase_ss21.Player;
 import com.example.se2_gruppenphase_ss21.PlayerArrayAdapter;
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
-import com.example.se2_gruppenphase_ss21.networking.MulticastReceiver;
-import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
-import com.example.se2_gruppenphase_ss21.networking.client.ServerMessageListener;
-import com.example.se2_gruppenphase_ss21.networking.server.GameServer;
 
 import java.util.ArrayList;
 import java.util.List;

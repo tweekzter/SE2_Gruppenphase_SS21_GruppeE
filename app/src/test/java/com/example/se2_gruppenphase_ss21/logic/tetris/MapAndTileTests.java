@@ -10,6 +10,7 @@ public class MapAndTileTests {
     @Test
     public void testMapAndTile() {
         Map map = new Map();
+
         boolean[][] field = {
                 {false, true,  true,  false, false},
                 {false, true,  true,  true,  false},
@@ -29,7 +30,7 @@ public class MapAndTileTests {
                 { true, true, true, true, true },
 
         };
-        */
+         */
 
         map.setUpMap(field);
 
@@ -41,6 +42,7 @@ public class MapAndTileTests {
         Tile tile2 = new Tile(p2, new Position(1, 0));
         Tile tile3 = new Tile(new Position(2, 0), new Position(2, 2), new Position(3, 2),
                 new Position(2, 3), new Position(3, 3), new Position(3, 4), new Position(3, 5));
+
 
         tile.attachToMap(map, 1, 1);
         //tile2.attachToMap(2,1);
@@ -95,6 +97,22 @@ public class MapAndTileTests {
         System.out.println("Does this work? "+collide.attachToMap(map, new Position(1,0)));
         displayMap(map);
 
+
+        Tile temp = new Tile();
+        temp.addPoint(-1,0);
+        temp.addPoint(0,0);
+        temp.addPoint(1,0);
+        System.out.println(temp.placeTempOnMap(map, new Position(3,3)));
+        displayMap(map);
+        Tile temp2 = new Tile();
+        temp2.addPoint(0,0);
+        temp2.addPoint(0,1);
+        System.out.println(temp2.placeTempOnMap(map, new Position(4,2)));
+        displayMap(map);
+        temp2.removeTempFromMap();
+        System.out.println("****");
+        displayMap(map);
+
         for (Position pos : tile.getShape()) {
             System.out.print(pos.x + ", ");
             System.out.print(pos.y + "\n");
@@ -106,6 +124,8 @@ public class MapAndTileTests {
             for (int x = 0; x < 5; x++) {
                 if (map.getBox(x, y).isField() && map.getBox(x, y).getTile() != null)
                     System.out.print("I ");
+                else if(map.getBox(x, y).isCoveredByTempTile())
+                    System.out.print("* ");
                 else if (map.getBox(x, y).isField())
                     System.out.print("O ");
                 else

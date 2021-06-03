@@ -11,6 +11,7 @@ public class GameClientHandler {
     private boolean isReady;
     private int rollResult;
     private long finishedPuzzleAt;
+    private boolean bluff;
 
     public GameClientHandler(SocketWrapper client, String nickname) {
         this.client = client;
@@ -37,6 +38,7 @@ public class GameClientHandler {
                             break;
                         case "finish_puzzle":
                             finishedPuzzleAt = System.currentTimeMillis();
+                            bluff = Boolean.parseBoolean(params[1]);
                             break;
                         default:
                             System.err.printf("Received invalid message from client %s%n", fromUser);
@@ -76,6 +78,10 @@ public class GameClientHandler {
 
     public long getPuzzleFinishedAt() {
         return finishedPuzzleAt;
+    }
+
+    public boolean didBluff() {
+        return bluff;
     }
 
     public void close() throws IOException {
