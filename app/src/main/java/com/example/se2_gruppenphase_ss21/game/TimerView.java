@@ -30,11 +30,7 @@ public class TimerView extends View {
     private Canvas canvas;
     private final Paint paint;
     private RectF bounds;
-    private int color = Color.BLUE;
-    // angle where the arc starts
-    private float startAngle = -90f;
-    // angle that is covered
-    private float angleSpan = 360f;
+    private float angleSpan = -360f;
     // refresh-rate in ms - default of 50ms resembles 20fps
     private int delta = 50;
 
@@ -46,6 +42,7 @@ public class TimerView extends View {
      */
     public TimerView(Context ctx, AttributeSet attrs) {
         super(ctx, attrs);
+        int color = Color.BLUE;
 
         // check for arguments
         if(attrs != null) {
@@ -71,12 +68,13 @@ public class TimerView extends View {
      * @param oldH Views old height
      */
     protected void onSizeChanged(int w, int h, int oldW, int oldH) {
+        super.onSizeChanged(w, h, oldW, oldH);
         if (w != oldW || h != oldH) {
             bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
             bitmap.eraseColor(Color.TRANSPARENT);
             canvas = new Canvas(bitmap);
         }
-        super.onSizeChanged(w, h, oldW, oldH);
+
         bounds = new RectF(0,0, getWidth(), getHeight());
         invalidate();
     }
@@ -87,7 +85,7 @@ public class TimerView extends View {
      */
     protected void onDraw(Canvas c) {
         canvas.drawColor(0, PorterDuff.Mode.CLEAR);
-        canvas.drawArc(bounds, startAngle, angleSpan, true, paint);
+        canvas.drawArc(bounds, -90f, angleSpan, true, paint);
         c.drawBitmap(bitmap, 0f, 0f, null);
     }
 
@@ -103,6 +101,7 @@ public class TimerView extends View {
      * @param finishUntil time until the timer finishes
      */
     public void start(long finishUntil) {
+        long totalTime = finishUntil - System.currentTimeMillis();
         Thread timer = new Thread(() -> {
             // Handler is not necessary in this case, but it's good practise
             Handler handler = new Handler(Looper.getMainLooper());
@@ -110,9 +109,9 @@ public class TimerView extends View {
                 handler.post(() -> {
                     long remainTime = finishUntil - System.currentTimeMillis();
                     if(remainTime < 15000)
-                        paint.setColor(Color.RED);
-                    startAngle += ((360 - (startAngle + 90)) / remainTime) * delta;
-                    angleSpan = 270 - startAngle;
+                        setColor(Color.RED);
+                    // update angleSpan with remaining time
+                    angleSpan = -360f * ((float)remainTime / (float)totalTime);
                     invalidate();
                 });
                 try {
@@ -131,5 +130,9 @@ public class TimerView extends View {
      */
     public void setFPS(int fps) {
         delta = 1000 / fps;
+    }
+
+    public void setColor(int color) {
+        paint.setColor(color);
     }
 }
