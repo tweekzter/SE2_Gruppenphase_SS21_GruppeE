@@ -95,14 +95,9 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
             removetile = findViewById(R.id.removetile);
 
 
-            //zeichnet die map
-            drawmap();
-
-            // TODO: REMOVE when network connection stands - this is just for testing !!
-            // Adds the timer
-            TimerView timer = findViewById(R.id.timer);
-            timer.start(System.currentTimeMillis() + 60000);
-            // TODO: REMOVE until here
+            // TODO: RE-IMPLEMENT when network connection stands - this is just for testing !!
+            Button ubongo = findViewById(R.id.ubongo);
+            ubongo.setOnClickListener(v -> beginPuzzle(System.currentTimeMillis() + 60000));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -475,6 +470,8 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
      * @author Manuel Simon #00326348
      */
     public void beginPuzzle(long finishUntil) {
+        // reveal the map
+        drawmap();
         // setting up and starting the timer
         TimerView timer = findViewById(R.id.timer);
         timer.start(finishUntil);
