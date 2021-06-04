@@ -1,6 +1,6 @@
 {
   "map": {
-    "5x6": [
+    "5x5": [
       {
         "id": -1,
         "name": null,
@@ -12,13 +12,124 @@
         ]
       },
       {
-        "id": 1,
+        "id": 2,
         "name": null,
         "shape": [
-          [ false, false, false, false ],
-          [ false, true,  true,  false ],
-          [ false, true,  true,  false ],
-          [ false, true,  true,  false ]
+          [ true,  true,  true,  false, false ],
+          [ true,  true,  true,  true,  false ],
+          [ true,  true,  true,  true,  true  ],
+          [ true,  false, false, false, false ],
+          [ false, false, false, false, false ]
+        ]
+      },
+      {
+        "id": 3,
+        "name": null,
+        "shape": [
+          [ false, true,  true,  false, false ],
+          [ false, true,  true,  false, false ],
+          [ false, true,  true,  true,  false ],
+          [ false, true,  true,  true,  false ],
+          [ false, false, false, false, false ]
+        ]
+      },
+      {
+        "id": 4,
+        "name": null,
+        "shape": [
+          [ false, true,  true,  false, false ],
+          [ true,  true,  true,  true,  false ],
+          [ false, true,  true,  true,  true  ],
+          [ false, true,  true,  true,  false ],
+          [ false, false, false, false, false ]
+        ]
+      },
+      {
+        "id": 5,
+        "name": null,
+        "shape": [
+          [ false, true,  true,  true,  true  ],
+          [ false, true,  true,  true,  true  ],
+          [ false, false, false, true,  true  ],
+          [ false, false, false, true,  false ],
+          [ false, false, false, true,  false ]
+        ]
+      },
+      {
+        "id": 6,
+        "name": null,
+        "shape": [
+          [ false, false, true,  true,  false ],
+          [ false, true,  true,  true,  false ],
+          [ false, true,  true,  true,  false ],
+          [ false, true,  false, true,  false ],
+          [ false, true,  false, false, false ]
+        ]
+      },
+      {
+        "id": 7,
+        "name": null,
+        "shape": [
+          [ false, true,  true,  true,  false ],
+          [ false, true,  true,  true,  true  ],
+          [ false, false, true,  true,  true  ],
+          [ false, false, true,  true,  false ],
+          [ false, false, false, false, false ]
+        ]
+      },
+      {
+        "id": 8,
+        "name": null,
+        "shape": [
+          [ false, true,  true,  true,  false ],
+          [ false, false, true,  true,  false ],
+          [ true,  true,  true,  true,  false ],
+          [ true,  true,  true,  true,  false ],
+          [ false, false, false, false, false ]
+        ]
+      },
+      {
+        "id": 9,
+        "name": null,
+        "shape": [
+          [ true,  true,  true,  true,  false ],
+          [ true,  true,  true,  true,  false ],
+          [ true,  true,  true,  true,  false ],
+          [ true,  false, false, false, false ],
+          [ false, false, false, false, false ]
+        ]
+      },
+      {
+        "id": 10,
+        "name": null,
+        "shape": [
+          [ true,  true,  false, false, false ],
+          [ true,  true,  true,  false, false ],
+          [ true,  true,  true,  false, false ],
+          [ true,  true,  true,  true,  false ],
+          [ false, false, false, false, false ]
+        ]
+      },
+      {
+        "id": 11,
+        "name": null,
+        "shape": [
+          [ true,  true,  true,  false, false ],
+          [ false, true,  true,  true,  true  ],
+          [ false, true,  true,  true,  true  ],
+          [ false, true,  true,  true,  true  ],
+          [ false, true,  true,  false, false ]
+        ]
+      },
+      {
+        "id": 12,
+        "name": null,
+        "shape": [
+          [ false, false, true,  false, false ],
+          [ true,  true,  true,  true,  false ],
+          [ true,  true,  true,  true,  false ],
+          [ true,  true,  true,  true,  false ],
+          [ false, false, false, true,  false ]
         ]
       }
     ]
