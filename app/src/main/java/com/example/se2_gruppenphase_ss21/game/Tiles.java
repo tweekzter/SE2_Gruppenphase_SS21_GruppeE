@@ -53,8 +53,9 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tiles);
+        InputStream is = null;
         try {
-            InputStream is = getAssets().open("maps.xml");
+            is = getAssets().open("maps.xml");
             //holt sich daten aus xml für das aussehen der map
             map= XMLParser.parsexml("two","cardnumber", is);
             currentmap=new Map(map);
@@ -100,6 +101,8 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
             // TODO: RE-IMPLEMENT when network connection stands - this is just for testing !!
             Button ubongo = findViewById(R.id.ubongo);
             ubongo.setOnClickListener(v -> beginPuzzle(System.currentTimeMillis() + 60000));
+
+            is.close();
 
         } catch (IOException e) {
             e.printStackTrace();
