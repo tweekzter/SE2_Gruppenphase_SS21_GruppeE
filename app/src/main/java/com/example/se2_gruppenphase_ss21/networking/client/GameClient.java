@@ -1,5 +1,8 @@
 package com.example.se2_gruppenphase_ss21.networking.client;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
 import com.example.se2_gruppenphase_ss21.networking.SocketWrapper;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.GeneralGameListener;
@@ -15,7 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GameClient {
+public class GameClient implements Parcelable {
 
     private SocketWrapper socket;
     private String nickname;
@@ -52,6 +55,24 @@ public class GameClient {
         this.nickname = nickname;
         this.roomName = roomName;
     }
+
+    protected GameClient(Parcel in) {
+        nickname = in.readString();
+        roomName = in.readString();
+        isConnected = in.readByte() != 0;
+    }
+
+    public static final Creator<GameClient> CREATOR = new Creator<GameClient>() {
+        @Override
+        public GameClient createFromParcel(Parcel in) {
+            return new GameClient(in);
+        }
+
+        @Override
+        public GameClient[] newArray(int size) {
+            return new GameClient[size];
+        }
+    };
 
     /**
      * Try to connect to the room specified in the constructor.
@@ -193,5 +214,17 @@ public class GameClient {
      */
     public void registerListener(GeneralGameListener listener) {
         this.listener = listener;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(nickname);
+        dest.writeString(roomName);
+        dest.writeByte((byte) (isConnected ? 1 : 0));
     }
 }
