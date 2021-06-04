@@ -116,6 +116,25 @@ public class Map {
     }
 
     /**
+     * Covers a specific box on the map with the given TILE.
+     * @param tile the tile to cover box with
+     * @param x x-coordinate of the box
+     * @param y y-coordinate of the box
+     */
+    void coverBoxTemp(Tile tile, int x, int y) {
+        boxMap[y][x].setTempTile(tile);
+    }
+
+    /**
+     * Clears any tile from the specified box on the map.
+     * @param x x-coordinate of the box
+     * @param y y-coordinate of the box
+     */
+    void clearBoxTemp(int x, int y, Tile tile) {
+        boxMap[y][x].removeTempTile(tile);
+    }
+
+    /**
      * Checks if a specified box on the map is available for placement.
      * @param x x-coordinate of the box
      * @param y y-coordinate of the box
