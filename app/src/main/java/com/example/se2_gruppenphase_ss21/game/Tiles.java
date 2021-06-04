@@ -8,6 +8,7 @@ import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -52,8 +53,9 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tiles);
+        InputStream is = null;
         try {
-            InputStream is = getAssets().open("maps.xml");
+            is = getAssets().open("maps.xml");
             //holt sich daten aus xml für das aussehen der map
             map= XMLParser.parsexml("two","cardnumber", is);
             currentmap=new Map(map);
@@ -68,9 +70,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
             ImageView firsttile = findViewById(R.id.firsttile);
             ImageView secondtile = findViewById(R.id.secondtile);
             ImageView thirdtile = findViewById(R.id.thirdtile);
-            firsttile.setVisibility(View.INVISIBLE);
-            secondtile.setVisibility(View.INVISIBLE);
-            thirdtile.setVisibility(View.INVISIBLE);
 
             Tile tileone = new Tile(getApplicationContext().getAssets(), pictures[3], "standard");
             Tile tiletwo = new Tile(getApplicationContext().getAssets(), pictures[4], "standard");
@@ -102,6 +101,8 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
             // TODO: RE-IMPLEMENT when network connection stands - this is just for testing !!
             Button ubongo = findViewById(R.id.ubongo);
             ubongo.setOnClickListener(v -> beginPuzzle(System.currentTimeMillis() + 60000));
+
+            is.close();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -496,7 +497,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
 
     @Override
     public void userDisconnect(String nickname) {
-        Toast.makeText(this, "Player "+nickname+" disconnected!", Toast.LENGTH_LONG);
+        Toast.makeText(this, "Player "+nickname+" disconnected!", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -506,6 +507,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
 
     @Override
     public void unknownMessage(String message) {
-        Toast.makeText(this, "Network error: "+message, Toast.LENGTH_LONG);
+        Toast.makeText(this, "Network error: "+message, Toast.LENGTH_LONG).show();
     }
 }
