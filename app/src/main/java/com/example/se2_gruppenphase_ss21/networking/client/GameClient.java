@@ -25,7 +25,7 @@ public class GameClient implements Parcelable {
     private String roomName;
     private boolean isConnected;
 
-    private ArrayList<GeneralGameListener> listeners;
+    private GeneralGameListener listener;
 
     public GameClient(GameServer server, String roomName, String nickname) throws IOException {
         this("127.0.0.1", server.getPort(), roomName, nickname);
@@ -106,50 +106,43 @@ public class GameClient implements Parcelable {
                     String[] params = fromServer.split("\\s");
                     switch (params[0]) {
                         case "game_start":
-                            for(GeneralGameListener listener : listeners)
-                                if(listener instanceof PreGameListener)
-                                    ((PreGameListener) listener).onGameStart();
+                            if(listener instanceof PreGameListener)
+                                ((PreGameListener) listener).onGameStart();
                             break;
                         case "users_ready":
                             String[] split = params[1].split(",");
                             int current = Integer.parseInt(split[0]);
                             int max = Integer.parseInt(split[1]);
 
-                            for(GeneralGameListener listener : listeners)
-                                if(listener instanceof PreGameListener)
-                                    ((PreGameListener) listener).readyCount(current, max);
+                            if(listener instanceof PreGameListener)
+                                ((PreGameListener) listener).readyCount(current, max);
                             break;
                         case "user_list":
                             String[] nicknames = params[1].split(",");
-                            for(GeneralGameListener listener : listeners)
-                                listener.receiveUserList(nicknames);
+                            listener.receiveUserList(nicknames);
                             break;
                         case "disconnect_user":
                             String name = params[1];
 
-                            for(GeneralGameListener listener : listeners)
-                                listener.userDisconnect(name);
+                            listener.userDisconnect(name);
                             break;
                         case "roll_request":
                             String nick = params[1];
 
-                            for(GeneralGameListener listener : listeners)
-                                if(listener instanceof PreRoundListener)
-                                    ((PreRoundListener) listener).rollRequest(nick);
+                            if(listener instanceof PreRoundListener)
+                                ((PreRoundListener) listener).rollRequest(nick);
                             break;
                         case "roll_result":
                             int result = Integer.parseInt(params[1]);
 
-                            for(GeneralGameListener listener : listeners)
-                                if(listener instanceof PreRoundListener)
-                                    ((PreRoundListener) listener).rollResult(result);
+                            if(listener instanceof PreRoundListener)
+                                ((PreRoundListener) listener).rollResult(result);
                             break;
                         case "begin_puzzle":
                             long finishUntil = Long.parseLong(params[1]);
 
-                            for(GeneralGameListener listener : listeners)
-                                if(listener instanceof InRoundListener)
-                                    ((InRoundListener) listener).beginPuzzle(finishUntil);
+                            if(listener instanceof InRoundListener)
+                                ((InRoundListener) listener).beginPuzzle(finishUntil);
                             break;
                         case "placements":
                             String[] foo = params[1].split(";");
@@ -159,13 +152,11 @@ public class GameClient implements Parcelable {
                                 placements.put(bar[0], Integer.parseInt(bar[1]));
                             }
 
-                            for(GeneralGameListener listener : listeners)
-                                if(listener instanceof InRoundListener)
-                                    ((InRoundListener) listener).placementsReceived(placements);
+                            if(listener instanceof InRoundListener)
+                                ((InRoundListener) listener).placementsReceived(placements);
                             break;
                         default:
-                            for(GeneralGameListener listener : listeners)
-                                listener.unknownMessage(fromServer);
+                            listener.unknownMessage(fromServer);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -197,6 +188,7 @@ public class GameClient implements Parcelable {
 
     /**
      * Ubongo!
+     * @param bluff indicates whether the puzzle was solved (true for cheating)
      * @throws IOException
      */
     public void puzzleDone(boolean bluff) throws IOException {
@@ -207,13 +199,21 @@ public class GameClient implements Parcelable {
         socket.sendString("finish_puzzle " + bluff);
     }
 
+    public void accuseOfCheating(String nick) throws IOException {
+        if (!isConnected) {
+            throw new RuntimeException("Client is not connected");
+        }
+
+        socket.sendString("accuse " + nick);
+    }
+
     /**
      * Sets a Listener to listen for messages from the server.
      * Only one listener can be registered at a time so this overwrites any previously registered Listener.
      * @param listener the Listener to be registered
      */
     public void registerListener(GeneralGameListener listener) {
-        listeners.add(listener);
+        this.listener = listener;
     }
 
     @Override

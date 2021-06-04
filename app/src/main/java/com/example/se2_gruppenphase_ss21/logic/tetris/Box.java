@@ -1,6 +1,8 @@
 package com.example.se2_gruppenphase_ss21.logic.tetris;
 
 
+import java.util.LinkedList;
+
 /**
  * A BOX is the fundamental element that a MAP consists of.
  * A BOX can be part of the play field and can also be covered by a tile.
@@ -9,6 +11,8 @@ package com.example.se2_gruppenphase_ss21.logic.tetris;
  */
 public class Box extends Position {
     private Tile tile;
+    // a tempTile is a Tile which is not yet attached to the MAP
+    private LinkedList<Tile> tempTiles = new LinkedList<>();
     private boolean isField;
 
     public Box(int x, int y) {
@@ -43,10 +47,18 @@ public class Box extends Position {
 
     /**
      * Returns if this BOX is occupied by a TILE.
-     * @return true if occupied by a TILE, otherwise false;
+     * @return true if occupied by a TILE, otherwise false.
      */
     public boolean isCoveredByTile() {
         return tile != null;
+    }
+
+    /**
+     * Returns if this BOX is covered by one or more temporarily placed TILEs.
+     * @return true if covered by a temp TILE, otherwise false.
+     */
+    public boolean isCoveredByTempTile() {
+        return !tempTiles.isEmpty();
     }
 
     /**
@@ -64,5 +76,29 @@ public class Box extends Position {
     public void setTile(Tile tile) {
         this.tile = tile;
     }
-}
 
+    /**
+     * Returns the temporary TILE of this BOX.
+     * @return the temporarily placed TILE.
+     */
+    public Tile getTempTile() {
+        return tempTiles.peek();
+    }
+
+    /**
+     * Sets this BOX temporary TILE.
+     * @param tile the temporarily placed TILE.
+     */
+    public void setTempTile(Tile tile) {
+        tempTiles.push(tile);
+    }
+
+    /**
+     * Removes the specified TILE from this BOXs temporary TILEs.
+     * @param tile the TILE to delete
+     * @return true if found and deleted, otherwise false.
+     */
+    public boolean removeTempTile(Tile tile) {
+        return tempTiles.remove(tile);
+    }
+}

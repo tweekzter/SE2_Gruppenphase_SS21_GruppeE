@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/game_background"
+
+    tools:context=".game.Tiles">
+
+    <Button
+        android:id="@+id/removetile"
+        android:layout_width="96dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="280dp"
+        android:layout_marginTop="172dp"
+        android:text="REMOVE FROM MAP"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <Button
+        android:id="@+id/ubongo"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="172dp"
+        android:text="UBONGO"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/turnleft"
+        android:layout_width="99dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="156dp"
+        android:layout_marginTop="256dp"
+        android:text="TURN LEFT"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <Button
+        android:id="@+id/mirror"
+        android:layout_width="99dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="280dp"
+        android:layout_marginTop="256dp"
+        android:text="MIRROR"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+       />
+
+    <Button
+        android:id="@+id/turnrigth"
+        android:layout_width="99dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="256dp"
+        android:text="TURN RIGHT"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+       />
+
+    <Button
+        android:id="@+id/tileright"
+        android:layout_width="95dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="300dp"
+        android:layout_marginTop="628dp"
+        android:text="RIGHT"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <Button
+        android:id="@+id/tileleft"
+        android:layout_width="95dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="184dp"
+        android:layout_marginTop="628dp"
+        android:text="LEFT"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+         />
+
+    <Button
+        android:id="@+id/tiledown"
+        android:layout_width="95dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="628dp"
+        android:text="DOWN"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+         />
+
+    <com.example.se2_gruppenphase_ss21.game.TimerView
+        android:id="@+id/timer"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/turnrigth"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/firsttile"
+        app:layout_constraintVertical_bias="0.588" />
+
+    <androidx.gridlayout.widget.GridLayout
+
+        android:layout_width="347dp"
+        android:layout_height="296dp"
+        android:layout_marginTop="320dp"
+        android:horizontalSpacing="-30dp"
+        android:verticalSpacing="-100dp"
+        app:columnCount="5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/one"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#1E0A0A"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/two"
+
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/three"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/four"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_column="3"
+            app:layout_gravity="fill_vertical"
+            app:layout_row="0" />
+
+        <Button
+            android:id="@+id/five"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/six"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/seven"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/eigth"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/nine"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/ten"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/eleven"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/twelve"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/thirteen"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/fourteen"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/fifteen"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/sixteen"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/seventeen"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/eighteen"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/nineteen"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/twenty"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/twentyone"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/twentytwo"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/twentythree"
+            android:layout_width="69dp"
+            android:layout_height="85dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/twentyfour"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+        <Button
+            android:id="@+id/twentyfive"
+            android:layout_width="69dp"
+            android:layout_height="68dp"
+            android:layout_marginBottom="-11.5dp"
+            android:textColorLink="#F3EFEF"
+            app:backgroundTint="#000000"
+            app:layout_gravity="fill_vertical" />
+
+    </androidx.gridlayout.widget.GridLayout>
+
+    <Button
+        android:id="@+id/tileup"
+        android:layout_width="62dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="628dp"
+        android:text="UP"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/firsttile"
+        android:layout_width="124dp"
+        android:layout_height="145dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/secondtile"
+        android:layout_width="124dp"
+        android:layout_height="145dp"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="4dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/thirdtile"
+        android:layout_width="124dp"
+        android:layout_height="145dp"
+        android:layout_marginStart="280dp"
+        android:layout_marginTop="4dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/waitForServer"
+        android:layout_width="347dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="56dp"
+        android:fontFamily="@font/architects_daughter"
+        android:text="@string/wait_for_server"
+        android:textColor="@color/white"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
