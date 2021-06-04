@@ -116,6 +116,7 @@ public class RoomFragment extends Fragment {
                 @Override
                 public void onGameStart() {
                     Intent intent = new Intent(getActivity(), MockingGame.class);
+                    intent.putExtra("client", client);
                     startActivity(intent);
                 }
 
