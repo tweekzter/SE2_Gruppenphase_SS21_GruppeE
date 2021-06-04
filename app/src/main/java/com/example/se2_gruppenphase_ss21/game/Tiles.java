@@ -494,7 +494,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
 
     @Override
     public void userDisconnect(String nickname) {
-        Toast.makeText(this, "Player "+nickname+" disconnected!", Toast.LENGTH_LONG);
+        Toast.makeText(this, "Player "+nickname+" disconnected!", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -504,6 +504,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
 
     @Override
     public void unknownMessage(String message) {
-        Toast.makeText(this, "Network error: "+message, Toast.LENGTH_LONG);
+        Toast.makeText(this, "Network error: "+message, Toast.LENGTH_LONG).show();
     }
 }
