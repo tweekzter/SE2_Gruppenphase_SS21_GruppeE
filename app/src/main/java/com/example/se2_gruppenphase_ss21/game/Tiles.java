@@ -385,6 +385,9 @@ public class Tiles extends AppCompatActivity
         if(checkifplacable(currentpositionx,currentpositiony,tilepositions)){
             drawmap();
             colorbuttons(currentpositionx,currentpositiony,tilepositions);
+        }else{
+            currenttile.rotateLeft();
+            tilepositions = currenttile.getShape();
         }
 
 
@@ -396,6 +399,9 @@ public class Tiles extends AppCompatActivity
         if(checkifplacable(currentpositionx,currentpositiony,tilepositions)){
             drawmap();
             colorbuttons(currentpositionx,currentpositiony,tilepositions);
+        }else{
+            currenttile.rotateRight();
+            tilepositions = currenttile.getShape();
         }
 
     }
@@ -406,6 +412,9 @@ public class Tiles extends AppCompatActivity
         if(checkifplacable(currentpositionx,currentpositiony,tilepositions)){
             drawmap();
             colorbuttons(currentpositionx,currentpositiony,tilepositions);
+        }else{
+            currenttile.mirrorHorizontally();
+            tilepositions= currenttile.getShape();
         }
     }
 
