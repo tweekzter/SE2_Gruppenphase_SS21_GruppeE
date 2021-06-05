@@ -15,6 +15,7 @@
             android:theme="@style/Theme.SE2_Gruppenphase_SS21.NoActionBar"/>
         <activity android:name=".game.Dice"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".game.alternativeGUI.Puzzle" />
         <activity android:name=".menu.MockingGame" />
         <activity android:name=".menu.MenuActivity" />
         <activity android:name=".menu.LeaderboardActivity" />

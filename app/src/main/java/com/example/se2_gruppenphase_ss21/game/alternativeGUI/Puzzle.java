@@ -10,5 +10,7 @@ public class Puzzle extends AppCompatActivity {
         super.onCreate(savedInstances);
         setContentView(R.layout.activity_puzzle);
         Objects.requireNonNull(getSupportActionBar()).hide();
+
+        getSupportFragmentManager().beginTransaction().add(R.id.puzzle_container, new Dice()).commit();
     }
 }

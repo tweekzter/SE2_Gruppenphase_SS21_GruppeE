@@ -104,6 +104,7 @@ public class TimerView extends View {
     public void start(long finishUntil) {
 
         long totalTime = finishUntil - System.currentTimeMillis();
+
         Thread timer = new Thread(() -> {
             // Handler is not necessary in this case, but it's good practise
             Handler handler = new Handler(Looper.getMainLooper());
@@ -117,7 +118,6 @@ public class TimerView extends View {
                     angleSpan = -360f * ((float)remainTime / (float)totalTime);
                     invalidate();
                 });
-
                 try {
                     Thread.sleep(delta);
                 } catch (InterruptedException ex) {

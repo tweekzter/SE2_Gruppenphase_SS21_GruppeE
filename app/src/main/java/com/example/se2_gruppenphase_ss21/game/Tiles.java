@@ -58,8 +58,9 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tiles);
+        InputStream is = null;
         try {
-            InputStream is = getAssets().open("maps.xml");
+            is = getAssets().open("maps.xml");
             //holt sich daten aus xml für das aussehen der map
             map= XMLParser.parsexml("two","cardnumber", is);
             currentmap=new Map(map);
@@ -110,6 +111,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
             Point size = new Point();
             d.getSize(size);
             int width = size.x;
+            is.close();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -504,7 +506,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
 
     @Override
     public void userDisconnect(String nickname) {
-        Toast.makeText(this, "Player "+nickname+" disconnected!", Toast.LENGTH_LONG);
+        Toast.makeText(this, "Player "+nickname+" disconnected!", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -514,6 +516,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
 
     @Override
     public void unknownMessage(String message) {
-        Toast.makeText(this, "Network error: "+message, Toast.LENGTH_LONG);
+        Toast.makeText(this, "Network error: "+message, Toast.LENGTH_LONG).show();
     }
 }

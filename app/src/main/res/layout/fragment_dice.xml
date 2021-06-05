@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/roll_dice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:text="@string/diceroll"
+        app:layout_constraintBottom_toTopOf="@+id/frame_roll"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TableLayout
+        android:id="@+id/frame_roll"
+        android:layout_width="7900px"
+        android:layout_height="700px"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/slide_image6"
+                android:layout_width="700px"
+                android:layout_height="700px"
+                android:layout_marginRight="500px"
+                app:srcCompat="@drawable/snake" />
+
+            <ImageView
+                android:id="@+id/slide_image5"
+                android:layout_width="700px"
+                android:layout_height="700px"
+                android:layout_marginRight="500px"
+                app:srcCompat="@drawable/hand" />
+
+            <ImageView
+                android:id="@+id/slide_image4"
+                android:layout_width="700px"
+                android:layout_height="700px"
+                android:layout_marginRight="500px"
+                app:srcCompat="@drawable/bug" />
+
+            <ImageView
+                android:id="@+id/slide_image3"
+                android:layout_width="700px"
+                android:layout_height="700px"
+                android:layout_marginRight="500px"
+                app:srcCompat="@drawable/elefant" />
+
+            <ImageView
+                android:id="@+id/slide_image2"
+                android:layout_width="700px"
+                android:layout_height="700px"
+                android:layout_marginRight="500px"
+                app:srcCompat="@drawable/lion"
+                tools:layout_editor_absoluteX="105dp"
+                tools:layout_editor_absoluteY="271dp" />
+
+            <ImageView
+                android:id="@+id/slide_image1"
+                android:layout_width="700px"
+                android:layout_height="700px"
+                app:srcCompat="@drawable/antilope" />
+
+        </TableRow>
+    </TableLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
