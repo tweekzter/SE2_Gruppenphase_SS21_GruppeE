@@ -1,15 +1,20 @@
 package com.example.se2_gruppenphase_ss21.game;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.solver.state.Dimension;
 import androidx.fragment.app.DialogFragment;
 
+import android.animation.ObjectAnimator;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -100,6 +105,11 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
             // TODO: RE-IMPLEMENT when network connection stands - this is just for testing !!
             Button ubongo = findViewById(R.id.ubongo);
             ubongo.setOnClickListener(v -> beginPuzzle(System.currentTimeMillis() + 60000));
+
+            Display d = getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            d.getSize(size);
+            int width = size.x;
 
         } catch (IOException e) {
             e.printStackTrace();

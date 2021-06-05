@@ -18,7 +18,7 @@
         "hand": [ 5, 2, 3 ],
         "antilope": [ 9, 12, 3 ],
         "snake": [ 11, 4, 9 ],
-        "elefant": [ 5, 3, 4 ],
+        "elephant": [ 5, 3, 4 ],
         "bug": [ 12, 5, 4 ],
         "shape": [
           [ true,  true,  true,  false, false ],
@@ -35,7 +35,7 @@
         "hand": [ 12, 5, 7 ],
         "antilope": [ 1, 11, 12 ],
         "snake": [ 8, 5, 10 ],
-        "elefant": [ 2, 10 , 4 ],
+        "elephant": [ 2, 10 , 4 ],
         "bug": [ 1, 5, 11 ],
         "shape": [
           [ false, true,  true,  false, false ],
@@ -52,7 +52,7 @@
         "hand": [ 12, 4, 2 ],
         "antilope": [ 5, 2, 6 ],
         "snake": [ 11, 9, 4 ],
-        "elefant": [ 12, 4, 5 ],
+        "elephant": [ 12, 4, 5 ],
         "bug": [ 5, 2, 8 ],
         "shape": [
           [ false, true, true, false, false ],
@@ -69,7 +69,7 @@
         "hand": [ 6, 5, 7 ],
         "antilope": [ 10, 4, 6 ],
         "snake": [ 2, 11, 4 ],
-        "elefant": [ 6, 10, 9 ],
+        "elephant": [ 6, 10, 9 ],
         "bug": [ 3, 6, 11 ],
         "shape": [
           [ false, true, true, true, true ],
@@ -86,7 +86,7 @@
         "hand": [ 5, 3, 11 ],
         "antilope": [ 9, 12, 10 ],
         "snake": [ 12, 11, 2 ],
-        "elefant": [ 6, 2, 10 ],
+        "elephant": [ 6, 2, 10 ],
         "bug": [ 11, 5, 12 ],
         "shape": [
           [ false, false, true, true, false ],
@@ -103,7 +103,7 @@
         "hand": [ 5, 4, 11 ],
         "antilope": [ 12, 7, 4 ],
         "snake": [ 1, 11, 6 ],
-        "elefant": [ 7, 8, 5 ],
+        "elephant": [ 7, 8, 5 ],
         "bug": [ 2, 4, 7 ],
         "shape": [
           [ false, true, true, true, false ],
@@ -120,7 +120,7 @@
         "hand": [ 6, 2, 5 ],
         "antilope": [ 8, 5, 2 ],
         "snake": [ 5, 4, 1 ],
-        "elefant": [ 1, 2, 4 ],
+        "elephant": [ 1, 2, 4 ],
         "bug": [ 2, 9, 3 ],
         "shape": [
           [ false, true, true, true, false ],
@@ -137,7 +137,7 @@
         "hand": [ 5, 4, 3 ],
         "antilope": [ 11, 8, 4 ],
         "snake": [ 12, 6, 5 ],
-        "elefant": [ 4, 5, 2 ],
+        "elephant": [ 4, 5, 2 ],
         "bug": [ 9, 4, 7 ],
         "shape": [
           [ true,  true,  true,  true,  false ],
@@ -154,7 +154,7 @@
         "hand": [ 9, 12, 11 ],
         "antilope": [ 6, 7, 2 ],
         "snake": [ 7, 4, 5 ],
-        "elefant": [ 1, 8, 11 ],
+        "elephant": [ 1, 8, 11 ],
         "bug": [ 10, 9, 4 ],
         "shape": [
           [ true, true, false, false, false ],
@@ -171,7 +171,7 @@
         "hand": [ 5, 1, 6 ],
         "antilope": [ 11, 6, 4 ],
         "snake": [ 5, 4, 2 ],
-        "elefant": [ 2, 1, 4 ],
+        "elephant": [ 2, 1, 4 ],
         "bug": [ 4, 7, 8 ],
         "shape": [
           [ true,  true,  true,  false, false ],
@@ -188,7 +188,7 @@
         "hand": [ 2, 4, 9 ],
         "antilope": [ 6, 3, 4 ],
         "snake": [ 2, 8, 9 ],
-        "elefant": [ 8, 9, 12 ],
+        "elephant": [ 8, 9, 12 ],
         "bug": [ 5, 9, 4 ],
         "shape": [
           [ false, false, true,  false, false ],
@@ -205,7 +205,7 @@
         "hand": [ 3, 6, 4 ],
         "antilope": [ 2, 4, 6 ],
         "snake": [ 8, 5, 4 ],
-        "elefant": [ 6, 12, 8 ],
+        "elephant": [ 6, 12, 8 ],
         "bug": [ 3, 9, 4 ],
         "shape": [
           [ true, true, false, false, false ],
@@ -222,7 +222,7 @@
         "hand": [ 11, 9, 4 ],
         "antilope": [ 1, 4, 12 ],
         "snake": [ 5, 1, 4 ],
-        "elefant": [ 6, 4, 11 ],
+        "elephant": [ 6, 4, 11 ],
         "bug": [ 8, 5, 2 ],
         "shape": [
           [ true, true, false, false, false ],
@@ -239,7 +239,7 @@
         "hand": [ 12, 2, 4 ],
         "antilope": [ 2, 8, 5 ],
         "snake": [ 5, 6, 3 ],
-        "elefant": [ 7, 9, 6 ],
+        "elephant": [ 7, 9, 6 ],
         "bug": [ 6, 1, 5 ],
         "shape": [
           [ true, true, true, false, false ],
@@ -256,7 +256,7 @@
         "hand": [ 11, 4, 9 ],
         "antilope": [ 5, 9, 1 ],
         "snake": [ 1, 6, 5 ],
-        "elefant": [ 2, 4, 1 ],
+        "elephant": [ 2, 4, 1 ],
         "bug": [ 6, 3, 1 ],
         "shape": [
           [ true, true, false, false, false ],
@@ -273,7 +273,7 @@
         "hand": [ 2, 4, 12 ],
         "antilope": [ 7, 8, 4 ],
         "snake": [ 7, 4, 6 ],
-        "elefant": [ 5, 9, 1 ],
+        "elephant": [ 5, 9, 1 ],
         "bug": [ 1, 6, 5 ],
         "shape": [
           [ false, true, true, false, false ],
@@ -290,7 +290,7 @@
         "hand": [ 12, 7, 9 ],
         "antilope": [ 2, 8, 11 ],
         "snake": [ 9, 5, 7 ],
-        "elefant": [ 11, 6, 5 ],
+        "elephant": [ 11, 6, 5 ],
         "bug": [ 7, 5, 4 ],
         "shape": [
           [ false, true, true, true, true ],
@@ -307,7 +307,7 @@
         "hand": [ 12, 4, 5 ],
         "antilope": [ 5, 6, 2 ],
         "snake": [ 7, 9, 4 ],
-        "elefant": [ 3, 12, 4 ],
+        "elephant": [ 3, 12, 4 ],
         "bug": [ 12, 1, 8 ],
         "shape": [
           [ true, true, true, true, false ],
@@ -324,7 +324,7 @@
         "hand": [ 5, 7, 4 ],
         "antilope": [ 11, 4, 5 ],
         "snake": [ 6, 10, 4 ],
-        "elefant": [ 1, 12, 5 ],
+        "elephant": [ 1, 12, 5 ],
         "bug": [ 5, 6, 11 ],
         "shape": [
           [ false, false, true,  true,  false ],
@@ -341,7 +341,7 @@
         "hand": [ 6, 3, 5 ],
         "antilope": [ 2, 5, 4 ],
         "snake": [ 11, 4, 6 ],
-        "elefant": [ 7, 8, 4 ],
+        "elephant": [ 7, 8, 4 ],
         "bug": [ 2, 6, 5 ],
         "shape": [
           [ false, false, true,  true,  false ],
@@ -358,7 +358,7 @@
         "hand": [ 7, 5, 6 ],
         "antilope": [ 11, 4, 5 ],
         "snake": [ 7, 9, 5 ],
-        "elefant": [ 5, 7, 4 ],
+        "elephant": [ 5, 7, 4 ],
         "bug": [ 5, 12, 1 ],
         "shape": [
           [ false, true, true, true, false ],
@@ -375,7 +375,7 @@
         "hand": [ 11, 12, 4 ],
         "antilope": [ 6, 4, 10 ],
         "snake": [ 5, 7, 4 ],
-        "elefant": [ 11, 9, 12 ],
+        "elephant": [ 11, 9, 12 ],
         "bug": [ 6, 11, 5 ],
         "shape": [
           [ false, true, true, true, false ],
@@ -392,7 +392,7 @@
         "hand": [ 12, 5, 9 ],
         "antilope": [ 6, 4, 7 ],
         "snake": [ 5, 12, 6 ],
-        "elefant": [ 12, 3, 9 ],
+        "elephant": [ 12, 3, 9 ],
         "bug": [ 1, 9, 5 ],
         "shape": [
           [ false, true, true, false, false ],
@@ -409,7 +409,7 @@
         "hand": [ 8, 11, 12 ],
         "antilope": [ 11, 6, 5 ],
         "snake": [ 1, 11, 4 ],
-        "elefant": [ 11, 4, 5 ],
+        "elephant": [ 11, 4, 5 ],
         "bug": [ 5, 12, 1 ],
         "shape": [
           [ false, true, true, true, false ],
@@ -426,7 +426,7 @@
         "hand": [ 5, 12, 4 ],
         "antilope": [ 12, 6, 2 ],
         "snake": [ 2, 5, 9 ],
-        "elefant": [ 11, 6, 4 ],
+        "elephant": [ 11, 6, 4 ],
         "bug": [ 3, 4, 5 ],
         "shape": [
           [ false, true, false, false, false ],
@@ -443,7 +443,7 @@
         "hand": [ 6, 5, 2 ],
         "antilope": [ 1, 6, 5 ],
         "snake": [ 12, 4, 1 ],
-        "elefant": [ 8, 6, 12 ],
+        "elephant": [ 8, 6, 12 ],
         "bug": [ 1, 4, 5 ],
         "shape": [
           [ true, true, true, true, false ],
@@ -460,7 +460,7 @@
         "hand": [ 7, 8, 5 ],
         "antilope": [ 3, 4, 11 ],
         "snake": [ 6, 10, 4 ],
-        "elefant": [ 11, 4, 5 ],
+        "elephant": [ 11, 4, 5 ],
         "bug": [ 9, 5, 7 ],
         "shape": [
           [ false, true, false, false, false ],
@@ -477,7 +477,7 @@
         "hand": [ 12, 5, 7 ],
         "antilope": [ 10, 6, 5 ],
         "snake": [ 5, 4, 10 ],
-        "elefant": [ 4, 10, 2 ],
+        "elephant": [ 4, 10, 2 ],
         "bug": [ 11, 7, 4 ],
         "shape": [
           [ true, true, true, true, false ],
@@ -494,7 +494,7 @@
         "hand": [ 5, 9, 2 ],
         "antilope": [ 3, 5, 4 ],
         "snake": [ 12, 4, 3 ],
-        "elefant": [ 6, 2, 5 ],
+        "elephant": [ 6, 2, 5 ],
         "bug": [ 5, 6, 12 ],
         "shape": [
           [ false, true, true, false, false ],
@@ -511,7 +511,7 @@
         "hand": [ 6, 7, 2 ],
         "antilope": [ 5, 2, 12 ],
         "snake": [ 10, 9, 4 ],
-        "elefant": [ 7, 6, 12 ],
+        "elephant": [ 7, 6, 12 ],
         "bug": [ 5, 7, 8 ],
         "shape": [
           [ false, true, true, true, true ],
@@ -528,7 +528,7 @@
         "hand": [ 7, 12, 2 ],
         "antilope": [ 11, 7, 4 ],
         "snake": [ 7, 2, 5 ],
-        "elefant": [ 2, 10, 4 ],
+        "elephant": [ 2, 10, 4 ],
         "bug": [ 6, 10, 7 ],
         "shape": [
           [ false, false, true, false, false ],
@@ -545,7 +545,7 @@
         "hand": [ 12, 9, 5 ],
         "antilope": [ 5, 12, 4 ],
         "snake": [ 3, 4, 2 ],
-        "elefant": [ 12, 2, 6 ],
+        "elephant": [ 12, 2, 6 ],
         "bug": [ 9, 11, 4 ],
         "shape": [
           [ false, true, true, true, false ],
@@ -562,7 +562,7 @@
         "hand": [ 7, 12, 2 ],
         "antilope": [ 8, 11, 7 ],
         "snake": [ 10, 8, 5 ],
-        "elefant": [ 3, 10, 6 ],
+        "elephant": [ 3, 10, 6 ],
         "bug": [ 11, 6, 7 ],
         "shape": [
           [ false, false, true, true, false ],
@@ -579,7 +579,7 @@
         "hand": [ 12, 4, 2 ],
         "antilope": [ 2, 12, 9 ],
         "snake": [ 8, 5, 12 ],
-        "elefant": [ 6, 4, 7 ],
+        "elephant": [ 6, 4, 7 ],
         "bug": [ 3, 5, 6 ],
         "shape": [
           [ false, false, true, true, false ],
@@ -596,7 +596,7 @@
         "hand": [ 9, 7, 5 ],
         "antilope": [ 5, 7, 6 ],
         "snake": [ 11, 3, 4 ],
-        "elefant": [ 7, 4, 5 ],
+        "elephant": [ 7, 4, 5 ],
         "bug": [ 5, 12, 1 ],
         "shape": [
           [ false, false, true, true, false ],
