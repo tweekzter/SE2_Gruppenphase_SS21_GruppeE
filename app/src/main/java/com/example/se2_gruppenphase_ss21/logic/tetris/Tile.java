@@ -126,13 +126,14 @@ public class Tile {
             Log.e("tile", "Tile must be detached before attaching!");
             return false;
         }
-        // absolute reference point of map
-        hook = posOnMap;
+
         this.map = map;
         // check if tile is allowed to be placed
-        if(!checkPlaceable())
+        if(!checkPlaceable(posOnMap))
             return false;
 
+        // set absolute reference point of map
+        hook = posOnMap;
         // register tile on map
         map.addTile(this);
         // place tile on the map at posOnMap
@@ -154,11 +155,11 @@ public class Tile {
         }
 
         this.map = map;
+        if(collidesWithMapBorder(posOnMap))
+            return false;
         if(isPlaced)
             removeTempFromMap();
         hook = posOnMap;
-        if(collidesWithMapBorder())
-            return false;
         for(Position pos : shape) {
             int x = hook.x + pos.x;
             int y = hook.y + pos.y;
@@ -226,8 +227,8 @@ public class Tile {
         if(map == null)
             return true;
         for(Position pos : shape) {
-            int x = hook.x + pos.x;
-            int y = hook.y + pos.y;
+            int x = posOnMap.x + pos.x;
+            int y = posOnMap.y + pos.y;
             if(x > map.getMaxX() || y > map.getMaxY())
                 return true;
         }
