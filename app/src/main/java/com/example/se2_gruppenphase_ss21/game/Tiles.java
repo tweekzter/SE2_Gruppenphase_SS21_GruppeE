@@ -56,7 +56,11 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // get client instance + register in-round listener
         client = (GameClient)getIntent().getSerializableExtra("client");
+        // TODO: remove comment when networking works
+        //client.registerListener(this);
+
         setContentView(R.layout.activity_tiles);
         InputStream is = null;
         try {
