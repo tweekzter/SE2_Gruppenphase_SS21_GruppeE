@@ -455,7 +455,14 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
 
     @Override
     public void onCheatingPositiveClick(DialogFragment dialog) {
-
+        try {
+            client.puzzleDone(true);
+        } catch(IOException ex) {
+            Log.e("tiles", ex.toString());
+            Toast.makeText(this, "Connection to the server failed", Toast.LENGTH_LONG);
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
