@@ -57,9 +57,8 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // get client instance + register in-round listener
-        client = (GameClient)getIntent().getSerializableExtra("client");
-        // TODO: remove comment when networking works
-        //client.registerListener(this);
+        client = getIntent().getParcelableExtra("client");
+        client.registerListener(this);
 
         setContentView(R.layout.activity_tiles);
         InputStream is = null;
@@ -106,11 +105,9 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
             mirror = findViewById(R.id.mirror);
             removetile = findViewById(R.id.removetile);
 
-
-            // TODO: Use commented command when network connection stands - this is just for testing !!
             Button ubongo = findViewById(R.id.ubongo);
-            ubongo.setOnClickListener(v -> beginPuzzle(System.currentTimeMillis() + 60000));
-            // ubongo.setOnClickListener(v -> callUbongo());
+            // testing: ubongo.setOnClickListener(v -> beginPuzzle(System.currentTimeMillis() + 60000));
+            ubongo.setOnClickListener(v -> callUbongo());
 
 
             is.close();
