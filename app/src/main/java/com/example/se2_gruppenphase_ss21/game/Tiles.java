@@ -459,7 +459,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
             client.puzzleDone(true);
         } catch(IOException ex) {
             Log.e("tiles", ex.toString());
-            Toast.makeText(this, "Connection to the server failed", Toast.LENGTH_LONG);
+            Toast.makeText(this, "Connection to the server failed", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
@@ -479,7 +479,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
             }
         } catch(IOException ex) {
             Log.e("tiles", ex.toString());
-            Toast.makeText(this, "Connection to the server failed", Toast.LENGTH_LONG);
+            Toast.makeText(this, "Connection to the server failed", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }
