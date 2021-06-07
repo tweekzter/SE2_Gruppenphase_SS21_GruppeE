@@ -1,5 +1,6 @@
 package com.example.se2_gruppenphase_ss21.menu;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -88,16 +89,28 @@ public class LeaderboardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
         Button quitGameButton = view.findViewById(R.id.buttonQuitGame);
         quitGameButton.setOnClickListener((View v) ->{
+            Intent intent = new Intent(getActivity(), MenuActivity.class);
             getParentFragmentManager().beginTransaction().replace(R.id.container, new MenuFragment()).addToBackStack("tag").commit();
         });
 
 
         //To Do: Listener and Array for the server nicknames
-        String userName = getArguments().getString(LEADERBOARD_ARG_PARAM1);
+        String userName;
+        if(getArguments() != null) {
+            userName = getArguments().getString(LEADERBOARD_ARG_PARAM1);
+        }else {
+            userName = "";
+        }
 
         Button nextGameButton = view.findViewById(R.id.buttonNextRound);
         nextGameButton.setOnClickListener((View v) ->{
-            getParentFragmentManager().beginTransaction().replace(R.id.container, RoomFragment.newInstance(userName, room)).addToBackStack("tag").commit();
+            Intent intent = new Intent(getActivity(), MockingGame.class);
+            startActivity(intent);
+            /*if(userName != null && room != null){
+                Intent intent = new Intent(getActivity(), MockingGame.class);
+                startActivity(intent);
+                //getParentFragmentManager().beginTransaction().replace(R.id.container, RoomFragment.newInstance(userName, room)).addToBackStack("tag").commit();
+            }*/
         });
 
         listView = (ListView) view.findViewById(R.id.listView);
