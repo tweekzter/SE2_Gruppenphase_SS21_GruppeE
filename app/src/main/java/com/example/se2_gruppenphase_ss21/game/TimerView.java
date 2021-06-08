@@ -17,9 +17,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.se2_gruppenphase_ss21.Global;
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.menu.MainActivity;
+import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 
 import java.io.IOException;
 
@@ -144,7 +144,8 @@ public class TimerView extends View {
             button.setClickable(false);
 
             try {
-                Global.client.puzzleDone(false);
+                GameClient client = GameClient.getActiveGameClient();
+                client.puzzleDone(false);
             } catch(IOException ex) {
                 Log.e("tiles", ex.toString());
                 Toast.makeText(getContext(), "Connection to the server failed", Toast.LENGTH_LONG).show();

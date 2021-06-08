@@ -27,6 +27,9 @@ public class GameClient implements Parcelable {
 
     private GeneralGameListener listener;
 
+    private static GameClient activeGameClient;
+
+
     public GameClient(GameServer server, String roomName, String nickname) throws IOException {
         this("127.0.0.1", server.getPort(), roomName, nickname);
     }
@@ -226,5 +229,13 @@ public class GameClient implements Parcelable {
         dest.writeString(nickname);
         dest.writeString(roomName);
         dest.writeByte((byte) (isConnected ? 1 : 0));
+    }
+
+    public static GameClient getActiveGameClient() {
+        return activeGameClient;
+    }
+
+    public static void setActiveGameClient(GameClient activeGameClient) {
+        GameClient.activeGameClient = activeGameClient;
     }
 }
