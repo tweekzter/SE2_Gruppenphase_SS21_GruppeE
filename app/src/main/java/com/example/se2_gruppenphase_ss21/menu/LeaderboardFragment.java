@@ -3,11 +3,13 @@ package com.example.se2_gruppenphase_ss21.menu;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.os.Handler;
 import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
@@ -15,8 +17,14 @@ import androidx.fragment.app.Fragment;
 import com.example.se2_gruppenphase_ss21.Player;
 import com.example.se2_gruppenphase_ss21.PlayerArrayAdapter;
 import com.example.se2_gruppenphase_ss21.R;
+import com.example.se2_gruppenphase_ss21.game.Dice;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
+import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
+import com.example.se2_gruppenphase_ss21.networking.client.listeners.GeneralGameListener;
+import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreGameListener;
+import com.example.se2_gruppenphase_ss21.networking.server.logic.GameLogicException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +50,9 @@ public class LeaderboardFragment extends Fragment {
     private ListView listView;
     static AvailableRoom room;
     static Map<String, Integer> nicknamesMap;
+    static GameClient gameClient = null;
+    static boolean isReady = false;
+    Handler handler = new Handler();
 
     public LeaderboardFragment() {
         // Required empty public constructor
@@ -51,16 +62,17 @@ public class LeaderboardFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
+     * @param username Parameter 1.
      * @return A new instance of fragment Rules1Fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LeaderboardFragment newInstance(String param1, AvailableRoom availableRoom, Map<String, Integer> nicknames) {
+    public static LeaderboardFragment newInstance(String username, AvailableRoom availableRoom, Map<String, Integer> nicknames, GameClient client) {
         LeaderboardFragment fragment = new LeaderboardFragment();
         Bundle args = new Bundle();
-        args.putString(LEADERBOARD_ARG_PARAM1, param1);
+        args.putString(LEADERBOARD_ARG_PARAM1, username);
         room = availableRoom;
         nicknamesMap = nicknames;
+        gameClient = client;
         fragment.setArguments(args);
         return fragment;
     }
@@ -94,11 +106,55 @@ public class LeaderboardFragment extends Fragment {
             userName = getArguments().getString(LEADERBOARD_ARG_PARAM1);
         }
 
+        try {
+            gameClient.connect();
+            GeneralGameListener gameListener = new PreGameListener() {
+                @Override
+                public void readyCount(int current, int max) {
+                    if(isReady){
+                        updateReady(current, max, view);
+                    }
+                }
+
+                @Override
+                public void onGameStart() {
+                    Intent intent = new Intent(getActivity(), Dice.class);
+                    intent.putExtra("client", gameClient);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void userDisconnect(String nickname) {
+
+                }
+
+                @Override
+                public void receiveUserList(String[] nicknames) {
+
+                }
+
+                @Override
+                public void unknownMessage(String message) {
+
+                }
+            };
+            gameClient.registerListener(gameListener);
+            gameClient.startReceiveLoop();
+        }catch (IOException e){
+            e.printStackTrace();
+        }catch (GameLogicException e){
+            e.printStackTrace();
+        }
+
+        GameClient finalClient = gameClient;
         Button nextGameButton = view.findViewById(R.id.buttonNextRound);
         nextGameButton.setOnClickListener((View v) ->{
-            Intent intent = new Intent(getActivity(), MockingGame.class);
-            startActivity(intent);
+            try {
+                finalClient.sendReady(true);
+                isReady = true;
+            }catch (IOException e){
 
+            }
         });
 
         listView = (ListView) view.findViewById(R.id.listView);
@@ -118,6 +174,9 @@ public class LeaderboardFragment extends Fragment {
 
             playerArrayAdapter.add(player);
         }
+
+
+
         return view;
     }
 
@@ -136,5 +195,27 @@ public class LeaderboardFragment extends Fragment {
             }
         }
         return resultList;
+    }
+
+    public void updateReady(int current, int max, View view) {
+
+        final Runnable runUpdateReady = new Runnable() {
+            public void run() {
+
+                LinearLayout layout = view.findViewById(R.id.layoutRoom);
+                layout.removeAllViews();
+
+                layout.setPadding(450, 200, 450, 200);
+
+                Button readyData;
+                readyData = new Button(getContext());
+                readyData.setText(String.valueOf(current) + "/" + String.valueOf(max));
+                readyData.setClickable(false);
+                layout.addView(readyData);
+
+            }
+        };
+
+        handler.postDelayed(runUpdateReady, 1000);
     }
 }
