@@ -94,69 +94,26 @@ public class LeaderboardFragment extends Fragment {
         });
 
 
-        //To Do: Listener and Array for the server nicknames
         String userName;
         if(getArguments() != null) {
             userName = getArguments().getString(LEADERBOARD_ARG_PARAM1);
-        }else {
-            userName = "";
         }
 
         Button nextGameButton = view.findViewById(R.id.buttonNextRound);
         nextGameButton.setOnClickListener((View v) ->{
             Intent intent = new Intent(getActivity(), MockingGame.class);
             startActivity(intent);
-            /*if(userName != null && room != null){
-                Intent intent = new Intent(getActivity(), MockingGame.class);
-                startActivity(intent);
-                //getParentFragmentManager().beginTransaction().replace(R.id.container, RoomFragment.newInstance(userName, room)).addToBackStack("tag").commit();
-            }*/
+
         });
 
         listView = (ListView) view.findViewById(R.id.listView);
         playerArrayAdapter = new PlayerArrayAdapter(view.getContext(), R.layout.listview_row_layout);
         listView.setAdapter(playerArrayAdapter);
 
-        //TODO: Edit it after ServerMessageListener is ready
-        Map<String, Integer> testmap = new HashMap<>();
-        testmap.put("Test1", 3);
-        testmap.put("Test2", 1);
-        testmap.put("Test3", 2);
-        InRoundListener listener = new InRoundListener() {
-            @Override
-            public void userDisconnect(String nickname) {
+        //TODO: Implement
+        Map<String, Integer> usermap = null;
 
-            }
-
-            @Override
-            public void receiveUserList(String[] nicknames) {
-
-            }
-
-            @Override
-            public void unknownMessage(String message) {
-
-            }
-
-            @Override
-            public void beginPuzzle(long finishUntil) {
-
-            }
-
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            public void placementsReceived(Map<String, Integer> placements) {
-                List<Map.Entry<String, Integer>> list = new ArrayList<>(placements.entrySet());
-                list.sort(Map.Entry.comparingByValue());
-                Map<String, Integer> result = new HashMap<>();
-                for (Map.Entry<String, Integer> entry : list){
-                    result.put(entry.getKey(), entry.getValue());
-                }
-                placements = result;
-            }
-        };
-        listener.placementsReceived(testmap);
-
-        List<String[]> playerList = readData(testmap);
+        List<String[]> playerList = readData(usermap);
         for(String[] playerData:playerList){
             String position = playerData[0];
             String playername = playerData[1];
@@ -175,13 +132,11 @@ public class LeaderboardFragment extends Fragment {
         if (map != null){
             List<String> nicknames = new ArrayList<>(map.keySet());
             List<Integer> placements = new ArrayList<>(map.values());
-            int points = 5;
             for (int i = 0; i < map.size(); i++) {
                 String[] player = new String[3];
-                player[0] = Integer.toString(placements.get(i));
+                player[0] = Integer.toString(i+1);
                 player[1] = nicknames.get(i);
-                player[2] = points + " Punkte";
-                if(points>=0) points--;
+                player[2] = Integer.toString(placements.get(i));
                 resultList.add(player);
             }
         }
