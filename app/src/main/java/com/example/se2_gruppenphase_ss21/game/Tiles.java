@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
+import com.example.se2_gruppenphase_ss21.Global;
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Map;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Position;
@@ -57,7 +60,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // get client instance + register in-round listener
-        client = getIntent().getParcelableExtra("client");
+        client = Global.client;
         client.registerListener(this);
 
         setContentView(R.layout.activity_tiles);
@@ -499,15 +502,20 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
      * @author Manuel Simon #00326348
      */
     public void beginPuzzle(long finishUntil) {
-        findViewById(R.id.waitForServer).setVisibility(View.INVISIBLE);
-        // reveal map
-        drawmap();
-        findViewById(R.id.firsttile).setVisibility(View.VISIBLE);;
-        findViewById(R.id.secondtile).setVisibility(View.VISIBLE);;
-        findViewById(R.id.thirdtile).setVisibility(View.VISIBLE);;
-        // start timer
-        TimerView timer = findViewById(R.id.timer);
-        timer.start(finishUntil);
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() -> {
+            findViewById(R.id.waitForServer).setVisibility(View.INVISIBLE);
+
+            // reveal map and tiles
+            drawmap();
+            findViewById(R.id.firsttile).setVisibility(View.VISIBLE);
+            findViewById(R.id.secondtile).setVisibility(View.VISIBLE);
+            findViewById(R.id.thirdtile).setVisibility(View.VISIBLE);
+
+            // start timer
+            TimerView timer = findViewById(R.id.timer);
+            timer.start(finishUntil);
+        });
     }
 
     /**
