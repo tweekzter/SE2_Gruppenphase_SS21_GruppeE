@@ -36,6 +36,7 @@ public class RoomFragment extends Fragment {
     static AvailableRoom room;
     static boolean isReady = false;
     GameClient client = null;
+    String[] nicknameslist;
 
     // Handler for creating post delay threads for updating ui
     Handler handler = new Handler();
@@ -188,7 +189,7 @@ public class RoomFragment extends Fragment {
 
                 LinearLayout layout = view.findViewById(R.id.layoutRoom);
                 layout.removeAllViews();
-
+                nicknameslist = nicknames;
                 for (String n : nicknames) {
 
                     Button user;
