@@ -13,13 +13,12 @@
         android:id="@+id/removetile"
         android:layout_width="96dp"
         android:layout_height="70dp"
-        android:layout_marginStart="280dp"
-        android:layout_marginTop="172dp"
+        android:layout_marginStart="172dp"
+        android:layout_marginTop="180dp"
         android:text="REMOVE FROM MAP"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/ubongo"

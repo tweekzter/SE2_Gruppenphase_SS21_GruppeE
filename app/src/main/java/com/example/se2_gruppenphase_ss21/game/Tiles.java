@@ -9,9 +9,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
+
+import android.view.PointerIcon;
+
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -232,6 +236,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
 
     private void placetilesintilesarray(Tile tile, int x, int y){
         Position[] tilepositions = tile.getShape();
+        tile.setHook(new Position(x,y));
         for(Position c : tilepositions){
             tilearray[y+c.getY()][x+c.getX()]=tile;
         }
@@ -266,8 +271,10 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
                 addonclicklistener();
             }
             currenttile = tilearray[i][j];
+            System.out.println("this is the currenttile" + currenttile.getShape().toString());
 
             tilepositions= currenttile.getShape();
+
             currentpositionx = currenttile.getHook().getX();
             currentpositiony = currenttile.getHook().getY();
             detatchfromtilearray();
@@ -400,6 +407,9 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
         if(checkifplacable(currentpositionx,currentpositiony,tilepositions)){
             drawmap();
             colorbuttons(currentpositionx,currentpositiony,tilepositions);
+        }else{
+            currenttile.rotateLeft();
+            tilepositions = currenttile.getShape();
         }
 
 
@@ -411,6 +421,9 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
         if(checkifplacable(currentpositionx,currentpositiony,tilepositions)){
             drawmap();
             colorbuttons(currentpositionx,currentpositiony,tilepositions);
+        }else{
+            currenttile.rotateRight();
+            tilepositions = currenttile.getShape();
         }
 
     }
@@ -421,6 +434,9 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
         if(checkifplacable(currentpositionx,currentpositiony,tilepositions)){
             drawmap();
             colorbuttons(currentpositionx,currentpositiony,tilepositions);
+        }else{
+            currenttile.mirrorHorizontally();
+            tilepositions= currenttile.getShape();
         }
     }
 
