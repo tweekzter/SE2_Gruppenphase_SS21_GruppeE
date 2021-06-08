@@ -1,7 +1,6 @@
 package com.example.se2_gruppenphase_ss21.menu;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 
 import android.os.StrictMode;
@@ -11,18 +10,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.se2_gruppenphase_ss21.Player;
 import com.example.se2_gruppenphase_ss21.PlayerArrayAdapter;
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
-import com.example.se2_gruppenphase_ss21.networking.client.ServerMessageListenerImpl;
-import com.example.se2_gruppenphase_ss21.networking.client.listeners.InRoundListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +41,7 @@ public class LeaderboardFragment extends Fragment {
     private PlayerArrayAdapter playerArrayAdapter;
     private ListView listView;
     static AvailableRoom room;
-    static String[] nicknameslist = null;
+    static Map<String, Integer> nicknamesMap;
 
     public LeaderboardFragment() {
         // Required empty public constructor
@@ -60,12 +55,12 @@ public class LeaderboardFragment extends Fragment {
      * @return A new instance of fragment Rules1Fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LeaderboardFragment newInstance(String param1, AvailableRoom availableRoom, String[] nicknames) {
+    public static LeaderboardFragment newInstance(String param1, AvailableRoom availableRoom, Map<String, Integer> nicknames) {
         LeaderboardFragment fragment = new LeaderboardFragment();
         Bundle args = new Bundle();
         args.putString(LEADERBOARD_ARG_PARAM1, param1);
         room = availableRoom;
-        nicknameslist = nicknames;
+        nicknamesMap = nicknames;
         fragment.setArguments(args);
         return fragment;
     }
