@@ -5,6 +5,7 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -19,6 +20,8 @@ import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Map;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Position;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Tile;
+import com.example.se2_gruppenphase_ss21.menu.MainActivity;
+import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.InRoundListener;
 
 
@@ -27,6 +30,7 @@ import java.io.InputStream;
 import java.util.Arrays;
 
 public class Tiles extends AppCompatActivity implements InRoundListener, CheatingDialogFragment.CheatingDialogListener {
+    GameClient client;
     Tile currenttile;
     int currentpositionx=0;
     int currentpositiony=0;
@@ -52,6 +56,10 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // get client instance + register in-round listener
+        client = getIntent().getParcelableExtra("client");
+        client.registerListener(this);
+
         setContentView(R.layout.activity_tiles);
         InputStream is = null;
         try {
@@ -97,10 +105,10 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
             mirror = findViewById(R.id.mirror);
             removetile = findViewById(R.id.removetile);
 
-
-            // TODO: RE-IMPLEMENT when network connection stands - this is just for testing !!
             Button ubongo = findViewById(R.id.ubongo);
-            ubongo.setOnClickListener(v -> beginPuzzle(System.currentTimeMillis() + 60000));
+            // testing: ubongo.setOnClickListener(v -> beginPuzzle(System.currentTimeMillis() + 60000));
+            ubongo.setOnClickListener(v -> callUbongo());
+
 
             is.close();
 
@@ -448,7 +456,14 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
 
     @Override
     public void onCheatingPositiveClick(DialogFragment dialog) {
-
+        try {
+            client.puzzleDone(true);
+        } catch(IOException ex) {
+            Log.e("tiles", ex.toString());
+            Toast.makeText(this, "Connection to the server failed", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -457,8 +472,17 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
     }
 
     private void callUbongo() {
-        if (!currentmap.checkSolved()) {
-            showCheatingDialog();
+        try {
+            if (currentmap.checkSolved()) {
+                client.puzzleDone(false);
+            } else {
+                showCheatingDialog();
+            }
+        } catch(IOException ex) {
+            Log.e("tiles", ex.toString());
+            Toast.makeText(this, "Connection to the server failed", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
     }
 

@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.se2_gruppenphase_ss21.R;
+import com.example.se2_gruppenphase_ss21.game.Dice;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.GeneralGameListener;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreGameListener;
@@ -114,7 +115,7 @@ public class OnlineRoomFragment extends Fragment {
 
                 @Override
                 public void onGameStart() {
-                    Intent intent = new Intent(getActivity(), MockingGame.class);
+                    Intent intent = new Intent(getActivity(), Dice.class);
                     intent.putExtra("client", client);
                     startActivity(intent);
                 }
