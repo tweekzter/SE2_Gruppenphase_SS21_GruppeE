@@ -24,9 +24,10 @@
         android:id="@+id/ubongo"
         android:layout_width="100dp"
         android:layout_height="70dp"
-        android:layout_marginStart="280dp"
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="172dp"
         android:text="UBONGO"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -372,6 +373,7 @@
         android:layout_height="145dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="4dp"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -381,6 +383,7 @@
         android:layout_height="145dp"
         android:layout_marginStart="148dp"
         android:layout_marginTop="4dp"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -390,6 +393,21 @@
         android:layout_height="145dp"
         android:layout_marginStart="280dp"
         android:layout_marginTop="4dp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/waitForServer"
+        android:layout_width="347dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="56dp"
+        android:fontFamily="@font/architects_daughter"
+        android:text="@string/wait_for_server"
+        android:textColor="@color/white"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
