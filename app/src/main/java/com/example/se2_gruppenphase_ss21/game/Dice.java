@@ -244,8 +244,6 @@ public class Dice extends AppCompatActivity {
         Bundle a = new Bundle();
         a.putIntArray("key" , pictures);
         intent.putExtras(a);
-        GameClient client = getIntent().getParcelableExtra("client");
-        intent.putExtra("client", client);
         startActivity(intent);
     }
 

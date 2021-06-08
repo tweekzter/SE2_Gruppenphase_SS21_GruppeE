@@ -180,6 +180,10 @@ public class GameRoom {
     }
 
     private void handleDiceRoll(int round) {
+        /*
+        ***** FOLLOWING FEATURE IS CURRENTLY NOT NEEDED !! *****
+
+
         GameClientHandler diceRoller = handlers.get(round % handlers.size());
         broadcastMessage("roll_request " + diceRoller.getNickname());
         int rollResult;
@@ -196,7 +200,8 @@ public class GameRoom {
             Util.sleep(0, 200);
         }
         broadcastMessage("roll_result " + rollResult);
-        Util.sleep(5, 0);
+         */
+        Util.sleep(7, 0);
     }
 
     private void resetRoom() {

@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.se2_gruppenphase_ss21.Global;
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.game.Dice;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
@@ -100,6 +101,7 @@ public class RoomFragment extends Fragment {
         // create new Client
         try {
             client = new GameClient(room, userName);
+            Global.client = client;
         } catch (IOException e) {
             e.printStackTrace();
         }
