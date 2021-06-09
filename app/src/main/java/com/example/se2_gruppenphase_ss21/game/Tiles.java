@@ -31,6 +31,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
+/**
+ * Puzzle field. GUI representation of the Puzzle.
+ * @author Pia Lanker (main logic), Manuel Simon (client integration)
+ */
 public class Tiles extends AppCompatActivity implements InRoundListener,
         TimerListener, CheatingDialogFragment.CheatingDialogListener {
     GameClient client;
@@ -45,6 +49,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     int[] pictures;
 
     Tile[][] tilearray = new Tile[5][5];
+    Tile empty = new Tile();
 
     Button up;
     Button down;
@@ -56,9 +61,23 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     Button mirror;
     Button removetile;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setUpPuzzle();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        setUpPuzzle();
+    }
+
+    /**
+     * Sets up the Puzzle field.
+     */
+    private void setUpPuzzle() {
         // get client instance + register in-round listener
         client = GameClient.getActiveGameClient();
         client.registerListener(this);
@@ -118,13 +137,10 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
             e.printStackTrace();
 
         }
-
-
     }
 
     //befuellt das tile array. tylearray dient dazu zu überprüfen ob an stelle x,y ein baustein liegt und wenn ja welcher
     protected void filltylearray(){
-        Tile empty = new Tile();
         for (Tile[] tiles : tilearray) {
             Arrays.fill(tiles, empty);
         }
@@ -463,6 +479,16 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
         drawmap();
     }
 
+    private boolean checkSolved() {
+        for(int y=0; y < tilearray.length; y++) {
+            for(int x=0; x < tilearray[0].length; x++) {
+                if(map[y][x] && tilearray[y][x] == empty)
+                    return false;
+            }
+        }
+        return true;
+    }
+
     public void showCheatingDialog() {
         DialogFragment newFragment = new CheatingDialogFragment();
         newFragment.show(getSupportFragmentManager(), "CheatingDialogFragment");
@@ -487,7 +513,8 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
 
     private void callUbongo() {
         try {
-            if (currentmap.checkSolved()) {
+            if(checkSolved()) {
+                Log.d("tiles", "you're done mate");
                 client.puzzleDone(false);
             } else {
                 showCheatingDialog();
@@ -555,6 +582,9 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
         );
     }
 
+    /**
+     * Listener method called when timer runs out.
+     */
     public void timeIsUp() {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(() -> {
@@ -577,5 +607,15 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
                 startActivity(intent);
             }
         });
+    }
+
+    /**
+     * Prepares views for usage in next round.
+     */
+    @Override
+    protected void onStop() {
+        super.onStop();
+        findViewById(R.id.waitForServer).setVisibility(View.VISIBLE);
+        findViewById(R.id.time_is_up).setVisibility(View.INVISIBLE);
     }
 }
