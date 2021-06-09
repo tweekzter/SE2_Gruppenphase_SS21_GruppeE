@@ -1,5 +1,6 @@
 package com.example.se2_gruppenphase_ss21.networking.server.logic;
 
+import com.example.se2_gruppenphase_ss21.networking.ServerMessage;
 import com.example.se2_gruppenphase_ss21.networking.SocketWrapper;
 import com.example.se2_gruppenphase_ss21.networking.Util;
 
@@ -7,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class GameRoom {
     private static final int DEFAULT_MAX_USERS = 4;
@@ -16,7 +18,7 @@ public class GameRoom {
 
     private int maxUsers;
 
-    private GameRoomState state;
+    public GameRoomState state;
 
     public GameRoom() {
         this(DEFAULT_MAX_USERS);
@@ -46,10 +48,17 @@ public class GameRoom {
         }
     }
 
-    public void broadcastMessage(String msg) {
+    public void broadcastMessage(ServerMessage type, Object... args) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(type.name());
+        for(Object arg : args) {
+            sb.append(",");
+            sb.append(arg);
+        }
+
         for(GameClientHandler handler : handlers) {
             try {
-                handler.sendMessage(msg);
+                handler.sendMessage(sb.toString());
             } catch (IOException e) {
                 e.printStackTrace();
                 removeUser(handler);
@@ -59,26 +68,15 @@ public class GameRoom {
 
     public void removeUser(GameClientHandler handler) {
         handlers.remove(handler);
-        broadcastMessage("disconnect_user " + handler.getNickname());
+        broadcastMessage(ServerMessage.DISCONNECT, handler.getNickname());
     }
 
     public void broadcastUserList() {
-        String[] nicks = listNicknames();
-        StringBuilder sb = new StringBuilder("user_list ");
-        for(int i = 0; i < nicks.length; i++) {
-            sb.append(nicks[i]);
-            if (i != nicks.length - 1) {
-                sb.append(",");
-            }
-        }
-
-        broadcastMessage(sb.toString());
+        broadcastMessage(ServerMessage.USER_LIST, listNicknames());
     }
 
     public void broadcastReadyCount() {
-        if(state == GameRoomState.WAITING) {
-            broadcastMessage("users_ready " + usersReady() + "," + handlers.size());
-        }
+        broadcastMessage(ServerMessage.READY, usersReady(), handlers.size());
     }
 
     public int usersReady() {
@@ -92,7 +90,7 @@ public class GameRoom {
     public void broadcastIfGameStart() {
         if((handlers.size() == maxUsers || usersReady() == handlers.size()) && state == GameRoomState.WAITING) {
             state = GameRoomState.PLAYING;
-            broadcastMessage("game_start");
+            broadcastMessage(ServerMessage.GAME_START);
             startGameLoop();
         }
     }
@@ -140,7 +138,7 @@ public class GameRoom {
                 if(round >= ROUND_COUNT) {
                     break;
                 }else if(handlers.size() == 0) {
-                    System.err.println("Room was empty when trying to start round, closing room!");
+                    System.err.println("Room was empty when starting round, closing room!");
                     break;
                 }
 
@@ -153,9 +151,15 @@ public class GameRoom {
 
                 sendPlacements();
 
-                round++;
-            }
+                Util.sleep(10, 0);
 
+                if(++round == ROUND_COUNT) {
+                    broadcastMessage(ServerMessage.END_GAME);
+                }else {
+                    broadcastMessage(ServerMessage.END_SCOREBOARD);
+                }
+
+            }
             resetRoom();
 
             //Round end
@@ -164,54 +168,35 @@ public class GameRoom {
 
     private void sendPlacements() {
         Map<String, Integer> placements = calculatePlacements();
-        StringBuilder sb = new StringBuilder("placements ");
+        String[] foo = new String[placements.keySet().size()];
+
+        int c = 0;
         for(String nick : placements.keySet()) {
-            sb.append(nick).append(":").append(placements.get(nick)).append(";");
+            foo[c] = nick + ":" + placements.get(nick);
+            c++;
         }
-        broadcastMessage(sb.substring(0, sb.length() - 1));
-        Util.sleep(10, 0);
+
+        broadcastMessage(ServerMessage.PLACEMENTS, foo);
     }
 
     private void handlePuzzle() {
         long finishUntil = System.currentTimeMillis() + (60 * 1000);
-        broadcastMessage("begin_puzzle " + finishUntil);
+        broadcastMessage(ServerMessage.BEGIN_PUZZLE, finishUntil);
         Util.sleep(0, finishUntil - System.currentTimeMillis());
     }
 
     private void handleDiceRoll(int round) {
-        /*
-        ***** FOLLOWING FEATURE IS CURRENTLY NOT NEEDED !! *****
+        broadcastMessage(ServerMessage.PLAY_DICE_ANIMATION, (new Random().nextInt(6 - 1) + 1));
 
-
-        GameClientHandler diceRoller = handlers.get(round % handlers.size());
-        broadcastMessage("roll_request " + diceRoller.getNickname());
-        int rollResult;
-        //Wait for user to roll or disconnect
-        while (true) {
-            if(!handlers.contains(diceRoller)) {
-                rollResult = (int) (Math.random() * 6 + 1);
-                break;
-            }else if(diceRoller.hasRolled()) {
-                rollResult = diceRoller.getRollResult();
-                break;
-            }
-
-            Util.sleep(0, 200);
-        }
-        broadcastMessage("roll_result " + rollResult);
-         */
         Util.sleep(8, 0);
+
+        broadcastMessage(ServerMessage.END_DICE_ANIMATION);
     }
 
     private void resetRoom() {
         state = GameRoomState.RESTARTING;
-        for(GameClientHandler handler : handlers) {
-            try {
-                handler.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        for(GameClientHandler handler : handlers)
+            handler.close();
         handlers.clear();
         System.out.println("Room reset done!");
         state = GameRoomState.WAITING;

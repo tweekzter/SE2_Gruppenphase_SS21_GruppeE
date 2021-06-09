@@ -548,11 +548,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     }
 
     @Override
-    public void receiveUserList(String[] nicknames) {
-        // TODO: implement
-    }
-
-    @Override
     public void unknownMessage(String message) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(() ->

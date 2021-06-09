@@ -4,17 +4,14 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
+import com.example.se2_gruppenphase_ss21.networking.ServerMessage;
 import com.example.se2_gruppenphase_ss21.networking.SocketWrapper;
-import com.example.se2_gruppenphase_ss21.networking.client.listeners.GeneralGameListener;
-import com.example.se2_gruppenphase_ss21.networking.client.listeners.InRoundListener;
-import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreGameListener;
-import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreRoundListener;
+import com.example.se2_gruppenphase_ss21.networking.client.listeners.*;
 import com.example.se2_gruppenphase_ss21.networking.server.GameServer;
 import com.example.se2_gruppenphase_ss21.networking.server.logic.GameLogicException;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -107,12 +104,14 @@ public class GameClient implements Parcelable {
                 try {
                     String fromServer = socket.readString();
                     String[] params = fromServer.split("\\s");
-                    switch (params[0]) {
-                        case "game_start":
+                    ServerMessage type = Enum.valueOf(ServerMessage.class, params[0]);
+
+                    switch (type) {
+                        case GAME_START:
                             if(listener instanceof PreGameListener)
                                 ((PreGameListener) listener).onGameStart();
                             break;
-                        case "users_ready":
+                        case READY:
                             String[] split = params[1].split(",");
                             int current = Integer.parseInt(split[0]);
                             int max = Integer.parseInt(split[1]);
@@ -120,35 +119,34 @@ public class GameClient implements Parcelable {
                             if(listener instanceof PreGameListener)
                                 ((PreGameListener) listener).readyCount(current, max);
                             break;
-                        case "user_list":
+                        case USER_LIST:
                             String[] nicknames = params[1].split(",");
-                            listener.receiveUserList(nicknames);
+                            if(listener instanceof PreGameListener)
+                                ((PreGameListener) listener).receiveUserList(nicknames);
                             break;
-                        case "disconnect_user":
+                        case DISCONNECT:
                             String name = params[1];
 
                             listener.userDisconnect(name);
                             break;
-                        case "roll_request":
-                            String nick = params[1];
-
-                            if(listener instanceof PreRoundListener)
-                                ((PreRoundListener) listener).rollRequest(nick);
-                            break;
-                        case "roll_result":
+                        case PLAY_DICE_ANIMATION:
                             int result = Integer.parseInt(params[1]);
 
                             if(listener instanceof PreRoundListener)
-                                ((PreRoundListener) listener).rollResult(result);
+                                ((PreRoundListener) listener).playDiceAnimation(result);
                             break;
-                        case "begin_puzzle":
+                        case END_DICE_ANIMATION:
+                            if(listener instanceof PreRoundListener)
+                                ((PreRoundListener) listener).transitionToPuzzle();
+                            break;
+                        case BEGIN_PUZZLE:
                             long finishUntil = Long.parseLong(params[1]);
 
                             if(listener instanceof InRoundListener)
                                 ((InRoundListener) listener).beginPuzzle(finishUntil);
                             break;
-                        case "placements":
-                            String[] foo = params[1].split(";");
+                        case PLACEMENTS:
+                            String[] foo = params[1].split(",");
                             Map<String, Integer> placements = new HashMap<>();
                             for(String p : foo) {
                                 String[] bar = p.split(":");
@@ -157,6 +155,14 @@ public class GameClient implements Parcelable {
 
                             if(listener instanceof InRoundListener)
                                 ((InRoundListener) listener).placementsReceived(placements);
+                            break;
+                        case END_SCOREBOARD:
+                            if(listener instanceof PostRoundListener)
+                                ((PostRoundListener) listener).transitionToDice();
+                            break;
+                        case END_GAME:
+                            if(listener instanceof  PostRoundListener)
+                                ((PostRoundListener) listener).endGame();
                             break;
                         default:
                             listener.unknownMessage(fromServer);
