@@ -49,6 +49,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     int[] pictures;
 
     Tile[][] tilearray = new Tile[5][5];
+    Tile empty = new Tile();
 
     Button up;
     Button down;
@@ -140,7 +141,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
 
     //befuellt das tile array. tylearray dient dazu zu überprüfen ob an stelle x,y ein baustein liegt und wenn ja welcher
     protected void filltylearray(){
-        Tile empty = new Tile();
         for (Tile[] tiles : tilearray) {
             Arrays.fill(tiles, empty);
         }
@@ -479,6 +479,16 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
         drawmap();
     }
 
+    private boolean checkSolved() {
+        for(int y=0; y < tilearray.length; y++) {
+            for(int x=0; x < tilearray[0].length; x++) {
+                if(map[y][x] && tilearray[y][x] == empty)
+                    return false;
+            }
+        }
+        return true;
+    }
+
     public void showCheatingDialog() {
         DialogFragment newFragment = new CheatingDialogFragment();
         newFragment.show(getSupportFragmentManager(), "CheatingDialogFragment");
@@ -503,7 +513,8 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
 
     private void callUbongo() {
         try {
-            if (currentmap.checkSolved()) {
+            if(checkSolved()) {
+                Log.d("tiles", "you're done mate");
                 client.puzzleDone(false);
             } else {
                 showCheatingDialog();
