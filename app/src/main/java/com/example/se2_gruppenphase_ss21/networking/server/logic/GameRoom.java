@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class GameRoom {
     private static final int DEFAULT_MAX_USERS = 4;
@@ -179,28 +180,11 @@ public class GameRoom {
     }
 
     private void handleDiceRoll(int round) {
-        /*
-        ***** FOLLOWING FEATURE IS CURRENTLY NOT NEEDED !! *****
+        broadcastMessage("play_dice_animation " + (new Random().nextInt(6 - 1) + 1));
 
-
-        GameClientHandler diceRoller = handlers.get(round % handlers.size());
-        broadcastMessage("roll_request " + diceRoller.getNickname());
-        int rollResult;
-        //Wait for user to roll or disconnect
-        while (true) {
-            if(!handlers.contains(diceRoller)) {
-                rollResult = (int) (Math.random() * 6 + 1);
-                break;
-            }else if(diceRoller.hasRolled()) {
-                rollResult = diceRoller.getRollResult();
-                break;
-            }
-
-            Util.sleep(0, 200);
-        }
-        broadcastMessage("roll_result " + rollResult);
-         */
         Util.sleep(7, 0);
+
+        broadcastMessage("end_dice_animation");
     }
 
     private void resetRoom() {

@@ -130,17 +130,15 @@ public class GameClient implements Parcelable {
 
                             listener.userDisconnect(name);
                             break;
-                        case "roll_request":
-                            String nick = params[1];
-
-                            if(listener instanceof PreRoundListener)
-                                ((PreRoundListener) listener).rollRequest(nick);
-                            break;
-                        case "roll_result":
+                        case "play_dice_animation":
                             int result = Integer.parseInt(params[1]);
 
                             if(listener instanceof PreRoundListener)
-                                ((PreRoundListener) listener).rollResult(result);
+                                ((PreRoundListener) listener).playDiceAnimation(result);
+                            break;
+                        case "end_dice_animation":
+                            if(listener instanceof PreRoundListener)
+                                ((PreRoundListener) listener).transitionToPuzzle();
                             break;
                         case "begin_puzzle":
                             long finishUntil = Long.parseLong(params[1]);
