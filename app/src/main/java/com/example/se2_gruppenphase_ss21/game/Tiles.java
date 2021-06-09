@@ -31,6 +31,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
+/**
+ * Puzzle field. GUI representation of the Puzzle.
+ * @author Pia Lanker (main logic), Manuel Simon (client integration)
+ */
 public class Tiles extends AppCompatActivity implements InRoundListener,
         TimerListener, CheatingDialogFragment.CheatingDialogListener {
     GameClient client;
@@ -69,6 +73,9 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
         setUpPuzzle();
     }
 
+    /**
+     * Sets up the Puzzle field.
+     */
     private void setUpPuzzle() {
         // get client instance + register in-round listener
         client = GameClient.getActiveGameClient();
@@ -569,6 +576,9 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
         );
     }
 
+    /**
+     * Listener method called when timer runs out.
+     */
     public void timeIsUp() {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(() -> {
@@ -591,5 +601,15 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
                 startActivity(intent);
             }
         });
+    }
+
+    /**
+     * Prepares views for usage in next round.
+     */
+    @Override
+    protected void onStop() {
+        super.onStop();
+        findViewById(R.id.waitForServer).setVisibility(View.VISIBLE);
+        findViewById(R.id.time_is_up).setVisibility(View.INVISIBLE);
     }
 }
