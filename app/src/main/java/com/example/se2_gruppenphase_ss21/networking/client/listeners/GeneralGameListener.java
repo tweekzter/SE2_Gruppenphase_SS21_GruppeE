@@ -8,12 +8,6 @@ public interface GeneralGameListener {
     public void userDisconnect(String nickname);
 
     /**
-     * Called when a list of the users currently in the room is transmitted.
-     * @param nicknames
-     */
-    public void receiveUserList(String[] nicknames);
-
-    /**
      * Called when a message is received from the server that is not known.
      * @param message
      */

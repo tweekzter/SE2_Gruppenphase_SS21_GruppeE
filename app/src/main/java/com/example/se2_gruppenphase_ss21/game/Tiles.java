@@ -543,11 +543,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
     }
 
     @Override
-    public void receiveUserList(String[] nicknames) {
-        // TODO: implement
-    }
-
-    @Override
     public void unknownMessage(String message) {
         Toast.makeText(this, "Network error: "+message, Toast.LENGTH_LONG).show();
     }

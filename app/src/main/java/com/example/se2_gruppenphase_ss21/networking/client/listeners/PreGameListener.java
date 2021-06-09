@@ -12,4 +12,10 @@ public interface PreGameListener extends GeneralGameListener {
      * Called once when the server starts the game.
      */
     public void onGameStart();
+
+    /**
+     * Called when a list of the users currently in the room is transmitted.
+     * @param nicknames
+     */
+    public void receiveUserList(String[] nicknames);
 }

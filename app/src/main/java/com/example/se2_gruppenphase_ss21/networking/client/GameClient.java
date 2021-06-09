@@ -122,7 +122,8 @@ public class GameClient implements Parcelable {
                             break;
                         case "user_list":
                             String[] nicknames = params[1].split(",");
-                            listener.receiveUserList(nicknames);
+                            if(listener instanceof PreGameListener)
+                                ((PreGameListener) listener).receiveUserList(nicknames);
                             break;
                         case "disconnect_user":
                             String name = params[1];
