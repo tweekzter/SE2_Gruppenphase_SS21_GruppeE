@@ -5,10 +5,10 @@ public interface PreRoundListener extends GeneralGameListener {
      * Called to start playing a dice animation with a determined result
      * @param result the result the animation should show
      */
-    public void playDiceAnimation(int result);
+    void playDiceAnimation(int result);
 
     /**
      * Called when the transition to the puzzle Activity should be made
      */
-    public void transitionToPuzzle();
+    void transitionToPuzzle();
 }
