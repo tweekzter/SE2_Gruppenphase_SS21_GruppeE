@@ -2,7 +2,6 @@ package com.example.se2_gruppenphase_ss21.networking.server.logic;
 
 import com.example.se2_gruppenphase_ss21.networking.SocketWrapper;
 import com.example.se2_gruppenphase_ss21.networking.Util;
-import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
