@@ -52,4 +52,14 @@ public class ServerMessageListenerImpl implements GeneralGameListener, InRoundLi
     public void unknownMessage(String message) {
         System.out.println("Received unknown message " + message);
     }
+
+    @Override
+    public void transitionToDice() {
+
+    }
+
+    @Override
+    public void endGame() {
+
+    }
 }

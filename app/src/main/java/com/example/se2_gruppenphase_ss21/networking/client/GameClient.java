@@ -5,10 +5,7 @@ import android.os.Parcelable;
 
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
 import com.example.se2_gruppenphase_ss21.networking.SocketWrapper;
-import com.example.se2_gruppenphase_ss21.networking.client.listeners.GeneralGameListener;
-import com.example.se2_gruppenphase_ss21.networking.client.listeners.InRoundListener;
-import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreGameListener;
-import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreRoundListener;
+import com.example.se2_gruppenphase_ss21.networking.client.listeners.*;
 import com.example.se2_gruppenphase_ss21.networking.server.GameServer;
 import com.example.se2_gruppenphase_ss21.networking.server.logic.GameLogicException;
 
@@ -156,6 +153,14 @@ public class GameClient implements Parcelable {
 
                             if(listener instanceof InRoundListener)
                                 ((InRoundListener) listener).placementsReceived(placements);
+                            break;
+                        case "end_scoreboard":
+                            if(listener instanceof PostRoundListener)
+                                ((PostRoundListener) listener).transitionToDice();
+                            break;
+                        case "end_game":
+                            if(listener instanceof  PostRoundListener)
+                                ((PostRoundListener) listener).endGame();
                             break;
                         default:
                             listener.unknownMessage(fromServer);

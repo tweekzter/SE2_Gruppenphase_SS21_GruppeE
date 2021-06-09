@@ -154,9 +154,15 @@ public class GameRoom {
 
                 sendPlacements();
 
-                round++;
-            }
+                Util.sleep(10, 0);
 
+                if(++round == ROUND_COUNT) {
+                    broadcastMessage("end_game");
+                }else {
+                    broadcastMessage("end_scoreboard");
+                }
+
+            }
             resetRoom();
 
             //Round end
@@ -170,7 +176,6 @@ public class GameRoom {
             sb.append(nick).append(":").append(placements.get(nick)).append(";");
         }
         broadcastMessage(sb.substring(0, sb.length() - 1));
-        Util.sleep(10, 0);
     }
 
     private void handlePuzzle() {
