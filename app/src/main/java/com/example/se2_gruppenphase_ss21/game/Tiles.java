@@ -56,9 +56,20 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     Button mirror;
     Button removetile;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setUpPuzzle();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        setUpPuzzle();
+    }
+
+    private void setUpPuzzle() {
         // get client instance + register in-round listener
         client = GameClient.getActiveGameClient();
         client.registerListener(this);
@@ -118,8 +129,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
             e.printStackTrace();
 
         }
-
-
     }
 
     //befuellt das tile array. tylearray dient dazu zu überprüfen ob an stelle x,y ein baustein liegt und wenn ja welcher
