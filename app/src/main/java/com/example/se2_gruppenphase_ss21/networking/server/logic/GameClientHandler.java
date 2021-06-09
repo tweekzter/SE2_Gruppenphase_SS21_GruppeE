@@ -21,7 +21,14 @@ public class GameClientHandler {
     public void startGameLoop(GameRoom room) {
         new Thread(() -> {
             try {
-                client.sendString("ok");
+                if(room.state == GameRoomState.WAITING) {
+                    client.sendString("ok");
+                }else {
+                    client.sendString("Room not accepting new players!");
+                    close();
+                    return;
+                }
+
                 room.broadcastUserList();
                 room.broadcastIfGameStart();
                 while(true) {
