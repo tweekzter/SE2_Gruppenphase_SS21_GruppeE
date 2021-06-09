@@ -31,7 +31,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-public class Tiles extends AppCompatActivity implements InRoundListener, CheatingDialogFragment.CheatingDialogListener {
+public class Tiles extends AppCompatActivity implements InRoundListener,
+        TimerListener, CheatingDialogFragment.CheatingDialogListener {
     GameClient client;
     Tile currenttile;
     int currentpositionx=0;
@@ -524,6 +525,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
 
             // start timer
             TimerView timer = findViewById(R.id.timer);
+            timer.setListener(this);
             timer.start(finishUntil);
         });
     }
@@ -539,7 +541,10 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
 
     @Override
     public void userDisconnect(String nickname) {
-        Toast.makeText(this, "Player "+nickname+" disconnected!", Toast.LENGTH_LONG).show();
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() ->
+            Toast.makeText(this, "Player "+nickname+" disconnected!", Toast.LENGTH_LONG).show()
+        );
     }
 
     @Override
@@ -549,6 +554,33 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
 
     @Override
     public void unknownMessage(String message) {
-        Toast.makeText(this, "Network error: "+message, Toast.LENGTH_LONG).show();
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() ->
+                Toast.makeText(this, "Network error: "+message, Toast.LENGTH_LONG).show()
+        );
+    }
+
+    public void timeIsUp() {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() -> {
+            Button button = findViewById(R.id.ubongo);
+            button.setClickable(false);
+
+            findViewById(R.id.firsttile).setVisibility(View.INVISIBLE);
+            findViewById(R.id.secondtile).setVisibility(View.INVISIBLE);
+            findViewById(R.id.thirdtile).setVisibility(View.INVISIBLE);
+            findViewById(R.id.time_is_up).setVisibility(View.VISIBLE);
+
+            try {
+                GameClient client = GameClient.getActiveGameClient();
+                client.puzzleDone(false);
+            }
+            catch (IOException ex) {
+                Log.e("tiles", ex.toString());
+                Toast.makeText(this, "Connection to the server failed", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

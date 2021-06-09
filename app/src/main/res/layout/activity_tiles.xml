@@ -403,10 +403,27 @@
         android:layout_height="55dp"
         android:layout_marginTop="56dp"
         android:fontFamily="@font/architects_daughter"
+        android:gravity="center_horizontal"
         android:text="@string/wait_for_server"
         android:textColor="@color/white"
         android:textSize="34sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/time_is_up"
+        android:layout_width="349dp"
+        android:layout_height="58dp"
+        android:layout_marginTop="56dp"
+        android:fontFamily="@font/architects_daughter"
+        android:gravity="center_horizontal"
+        android:text="@string/time_is_up"
+        android:textColor="@color/white"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
