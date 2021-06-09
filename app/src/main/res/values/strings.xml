@@ -21,4 +21,5 @@
     <string name="cheating_dialog_positive">Klar doch!</string>
     <string name="cheating_dialog_cancel">Besser nicht!</string>
     <string name="wait_for_server">Warte auf Server …</string>
+    <string name="time_is_up">Zeit abgelaufen !!</string>
 </resources>
