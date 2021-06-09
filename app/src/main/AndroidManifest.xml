@@ -18,7 +18,7 @@
         <activity android:name=".game.alternativeGUI.Puzzle" />
         <activity android:name=".menu.MockingGame" />
         <activity android:name=".menu.MenuActivity" />
-        <activity android:name=".menu.LeaderboardActivity" />
+        <activity android:name=".menu.LeaderboardActivity"/>
         <activity android:name=".menu.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

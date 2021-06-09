@@ -1,28 +1,31 @@
 package com.example.se2_gruppenphase_ss21.networking.client;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
+import com.example.se2_gruppenphase_ss21.networking.ServerMessage;
 import com.example.se2_gruppenphase_ss21.networking.SocketWrapper;
-import com.example.se2_gruppenphase_ss21.networking.client.listeners.GeneralGameListener;
-import com.example.se2_gruppenphase_ss21.networking.client.listeners.InRoundListener;
-import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreGameListener;
-import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreRoundListener;
+import com.example.se2_gruppenphase_ss21.networking.client.listeners.*;
 import com.example.se2_gruppenphase_ss21.networking.server.GameServer;
 import com.example.se2_gruppenphase_ss21.networking.server.logic.GameLogicException;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GameClient {
+public class GameClient implements Parcelable {
 
     private SocketWrapper socket;
     private String nickname;
     private String roomName;
     private boolean isConnected;
 
-    private ArrayList<GeneralGameListener> listeners;
+    private GeneralGameListener listener;
+
+    private static GameClient activeGameClient;
+
 
     public GameClient(GameServer server, String roomName, String nickname) throws IOException {
         this("127.0.0.1", server.getPort(), roomName, nickname);
@@ -52,6 +55,24 @@ public class GameClient {
         this.nickname = nickname;
         this.roomName = roomName;
     }
+
+    protected GameClient(Parcel in) {
+        nickname = in.readString();
+        roomName = in.readString();
+        isConnected = in.readByte() != 0;
+    }
+
+    public static final Creator<GameClient> CREATOR = new Creator<GameClient>() {
+        @Override
+        public GameClient createFromParcel(Parcel in) {
+            return new GameClient(in);
+        }
+
+        @Override
+        public GameClient[] newArray(int size) {
+            return new GameClient[size];
+        }
+    };
 
     /**
      * Try to connect to the room specified in the constructor.
@@ -83,68 +104,68 @@ public class GameClient {
                 try {
                     String fromServer = socket.readString();
                     String[] params = fromServer.split("\\s");
-                    switch (params[0]) {
-                        case "game_start":
-                            for(GeneralGameListener listener : listeners)
-                                if(listener instanceof PreGameListener)
-                                    ((PreGameListener) listener).onGameStart();
+                    ServerMessage type = Enum.valueOf(ServerMessage.class, params[0]);
+
+                    switch (type) {
+                        case GAME_START:
+                            if(listener instanceof PreGameListener)
+                                ((PreGameListener) listener).onGameStart();
                             break;
-                        case "users_ready":
+                        case READY:
                             String[] split = params[1].split(",");
                             int current = Integer.parseInt(split[0]);
                             int max = Integer.parseInt(split[1]);
 
-                            for(GeneralGameListener listener : listeners)
-                                if(listener instanceof PreGameListener)
-                                    ((PreGameListener) listener).readyCount(current, max);
+                            if(listener instanceof PreGameListener)
+                                ((PreGameListener) listener).readyCount(current, max);
                             break;
-                        case "user_list":
+                        case USER_LIST:
                             String[] nicknames = params[1].split(",");
-                            for(GeneralGameListener listener : listeners)
-                                listener.receiveUserList(nicknames);
+                            if(listener instanceof PreGameListener)
+                                ((PreGameListener) listener).receiveUserList(nicknames);
                             break;
-                        case "disconnect_user":
+                        case DISCONNECT:
                             String name = params[1];
 
-                            for(GeneralGameListener listener : listeners)
-                                listener.userDisconnect(name);
+                            listener.userDisconnect(name);
                             break;
-                        case "roll_request":
-                            String nick = params[1];
-
-                            for(GeneralGameListener listener : listeners)
-                                if(listener instanceof PreRoundListener)
-                                    ((PreRoundListener) listener).rollRequest(nick);
-                            break;
-                        case "roll_result":
+                        case PLAY_DICE_ANIMATION:
                             int result = Integer.parseInt(params[1]);
 
-                            for(GeneralGameListener listener : listeners)
-                                if(listener instanceof PreRoundListener)
-                                    ((PreRoundListener) listener).rollResult(result);
+                            if(listener instanceof PreRoundListener)
+                                ((PreRoundListener) listener).playDiceAnimation(result);
                             break;
-                        case "begin_puzzle":
+                        case END_DICE_ANIMATION:
+                            if(listener instanceof PreRoundListener)
+                                ((PreRoundListener) listener).transitionToPuzzle();
+                            break;
+                        case BEGIN_PUZZLE:
                             long finishUntil = Long.parseLong(params[1]);
 
-                            for(GeneralGameListener listener : listeners)
-                                if(listener instanceof InRoundListener)
-                                    ((InRoundListener) listener).beginPuzzle(finishUntil);
+                            if(listener instanceof InRoundListener)
+                                ((InRoundListener) listener).beginPuzzle(finishUntil);
                             break;
-                        case "placements":
-                            String[] foo = params[1].split(";");
+                        case PLACEMENTS:
+                            String[] foo = params[1].split(",");
                             Map<String, Integer> placements = new HashMap<>();
                             for(String p : foo) {
                                 String[] bar = p.split(":");
                                 placements.put(bar[0], Integer.parseInt(bar[1]));
                             }
 
-                            for(GeneralGameListener listener : listeners)
-                                if(listener instanceof InRoundListener)
-                                    ((InRoundListener) listener).placementsReceived(placements);
+                            if(listener instanceof InRoundListener)
+                                ((InRoundListener) listener).placementsReceived(placements);
+                            break;
+                        case END_SCOREBOARD:
+                            if(listener instanceof PostRoundListener)
+                                ((PostRoundListener) listener).transitionToDice();
+                            break;
+                        case END_GAME:
+                            if(listener instanceof  PostRoundListener)
+                                ((PostRoundListener) listener).endGame();
                             break;
                         default:
-                            for(GeneralGameListener listener : listeners)
-                                listener.unknownMessage(fromServer);
+                            listener.unknownMessage(fromServer);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -176,6 +197,7 @@ public class GameClient {
 
     /**
      * Ubongo!
+     * @param bluff indicates whether the puzzle was solved (true for cheating)
      * @throws IOException
      */
     public void puzzleDone(boolean bluff) throws IOException {
@@ -186,12 +208,40 @@ public class GameClient {
         socket.sendString("finish_puzzle " + bluff);
     }
 
+    public void accuseOfCheating(String nick) throws IOException {
+        if (!isConnected) {
+            throw new RuntimeException("Client is not connected");
+        }
+
+        socket.sendString("accuse " + nick);
+    }
+
     /**
      * Sets a Listener to listen for messages from the server.
      * Only one listener can be registered at a time so this overwrites any previously registered Listener.
      * @param listener the Listener to be registered
      */
     public void registerListener(GeneralGameListener listener) {
-        listeners.add(listener);
+        this.listener = listener;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(nickname);
+        dest.writeString(roomName);
+        dest.writeByte((byte) (isConnected ? 1 : 0));
+    }
+
+    public static GameClient getActiveGameClient() {
+        return activeGameClient;
+    }
+
+    public static void setActiveGameClient(GameClient activeGameClient) {
+        GameClient.activeGameClient = activeGameClient;
     }
 }

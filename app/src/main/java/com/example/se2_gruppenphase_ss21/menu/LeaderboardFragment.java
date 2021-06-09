@@ -1,10 +1,15 @@
 package com.example.se2_gruppenphase_ss21.menu;
 
+import android.content.Intent;
 import android.os.Bundle;
+
+import android.os.Handler;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
@@ -12,10 +17,17 @@ import androidx.fragment.app.Fragment;
 import com.example.se2_gruppenphase_ss21.Player;
 import com.example.se2_gruppenphase_ss21.PlayerArrayAdapter;
 import com.example.se2_gruppenphase_ss21.R;
+import com.example.se2_gruppenphase_ss21.game.Dice;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
+import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
+import com.example.se2_gruppenphase_ss21.networking.client.listeners.GeneralGameListener;
+import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreGameListener;
+import com.example.se2_gruppenphase_ss21.networking.server.logic.GameLogicException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +48,11 @@ public class LeaderboardFragment extends Fragment {
 
     private PlayerArrayAdapter playerArrayAdapter;
     private ListView listView;
+    static AvailableRoom room;
+    static Map<String, Integer> nicknamesMap;
+    static GameClient gameClient = null;
+    static boolean isReady = false;
+    Handler handler = new Handler();
 
     public LeaderboardFragment() {
         // Required empty public constructor
@@ -45,21 +62,27 @@ public class LeaderboardFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param leaderboardparam1 Parameter 1.
+     * @param username Parameter 1.
      * @return A new instance of fragment Rules1Fragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LeaderboardFragment newInstance(String leaderboardparam1, AvailableRoom room) {
+    public static LeaderboardFragment newInstance(String username, AvailableRoom availableRoom, Map<String, Integer> nicknames, GameClient client) {
         LeaderboardFragment fragment = new LeaderboardFragment();
         Bundle args = new Bundle();
-        args.putString(LEADERBOARD_ARG_PARAM1, leaderboardparam1);
+        args.putString(LEADERBOARD_ARG_PARAM1, username);
+        room = availableRoom;
+        nicknamesMap = nicknames;
+        gameClient = client;
         fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             leaderboardmParam1 = getArguments().getString(LEADERBOARD_ARG_PARAM1);
             leaderboardmParam2 = getArguments().getString(LEADERBOARD_ARG_PARAM2);
@@ -73,21 +96,75 @@ public class LeaderboardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
         Button quitGameButton = view.findViewById(R.id.buttonQuitGame);
         quitGameButton.setOnClickListener((View v) ->{
+            Intent intent = new Intent(getActivity(), MenuActivity.class);
             getParentFragmentManager().beginTransaction().replace(R.id.container, new MenuFragment()).addToBackStack("tag").commit();
         });
 
+
+        String userName;
+        if(getArguments() != null) {
+            userName = getArguments().getString(LEADERBOARD_ARG_PARAM1);
+        }
+
+        try {
+            gameClient.connect();
+            GeneralGameListener gameListener = new PreGameListener() {
+                @Override
+                public void readyCount(int current, int max) {
+                    if(isReady){
+                        updateReady(current, max, view);
+                    }
+                }
+
+                @Override
+                public void onGameStart() {
+                    Intent intent = new Intent(getActivity(), Dice.class);
+                    intent.putExtra("client", gameClient);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void userDisconnect(String nickname) {
+
+                }
+
+                @Override
+                public void receiveUserList(String[] nicknames) {
+
+                }
+
+                @Override
+                public void unknownMessage(String message) {
+
+                }
+            };
+            gameClient.registerListener(gameListener);
+            gameClient.startReceiveLoop();
+        }catch (IOException e){
+            e.printStackTrace();
+        }catch (GameLogicException e){
+            e.printStackTrace();
+        }
+
+        GameClient finalClient = gameClient;
         Button nextGameButton = view.findViewById(R.id.buttonNextRound);
         nextGameButton.setOnClickListener((View v) ->{
-            getParentFragmentManager().beginTransaction().replace(R.id.container, new RoomFragment()).addToBackStack("tag").commit();
-        });
+            try {
+                finalClient.sendReady(true);
+                isReady = true;
+            }catch (IOException e){
 
-        //To Do: Listener and Array for the server nicknames
+            }
+        });
 
         listView = (ListView) view.findViewById(R.id.listView);
         playerArrayAdapter = new PlayerArrayAdapter(view.getContext(), R.layout.listview_row_layout);
         listView.setAdapter(playerArrayAdapter);
-        String[] nicknames = {"Test1", "Test2"};
-        List<String[]> playerList = readData(nicknames);
+
+        //TODO: Implement
+        Map<String, Integer> usermap = null;
+
+        List<String[]> playerList = readData(usermap);
         for(String[] playerData:playerList){
             String position = playerData[0];
             String playername = playerData[1];
@@ -98,21 +175,47 @@ public class LeaderboardFragment extends Fragment {
             playerArrayAdapter.add(player);
         }
 
+
+
         return view;
     }
 
     //List of players
-    private List<String[]> readData(String[] nicknames) {
+    private List<String[]> readData(Map<String, Integer> map) {
         List<String[]> resultList = new ArrayList<String[]>();
-        int points = 4;
-        for (int i = 0; i < nicknames.length; i++) {
-            String[] player = new String[3];
-            player[0] = Integer.toString(i+1);
-            player[1] = nicknames[i];
-            player[2] = points + " Punkte";
-            if(points>=0) points--;
-            resultList.add(player);
+        if (map != null){
+            List<String> nicknames = new ArrayList<>(map.keySet());
+            List<Integer> placements = new ArrayList<>(map.values());
+            for (int i = 0; i < map.size(); i++) {
+                String[] player = new String[3];
+                player[0] = Integer.toString(i+1);
+                player[1] = nicknames.get(i);
+                player[2] = Integer.toString(placements.get(i));
+                resultList.add(player);
+            }
         }
         return resultList;
+    }
+
+    public void updateReady(int current, int max, View view) {
+
+        final Runnable runUpdateReady = new Runnable() {
+            public void run() {
+
+                LinearLayout layout = view.findViewById(R.id.layoutRoom);
+                layout.removeAllViews();
+
+                layout.setPadding(450, 200, 450, 200);
+
+                Button readyData;
+                readyData = new Button(getContext());
+                readyData.setText(String.valueOf(current) + "/" + String.valueOf(max));
+                readyData.setClickable(false);
+                layout.addView(readyData);
+
+            }
+        };
+
+        handler.postDelayed(runUpdateReady, 1000);
     }
 }

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.se2_gruppenphase_ss21.R;
+import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 
 import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlPullParser;

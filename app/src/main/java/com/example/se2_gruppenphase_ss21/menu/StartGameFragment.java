@@ -84,7 +84,11 @@ public class StartGameFragment extends Fragment {
         onlineGameButton.setOnClickListener((View v) -> {
             String userName = getUsername(view);
             if (userName != null) {
-                //TODO: start remote server
+                // open OnlineGameFragment and pass userName as an argument
+                getParentFragmentManager().beginTransaction().replace(R.id.container, OnlineGameFragment.newInstance(userName)).addToBackStack("tag").commit();
+
+                // MulticastReceiver starts to listen
+                //MulticastReceiver.startListen();
             }
         });
 

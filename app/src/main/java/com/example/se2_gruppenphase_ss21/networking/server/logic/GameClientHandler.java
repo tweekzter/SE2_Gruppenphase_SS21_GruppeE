@@ -21,7 +21,14 @@ public class GameClientHandler {
     public void startGameLoop(GameRoom room) {
         new Thread(() -> {
             try {
-                client.sendString("ok");
+                if(room.state == GameRoomState.WAITING) {
+                    client.sendString("ok");
+                }else {
+                    client.sendString("Room not accepting new players!");
+                    close();
+                    return;
+                }
+
                 room.broadcastUserList();
                 room.broadcastIfGameStart();
                 while(true) {
@@ -40,12 +47,20 @@ public class GameClientHandler {
                             finishedPuzzleAt = System.currentTimeMillis();
                             bluff = Boolean.parseBoolean(params[1]);
                             break;
+                        case "accuse":
+                            GameClientHandler accused = room.getUserByNickname(params[1]);
+                            if(accused.didBluff()) {
+
+                            }else {
+
+                            }
+                            break;
                         default:
                             System.err.printf("Received invalid message from client %s%n", fromUser);
                     }
                 }
             } catch (IOException e) {
-                e.printStackTrace();
+                System.err.println(nickname + " disconnected");
                 room.removeUser(this);
             }
         }).start();
@@ -84,7 +99,11 @@ public class GameClientHandler {
         return bluff;
     }
 
-    public void close() throws IOException {
-        client.close();
+    public void close() {
+        try {
+            client.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
