@@ -201,7 +201,7 @@ public class GameRoom {
         }
         broadcastMessage("roll_result " + rollResult);
          */
-        Util.sleep(7, 0);
+        Util.sleep(8, 0);
     }
 
     private void resetRoom() {
