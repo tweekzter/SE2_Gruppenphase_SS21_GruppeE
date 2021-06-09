@@ -3,14 +3,10 @@ package com.example.se2_gruppenphase_ss21.game;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
-
-import android.view.PointerIcon;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -22,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
-import com.example.se2_gruppenphase_ss21.Global;
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Map;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Position;
@@ -64,7 +59,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // get client instance + register in-round listener
-        client = Global.client;
+        client = GameClient.getActiveGameClient();
         client.registerListener(this);
 
         setContentView(R.layout.activity_tiles);
@@ -113,7 +108,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
             removetile = findViewById(R.id.removetile);
 
             Button ubongo = findViewById(R.id.ubongo);
-            // testing: ubongo.setOnClickListener(v -> beginPuzzle(System.currentTimeMillis() + 60000));
             ubongo.setOnClickListener(v -> callUbongo());
 
 
