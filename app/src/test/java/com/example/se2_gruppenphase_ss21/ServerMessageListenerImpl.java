@@ -1,4 +1,4 @@
-package com.example.se2_gruppenphase_ss21.networking.client;
+package com.example.se2_gruppenphase_ss21;
 
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.*;
 
@@ -29,12 +29,12 @@ public class ServerMessageListenerImpl implements GeneralGameListener, InRoundLi
     }
 
     @Override
-    public void rollRequest(String nick) {
+    public void playDiceAnimation(int result) {
 
     }
 
     @Override
-    public void rollResult(int result) {
+    public void transitionToPuzzle() {
 
     }
 
