@@ -188,7 +188,7 @@ public class GameRoom {
     private void handleDiceRoll(int round) {
         broadcastMessage(ServerMessage.PLAY_DICE_ANIMATION, (new Random().nextInt(6 - 1) + 1));
 
-        Util.sleep(7, 0);
+        Util.sleep(8, 0);
 
         broadcastMessage(ServerMessage.END_DICE_ANIMATION);
     }
