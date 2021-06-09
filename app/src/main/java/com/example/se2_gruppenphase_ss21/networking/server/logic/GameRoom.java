@@ -141,7 +141,7 @@ public class GameRoom {
                 if(round >= ROUND_COUNT) {
                     break;
                 }else if(handlers.size() == 0) {
-                    System.err.println("Room was empty when trying to start round, closing room!");
+                    System.err.println("Room was empty when starting round, closing room!");
                     break;
                 }
 
@@ -189,13 +189,8 @@ public class GameRoom {
 
     private void resetRoom() {
         state = GameRoomState.RESTARTING;
-        for(GameClientHandler handler : handlers) {
-            try {
-                handler.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        for(GameClientHandler handler : handlers)
+            handler.close();
         handlers.clear();
         System.out.println("Room reset done!");
         state = GameRoomState.WAITING;

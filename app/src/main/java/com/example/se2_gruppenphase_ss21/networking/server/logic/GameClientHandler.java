@@ -92,7 +92,11 @@ public class GameClientHandler {
         return bluff;
     }
 
-    public void close() throws IOException {
-        client.close();
+    public void close() {
+        try {
+            client.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
