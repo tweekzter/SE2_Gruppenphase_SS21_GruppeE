@@ -105,7 +105,7 @@ public class GameClient implements Parcelable {
             while (true) {
                 try {
                     String fromServer = socket.readString();
-                    String[] params = fromServer.split("\\s");
+                    String[] params = fromServer.split("\\s", 2);
                     ServerMessage type = Enum.valueOf(ServerMessage.class, params[0]);
 
                     switch (type) {
