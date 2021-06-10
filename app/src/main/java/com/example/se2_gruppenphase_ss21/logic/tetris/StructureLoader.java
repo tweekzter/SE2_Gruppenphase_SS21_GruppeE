@@ -10,6 +10,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Loader class for JSON data structure file.
@@ -64,6 +66,7 @@ class StructureLoader {
             JSONObject obj = new JSONObject(json);
             JSONObject tp = obj.getJSONObject(type);
             JSONArray cat = tp.getJSONArray(category);
+
             for(int i=0; i < cat.length(); i++) {
                 JSONObject struct = cat.getJSONObject(i);
                 if(struct.getInt("id") == id) {
@@ -88,6 +91,43 @@ class StructureLoader {
         }
 
         return structure;
+    }
+
+    /**
+     * Returns the IDs of the Tiles (stored in structures.json) for a specific dice result
+     * and map.
+     * @param mgr AssetManager to access structures.json
+     * @param diceResult dice result
+     * @param mapID ID of the map this dice result should be applied on
+     * @return the IDs of the Tiles as an int-array
+     */
+    public static int[] getTiles(AssetManager mgr, String diceResult, int mapID) {
+        int tiles[] = { 2, 3, 4 };
+
+        try {
+            if(json == null)
+                loadStructurePool(mgr);
+
+            JSONObject obj = new JSONObject(json);
+            JSONObject tp = obj.getJSONObject("map");
+            JSONArray cat = tp.getJSONArray("5x5");
+
+            for(int i=0; i < cat.length(); i++) {
+                JSONObject struct = cat.getJSONObject(i);
+                if(struct.getInt("id") == mapID) {
+                    JSONArray t = struct.getJSONArray(diceResult);
+                    for(int j=0; j < 3; j++)
+                        tiles[j] = t.getInt(j);
+                    break;
+                }
+            }
+
+        } catch(JSONException | NullPointerException | IOException ex) {
+            Log.e("pool", ex.toString());
+            return tiles;
+        }
+
+        return tiles;
     }
 
     /**
