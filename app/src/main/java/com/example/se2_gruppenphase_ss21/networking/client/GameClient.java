@@ -3,7 +3,6 @@ package com.example.se2_gruppenphase_ss21.networking.client;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.se2_gruppenphase_ss21.Player;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
 import com.example.se2_gruppenphase_ss21.networking.ServerMessage;
 import com.example.se2_gruppenphase_ss21.networking.SocketWrapper;
@@ -14,8 +13,6 @@ import com.example.se2_gruppenphase_ss21.networking.server.logic.GameLogicExcept
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class GameClient implements Parcelable {
 
@@ -105,7 +102,7 @@ public class GameClient implements Parcelable {
             while (true) {
                 try {
                     String fromServer = socket.readString();
-                    String[] params = fromServer.split("\\s", 2);
+                    String[] params = fromServer.split("\\s");
                     ServerMessage type = Enum.valueOf(ServerMessage.class, params[0]);
 
                     switch (type) {
