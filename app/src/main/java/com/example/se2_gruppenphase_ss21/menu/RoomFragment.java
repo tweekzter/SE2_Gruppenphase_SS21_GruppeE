@@ -119,7 +119,6 @@ public class RoomFragment extends Fragment {
                 @Override
                 public void onGameStart() {
                     Intent intent = new Intent(getActivity(), Dice.class);
-                    intent.putExtra("client", client);
                     startActivity(intent);
                 }
 
