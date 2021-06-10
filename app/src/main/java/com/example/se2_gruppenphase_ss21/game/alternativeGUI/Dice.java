@@ -18,9 +18,13 @@ import androidx.fragment.app.Fragment;
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.menu.StartGameFragment;
 import com.example.se2_gruppenphase_ss21.networking.Util;
+import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
+import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreRoundListener;
 
 
-public class Dice extends Fragment {
+public class Dice extends Fragment implements PreRoundListener {
+
+    private GameClient client;
 
     private static final int ANTILOPE_POS = 325;
     private static final int LION_POS = 775;
@@ -28,6 +32,14 @@ public class Dice extends Fragment {
     private static final int BUG_POS = 1675;
     private static final int HAND_POS = 2125;
     private static final int SNAKE_POS = 2575;
+
+    private static final int ANTILOPE_ID = 1;
+    private static final int LION_ID = 2;
+    private static final int ELEPHANT_ID = 3;
+    private static final int BUG_ID = 4;
+    private static final int HAND_ID = 5;
+    private static final int SNAKE_ID = 6;
+
     private int diceResult = 325;
     private int animationTime = 5000;
 
@@ -42,11 +54,12 @@ public class Dice extends Fragment {
 
     public void onStart() {
         super.onStart();
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(() -> animateDiceRoll(), 500);
+        client = GameClient.getActiveGameClient();
+        //Handler handler = new Handler(Looper.getMainLooper());
+        //handler.postDelayed(() -> animateDiceRoll(), 500);
     }
 
-    private void animateDiceRoll() {
+    private void animateDiceRoll(int diceResultPos) {
         TableLayout frame = getView().findViewById(R.id.frame_roll);
         float distance = frame.getWidth();
 
@@ -58,8 +71,7 @@ public class Dice extends Fragment {
         reset.setInterpolator(new LinearInterpolator());
         reset.setDuration(0);
 
-        diceResult = getDiceResult();
-        float target = convertDpToPixels(diceResult);
+        float target = convertDpToPixels(diceResultPos);
         ObjectAnimator stop = ObjectAnimator.ofFloat(frame, "translationX", target);
         stop.setInterpolator(new DecelerateInterpolator());
         stop.setDuration(animationTime/2);
@@ -88,8 +100,42 @@ public class Dice extends Fragment {
         return pixels / getContext().getResources().getDisplayMetrics().density;
     }
 
-    private int getDiceResult() {
-        int[] diceCounts = { ANTILOPE_POS, LION_POS, ELEPHANT_POS, BUG_POS, HAND_POS, SNAKE_POS };
-        return diceCounts[(int)(diceCounts.length * Math.random())];
+    private int getDiceResultPos(int result) {
+        switch(result) {
+            case(LION_ID):
+                return LION_POS;
+            case(ELEPHANT_ID):
+                return ELEPHANT_POS;
+            case(BUG_ID):
+                return BUG_POS;
+            case(HAND_ID):
+                return HAND_POS;
+            case(SNAKE_ID):
+                return SNAKE_POS;
+            default:
+                return ANTILOPE_POS;
+        }
+    }
+
+    @Override
+    public void playDiceAnimation(int result) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        int diceResultPos = getDiceResultPos(result);
+        handler.post(() -> animateDiceRoll(diceResultPos));
+    }
+
+    @Override
+    public void transitionToPuzzle() {
+
+    }
+
+    @Override
+    public void userDisconnect(String nickname) {
+
+    }
+
+    @Override
+    public void unknownMessage(String message) {
+
     }
 }
