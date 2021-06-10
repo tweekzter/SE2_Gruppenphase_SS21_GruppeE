@@ -1,17 +1,18 @@
 package com.example.se2_gruppenphase_ss21.networking.server.logic;
 
+import com.example.se2_gruppenphase_ss21.networking.ServerMessage;
 import com.example.se2_gruppenphase_ss21.networking.SocketWrapper;
 
 import java.io.IOException;
 
-public class GameClientHandler {
+public class GameClientHandler implements Comparable {
 
     private SocketWrapper client;
     private String nickname;
     private boolean isReady;
-    private int rollResult;
     private long finishedPuzzleAt;
     private boolean bluff;
+    private int points, lastPointIncrease;
 
     public GameClientHandler(SocketWrapper client, String nickname) {
         this.client = client;
@@ -40,20 +41,18 @@ public class GameClientHandler {
                             room.broadcastReadyCount();
                             room.broadcastIfGameStart();
                             break;
-                        case "roll":
-                            rollResult = Integer.parseInt(params[1]);
-                            break;
                         case "finish_puzzle":
                             finishedPuzzleAt = System.currentTimeMillis();
                             bluff = Boolean.parseBoolean(params[1]);
                             break;
                         case "accuse":
                             GameClientHandler accused = room.getUserByNickname(params[1]);
-                            if(accused.didBluff()) {
-
-                            }else {
-
-                            }
+                            if(!accused.didBluff())
+                                points--;
+                            room.broadcastMessage(ServerMessage.ACCUSATION_RESULT, getNickname(), accused.getNickname(), accused.didBluff(), accused.didBluff() ? accused.undoLastPointGain() : 0);
+                            break;
+                        case "disconnect":
+                            room.removeUser(this);
                             break;
                         default:
                             System.err.printf("Received invalid message from client %s%n", fromUser);
@@ -79,16 +78,12 @@ public class GameClientHandler {
     }
 
     public void resetForNextRound() {
-        rollResult = -1;
-        finishedPuzzleAt = -1;
+        finishedPuzzleAt = Long.MAX_VALUE;
+        bluff = false;
     }
 
-    public boolean hasRolled() {
-        return rollResult != -1;
-    }
-
-    public int getRollResult() {
-        return rollResult;
+    public boolean didFinnishPuzzle() {
+        return finishedPuzzleAt == Long.MAX_VALUE;
     }
 
     public long getPuzzleFinishedAt() {
@@ -99,11 +94,31 @@ public class GameClientHandler {
         return bluff;
     }
 
+    public int getPoints() {
+        return points;
+    }
+
+    public void addPoints(int amount) {
+        lastPointIncrease = amount;
+        points += amount;
+    }
+
+    public int undoLastPointGain() {
+        points -= lastPointIncrease;
+        return lastPointIncrease;
+    }
+
     public void close() {
         try {
             client.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        GameClientHandler other = (GameClientHandler) o;
+        return Integer.compare(getPoints(), other.getPoints());
     }
 }

@@ -24,11 +24,13 @@ import com.example.se2_gruppenphase_ss21.logic.tetris.Position;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Tile;
 import com.example.se2_gruppenphase_ss21.menu.MainActivity;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
+import com.example.se2_gruppenphase_ss21.networking.client.PlayerPlacement;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.InRoundListener;
 
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -528,7 +530,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     }
 
     private void detatchfromtilearray(){
-        Tile empty = new Tile();
         for(Position positions:currenttile.getShape()){
             tilearray[currentpositiony+positions.getY()][currentpositionx+positions.getX()] = empty;
         }
@@ -562,8 +563,9 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
      * Next roll request is received in approx. 10 seconds.
      * @param placements
      */
-    public void placementsReceived(java.util.Map<String, Integer> placements) {
-        // TODO: implement in accordance with Sabrina!!
+    @Override
+    public void placementsReceived(ArrayList<PlayerPlacement> placements) {
+
     }
 
     @Override
