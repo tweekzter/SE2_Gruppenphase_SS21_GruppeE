@@ -528,7 +528,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     }
 
     private void detatchfromtilearray(){
-        Tile empty = new Tile();
         for(Position positions:currenttile.getShape()){
             tilearray[currentpositiony+positions.getY()][currentpositionx+positions.getX()] = empty;
         }
