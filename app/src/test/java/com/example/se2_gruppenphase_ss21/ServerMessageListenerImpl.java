@@ -62,4 +62,9 @@ public class ServerMessageListenerImpl implements GeneralGameListener, InRoundLi
     public void endGame() {
 
     }
+
+    @Override
+    public void accusationResult(String accuser, String accused, boolean wasCheating, int pointLoss) {
+
+    }
 }

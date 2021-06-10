@@ -10,5 +10,6 @@ public enum ServerMessage {
     BEGIN_PUZZLE,
     PLACEMENTS,
     END_SCOREBOARD,
-    END_GAME;
+    END_GAME,
+    ACCUSATION_RESULT;
 }

@@ -164,6 +164,11 @@ public class GameClient implements Parcelable {
                             if(listener instanceof  PostRoundListener)
                                 ((PostRoundListener) listener).endGame();
                             break;
+                        case ACCUSATION_RESULT:
+                            String[] bar = params[1].split(",");
+                            if(listener instanceof PostRoundListener)
+                                ((PostRoundListener) listener).accusationResult(bar[0], bar[1], Boolean.parseBoolean(bar[2]), Integer.parseInt(bar[3]));
+                            break;
                         default:
                             listener.unknownMessage(fromServer);
                     }
@@ -185,14 +190,6 @@ public class GameClient implements Parcelable {
         }
 
         socket.sendString("ready " + isReady);
-    }
-
-    public void sendRollResult(int result) throws IOException {
-        if (!isConnected) {
-            throw new RuntimeException("Client is not connected");
-        }
-
-        socket.sendString("roll " + result);
     }
 
     /**
