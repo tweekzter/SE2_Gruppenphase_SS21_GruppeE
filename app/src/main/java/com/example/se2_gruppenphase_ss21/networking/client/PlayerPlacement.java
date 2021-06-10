@@ -2,7 +2,8 @@ package com.example.se2_gruppenphase_ss21.networking.client;
 
 public class PlayerPlacement {
     public String nickname;
-    public int placement, points, timeTaken;
+    public int placement, points;
+    public long timeTaken;
     public boolean didFinnish;
 
     public PlayerPlacement(String serialized) {
@@ -11,7 +12,7 @@ public class PlayerPlacement {
         placement = Integer.parseInt(split[1]);
         points = Integer.parseInt(split[2]);
         didFinnish = Boolean.parseBoolean(split[3]);
-        timeTaken = Integer.parseInt(split[4]);
+        timeTaken = Long.parseLong(split[4]);
     }
 
     public String getNickname() {
@@ -26,7 +27,7 @@ public class PlayerPlacement {
         return points;
     }
 
-    public int getTimeTaken() {
+    public long getTimeTaken() {
         return timeTaken;
     }
 
