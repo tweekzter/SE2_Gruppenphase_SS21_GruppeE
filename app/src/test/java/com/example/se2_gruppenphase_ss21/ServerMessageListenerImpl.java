@@ -1,7 +1,9 @@
 package com.example.se2_gruppenphase_ss21;
 
+import com.example.se2_gruppenphase_ss21.networking.client.PlayerPlacement;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.*;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class ServerMessageListenerImpl implements GeneralGameListener, InRoundListener, PostRoundListener, PreGameListener, PreRoundListener {
@@ -44,7 +46,7 @@ public class ServerMessageListenerImpl implements GeneralGameListener, InRoundLi
     }
 
     @Override
-    public void placementsReceived(Map<String, Integer> placements) {
+    public void placementsReceived(ArrayList<PlayerPlacement> placements) {
 
     }
 
@@ -60,6 +62,11 @@ public class ServerMessageListenerImpl implements GeneralGameListener, InRoundLi
 
     @Override
     public void endGame() {
+
+    }
+
+    @Override
+    public void accusationResult(String accuser, String accused, boolean wasCheating, int pointLoss) {
 
     }
 }

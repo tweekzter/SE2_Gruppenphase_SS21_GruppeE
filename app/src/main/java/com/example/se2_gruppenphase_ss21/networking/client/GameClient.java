@@ -3,6 +3,7 @@ package com.example.se2_gruppenphase_ss21.networking.client;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.se2_gruppenphase_ss21.Player;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
 import com.example.se2_gruppenphase_ss21.networking.ServerMessage;
 import com.example.se2_gruppenphase_ss21.networking.SocketWrapper;
@@ -12,6 +13,7 @@ import com.example.se2_gruppenphase_ss21.networking.server.logic.GameLogicExcept
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -147,10 +149,9 @@ public class GameClient implements Parcelable {
                             break;
                         case PLACEMENTS:
                             String[] foo = params[1].split(",");
-                            Map<String, Integer> placements = new HashMap<>();
-                            for(String p : foo) {
-                                String[] bar = p.split(":");
-                                placements.put(bar[0], Integer.parseInt(bar[1]));
+                            ArrayList<PlayerPlacement> placements = new ArrayList<>();
+                            for(String serialized : foo) {
+                                placements.add(new PlayerPlacement(serialized));
                             }
 
                             if(listener instanceof InRoundListener)
@@ -163,6 +164,11 @@ public class GameClient implements Parcelable {
                         case END_GAME:
                             if(listener instanceof  PostRoundListener)
                                 ((PostRoundListener) listener).endGame();
+                            break;
+                        case ACCUSATION_RESULT:
+                            String[] bar = params[1].split(",");
+                            if(listener instanceof PostRoundListener)
+                                ((PostRoundListener) listener).accusationResult(bar[0], bar[1], Boolean.parseBoolean(bar[2]), Integer.parseInt(bar[3]));
                             break;
                         default:
                             listener.unknownMessage(fromServer);
@@ -185,14 +191,6 @@ public class GameClient implements Parcelable {
         }
 
         socket.sendString("ready " + isReady);
-    }
-
-    public void sendRollResult(int result) throws IOException {
-        if (!isConnected) {
-            throw new RuntimeException("Client is not connected");
-        }
-
-        socket.sendString("roll " + result);
     }
 
     /**
