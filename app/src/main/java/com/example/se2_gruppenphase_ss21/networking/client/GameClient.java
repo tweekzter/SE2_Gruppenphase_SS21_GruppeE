@@ -211,6 +211,15 @@ public class GameClient implements Parcelable {
         socket.sendString("accuse " + nick);
     }
 
+    public void close() {
+        try {
+            socket.sendString("disconnect");
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Sets a Listener to listen for messages from the server.
      * Only one listener can be registered at a time so this overwrites any previously registered Listener.

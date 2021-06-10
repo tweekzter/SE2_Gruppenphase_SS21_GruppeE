@@ -51,6 +51,9 @@ public class GameClientHandler implements Comparable {
                                 points--;
                             room.broadcastMessage(ServerMessage.ACCUSATION_RESULT, getNickname(), accused.getNickname(), accused.didBluff(), accused.didBluff() ? accused.undoLastPointGain() : 0);
                             break;
+                        case "disconnect":
+                            room.removeUser(this);
+                            break;
                         default:
                             System.err.printf("Received invalid message from client %s%n", fromUser);
                     }
