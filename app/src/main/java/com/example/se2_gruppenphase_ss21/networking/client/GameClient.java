@@ -21,7 +21,7 @@ public class GameClient implements Parcelable {
     private String roomName;
     private boolean isConnected;
 
-    private GeneralGameListener listener;
+    private volatile GeneralGameListener listener;
 
     private static GameClient activeGameClient;
 

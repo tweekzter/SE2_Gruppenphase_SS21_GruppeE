@@ -12,14 +12,16 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.TableLayout;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.se2_gruppenphase_ss21.R;
-import com.example.se2_gruppenphase_ss21.menu.StartGameFragment;
-import com.example.se2_gruppenphase_ss21.networking.Util;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreRoundListener;
+import com.example.se2_gruppenphase_ss21.logic.tetris.StructureLoader;
+
+import java.util.Random;
 
 
 public class Dice extends Fragment implements PreRoundListener {
@@ -40,9 +42,8 @@ public class Dice extends Fragment implements PreRoundListener {
     private static final int HAND_ID = 5;
     private static final int SNAKE_ID = 6;
 
-    private int diceResult = 325;
+    private int diceResultID = ANTILOPE_ID;
     private int animationTime = 5000;
-
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup puzzleContainer,
@@ -55,8 +56,7 @@ public class Dice extends Fragment implements PreRoundListener {
     public void onStart() {
         super.onStart();
         client = GameClient.getActiveGameClient();
-        //Handler handler = new Handler(Looper.getMainLooper());
-        //handler.postDelayed(() -> animateDiceRoll(), 500);
+        client.registerListener(this);
     }
 
     private void animateDiceRoll(int diceResultPos) {
@@ -75,22 +75,11 @@ public class Dice extends Fragment implements PreRoundListener {
         ObjectAnimator stop = ObjectAnimator.ofFloat(frame, "translationX", target);
         stop.setInterpolator(new DecelerateInterpolator());
         stop.setDuration(animationTime/2);
-        Log.d("dice", "ratio: "+target/distance);
 
         AnimatorSet animation = new AnimatorSet();
         animation.playSequentially(rollAnimation, reset, stop);
         animation.start();
-
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.postDelayed(() -> {
-            getParentFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.puzzle_container, new PlayField())
-                    .commit();
-            }, animationTime + 1000);
     }
-
-
 
     private float convertDpToPixels(float dp) {
         return dp * getContext().getResources().getDisplayMetrics().density;
@@ -100,8 +89,10 @@ public class Dice extends Fragment implements PreRoundListener {
         return pixels / getContext().getResources().getDisplayMetrics().density;
     }
 
-    private int getDiceResultPos(int result) {
-        switch(result) {
+    private int getDiceResultPos() {
+        switch(diceResultID) {
+            case(ANTILOPE_ID):
+                return ANTILOPE_POS;
             case(LION_ID):
                 return LION_POS;
             case(ELEPHANT_ID):
@@ -110,32 +101,68 @@ public class Dice extends Fragment implements PreRoundListener {
                 return BUG_POS;
             case(HAND_ID):
                 return HAND_POS;
-            case(SNAKE_ID):
-                return SNAKE_POS;
             default:
-                return ANTILOPE_POS;
+                return SNAKE_POS;
+        }
+    }
+
+    private String getResultName() {
+        switch(diceResultID) {
+            case(ANTILOPE_ID):
+                return "antilope";
+            case(LION_ID):
+                return "lion";
+            case(ELEPHANT_ID):
+                return "elephant";
+            case(BUG_ID):
+                return "bug";
+            case(HAND_ID):
+                return "hand";
+            default:
+                return "snake";
         }
     }
 
     @Override
     public void playDiceAnimation(int result) {
+        diceResultID = result;
+        int diceResultPos = getDiceResultPos();
         Handler handler = new Handler(Looper.getMainLooper());
-        int diceResultPos = getDiceResultPos(result);
-        handler.post(() -> animateDiceRoll(diceResultPos));
+        handler.postDelayed(() -> animateDiceRoll(diceResultPos), 500);
     }
 
     @Override
     public void transitionToPuzzle() {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() -> {
 
+            int[] tiles = StructureLoader.getTiles(getContext().getAssets(),
+                    getResultName(), new Random().nextInt(35) + 2);
+            Bundle bundle = new Bundle();
+            bundle.putIntArray("tiles", tiles);
+            PlayField pf = new PlayField();
+            pf.setArguments(bundle);
+
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.puzzle_container, pf)
+                    .commit();
+        });
     }
 
     @Override
     public void userDisconnect(String nickname) {
-
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() ->
+                Toast.makeText(getActivity(), "Player "+nickname+" disconnected!", Toast.LENGTH_LONG).show()
+        );
     }
 
     @Override
     public void unknownMessage(String message) {
-
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() ->
+                Toast.makeText(getActivity(), "Network error: "+message, Toast.LENGTH_LONG).show()
+        );
     }
 }

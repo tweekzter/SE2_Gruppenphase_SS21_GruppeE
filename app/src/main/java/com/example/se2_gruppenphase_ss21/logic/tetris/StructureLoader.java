@@ -26,7 +26,7 @@ import java.util.Arrays;
  *
  * @author Manuel Simon #00326348
  */
-class StructureLoader {
+public class StructureLoader {
     private static String json;
     // a default structure that will be used, whenever problems occur
     private static boolean[][] standardStructure = {

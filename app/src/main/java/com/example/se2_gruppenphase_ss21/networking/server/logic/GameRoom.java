@@ -193,10 +193,10 @@ public class GameRoom {
     }
 
     private void handleDiceRoll() {
+        // give activity time to load
+        Util.sleep(0,1000);
         broadcastMessage(ServerMessage.PLAY_DICE_ANIMATION, (new Random().nextInt(6 - 1) + 1));
-
         Util.sleep(8, 0);
-
         broadcastMessage(ServerMessage.END_DICE_ANIMATION);
     }
 

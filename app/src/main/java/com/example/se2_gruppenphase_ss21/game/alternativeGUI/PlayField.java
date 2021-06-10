@@ -13,6 +13,13 @@ import androidx.fragment.app.Fragment;
 import com.example.se2_gruppenphase_ss21.R;
 
 public class PlayField extends Fragment {
+    private int[] tiles;
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        tiles = getArguments().getIntArray("tiles");
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     public View onCreateView(LayoutInflater inflater, ViewGroup puzzleContainer,
                              Bundle savedInstanceState) {
@@ -23,10 +30,11 @@ public class PlayField extends Fragment {
             int x = (int)convertPixelsToDp(event.getX()) / 76;
             int y = (int)convertPixelsToDp(event.getY()) / 76;
             getField(x,y).setBackgroundColor(Color.RED);
+            text.setText(tiles[0]+" "+tiles[1]+" "+tiles[2]);
 
             return true;
         });
-        view.findViewById(R.id.field20).setOnClickListener(v -> text.setText("cougar"));
+
         return view;
     }
 
