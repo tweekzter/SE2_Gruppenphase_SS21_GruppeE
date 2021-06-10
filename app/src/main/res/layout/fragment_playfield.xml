@@ -7,7 +7,7 @@
     android:background="#00FFFFFF">
 
     <TableLayout
-        android:id="@+id/tableLayout"
+        android:id="@+id/table_playfield"
         android:layout_width="380dp"
         android:layout_height="380dp"
         android:layout_marginBottom="36dp"
@@ -206,19 +206,9 @@
         android:layout_marginBottom="132dp"
         android:text="TextView"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintBottom_toTopOf="@+id/table_playfield"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <View
-        android:id="@+id/touch_field"
-        android:layout_width="380dp"
-        android:layout_height="380dp"
-        android:background="#00FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/tableLayout"
-        app:layout_constraintEnd_toEndOf="@+id/tableLayout"
-        app:layout_constraintStart_toStartOf="@+id/tableLayout"
-        app:layout_constraintTop_toTopOf="@+id/tableLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

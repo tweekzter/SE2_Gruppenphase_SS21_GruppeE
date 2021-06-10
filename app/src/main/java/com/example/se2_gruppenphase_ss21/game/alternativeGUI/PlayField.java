@@ -19,10 +19,11 @@ public class PlayField extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_playfield, puzzleContainer, false);
         TextView text = view.findViewById(R.id.testi);
-        view.findViewById(R.id.touch_field).setOnTouchListener((v, event) -> {
+        view.findViewById(R.id.table_playfield).setOnTouchListener((v, event) -> {
             int x = (int)convertPixelsToDp(event.getX()) / 76;
             int y = (int)convertPixelsToDp(event.getY()) / 76;
             getField(x,y).setBackgroundColor(Color.RED);
+
             return true;
         });
         view.findViewById(R.id.field20).setOnClickListener(v -> text.setText("cougar"));
