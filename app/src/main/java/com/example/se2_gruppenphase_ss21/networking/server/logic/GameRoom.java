@@ -5,14 +5,12 @@ import com.example.se2_gruppenphase_ss21.networking.SocketWrapper;
 import com.example.se2_gruppenphase_ss21.networking.Util;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class GameRoom {
     private static final int DEFAULT_MAX_USERS = 4;
     private static final int ROUND_COUNT = 9;
+    private static final int PUZZLE_DURATION = 60 * 1000;
 
     private ArrayList<GameClientHandler> handlers = new ArrayList<>();
 
@@ -147,9 +145,10 @@ public class GameRoom {
 
                 handleDiceRoll(round);
 
-                handlePuzzle();
+                long puzzleUntil = startPuzzle();
+                Util.sleep(0, puzzleUntil - System.currentTimeMillis());
 
-                sendPlacements();
+                sendPlacements(puzzleUntil - PUZZLE_DURATION);
 
                 Util.sleep(10, 0);
 
@@ -166,23 +165,27 @@ public class GameRoom {
         }).start();
     }
 
-    private void sendPlacements() {
-        Map<String, Integer> placements = calculatePlacements();
-        String[] foo = new String[placements.keySet().size()];
+    private void sendPlacements(long puzzleStart) {
+        assignPoints();
+        Collections.sort(handlers);
+        String[] foo = new String[handlers.size()];
 
-        int c = 0;
-        for(String nick : placements.keySet()) {
-            foo[c] = nick + ":" + placements.get(nick);
-            c++;
+        for(int i = 0; i < handlers.size(); i++) {
+            foo[i] = String.format("%s:%d:%d:%b:%d",
+                    handlers.get(i).getNickname(),
+                    (i + 1),
+                    handlers.get(i).getPoints(),
+                    handlers.get(i).didFinnishPuzzle(),
+                    handlers.get(i).getPuzzleFinishedAt() - puzzleStart);
         }
 
         broadcastMessage(ServerMessage.PLACEMENTS, foo);
     }
 
-    private void handlePuzzle() {
-        long finishUntil = System.currentTimeMillis() + (60 * 1000);
+    private long startPuzzle() {
+        long finishUntil = System.currentTimeMillis() + PUZZLE_DURATION;
         broadcastMessage(ServerMessage.BEGIN_PUZZLE, finishUntil);
-        Util.sleep(0, finishUntil - System.currentTimeMillis());
+        return finishUntil;
     }
 
     private void handleDiceRoll(int round) {
@@ -202,48 +205,32 @@ public class GameRoom {
         state = GameRoomState.WAITING;
     }
 
-    private Map<String, Integer> calculatePlacements() {
-        Map<String, Long> tempMap = new HashMap<>();
-        Map<String, Integer> placementMap = new HashMap<>();
+    private void assignPoints() {
+        ArrayList<GameClientHandler> toAssign = new ArrayList<>(handlers);
 
         for(GameClientHandler handler : handlers) {
-            if(handler.getPuzzleFinishedAt() != -1) {
-                tempMap.put(handler.getNickname(), handler.getPuzzleFinishedAt());
+            if(!handler.didFinnishPuzzle()) {
+                toAssign.remove(handler);
+                handler.addPoints(1);
             }
         }
 
-        for(GameClientHandler handler : handlers) {
-            if(handler.getPuzzleFinishedAt() == -1) {
-                placementMap.put(handler.getNickname(), tempMap.keySet().size() + 1);
-            }
-        }
-
-        int c = 1;
-        while (!tempMap.keySet().isEmpty()) {
-            String smallest = keyFromPairWithSmallestVal(tempMap);
-            tempMap.remove(smallest);
-            placementMap.put(smallest, c);
+        int c = 0;
+        while (!toAssign.isEmpty()) {
+            GameClientHandler handler = getHandlerFinishedFirst(toAssign);
+            toAssign.remove(handler);
+            handler.addPoints(handlers.size() - c);
             c++;
         }
-
-        return placementMap;
     }
 
-    private String keyFromPairWithSmallestVal(Map<String, Long> map) {
-        long smallest = Integer.MAX_VALUE;
-        String val = "";
+    private GameClientHandler getHandlerFinishedFirst(ArrayList<GameClientHandler> h) {
+        GameClientHandler res = null;
 
-        if(map.keySet().isEmpty()) {
-            throw new RuntimeException("map is empty");
-        }
+        for(GameClientHandler handler : h)
+            if(res == null || handler.getPuzzleFinishedAt() < res.getPuzzleFinishedAt())
+                res = handler;
 
-        for(String key : map.keySet()) {
-            if(map.get(key) < smallest) {
-                smallest = map.get(key);
-                val = key;
-            }
-        }
-
-        return val;
+        return res;
     }
 }

@@ -1,5 +1,8 @@
 package com.example.se2_gruppenphase_ss21.networking.client.listeners;
 
+import com.example.se2_gruppenphase_ss21.networking.client.PlayerPlacement;
+
+import java.util.ArrayList;
 import java.util.Map;
 
 public interface InRoundListener extends GeneralGameListener {
@@ -14,5 +17,5 @@ public interface InRoundListener extends GeneralGameListener {
      * Next roll request is received in approx. 10 seconds.
      * @param placements
      */
-    void placementsReceived(Map<String, Integer> placements);
+    void placementsReceived(ArrayList<PlayerPlacement> placements);
 }

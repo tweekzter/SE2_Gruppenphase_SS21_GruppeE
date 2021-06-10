@@ -5,7 +5,7 @@ import com.example.se2_gruppenphase_ss21.networking.SocketWrapper;
 
 import java.io.IOException;
 
-public class GameClientHandler {
+public class GameClientHandler implements Comparable {
 
     private SocketWrapper client;
     private String nickname;
@@ -75,7 +75,12 @@ public class GameClientHandler {
     }
 
     public void resetForNextRound() {
-        finishedPuzzleAt = -1;
+        finishedPuzzleAt = Long.MAX_VALUE;
+        bluff = false;
+    }
+
+    public boolean didFinnishPuzzle() {
+        return finishedPuzzleAt == Long.MAX_VALUE;
     }
 
     public long getPuzzleFinishedAt() {
@@ -106,5 +111,11 @@ public class GameClientHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        GameClientHandler other = (GameClientHandler) o;
+        return Integer.compare(getPoints(), other.getPoints());
     }
 }
