@@ -49,10 +49,14 @@ public class GameRoom {
     public void broadcastMessage(ServerMessage type, Object... args) {
         StringBuilder sb = new StringBuilder();
         sb.append(type.name());
+        sb.append(" ");
         for(Object arg : args) {
-            sb.append(",");
             sb.append(arg);
+            sb.append(",");
         }
+
+        if(sb.charAt(sb.length() - 1) == ',')
+            sb.deleteCharAt(sb.length() - 1);
 
         for(GameClientHandler handler : handlers) {
             try {
