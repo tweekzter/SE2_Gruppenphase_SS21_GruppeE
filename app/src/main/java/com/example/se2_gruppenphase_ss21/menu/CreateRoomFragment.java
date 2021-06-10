@@ -82,16 +82,16 @@ public class CreateRoomFragment extends Fragment {
                 int maxUsers = Integer.parseInt(maxUsersEditText.getText().toString());
 
                 if (maxUsers <= 1) {
-                    Toast.makeText(getActivity(), "room should have at least two players!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.room_more_than_one_player, Toast.LENGTH_SHORT).show();
                 } else {
                     startServer(roomName, maxUsers);
-                    Toast.makeText(getActivity(), "room successfully created!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.room_successfully_created, Toast.LENGTH_SHORT).show();
                     getParentFragmentManager().beginTransaction().replace(R.id.container, LocalGameFragment.newInstance(userName)).addToBackStack("tag").commit();
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(getActivity(), "please enter max players and name!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.room_create_info, Toast.LENGTH_SHORT).show();
             }
 
         });
