@@ -147,7 +147,7 @@ public class GameRoom {
                 for(GameClientHandler handler : handlers)
                     handler.resetForNextRound();
 
-                handleDiceRoll(round);
+                handleDiceRoll();
 
                 long puzzleUntil = startPuzzle();
                 Util.sleep(0, puzzleUntil - System.currentTimeMillis());
@@ -192,7 +192,7 @@ public class GameRoom {
         return finishUntil;
     }
 
-    private void handleDiceRoll(int round) {
+    private void handleDiceRoll() {
         broadcastMessage(ServerMessage.PLAY_DICE_ANIMATION, (new Random().nextInt(6 - 1) + 1));
 
         Util.sleep(8, 0);
