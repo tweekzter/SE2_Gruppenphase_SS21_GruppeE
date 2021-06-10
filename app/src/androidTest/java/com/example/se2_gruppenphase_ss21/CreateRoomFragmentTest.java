@@ -5,14 +5,20 @@ import android.os.Bundle;
 import androidx.fragment.app.testing.FragmentScenario;
 import androidx.lifecycle.Lifecycle;
 import androidx.test.core.app.ApplicationProvider;
+<<<<<<< HEAD
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+=======
+>>>>>>> b3c0c7da74658ee3a95b01351f2278386023a36f
 
 import com.example.se2_gruppenphase_ss21.menu.CreateRoomFragment;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+<<<<<<< HEAD
 import org.junit.runner.RunWith;
+=======
+>>>>>>> b3c0c7da74658ee3a95b01351f2278386023a36f
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
