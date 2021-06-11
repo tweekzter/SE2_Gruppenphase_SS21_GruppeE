@@ -29,32 +29,10 @@ public class MainActivity extends AppCompatActivity {
         gettingStartedButton.setOnClickListener((View v) -> {
             openMenuActivity();
         });
-
-        //this is only for testing purposes
-
-        Button test = findViewById(R.id.testbutton);
-        test.setOnClickListener((View v) -> {
-            openGame();
-        });
-
-        Button altPuzzle = findViewById(R.id.alt_puzzle);
-        altPuzzle.setOnClickListener((View v) -> {
-            openAlternativePuzzle();
-        });
     }
 
     public void openMenuActivity() {
         Intent intent = new Intent(this, MenuActivity.class);
-        startActivity(intent);
-    }
-
-    public void openGame(){
-        Intent intent = new Intent(this, Dice.class);
-        startActivity(intent);
-    }
-
-    public void openAlternativePuzzle(){
-        Intent intent = new Intent(this, Puzzle.class);
         startActivity(intent);
     }
 }
