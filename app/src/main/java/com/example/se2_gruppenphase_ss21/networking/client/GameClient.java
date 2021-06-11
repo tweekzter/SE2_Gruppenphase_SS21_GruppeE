@@ -131,7 +131,6 @@ public class GameClient implements Parcelable {
                             break;
                         case PLAY_DICE_ANIMATION:
                             int result = Integer.parseInt(params[1]);
-                            Log.d("dice", "in need");
 
                             if(listener instanceof PreRoundListener)
                                 ((PreRoundListener) listener).playDiceAnimation(result);
