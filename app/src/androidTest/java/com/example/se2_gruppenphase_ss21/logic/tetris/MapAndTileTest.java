@@ -5,14 +5,8 @@ import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.example.se2_gruppenphase_ss21.game.XMLParser;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.xmlpull.v1.XmlPullParser;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 import static org.junit.Assert.*;
 

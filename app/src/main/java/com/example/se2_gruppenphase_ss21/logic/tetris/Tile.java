@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Representation of a TILE.
@@ -397,6 +398,55 @@ public class Tile {
         Position[] s = new Position[shape.size()];
         shape.toArray(s);
         return s;
+    }
+
+    /**
+     * Converts the shape of this TILE into a two dimensional boolean array.
+     * @return a two-dimensional boolean array representation of this TILE.
+     */
+    public boolean[][] getShapeMatrix() {
+        if(shape == null)
+            return new boolean[0][0];
+
+        int minX = shape.get(0).x;
+        int maxX = minX;
+        int minY = shape.get(0).y;
+        int maxY = minY;
+
+        for(Position pos : shape) {
+            minX = Math.min(minX, pos.x);
+            maxX = Math.max(maxX, pos.x);
+            minY = Math.min(minY, pos.y);
+            maxY = Math.max(maxY, pos.y);
+        }
+
+        int sizeX = Math.abs(maxX - minX) + 1;
+        int sizeY = Math.abs(maxY - minY) + 1;
+        int offsetX = -minX;
+        int offsetY = -minY;
+
+        Position[] shifted = shiftPositions(offsetX, offsetY);
+        boolean[][] matrix = new boolean[sizeY][sizeX];
+        for(Position pos : shifted)
+            matrix[pos.y][pos.x] = true;
+
+        return matrix;
+    }
+
+    /**
+     * Helper method to shift Positions in an array by a specified offset.
+     * @param offsetX offset in x-direction
+     * @param offsetY offset in y-direction
+     * @return the shifted Position array
+     */
+    private Position[] shiftPositions(int offsetX, int offsetY) {
+        Position[] shifted = new Position[shape.size()];
+        for(int i=0; i < shifted.length; i++) {
+            int x = shape.get(i).x + offsetX;
+            int y = shape.get(i).y + offsetY;
+            shifted[i] = new Position(x,y);
+        }
+        return shifted;
     }
 
     /**

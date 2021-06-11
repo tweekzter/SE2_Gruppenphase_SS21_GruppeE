@@ -46,17 +46,17 @@ public class Dice extends Fragment implements PreRoundListener {
     private int animationTime = 5000;
 
 
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        client = GameClient.getActiveGameClient();
+        client.registerListener(this);
+    }
+
     public View onCreateView(LayoutInflater inflater, ViewGroup puzzleContainer,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_dice, puzzleContainer, false);
         return view;
-    }
-
-    public void onStart() {
-        super.onStart();
-        client = GameClient.getActiveGameClient();
-        client.registerListener(this);
     }
 
     private void animateDiceRoll(int diceResultPos) {
@@ -136,10 +136,13 @@ public class Dice extends Fragment implements PreRoundListener {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(() -> {
 
+            int mapID = new Random().nextInt(35) + 2;
             int[] tiles = StructureLoader.getTiles(getContext().getAssets(),
-                    getResultName(), new Random().nextInt(35) + 2);
+                    getResultName(), mapID);
+
             Bundle bundle = new Bundle();
             bundle.putIntArray("tiles", tiles);
+            bundle.putInt("mapID", mapID);
             PlayField pf = new PlayField();
             pf.setArguments(bundle);
 

@@ -220,6 +220,26 @@ public class Map {
     }
 
     /**
+     * Returns the size of the x-dimension.
+     * @return the size of the x-dimension.
+     */
+    public int getSizeX() {
+        if(boxMap == null)
+            return 0;
+        return boxMap[0].length;
+    }
+
+    /**
+     * Returns the size of the y-dimension.
+     * @return the size of the y-dimension.
+     */
+    public int getSizeY() {
+        if(boxMap == null)
+            return 0;
+        return boxMap.length;
+    }
+
+    /**
      * Sets up the this MAP with a map from the pool.
      * The pool is represented by a JSON file (structures.json in assets).
      * It contains all maps of the game.
