@@ -193,7 +193,7 @@ public class GameRoom {
     }
 
     private void handleDiceRoll() {
-        broadcastMessage(ServerMessage.PLAY_DICE_ANIMATION, (new Random().nextInt(6 - 1) + 1));
+        broadcastMessage(ServerMessage.PLAY_DICE_ANIMATION, (new Random().nextInt(7 - 1) + 1));
 
         Util.sleep(8, 0);
 
