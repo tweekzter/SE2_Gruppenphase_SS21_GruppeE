@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
+import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreRoundListener;
 
 import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlPullParser;
@@ -23,12 +25,20 @@ import java.io.InputStream;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-public class Dice extends AppCompatActivity {
+public class Dice extends AppCompatActivity implements PreRoundListener {
+
+    int[] pictures;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dice);
+        GameClient client = GameClient.getActiveGameClient();
+        client.registerListener(this);
+        Log.d("dice", "registered");
+    }
+
+    private void startAnimation(int result) {
         ImageView bildergebnis = findViewById(R.id.diceresult);
         ImageView tile1 = (ImageView)findViewById(R.id.tile1);
         ImageView tile2 = (ImageView)findViewById(R.id.tile2);
@@ -59,7 +69,7 @@ public class Dice extends AppCompatActivity {
                 imagesAnimationtiles2.stop();
                 imagesAnimationtiles3.stop();
                 try {
-                    test();
+                    test(result);
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (SAXException e) {
@@ -69,17 +79,15 @@ public class Dice extends AppCompatActivity {
                 }
             }
         }, 3000);
-
     }
 
 
 
-    private void test() throws IOException, SAXException, ParserConfigurationException {
+    private void test(int result) throws IOException, SAXException, ParserConfigurationException {
         TextView ergebnis = findViewById(R.id.Ergebnis);
         ImageView bildergebnis = findViewById(R.id.diceresult);
 
-        int zahl = (int) (Math.random() * 6 + 1);
-        switch (zahl) {
+        switch (result) {
             case 1:
                 ergebnis.setText("Löwe");
                 Toast.makeText(this, "Lion", Toast.LENGTH_SHORT).show();
@@ -140,14 +148,13 @@ public class Dice extends AppCompatActivity {
             tileone.setBackgroundResource(test1);
             tiletwo.setBackgroundResource(test2);
             tilethree.setBackgroundResource(test3);
-            int[] pictures = new int[6];
+            pictures = new int[6];
             pictures[0]= test1;
             pictures[1]=test2;
             pictures[2]=test3;
             pictures[3] = Integer.parseInt(result[0]);
             pictures[4] = Integer.parseInt(result[1]);
             pictures[5] = Integer.parseInt(result[2]);
-            opentiles(pictures);
         } catch (XmlPullParserException e) {
 
 
@@ -239,7 +246,7 @@ public class Dice extends AppCompatActivity {
         }
         return null;
     }
-    public void opentiles(int[] pictures) {
+    public void opentiles() {
         Intent intent = new Intent(this,Tiles.class);
         Bundle a = new Bundle();
         a.putIntArray("key" , pictures);
@@ -247,4 +254,27 @@ public class Dice extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void playDiceAnimation(int result) {
+        runOnUiThread(() -> startAnimation(result));
+    }
+
+    @Override
+    public void transitionToPuzzle() {
+        opentiles();
+    }
+
+    @Override
+    public void userDisconnect(String nickname) {
+        runOnUiThread(() ->
+                Toast.makeText(this, "Player "+nickname+" disconnected!", Toast.LENGTH_LONG).show()
+        );
+    }
+
+    @Override
+    public void unknownMessage(String message) {
+        runOnUiThread(() ->
+                Toast.makeText(this, "Network error: "+message, Toast.LENGTH_LONG).show()
+        );
+    }
 }

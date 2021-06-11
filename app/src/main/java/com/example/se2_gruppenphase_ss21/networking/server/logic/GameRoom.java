@@ -11,6 +11,7 @@ public class GameRoom {
     private static final int DEFAULT_MAX_USERS = 4;
     private static final int ROUND_COUNT = 5;
     private static final int PUZZLE_DURATION = 2 * 60 * 1000;
+    private static final int WAIT_FOR_ACTIVITY = 1;
 
     private ArrayList<GameClientHandler> handlers = new ArrayList<>();
 
@@ -147,8 +148,10 @@ public class GameRoom {
                 for(GameClientHandler handler : handlers)
                     handler.resetForNextRound();
 
+                Util.sleep(WAIT_FOR_ACTIVITY,0);
                 handleDiceRoll();
 
+                Util.sleep(WAIT_FOR_ACTIVITY, 0);
                 long puzzleUntil = startPuzzle();
                 Util.sleep(0, puzzleUntil - System.currentTimeMillis());
 
@@ -193,10 +196,8 @@ public class GameRoom {
     }
 
     private void handleDiceRoll() {
-        broadcastMessage(ServerMessage.PLAY_DICE_ANIMATION, (new Random().nextInt(6 - 1) + 1));
-
+        broadcastMessage(ServerMessage.PLAY_DICE_ANIMATION, (new Random().nextInt(7 - 1) + 1));
         Util.sleep(8, 0);
-
         broadcastMessage(ServerMessage.END_DICE_ANIMATION);
     }
 
