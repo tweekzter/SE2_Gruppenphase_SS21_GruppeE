@@ -26,4 +26,5 @@
     <string name="room_more_than_one_player">room should have at least two players!</string>
     <string name="room_successfully_created">room successfully created!</string>
     <string name="room_create_info">please enter max players and name!</string>
+    <string name="remove_tile">Entfernen</string>
 </resources>

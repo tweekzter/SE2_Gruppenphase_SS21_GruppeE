@@ -156,8 +156,6 @@ public class Tile {
         }
 
         this.map = map;
-        if(collidesWithMapBorder(posOnMap))
-            return false;
         if(isPlaced)
             removeTempFromMap();
         hook = posOnMap;
@@ -305,6 +303,54 @@ public class Tile {
             return;
 
         invertX();
+    }
+
+    /**
+     * Rotates and places the TILE clockwise.
+     * @param map
+     */
+    public void rotateRightAndPlace(Map map) {
+        if(shape.size() == 0 || isAttached)
+            return;
+        removeTempFromMap();
+        rotateRight();
+        placeTempOnMap(map, hook);
+    }
+
+    /**
+     * Rotates and places the TILE counter-clockwise.
+     * @param map
+     */
+    public void rotateLeftAndPlace(Map map) {
+        if(shape.size() == 0 || isAttached)
+            return;
+        removeTempFromMap();
+        rotateLeft();
+        placeTempOnMap(map, hook);
+    }
+
+    /**
+     * Mirrors and places the TILE horizontally.
+     * @param map
+     */
+    public void mirrorHorizontallyAndPlace(Map map) {
+        if(shape.size() == 0 || isAttached)
+            return;
+        removeTempFromMap();
+        mirrorHorizontally();
+        placeTempOnMap(map, hook);
+    }
+
+    /**
+     * Mirrors and places the TILE horizontally.
+     * @param map
+     */
+    public void mirrorVerticallyAndPlace(Map map) {
+        if(shape.size() == 0 || isAttached)
+            return;
+        removeTempFromMap();
+        mirrorVertically();
+        placeTempOnMap(map, hook);
     }
 
     /**

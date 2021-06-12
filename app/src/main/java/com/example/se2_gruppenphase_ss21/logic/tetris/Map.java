@@ -122,6 +122,9 @@ public class Map {
      * @param y y-coordinate of the box
      */
     void coverBoxTemp(Tile tile, int x, int y) {
+        // coordinate outside of map
+        if(y >= boxMap.length || x >= boxMap[0].length || y < 0 || x < 0)
+            return;
         boxMap[y][x].setTempTile(tile);
     }
 
@@ -131,6 +134,9 @@ public class Map {
      * @param y y-coordinate of the box
      */
     void clearBoxTemp(int x, int y, Tile tile) {
+        // coordinate outside of map
+        if(y >= boxMap.length || x >= boxMap[0].length || y < 0 || x < 0)
+            return;
         boxMap[y][x].removeTempTile(tile);
     }
 
