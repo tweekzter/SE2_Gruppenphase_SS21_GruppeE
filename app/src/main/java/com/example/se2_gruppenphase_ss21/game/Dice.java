@@ -132,7 +132,8 @@ public class Dice extends AppCompatActivity {
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(is, null);
 
-            String[] result = processParsing(parser, value);
+
+            String[] result = processParsing(parser, value, cardnumber);
 
             int test1 = getpicturetotilenumber(result[0],tileone);
             int test2 = getpicturetotilenumber(result[1],tiletwo);
@@ -193,7 +194,7 @@ public class Dice extends AppCompatActivity {
         return 0;
     }
 
-    private String[] processParsing(XmlPullParser parser, String dice) throws XmlPullParserException, IOException {
+    private String[] processParsing(XmlPullParser parser, String dice, String cardnumber) throws XmlPullParserException, IOException {
 
         int eventType = parser.getEventType();
         boolean card = false;
@@ -209,8 +210,7 @@ public class Dice extends AppCompatActivity {
                 case XmlPullParser.START_TAG:
                     eltName = parser.getName();
 
-                    if("two".equals(eltName)) {
-                        System.out.println(eltName);
+                    if(cardnumber.equals(eltName)) {
                         card = true;
                         eventType = parser.next();
                         eltName = parser.getName();
@@ -245,6 +245,46 @@ public class Dice extends AppCompatActivity {
         a.putIntArray("key" , pictures);
         intent.putExtras(a);
         startActivity(intent);
+    }
+
+    public void getcardnumber(int cardnumber){
+        String[] cardnumbers = new String[36];
+        cardnumbers[1] = "one";
+        cardnumbers[2] = "two";
+        cardnumbers[3] = "three";
+        cardnumbers[4] = "four";
+        cardnumbers[5] = "five";
+        cardnumbers[6] = "six";
+        cardnumbers[7] = "seven";
+        cardnumbers[8] = "eight";
+        cardnumbers[9] = "nine";
+        cardnumbers[10] = "ten";
+        cardnumbers[11] = "eleven";
+        cardnumbers[12] = "twelve";
+        cardnumbers[13] = "thirteen";
+        cardnumbers[14] = "fourteen";
+        cardnumbers[15] = "fifteen";
+        cardnumbers[16] = "sixteen";
+        cardnumbers[17] = "seventeen";
+        cardnumbers[18] = "eighteen";
+        cardnumbers[19] = "nineteen";
+        cardnumbers[20] = "twenty";
+        cardnumbers[21] = "twentyone";
+        cardnumbers[22] = "twentytwo";
+        cardnumbers[23] = "twentythree";
+        cardnumbers[24] = "twentyfour";
+        cardnumbers[25] = "tweentyfive";
+        cardnumbers[26] = "twentysix";
+        cardnumbers[27] = "twentyseven";
+        cardnumbers[28] = "twentyeight";
+        cardnumbers[29] = "twentynine";
+        cardnumbers[30] = "thirty";
+        cardnumbers[31] = "thirtyone";
+        cardnumbers[32] = "thirtytwo";
+        cardnumbers[33] = "thirtythree";
+        cardnumbers[34] = "thirtyfour";
+        cardnumbers[35] = "thirtyfive";
+        cardnumbers[36] = "thirtysix";
     }
 
 }
