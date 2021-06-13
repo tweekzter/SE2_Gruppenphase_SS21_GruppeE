@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -21,6 +23,7 @@ import com.example.se2_gruppenphase_ss21.game.Dice;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.GeneralGameListener;
+import com.example.se2_gruppenphase_ss21.networking.client.listeners.PostRoundListener;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreGameListener;
 import com.example.se2_gruppenphase_ss21.networking.server.logic.GameLogicException;
 
@@ -35,7 +38,7 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 
-public class LeaderboardFragment extends Fragment {
+public class LeaderboardFragment extends Fragment implements PostRoundListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String LEADERBOARD_ARG_PARAM1 = "param1";
@@ -50,7 +53,7 @@ public class LeaderboardFragment extends Fragment {
     private ListView listView;
     static AvailableRoom room;
     static Map<String, Integer> nicknamesMap;
-    static GameClient gameClient = null;
+    static GameClient gameClient = GameClient.getActiveGameClient();
     static boolean isReady = false;
     Handler handler = new Handler();
 
@@ -106,56 +109,11 @@ public class LeaderboardFragment extends Fragment {
             userName = getArguments().getString(LEADERBOARD_ARG_PARAM1);
         }
 
-        try {
-            gameClient.connect();
-            GeneralGameListener gameListener = new PreGameListener() {
-                @Override
-                public void readyCount(int current, int max) {
-                    if(isReady){
-                        updateReady(current, max, view);
-                    }
-                }
 
-                @Override
-                public void onGameStart() {
-                    Intent intent = new Intent(getActivity(), Dice.class);
-                    intent.putExtra("client", gameClient);
-                    startActivity(intent);
-                }
+        gameClient.registerListener(this);
 
-                @Override
-                public void userDisconnect(String nickname) {
 
-                }
 
-                @Override
-                public void receiveUserList(String[] nicknames) {
-
-                }
-
-                @Override
-                public void unknownMessage(String message) {
-
-                }
-            };
-            gameClient.registerListener(gameListener);
-            gameClient.startReceiveLoop();
-        }catch (IOException e){
-            e.printStackTrace();
-        }catch (GameLogicException e){
-            e.printStackTrace();
-        }
-
-        GameClient finalClient = gameClient;
-        Button nextGameButton = view.findViewById(R.id.buttonNextRound);
-        nextGameButton.setOnClickListener((View v) ->{
-            try {
-                finalClient.sendReady(true);
-                isReady = true;
-            }catch (IOException e){
-
-            }
-        });
 
         listView = (ListView) view.findViewById(R.id.listView);
         playerArrayAdapter = new PlayerArrayAdapter(view.getContext(), R.layout.listview_row_layout);
@@ -217,5 +175,44 @@ public class LeaderboardFragment extends Fragment {
         };
 
         handler.postDelayed(runUpdateReady, 1000);
+    }
+
+    @Override
+    public void transitionToDice() {
+
+        Intent intent = new Intent(getActivity(), Dice.class);
+        startActivity(intent);
+
+    }
+
+    @Override
+    public void endGame() {
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        startActivity(intent);
+
+    }
+
+    @Override
+    public void accusationResult(String accuser, String accused, boolean wasCheating, int pointLoss) {
+
+
+    }
+
+    @Override
+    public void userDisconnect(String nickname) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() ->
+                Toast.makeText(getActivity(), "Player "+nickname+" disconnected!", Toast.LENGTH_LONG).show()
+        );
+
+    }
+
+    @Override
+    public void unknownMessage(String message) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() ->
+                Toast.makeText(getActivity(), "Network error: "+message, Toast.LENGTH_LONG).show()
+        );
+
     }
 }

@@ -22,6 +22,7 @@ import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Map;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Position;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Tile;
+import com.example.se2_gruppenphase_ss21.menu.LeaderboardActivity;
 import com.example.se2_gruppenphase_ss21.menu.MainActivity;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 import com.example.se2_gruppenphase_ss21.networking.client.PlayerPlacement;
@@ -565,6 +566,12 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
      */
     @Override
     public void placementsReceived(ArrayList<PlayerPlacement> placements) {
+        Intent intent = new Intent(this, LeaderboardActivity.class);
+        Bundle a = new Bundle();
+        System.out.println("test placementsre");
+        a.putIntArray("key" , pictures);
+        intent.putExtras(a);
+        startActivity(intent);
 
     }
 
