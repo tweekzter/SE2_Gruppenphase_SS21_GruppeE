@@ -2,13 +2,14 @@ package com.example.se2_gruppenphase_ss21.networking.client.listeners;
 
 public interface PreRoundListener extends GeneralGameListener {
     /**
-     * Called to start playing a dice animation with a determined result
-     * @param result the result the animation should show
+     * Called when a round begins specified user is requested to roll the dice.
+     * @param nick
      */
-    void playDiceAnimation(int result);
+    public void rollRequest(String nick);
 
     /**
-     * Called when the transition to the puzzle Activity should be made
+     * Called when a dice roll result is received, approx. 5 seconds until beginPuzzle() is called.
+     * @param result
      */
-    void transitionToPuzzle();
+    public void rollResult(int result);
 }

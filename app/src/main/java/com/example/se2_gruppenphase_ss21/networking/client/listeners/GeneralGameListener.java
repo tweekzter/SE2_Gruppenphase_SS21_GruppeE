@@ -5,11 +5,17 @@ public interface GeneralGameListener {
      * Called when a user disconnects from the lobby.
      * @param nickname
      */
-    void userDisconnect(String nickname);
+    public void userDisconnect(String nickname);
+
+    /**
+     * Called when a list of the users currently in the room is transmitted.
+     * @param nicknames
+     */
+    public void receiveUserList(String[] nicknames);
 
     /**
      * Called when a message is received from the server that is not known.
      * @param message
      */
-    void unknownMessage(String message);
+    public void unknownMessage(String message);
 }

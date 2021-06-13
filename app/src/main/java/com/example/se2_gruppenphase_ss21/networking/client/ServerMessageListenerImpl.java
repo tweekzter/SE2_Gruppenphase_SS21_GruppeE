@@ -1,9 +1,7 @@
-package com.example.se2_gruppenphase_ss21;
+package com.example.se2_gruppenphase_ss21.networking.client;
 
-import com.example.se2_gruppenphase_ss21.networking.client.PlayerPlacement;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.*;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 public class ServerMessageListenerImpl implements GeneralGameListener, InRoundListener, PostRoundListener, PreGameListener, PreRoundListener {
@@ -31,12 +29,12 @@ public class ServerMessageListenerImpl implements GeneralGameListener, InRoundLi
     }
 
     @Override
-    public void playDiceAnimation(int result) {
+    public void rollRequest(String nick) {
 
     }
 
     @Override
-    public void transitionToPuzzle() {
+    public void rollResult(int result) {
 
     }
 
@@ -46,27 +44,12 @@ public class ServerMessageListenerImpl implements GeneralGameListener, InRoundLi
     }
 
     @Override
-    public void placementsReceived(ArrayList<PlayerPlacement> placements) {
+    public void placementsReceived(Map<String, Integer> placements) {
 
     }
 
     @Override
     public void unknownMessage(String message) {
         System.out.println("Received unknown message " + message);
-    }
-
-    @Override
-    public void transitionToDice() {
-
-    }
-
-    @Override
-    public void endGame() {
-
-    }
-
-    @Override
-    public void accusationResult(String accuser, String accused, boolean wasCheating, int pointLoss) {
-
     }
 }

@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.se2_gruppenphase_ss21.Global;
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.game.Dice;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
@@ -97,7 +98,7 @@ public class OnlineRoomFragment extends Fragment {
         try {
 
             client = new GameClient("swablu.cloud", port, roomName, userName);
-            GameClient.setActiveGameClient(client);
+            Global.client = client;
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -117,6 +118,7 @@ public class OnlineRoomFragment extends Fragment {
                 @Override
                 public void onGameStart() {
                     Intent intent = new Intent(getActivity(), Dice.class);
+                    intent.putExtra("client", client);
                     startActivity(intent);
                 }
 
