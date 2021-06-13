@@ -11,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.se2_gruppenphase_ss21.R;
+import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreGameListener;
+import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreRoundListener;
 
 import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlPullParser;
@@ -22,7 +24,7 @@ import java.io.InputStream;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-public class Dice extends AppCompatActivity {
+public class Dice extends AppCompatActivity implements PreRoundListener {
     int[] pictures = new int[7];
 
     @Override
@@ -243,7 +245,29 @@ public class Dice extends AppCompatActivity {
         intent.putExtras(a);
         startActivity(intent);
     }
-    
+    @Override
+    public void playDiceAnimation(int result) {
+        runOnUiThread(() -> startAnimation(result));
+    }
+
+    @Override
+    public void transitionToPuzzle() {
+        opentiles();
+    }
+
+    @Override
+    public void userDisconnect(String nickname) {
+        runOnUiThread(() ->
+                Toast.makeText(this, "Player "+nickname+" disconnected!", Toast.LENGTH_LONG).show()
+        );
+    }
+
+    @Override
+    public void unknownMessage(String message) {
+        runOnUiThread(() ->
+                Toast.makeText(this, "Network error: "+message, Toast.LENGTH_LONG).show()
+        );
+    }
     
 
 }
