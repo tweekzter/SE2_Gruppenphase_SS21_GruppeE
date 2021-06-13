@@ -17,9 +17,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.se2_gruppenphase_ss21.Global;
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.menu.MainActivity;
+import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 
 import java.io.IOException;
 
@@ -41,6 +41,9 @@ public class TimerView extends View {
     private final int ALERT_TIME = 15000;
     // refresh-rate in ms - default of 50ms resembles 20fps
     private int delta = 50;
+
+    private TimerListener listener;
+
 
     /**
      * Takes context and attributes. Sets the paint properties by reading the View attributes.
@@ -132,26 +135,10 @@ public class TimerView extends View {
                 }
             }
 
-            lockPuzzle(handler);
+            listener.timeIsUp();
         });
 
         timer.start();
-    }
-
-    private void lockPuzzle(Handler handler) {
-        handler.post(() -> {
-            Button button = ((Tiles)getContext()).findViewById(R.id.ubongo);
-            button.setClickable(false);
-
-            try {
-                Global.client.puzzleDone(false);
-            } catch(IOException ex) {
-                Log.e("tiles", ex.toString());
-                Toast.makeText(getContext(), "Connection to the server failed", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(getContext(), MainActivity.class);
-                getContext().startActivity(intent);
-            }
-        });
     }
 
     /**
@@ -162,7 +149,19 @@ public class TimerView extends View {
         delta = 1000 / fps;
     }
 
+    /**
+     * Sets the base color of the pie shape.
+     * @param color color to be set.
+     */
     public void setColor(int color) {
         paint.setColor(color);
+    }
+
+    /**
+     * Sets the listener to react on finished timer.
+     * @param listener the listener to set.
+     */
+    public void setListener(TimerListener listener) {
+        this.listener = listener;
     }
 }

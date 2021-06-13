@@ -6,10 +6,16 @@ public interface PreGameListener extends GeneralGameListener {
      * @param current
      * @param max
      */
-    public void readyCount(int current, int max);
+    void readyCount(int current, int max);
 
     /**
      * Called once when the server starts the game.
      */
-    public void onGameStart();
+    void onGameStart();
+
+    /**
+     * Called when a list of the users currently in the room is transmitted.
+     * @param nicknames
+     */
+    void receiveUserList(String[] nicknames);
 }

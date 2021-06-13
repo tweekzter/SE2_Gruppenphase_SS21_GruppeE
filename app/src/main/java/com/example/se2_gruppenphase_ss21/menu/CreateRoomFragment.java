@@ -23,12 +23,10 @@ import java.io.IOException;
  */
 public class CreateRoomFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -43,7 +41,6 @@ public class CreateRoomFragment extends Fragment {
      * @param param1 Parameter 1.
      * @return A new instance of fragment CreateRoomFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static CreateRoomFragment newInstance(String param1) {
         CreateRoomFragment fragment = new CreateRoomFragment();
         Bundle args = new Bundle();
@@ -85,16 +82,16 @@ public class CreateRoomFragment extends Fragment {
                 int maxUsers = Integer.parseInt(maxUsersEditText.getText().toString());
 
                 if (maxUsers <= 1) {
-                    Toast.makeText(getActivity(), "room should have at least two players!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.room_more_than_one_player, Toast.LENGTH_SHORT).show();
                 } else {
                     startServer(roomName, maxUsers);
-                    Toast.makeText(getActivity(), "room successfully created!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.room_successfully_created, Toast.LENGTH_SHORT).show();
                     getParentFragmentManager().beginTransaction().replace(R.id.container, LocalGameFragment.newInstance(userName)).addToBackStack("tag").commit();
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
-                Toast.makeText(getActivity(), "please enter max players and name!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.room_create_info, Toast.LENGTH_SHORT).show();
             }
 
         });
