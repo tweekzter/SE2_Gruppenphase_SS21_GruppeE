@@ -34,14 +34,13 @@ public class PlayField extends Fragment implements InRoundListener, View.OnTouch
     private Tile tile3;
     private Tile active;
     private Map map;
+    private int cursorOffsetX = 0;
+    private int cursorOffsetY = 0;
 
     private TableLayout mapTable;
     private TableLayout trayTile1;
     private TableLayout trayTile2;
     private TableLayout trayTile3;
-
-    private boolean tileSelected;
-    private boolean firstSelection = true;
 
 
 
@@ -185,12 +184,13 @@ public class PlayField extends Fragment implements InRoundListener, View.OnTouch
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
             if(box.isCoveredByTempTile()) {
                 active = onLocation;
-                tileSelected = true;
+                cursorOffsetX = active.getHook().getX() - x;
+                cursorOffsetY = active.getHook().getY() - y;
             }
         }
         else {
             if(active.getHook().getX() != x || active.getHook().getY() != y) {
-                active.placeTempOnMap(map, new Position(x,y));
+                active.placeTempOnMap(map, new Position(x + cursorOffsetX,y + cursorOffsetY));
                 drawMap();
             }
         }

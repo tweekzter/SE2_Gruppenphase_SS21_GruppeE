@@ -12,6 +12,23 @@
         ]
       },
       {
+        "id": 1,
+        "name": null,
+        "lion": [ 3, 4, 2 ],
+        "hand": [ 5, 2, 3 ],
+        "antilope": [ 9, 12, 3 ],
+        "snake": [ 11, 4, 9 ],
+        "elephant": [ 5, 3, 4 ],
+        "bug": [ 12, 5, 4 ],
+        "shape": [
+          [ true,  true,  true,  false, false ],
+          [ true,  true,  true,  true,  false ],
+          [ true,  true,  true,  true,  true ],
+          [ true,  false, false, false, false ],
+          [ false, false, false, false, false ]
+        ]
+      },
+      {
         "id": 2,
         "name": null,
         "lion": [ 3, 4, 2 ],
@@ -39,7 +56,7 @@
         "bug": [ 1, 5, 11 ],
         "shape": [
           [ false, true,  true,  false, false ],
-          [ false, true,  true,  false, false ],
+          [ false, true,  true,  true,  false ],
           [ false, true,  true,  true,  false ],
           [ false, true,  true,  true,  false ],
           [ false, false, false, false, false ]
@@ -124,7 +141,7 @@
         "bug": [ 2, 9, 3 ],
         "shape": [
           [ false, true, true, true, false ],
-          [ false, false, true, true, false ],
+          [ false, true, true, false, false ],
           [ true, true, true, true, false ],
           [ true, true, true, true, false ],
           [ false, false, false, false, false ]
@@ -177,8 +194,8 @@
           [ true,  true,  true,  false, false ],
           [ false, true,  true,  true,  true  ],
           [ false, true,  true,  true,  true  ],
-          [ false, true,  true,  true,  true  ],
-          [ false, true,  true,  false, false ]
+          [ false, true,  true,  false, false ],
+          [ false, false, false, false, false ]
         ]
       },
       {
@@ -365,7 +382,7 @@
           [ false, true, true, true, false ],
           [ true, true, true, true, false ],
           [ false, false, true, true, false ],
-          [ false, false, true, true, false ]
+          [ false, false, false, false, false ]
         ]
       },
       {
@@ -416,7 +433,7 @@
           [ false, true, true, true, true ],
           [ false, true, true, true, true ],
           [ false, true, false, false, false ],
-          [ false, true, false, false, false ]
+          [ false, false, false, false, false ]
         ]
       },
       {
@@ -463,11 +480,11 @@
         "elephant": [ 11, 4, 5 ],
         "bug": [ 9, 5, 7 ],
         "shape": [
-          [ false, true, false, false, false ],
+          [ true, true, true, true, false ],
           [ true, true, true, true, false ],
           [ false, true, true, true, false ],
-          [ false, true, true, true, false ],
-          [ false, false, true, false, false ]
+          [ false, true, true, false, false ],
+          [ false, false, false, false, false ]
         ]
       },
       {
@@ -499,7 +516,7 @@
         "shape": [
           [ false, true, true, false, false ],
           [ false, true, true, true, true ],
-          [ false, false, true, true, true ],
+          [ false, true, true, true, false ],
           [ false, true, true, true, true ],
           [ false, false, false, false, false ]
         ]
