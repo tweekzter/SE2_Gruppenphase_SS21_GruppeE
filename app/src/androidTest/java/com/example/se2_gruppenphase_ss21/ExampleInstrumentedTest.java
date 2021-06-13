@@ -22,4 +22,10 @@ import static org.junit.Assert.*;
  */
 @RunWith(AndroidJUnit4.class)
 public class ExampleInstrumentedTest {
+    private Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+
+    @Test
+    public void dummyTest() {
+        assertTrue(true);
+    }
 }
