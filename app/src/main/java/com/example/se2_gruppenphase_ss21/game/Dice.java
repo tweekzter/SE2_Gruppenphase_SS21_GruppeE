@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.se2_gruppenphase_ss21.R;
-import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreGameListener;
+import com.example.se2_gruppenphase_ss21.logic.tetris.Map;
+import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreRoundListener;
 
 import org.xml.sax.SAXException;
@@ -25,13 +27,19 @@ import java.io.InputStream;
 import javax.xml.parsers.ParserConfigurationException;
 
 public class Dice extends AppCompatActivity implements PreRoundListener {
-    int[] pictures = new int[7];
+
+    int[] pictures;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Maps.setcardnumbers();
         setContentView(R.layout.activity_dice);
+        GameClient client = GameClient.getActiveGameClient();
+        client.registerListener(this);
+        Log.d("dice", "registered");
+    }
+
+    private void startAnimation(int result) {
         ImageView bildergebnis = findViewById(R.id.diceresult);
         ImageView tile1 = (ImageView)findViewById(R.id.tile1);
         ImageView tile2 = (ImageView)findViewById(R.id.tile2);
@@ -54,29 +62,33 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
         imagesAnimationtiles2.start();
         imagesAnimationtiles3.start();
         Handler handler = new Handler();
-        handler.postDelayed(() -> {
-            imagesAnimation.stop();
-            imagesAnimationtiles.stop();
-            imagesAnimationtiles2.stop();
-            imagesAnimationtiles3.stop();
-            try {
-                stoprolling();
-            } catch (IOException | ParserConfigurationException | SAXException e) {
-                e.printStackTrace();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                imagesAnimation.stop();
+                imagesAnimationtiles.stop();
+                imagesAnimationtiles2.stop();
+                imagesAnimationtiles3.stop();
+                try {
+                    test(result);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (SAXException e) {
+                    e.printStackTrace();
+                } catch (ParserConfigurationException e) {
+                    e.printStackTrace();
+                }
             }
         }, 3000);
-
     }
 
 
 
-    private void stoprolling() throws IOException, SAXException, ParserConfigurationException {
+    private void test(int result) throws IOException, SAXException, ParserConfigurationException {
         TextView ergebnis = findViewById(R.id.Ergebnis);
         ImageView bildergebnis = findViewById(R.id.diceresult);
-        int cardnumber = (int)(Math.random() * 36 + 1);
-
-        int zahl = (int) (Math.random() * 6 + 1);
-        switch (zahl) {
+        int cardnumber = (int)(Math.random() * 36) + 1;
+        switch (result) {
             case 1:
                 ergebnis.setText("Löwe");
                 Toast.makeText(this, "Lion", Toast.LENGTH_SHORT).show();
@@ -128,10 +140,8 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
             is = getAssets().open("solutions.xml");
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(is, null);
-            String cardnumberinwords = Maps.cardnumbers[cardnumber];
-            System.out.println(cardnumberinwords);
 
-            String[] result = processParsing(parser, value, cardnumberinwords);
+            String[] result = processParsing(parser, value, cardnumber);
 
             int test1 = getpicturetotilenumber(result[0],tileone);
             int test2 = getpicturetotilenumber(result[1],tiletwo);
@@ -139,7 +149,7 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
             tileone.setBackgroundResource(test1);
             tiletwo.setBackgroundResource(test2);
             tilethree.setBackgroundResource(test3);
-
+            pictures = new int[7];
             pictures[0]= test1;
             pictures[1]=test2;
             pictures[2]=test3;
@@ -147,7 +157,6 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
             pictures[4] = Integer.parseInt(result[1]);
             pictures[5] = Integer.parseInt(result[2]);
             pictures[6] = cardnumber;
-            opentiles();
         } catch (XmlPullParserException e) {
 
 
@@ -193,13 +202,13 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
         return 0;
     }
 
-    private String[] processParsing(XmlPullParser parser, String dice, String cardnumber) throws XmlPullParserException, IOException {
+    private String[] processParsing(XmlPullParser parser, String dice, int cardnumber) throws XmlPullParserException, IOException {
 
         int eventType = parser.getEventType();
         boolean card = false;
         boolean dicetype = false;
         String[] tiles = new String[3];
-
+        String cardnumberinwords = Maps.cardnumbers[cardnumber];
 
         while(eventType != XmlPullParser.END_DOCUMENT){
 
@@ -209,7 +218,8 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
                 case XmlPullParser.START_TAG:
                     eltName = parser.getName();
 
-                    if(cardnumber.equals(eltName)) {
+                    if("two".equals(eltName)) {
+                        System.out.println(eltName);
                         card = true;
                         eventType = parser.next();
                         eltName = parser.getName();
@@ -245,6 +255,7 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
         intent.putExtras(a);
         startActivity(intent);
     }
+
     @Override
     public void playDiceAnimation(int result) {
         runOnUiThread(() -> startAnimation(result));
@@ -268,6 +279,5 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
                 Toast.makeText(this, "Network error: "+message, Toast.LENGTH_LONG).show()
         );
     }
-    
-
 }
+
