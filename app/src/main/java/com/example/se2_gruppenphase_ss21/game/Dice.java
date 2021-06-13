@@ -40,6 +40,7 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
     }
 
     private void startAnimation(int result) {
+        Maps.setcardnumbers();
         ImageView bildergebnis = findViewById(R.id.diceresult);
         ImageView tile1 = (ImageView)findViewById(R.id.tile1);
         ImageView tile2 = (ImageView)findViewById(R.id.tile2);
@@ -140,8 +141,9 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
             is = getAssets().open("solutions.xml");
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(is, null);
-
-            String[] result = processParsing(parser, value, cardnumber);
+            System.out.println("This is the cardnumber" + cardnumber);
+            String cardnumberinwords = Maps.cardnumbers[cardnumber];
+            String[] result = processParsing(parser, value, cardnumberinwords);
 
             int test1 = getpicturetotilenumber(result[0],tileone);
             int test2 = getpicturetotilenumber(result[1],tiletwo);
@@ -149,6 +151,7 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
             tileone.setBackgroundResource(test1);
             tiletwo.setBackgroundResource(test2);
             tilethree.setBackgroundResource(test3);
+            System.out.println("This is the cardnumber" + cardnumber);
             pictures = new int[7];
             pictures[0]= test1;
             pictures[1]=test2;
@@ -202,13 +205,13 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
         return 0;
     }
 
-    private String[] processParsing(XmlPullParser parser, String dice, int cardnumber) throws XmlPullParserException, IOException {
+    private String[] processParsing(XmlPullParser parser, String dice, String cardnumber) throws XmlPullParserException, IOException {
 
         int eventType = parser.getEventType();
         boolean card = false;
         boolean dicetype = false;
         String[] tiles = new String[3];
-        String cardnumberinwords = Maps.cardnumbers[cardnumber];
+
 
         while(eventType != XmlPullParser.END_DOCUMENT){
 
@@ -218,8 +221,7 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
                 case XmlPullParser.START_TAG:
                     eltName = parser.getName();
 
-                    if("two".equals(eltName)) {
-                        System.out.println(eltName);
+                    if(cardnumber.equals(eltName)) {
                         card = true;
                         eventType = parser.next();
                         eltName = parser.getName();

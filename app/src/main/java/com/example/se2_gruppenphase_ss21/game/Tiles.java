@@ -97,6 +97,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
         try {
             is = getAssets().open("maps.xml");
             //holt sich daten aus xml für das aussehen der map
+            System.out.println("This is the cardnumber");
             map= XMLParser.parsexml(Maps.cardnumbers[pictures[6]], "cardnumber", is);
             System.out.println("map");
             for(boolean[] a:map){
