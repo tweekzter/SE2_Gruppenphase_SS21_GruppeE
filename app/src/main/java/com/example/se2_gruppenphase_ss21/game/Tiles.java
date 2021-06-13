@@ -563,7 +563,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
 
         Intent intent = new Intent(this, LeaderboardActivity.class);
         System.out.println(placements);
-        
+
         Bundle a = new Bundle();
         a.putIntArray("key" , pictures);
         intent.putExtras(a);
