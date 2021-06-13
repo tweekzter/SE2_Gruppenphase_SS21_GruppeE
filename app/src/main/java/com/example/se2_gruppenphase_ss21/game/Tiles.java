@@ -5,11 +5,13 @@ import androidx.fragment.app.DialogFragment;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
 
+import android.os.Vibrator;
 import android.view.PointerIcon;
 
 import android.os.Handler;
@@ -64,8 +66,8 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // get client instance + register in-round listener
-        //client = Global.client;
-        //client.registerListener(this);
+        client = Global.client;
+        client.registerListener(this);
         Bundle b = getIntent().getExtras();
         pictures = b.getIntArray("key");
         setContentView(R.layout.activity_tiles);
@@ -209,8 +211,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
     //false=0=belegt
 
     private void movetiles(Tile tile, ImageView tileimage, int color){
-        setvisibilityofbuttonstrue();
-        addonclicklistener();
 
 
 
@@ -232,10 +232,20 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
                     tileimage.setBackgroundResource(0);
                     tileimage.setOnClickListener(null);
                     colorbuttons(i,j, tilepositions);
+                    setvisibilityofbuttonstrue();
+                    addonclicklistener();
                     currentpositionx=i;
                     currentpositiony = j;
                     break outerloop;
                 }
+            }
+            if(i == 4){
+                currenttile = null;
+                tilepositions=null;
+                System.out.println("Placing from tile not possible");
+                Toast.makeText(this, "No space for placing tile", Toast.LENGTH_SHORT).show();
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                v.vibrate(100);
             }
         }
 
@@ -255,7 +265,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
         for(int i = 0; i<buttonarray.length; i++){
             for(int j = 0; j<buttonarray[i].length; j++){
                 if(buttonarray[i][j].getId()==id){
-                    System.out.println("Id found");
                     checkifthereisatile( i,  j);
                 }
             }
@@ -306,7 +315,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
             if (x + tileposition.getX() < 0 || y + tileposition.getY() < 0 || x + tileposition.getX() >= 5 || y + tileposition.getY() >= 5) {
                 return false;
             } else if (tilearray[y + tileposition.getY()][x + tileposition.getX()].getShape().length > 0) {
-                System.out.println("condition 246 went wrong");
                 return false;
             }
         }
@@ -524,6 +532,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
      * @param finishUntil the time until the puzzle should be finished
      * @author Manuel Simon #00326348
      */
+
     public void beginPuzzle(long finishUntil) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(() -> {
