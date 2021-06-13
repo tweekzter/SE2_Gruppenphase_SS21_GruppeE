@@ -29,6 +29,7 @@ import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Map;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Position;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Tile;
+import com.example.se2_gruppenphase_ss21.menu.LeaderboardActivity;
 import com.example.se2_gruppenphase_ss21.menu.MainActivity;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.InRoundListener;
@@ -37,6 +38,8 @@ import com.example.se2_gruppenphase_ss21.networking.client.listeners.InRoundList
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class Tiles extends AppCompatActivity implements InRoundListener, CheatingDialogFragment.CheatingDialogListener {
     GameClient client;
@@ -512,6 +515,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
             } else {
                 showCheatingDialog();
             }
+
         } catch(IOException ex) {
             Log.e("tiles", ex.toString());
             Toast.makeText(this, "Connection to the server failed", Toast.LENGTH_LONG).show();
@@ -556,6 +560,14 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
      * @param placements
      */
     public void placementsReceived(java.util.Map<String, Integer> placements) {
+
+        Intent intent = new Intent(this, LeaderboardActivity.class);
+        System.out.println(placements);
+        
+        Bundle a = new Bundle();
+        a.putIntArray("key" , pictures);
+        intent.putExtras(a);
+        startActivity(intent);
         // TODO: implement in accordance with Sabrina!!
     }
 
