@@ -23,7 +23,7 @@ import java.io.InputStream;
 import javax.xml.parsers.ParserConfigurationException;
 
 public class Dice extends AppCompatActivity {
-
+    int[] pictures = new int[7];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,7 +137,7 @@ public class Dice extends AppCompatActivity {
             tileone.setBackgroundResource(test1);
             tiletwo.setBackgroundResource(test2);
             tilethree.setBackgroundResource(test3);
-            int[] pictures = new int[7];
+
             pictures[0]= test1;
             pictures[1]=test2;
             pictures[2]=test3;
@@ -145,7 +145,7 @@ public class Dice extends AppCompatActivity {
             pictures[4] = Integer.parseInt(result[1]);
             pictures[5] = Integer.parseInt(result[2]);
             pictures[6] = cardnumber;
-            opentiles(pictures);
+            opentiles();
         } catch (XmlPullParserException e) {
 
 
@@ -236,13 +236,14 @@ public class Dice extends AppCompatActivity {
         }
         return null;
     }
-    public void opentiles(int[] pictures) {
+    public void opentiles() {
         Intent intent = new Intent(this,Tiles.class);
         Bundle a = new Bundle();
         a.putIntArray("key" , pictures);
         intent.putExtras(a);
         startActivity(intent);
     }
+    
     
 
 }
