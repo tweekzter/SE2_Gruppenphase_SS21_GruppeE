@@ -243,5 +243,6 @@ public class Dice extends AppCompatActivity {
         intent.putExtras(a);
         startActivity(intent);
     }
+    
 
 }
