@@ -66,13 +66,21 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
         // get client instance + register in-round listener
         //client = Global.client;
         //client.registerListener(this);
-
+        Bundle b = getIntent().getExtras();
+        pictures = b.getIntArray("key");
         setContentView(R.layout.activity_tiles);
         InputStream is = null;
         try {
             is = getAssets().open("maps.xml");
             //holt sich daten aus xml für das aussehen der map
-            map= XMLParser.parsexml("two","cardnumber", is);
+            map= XMLParser.parsexml(Maps.cardnumbers[pictures[6]], "cardnumber", is);
+            System.out.println("map");
+            for(boolean[] a:map){
+                for(boolean c:a){
+                    System.out.print(c);
+                }
+                System.out.println();
+            }
             currentmap=new Map(map);
 
             fillbuttonarray();
@@ -80,8 +88,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
             activateonclicklisteneronmapbuttons();
             //hole die bausteine und fuege die bilder zu den bausteinen ein
 
-            Bundle b = getIntent().getExtras();
-            pictures = b.getIntArray("key");
+
             ImageView firsttile = findViewById(R.id.firsttile);
             ImageView secondtile = findViewById(R.id.secondtile);
             ImageView thirdtile = findViewById(R.id.thirdtile);

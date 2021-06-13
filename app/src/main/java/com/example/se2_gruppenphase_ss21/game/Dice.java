@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.se2_gruppenphase_ss21.R;
-import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 
 import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlPullParser;
@@ -25,9 +24,11 @@ import javax.xml.parsers.ParserConfigurationException;
 
 public class Dice extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Maps.setcardnumbers();
         setContentView(R.layout.activity_dice);
         ImageView bildergebnis = findViewById(R.id.diceresult);
         ImageView tile1 = (ImageView)findViewById(R.id.tile1);
@@ -51,22 +52,15 @@ public class Dice extends AppCompatActivity {
         imagesAnimationtiles2.start();
         imagesAnimationtiles3.start();
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                imagesAnimation.stop();
-                imagesAnimationtiles.stop();
-                imagesAnimationtiles2.stop();
-                imagesAnimationtiles3.stop();
-                try {
-                    test();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (SAXException e) {
-                    e.printStackTrace();
-                } catch (ParserConfigurationException e) {
-                    e.printStackTrace();
-                }
+        handler.postDelayed(() -> {
+            imagesAnimation.stop();
+            imagesAnimationtiles.stop();
+            imagesAnimationtiles2.stop();
+            imagesAnimationtiles3.stop();
+            try {
+                stoprolling();
+            } catch (IOException | ParserConfigurationException | SAXException e) {
+                e.printStackTrace();
             }
         }, 3000);
 
@@ -74,9 +68,10 @@ public class Dice extends AppCompatActivity {
 
 
 
-    private void test() throws IOException, SAXException, ParserConfigurationException {
+    private void stoprolling() throws IOException, SAXException, ParserConfigurationException {
         TextView ergebnis = findViewById(R.id.Ergebnis);
         ImageView bildergebnis = findViewById(R.id.diceresult);
+        int cardnumber = (int)(Math.random() * 36 + 1);
 
         int zahl = (int) (Math.random() * 6 + 1);
         switch (zahl) {
@@ -84,37 +79,37 @@ public class Dice extends AppCompatActivity {
                 ergebnis.setText("Löwe");
                 Toast.makeText(this, "Lion", Toast.LENGTH_SHORT).show();
                 bildergebnis.setBackgroundResource(R.drawable.lion);
-                tiles("Lion",0);
+                tiles("Lion",cardnumber);
                 break;
             case 2:
                 ergebnis.setText("Hand");
                 Toast.makeText(this, "Hand", Toast.LENGTH_SHORT).show();
                 bildergebnis.setBackgroundResource(R.drawable.hand);
-                tiles("Hand",0);
+                tiles("Hand",cardnumber);
                 break;
             case 3:
                 ergebnis.setText("Antilope");
                 Toast.makeText(this, "Antilope", Toast.LENGTH_SHORT).show();
                 bildergebnis.setBackgroundResource(R.drawable.antilope);
-                tiles("Antilope",0);
+                tiles("Antilope",cardnumber);
                 break;
             case 4:
                 ergebnis.setText("Schlange");
                 Toast.makeText(this, "Schlange", Toast.LENGTH_SHORT).show();
                 bildergebnis.setBackgroundResource(R.drawable.snake);
-                tiles("Snake",0);
+                tiles("Snake",cardnumber);
                 break;
             case 5:
                 ergebnis.setText("Elefant");
                 Toast.makeText(this, "Elefant", Toast.LENGTH_SHORT).show();
                 bildergebnis.setBackgroundResource(R.drawable.elefant);
-                tiles("Elefant",0);
+                tiles("Elefant",cardnumber);
                 break;
             case 6:
                 ergebnis.setText("Käfer");
                 Toast.makeText(this, "Käfer", Toast.LENGTH_SHORT).show();
                 bildergebnis.setBackgroundResource(R.drawable.bug);
-                tiles("Bug",0);
+                tiles("Bug",cardnumber);
                 break;
 
         }
@@ -131,9 +126,10 @@ public class Dice extends AppCompatActivity {
             is = getAssets().open("solutions.xml");
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(is, null);
+            String cardnumberinwords = Maps.cardnumbers[cardnumber];
+            System.out.println(cardnumberinwords);
 
-
-            String[] result = processParsing(parser, value, cardnumber);
+            String[] result = processParsing(parser, value, cardnumberinwords);
 
             int test1 = getpicturetotilenumber(result[0],tileone);
             int test2 = getpicturetotilenumber(result[1],tiletwo);
@@ -141,13 +137,14 @@ public class Dice extends AppCompatActivity {
             tileone.setBackgroundResource(test1);
             tiletwo.setBackgroundResource(test2);
             tilethree.setBackgroundResource(test3);
-            int[] pictures = new int[6];
+            int[] pictures = new int[7];
             pictures[0]= test1;
             pictures[1]=test2;
             pictures[2]=test3;
             pictures[3] = Integer.parseInt(result[0]);
             pictures[4] = Integer.parseInt(result[1]);
             pictures[5] = Integer.parseInt(result[2]);
+            pictures[6] = cardnumber;
             opentiles(pictures);
         } catch (XmlPullParserException e) {
 
@@ -245,46 +242,6 @@ public class Dice extends AppCompatActivity {
         a.putIntArray("key" , pictures);
         intent.putExtras(a);
         startActivity(intent);
-    }
-
-    public void getcardnumber(int cardnumber){
-        String[] cardnumbers = new String[36];
-        cardnumbers[1] = "one";
-        cardnumbers[2] = "two";
-        cardnumbers[3] = "three";
-        cardnumbers[4] = "four";
-        cardnumbers[5] = "five";
-        cardnumbers[6] = "six";
-        cardnumbers[7] = "seven";
-        cardnumbers[8] = "eight";
-        cardnumbers[9] = "nine";
-        cardnumbers[10] = "ten";
-        cardnumbers[11] = "eleven";
-        cardnumbers[12] = "twelve";
-        cardnumbers[13] = "thirteen";
-        cardnumbers[14] = "fourteen";
-        cardnumbers[15] = "fifteen";
-        cardnumbers[16] = "sixteen";
-        cardnumbers[17] = "seventeen";
-        cardnumbers[18] = "eighteen";
-        cardnumbers[19] = "nineteen";
-        cardnumbers[20] = "twenty";
-        cardnumbers[21] = "twentyone";
-        cardnumbers[22] = "twentytwo";
-        cardnumbers[23] = "twentythree";
-        cardnumbers[24] = "twentyfour";
-        cardnumbers[25] = "tweentyfive";
-        cardnumbers[26] = "twentysix";
-        cardnumbers[27] = "twentyseven";
-        cardnumbers[28] = "twentyeight";
-        cardnumbers[29] = "twentynine";
-        cardnumbers[30] = "thirty";
-        cardnumbers[31] = "thirtyone";
-        cardnumbers[32] = "thirtytwo";
-        cardnumbers[33] = "thirtythree";
-        cardnumbers[34] = "thirtyfour";
-        cardnumbers[35] = "thirtyfive";
-        cardnumbers[36] = "thirtysix";
     }
 
 }
