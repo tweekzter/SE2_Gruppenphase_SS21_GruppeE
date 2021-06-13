@@ -24,7 +24,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
-import com.example.se2_gruppenphase_ss21.Global;
+
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Map;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Position;
@@ -32,16 +32,21 @@ import com.example.se2_gruppenphase_ss21.logic.tetris.Tile;
 import com.example.se2_gruppenphase_ss21.menu.LeaderboardActivity;
 import com.example.se2_gruppenphase_ss21.menu.MainActivity;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
+import com.example.se2_gruppenphase_ss21.networking.client.PlayerPlacement;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.InRoundListener;
 
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 
-public class Tiles extends AppCompatActivity implements InRoundListener, CheatingDialogFragment.CheatingDialogListener {
+/**
+ * Puzzle field. GUI representation of the Puzzle.
+ * @author Pia Lanker (main logic), Manuel Simon (client integration)
+ */
+public class Tiles extends AppCompatActivity implements InRoundListener,
+        TimerListener, CheatingDialogFragment.CheatingDialogListener {
     GameClient client;
     Tile currenttile;
     int currentpositionx=0;
@@ -54,6 +59,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
     int[] pictures;
 
     Tile[][] tilearray = new Tile[5][5];
+    Tile empty = new Tile();
 
     Button up;
     Button down;
@@ -68,8 +74,21 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setUpPuzzle();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        setUpPuzzle();
+    }
+
+    /**
+     * Sets up the Puzzle field.
+     */
+    private void setUpPuzzle() {
         // get client instance + register in-round listener
-        client = Global.client;
+        client = GameClient.getActiveGameClient();
         client.registerListener(this);
         Bundle b = getIntent().getExtras();
         pictures = b.getIntArray("key");
@@ -268,6 +287,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
         for(int i = 0; i<buttonarray.length; i++){
             for(int j = 0; j<buttonarray[i].length; j++){
                 if(buttonarray[i][j].getId()==id){
+                    System.out.println("Id found");
                     checkifthereisatile( i,  j);
                 }
             }
@@ -486,6 +506,8 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
         drawmap();
     }
 
+
+
     public void showCheatingDialog() {
         DialogFragment newFragment = new CheatingDialogFragment();
         newFragment.show(getSupportFragmentManager(), "CheatingDialogFragment");
@@ -507,15 +529,24 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
     public void onCheatingCancelClick(DialogFragment dialog) {
 
     }
+    private boolean checkSolved() {
+        for(int y=0; y < tilearray.length; y++) {
+            for(int x=0; x < tilearray[0].length; x++) {
+                if(map[y][x] && tilearray[y][x] == empty)
+                    return false;
+            }
+        }
+        return true;
+    }
 
     private void callUbongo() {
         try {
-            if (currentmap.checkSolved()) {
+            if(checkSolved()) {
+                Log.d("tiles", "you're done mate");
                 client.puzzleDone(false);
             } else {
                 showCheatingDialog();
             }
-
         } catch(IOException ex) {
             Log.e("tiles", ex.toString());
             Toast.makeText(this, "Connection to the server failed", Toast.LENGTH_LONG).show();
@@ -536,7 +567,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
      * @param finishUntil the time until the puzzle should be finished
      * @author Manuel Simon #00326348
      */
-
     public void beginPuzzle(long finishUntil) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(() -> {
@@ -550,6 +580,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
 
             // start timer
             TimerView timer = findViewById(R.id.timer);
+            timer.setListener(this);
             timer.start(finishUntil);
         });
     }
@@ -559,7 +590,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
      * Next roll request is received in approx. 10 seconds.
      * @param placements
      */
-    public void placementsReceived(java.util.Map<String, Integer> placements) {
+    public void placementsReceived(ArrayList<PlayerPlacement> placements) {
 
         Intent intent = new Intent(this, LeaderboardActivity.class);
         System.out.println(placements);
@@ -573,16 +604,54 @@ public class Tiles extends AppCompatActivity implements InRoundListener, Cheatin
 
     @Override
     public void userDisconnect(String nickname) {
-        Toast.makeText(this, "Player "+nickname+" disconnected!", Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void receiveUserList(String[] nicknames) {
-        // TODO: implement
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() ->
+            Toast.makeText(this, "Player "+nickname+" disconnected!", Toast.LENGTH_LONG).show()
+        );
     }
 
     @Override
     public void unknownMessage(String message) {
-        Toast.makeText(this, "Network error: "+message, Toast.LENGTH_LONG).show();
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() ->
+                Toast.makeText(this, "Network error: "+message, Toast.LENGTH_LONG).show()
+        );
+    }
+
+    /**
+     * Listener method called when timer runs out.
+     */
+    public void timeIsUp() {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() -> {
+            Button button = findViewById(R.id.ubongo);
+            button.setClickable(false);
+
+            findViewById(R.id.firsttile).setVisibility(View.INVISIBLE);
+            findViewById(R.id.secondtile).setVisibility(View.INVISIBLE);
+            findViewById(R.id.thirdtile).setVisibility(View.INVISIBLE);
+            findViewById(R.id.time_is_up).setVisibility(View.VISIBLE);
+
+            try {
+                GameClient client = GameClient.getActiveGameClient();
+                client.puzzleDone(false);
+            }
+            catch (IOException ex) {
+                Log.e("tiles", ex.toString());
+                Toast.makeText(this, "Connection to the server failed", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    /**
+     * Prepares views for usage in next round.
+     */
+    @Override
+    protected void onStop() {
+        super.onStop();
+        findViewById(R.id.waitForServer).setVisibility(View.VISIBLE);
+        findViewById(R.id.time_is_up).setVisibility(View.INVISIBLE);
     }
 }

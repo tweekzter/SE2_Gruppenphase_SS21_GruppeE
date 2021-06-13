@@ -1,23 +1,23 @@
 package com.example.se2_gruppenphase_ss21.networking.server.logic;
 
+import com.example.se2_gruppenphase_ss21.networking.ServerMessage;
 import com.example.se2_gruppenphase_ss21.networking.SocketWrapper;
 import com.example.se2_gruppenphase_ss21.networking.Util;
-import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class GameRoom {
     private static final int DEFAULT_MAX_USERS = 4;
-    private static final int ROUND_COUNT = 9;
+    private static final int ROUND_COUNT = 5;
+    private static final int PUZZLE_DURATION = 2 * 60 * 1000;
+    private static final int WAIT_FOR_ACTIVITY = 1;
 
     private ArrayList<GameClientHandler> handlers = new ArrayList<>();
 
     private int maxUsers;
 
-    private GameRoomState state;
+    public GameRoomState state;
 
     public GameRoom() {
         this(DEFAULT_MAX_USERS);
@@ -47,10 +47,21 @@ public class GameRoom {
         }
     }
 
-    public void broadcastMessage(String msg) {
+    public void broadcastMessage(ServerMessage type, Object... args) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(type.name());
+        sb.append(" ");
+        for(Object arg : args) {
+            sb.append(arg);
+            sb.append(",");
+        }
+
+        if(sb.charAt(sb.length() - 1) == ',')
+            sb.deleteCharAt(sb.length() - 1);
+
         for(GameClientHandler handler : handlers) {
             try {
-                handler.sendMessage(msg);
+                handler.sendMessage(sb.toString());
             } catch (IOException e) {
                 e.printStackTrace();
                 removeUser(handler);
@@ -60,26 +71,15 @@ public class GameRoom {
 
     public void removeUser(GameClientHandler handler) {
         handlers.remove(handler);
-        broadcastMessage("disconnect_user " + handler.getNickname());
+        broadcastMessage(ServerMessage.DISCONNECT, handler.getNickname());
     }
 
     public void broadcastUserList() {
-        String[] nicks = listNicknames();
-        StringBuilder sb = new StringBuilder("user_list ");
-        for(int i = 0; i < nicks.length; i++) {
-            sb.append(nicks[i]);
-            if (i != nicks.length - 1) {
-                sb.append(",");
-            }
-        }
-
-        broadcastMessage(sb.toString());
+        broadcastMessage(ServerMessage.USER_LIST, listNicknames());
     }
 
     public void broadcastReadyCount() {
-        if(state == GameRoomState.WAITING) {
-            broadcastMessage("users_ready " + usersReady() + "," + handlers.size());
-        }
+        broadcastMessage(ServerMessage.READY, usersReady(), handlers.size());
     }
 
     public int usersReady() {
@@ -93,7 +93,7 @@ public class GameRoom {
     public void broadcastIfGameStart() {
         if((handlers.size() == maxUsers || usersReady() == handlers.size()) && state == GameRoomState.WAITING) {
             state = GameRoomState.PLAYING;
-            broadcastMessage("game_start");
+            broadcastMessage(ServerMessage.GAME_START);
             startGameLoop();
         }
     }
@@ -141,125 +141,101 @@ public class GameRoom {
                 if(round >= ROUND_COUNT) {
                     break;
                 }else if(handlers.size() == 0) {
-                    System.err.println("Room was empty when trying to start round, closing room!");
+                    System.err.println("Room was empty when starting round, closing room!");
                     break;
                 }
 
                 for(GameClientHandler handler : handlers)
                     handler.resetForNextRound();
 
-                handleDiceRoll(round);
+                Util.sleep(WAIT_FOR_ACTIVITY,0);
+                handleDiceRoll();
 
-                handlePuzzle();
+                Util.sleep(WAIT_FOR_ACTIVITY, 0);
+                long puzzleUntil = startPuzzle();
+                Util.sleep(0, puzzleUntil - System.currentTimeMillis());
 
-                sendPlacements();
+                sendPlacements(puzzleUntil - PUZZLE_DURATION);
 
-                round++;
+                Util.sleep(10, 0);
+
+                if(++round == ROUND_COUNT) {
+                    broadcastMessage(ServerMessage.END_GAME);
+                }else {
+                    broadcastMessage(ServerMessage.END_SCOREBOARD);
+                }
+
             }
-
             resetRoom();
 
             //Round end
         }).start();
     }
 
-    private void sendPlacements() {
-        Map<String, Integer> placements = calculatePlacements();
-        StringBuilder sb = new StringBuilder("placements ");
-        for(String nick : placements.keySet()) {
-            sb.append(nick).append(":").append(placements.get(nick)).append(";");
+    private void sendPlacements(long puzzleStart) {
+        assignPoints();
+        Collections.sort(handlers);
+        String[] foo = new String[handlers.size()];
+
+        for(int i = 0; i < handlers.size(); i++) {
+            foo[i] = String.format("%s:%d:%d:%b:%d",
+                    handlers.get(i).getNickname(),
+                    (i + 1),
+                    handlers.get(i).getPoints(),
+                    handlers.get(i).didFinnishPuzzle(),
+                    handlers.get(i).getPuzzleFinishedAt() - puzzleStart);
         }
-        broadcastMessage(sb.substring(0, sb.length() - 1));
-        Util.sleep(10, 0);
+
+        broadcastMessage(ServerMessage.PLACEMENTS, foo);
     }
 
-    private void handlePuzzle() {
-        long finishUntil = System.currentTimeMillis() + (60 * 1000);
-        broadcastMessage("begin_puzzle " + finishUntil);
-        Util.sleep(0, finishUntil - System.currentTimeMillis());
+    private long startPuzzle() {
+        long finishUntil = System.currentTimeMillis() + PUZZLE_DURATION;
+        broadcastMessage(ServerMessage.BEGIN_PUZZLE, finishUntil);
+        return finishUntil;
     }
 
-    private void handleDiceRoll(int round) {
-        /*
-        ***** FOLLOWING FEATURE IS CURRENTLY NOT NEEDED !! *****
-
-
-        GameClientHandler diceRoller = handlers.get(round % handlers.size());
-        broadcastMessage("roll_request " + diceRoller.getNickname());
-        int rollResult;
-        //Wait for user to roll or disconnect
-        while (true) {
-            if(!handlers.contains(diceRoller)) {
-                rollResult = (int) (Math.random() * 6 + 1);
-                break;
-            }else if(diceRoller.hasRolled()) {
-                rollResult = diceRoller.getRollResult();
-                break;
-            }
-
-            Util.sleep(0, 200);
-        }
-        broadcastMessage("roll_result " + rollResult);
-         */
-        Util.sleep(7, 0);
+    private void handleDiceRoll() {
+        broadcastMessage(ServerMessage.PLAY_DICE_ANIMATION, (new Random().nextInt(7 - 1) + 1));
+        Util.sleep(8, 0);
+        broadcastMessage(ServerMessage.END_DICE_ANIMATION);
     }
 
     private void resetRoom() {
         state = GameRoomState.RESTARTING;
-        for(GameClientHandler handler : handlers) {
-            try {
-                handler.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        for(GameClientHandler handler : handlers)
+            handler.close();
         handlers.clear();
         System.out.println("Room reset done!");
         state = GameRoomState.WAITING;
     }
 
-    private Map<String, Integer> calculatePlacements() {
-        Map<String, Long> tempMap = new HashMap<>();
-        Map<String, Integer> placementMap = new HashMap<>();
+    private void assignPoints() {
+        ArrayList<GameClientHandler> toAssign = new ArrayList<>(handlers);
 
         for(GameClientHandler handler : handlers) {
-            if(handler.getPuzzleFinishedAt() != -1) {
-                tempMap.put(handler.getNickname(), handler.getPuzzleFinishedAt());
+            if(!handler.didFinnishPuzzle()) {
+                toAssign.remove(handler);
+                handler.addPoints(1);
             }
         }
 
-        for(GameClientHandler handler : handlers) {
-            if(handler.getPuzzleFinishedAt() == -1) {
-                placementMap.put(handler.getNickname(), tempMap.keySet().size() + 1);
-            }
-        }
-
-        int c = 1;
-        while (!tempMap.keySet().isEmpty()) {
-            String smallest = keyFromPairWithSmallestVal(tempMap);
-            tempMap.remove(smallest);
-            placementMap.put(smallest, c);
+        int c = 0;
+        while (!toAssign.isEmpty()) {
+            GameClientHandler handler = getHandlerFinishedFirst(toAssign);
+            toAssign.remove(handler);
+            handler.addPoints(handlers.size() - c);
             c++;
         }
-
-        return placementMap;
     }
 
-    private String keyFromPairWithSmallestVal(Map<String, Long> map) {
-        long smallest = Integer.MAX_VALUE;
-        String val = "";
+    private GameClientHandler getHandlerFinishedFirst(ArrayList<GameClientHandler> h) {
+        GameClientHandler res = null;
 
-        if(map.keySet().isEmpty()) {
-            throw new RuntimeException("map is empty");
-        }
+        for(GameClientHandler handler : h)
+            if(res == null || handler.getPuzzleFinishedAt() < res.getPuzzleFinishedAt())
+                res = handler;
 
-        for(String key : map.keySet()) {
-            if(map.get(key) < smallest) {
-                smallest = map.get(key);
-                val = key;
-            }
-        }
-
-        return val;
+        return res;
     }
 }
