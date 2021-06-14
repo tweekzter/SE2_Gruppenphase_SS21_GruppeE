@@ -34,7 +34,6 @@ import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link LeaderboardFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 
@@ -53,31 +52,11 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener {
     private ListView listView;
     static AvailableRoom room;
     static Map<String, Integer> nicknamesMap;
-    static GameClient gameClient = GameClient.getActiveGameClient();
     static boolean isReady = false;
     Handler handler = new Handler();
 
     public LeaderboardFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param username Parameter 1.
-     * @return A new instance of fragment Rules1Fragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static LeaderboardFragment newInstance(String username, AvailableRoom availableRoom, Map<String, Integer> nicknames, GameClient client) {
-        LeaderboardFragment fragment = new LeaderboardFragment();
-        Bundle args = new Bundle();
-        args.putString(LEADERBOARD_ARG_PARAM1, username);
-        room = availableRoom;
-        nicknamesMap = nicknames;
-        gameClient = client;
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -109,7 +88,7 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener {
             userName = getArguments().getString(LEADERBOARD_ARG_PARAM1);
         }
 
-
+        GameClient gameClient = GameClient.getActiveGameClient();
         gameClient.registerListener(this);
 
 
