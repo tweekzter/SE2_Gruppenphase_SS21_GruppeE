@@ -1,4 +1,4 @@
-package com.example.se2_gruppenphase_ss21;
+package com.example.se2_gruppenphase_ss21.menu;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
+
+import com.example.se2_gruppenphase_ss21.R;
 
 public class CheatingDialogFragment extends DialogFragment {
 
