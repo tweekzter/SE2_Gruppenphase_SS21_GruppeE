@@ -30,7 +30,7 @@ public class Maps {
         cardnumbers[25] = "tweentyfive";
         cardnumbers[26] = "twentysix";
         cardnumbers[27] = "twentyseven";
-        cardnumbers[28] = "twentyeigth";
+        cardnumbers[28] = "twentyeight";
         cardnumbers[29] = "twentynine";
         cardnumbers[30] = "thirty";
         cardnumbers[31] = "thirtyone";
