@@ -7,7 +7,6 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
-
 import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
