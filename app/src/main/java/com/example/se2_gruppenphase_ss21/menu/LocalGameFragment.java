@@ -18,14 +18,9 @@ import com.example.se2_gruppenphase_ss21.R;
  */
 public class LocalGameFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public LocalGameFragment() {
         // Required empty public constructor
@@ -38,7 +33,6 @@ public class LocalGameFragment extends Fragment {
      * @param param1 Parameter 1.
      * @return A new instance of fragment LocalGameFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static LocalGameFragment newInstance(String param1) {
         LocalGameFragment fragment = new LocalGameFragment();
         Bundle args = new Bundle();
@@ -50,10 +44,6 @@ public class LocalGameFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -63,19 +53,15 @@ public class LocalGameFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_local_game, container, false);
 
         // get userName from arguments
-        String userName =  getArguments().getString(ARG_PARAM1);
+        String userName = getArguments().getString(ARG_PARAM1);
 
         Button createRoomButton = view.findViewById(R.id.button_createRoom);
-        createRoomButton.setOnClickListener((View v) -> {
-            // open createRoomFragment and pass userName as argument
-            getParentFragmentManager().beginTransaction().replace(R.id.container, CreateRoomFragment.newInstance(userName)).addToBackStack("tag").commit();
-        });
+        // open createRoomFragment and pass userName as argument
+        createRoomButton.setOnClickListener((View v) -> getParentFragmentManager().beginTransaction().replace(R.id.container, CreateRoomFragment.newInstance(userName)).addToBackStack("tag").commit());
 
         Button joinRoomButton = view.findViewById(R.id.button_joinRoom);
-        joinRoomButton.setOnClickListener((View v) -> {
-            // open joinRoomFragment with userName as argument.
-            getParentFragmentManager().beginTransaction().replace(R.id.container, JoinRoomFragment.newInstance(userName)).addToBackStack("tag").commit();
-        });
+        // open joinRoomFragment with userName as argument.
+        joinRoomButton.setOnClickListener((View v) -> getParentFragmentManager().beginTransaction().replace(R.id.container, JoinRoomFragment.newInstance(userName)).addToBackStack("tag").commit());
 
         return view;
     }
