@@ -32,24 +32,17 @@ import java.io.IOException;
  */
 public class RoomFragment extends Fragment {
 
-
     static AvailableRoom room;
     static boolean isReady = false;
     GameClient client = null;
-    String[] nicknameslist;
+    String[] nicknamesList;
 
     // Handler for creating post delay threads for updating ui
     Handler handler = new Handler();
 
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public RoomFragment() {
         // Required empty public constructor
@@ -79,11 +72,6 @@ public class RoomFragment extends Fragment {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -124,7 +112,7 @@ public class RoomFragment extends Fragment {
 
                 @Override
                 public void userDisconnect(String nickname) {
-
+                    // react on disconnection of user
                 }
 
                 @Override
@@ -134,7 +122,7 @@ public class RoomFragment extends Fragment {
 
                 @Override
                 public void unknownMessage(String message) {
-
+                    // react on unknown message from server
                 }
             };
 
@@ -142,9 +130,7 @@ public class RoomFragment extends Fragment {
             client.startReceiveLoop();
 
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (GameLogicException e) {
+        } catch (IOException | GameLogicException e) {
             e.printStackTrace();
         }
 
@@ -189,7 +175,7 @@ public class RoomFragment extends Fragment {
 
                 LinearLayout layout = view.findViewById(R.id.layoutRoom);
                 layout.removeAllViews();
-                nicknameslist = nicknames;
+                nicknamesList = nicknames;
                 for (String n : nicknames) {
 
                     Button user;
@@ -225,7 +211,7 @@ public class RoomFragment extends Fragment {
 
                 Button readyData;
                 readyData = new Button(getContext());
-                readyData.setText(String.valueOf(current) + "/" + String.valueOf(max));
+                readyData.setText(current + "/" + max);
                 readyData.setClickable(false);
                 layout.addView(readyData);
 
