@@ -592,6 +592,8 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
      * @param placements
      */
     public void placementsReceived(ArrayList<PlayerPlacement> placements) {
+        TimerView timer = findViewById(R.id.timer);
+        timer.abort();
 
         Intent intent = new Intent(this, LeaderboardActivity.class);
         System.out.println(placements);
@@ -634,6 +636,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
             findViewById(R.id.time_is_up).setVisibility(View.VISIBLE);
 
             try {
+                System.out.println("TIMER IS UP");
                 GameClient client = GameClient.getActiveGameClient();
                 client.puzzleDone(false);
             }

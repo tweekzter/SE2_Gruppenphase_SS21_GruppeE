@@ -42,6 +42,8 @@ public class TimerView extends View {
     // refresh-rate in ms - default of 50ms resembles 20fps
     private int delta = 50;
 
+    private Thread timerThread;
+
     private TimerListener listener;
 
 
@@ -115,7 +117,7 @@ public class TimerView extends View {
 
         long totalTime = finishUntil - System.currentTimeMillis();
 
-        Thread timer = new Thread(() -> {
+        timerThread = new Thread(() -> {
             // Handler is not necessary in this case, but it's good practise
             Handler handler = new Handler(Looper.getMainLooper());
 
@@ -132,13 +134,15 @@ public class TimerView extends View {
                     Thread.sleep(delta);
                 } catch (InterruptedException ex) {
                     Log.e("timer", ex.toString());
+                    Log.e("timer", "Timer interrupted!");
+                    return;
                 }
             }
 
             listener.timeIsUp();
         });
 
-        timer.start();
+        timerThread.start();
     }
 
     /**
@@ -163,5 +167,10 @@ public class TimerView extends View {
      */
     public void setListener(TimerListener listener) {
         this.listener = listener;
+    }
+
+    public void abort() {
+        timerThread.interrupt();
+        System.out.println("Timer " + this + " aborted!");
     }
 }
