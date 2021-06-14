@@ -24,14 +24,8 @@ import java.util.List;
 public class JoinRoomFragment extends Fragment {
 
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public JoinRoomFragment() {
         // Required empty public constructor
@@ -44,7 +38,6 @@ public class JoinRoomFragment extends Fragment {
      * @param param1 Parameter 1.
      * @return A new instance of fragment JoinRoomFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static JoinRoomFragment newInstance(String param1) {
         JoinRoomFragment fragment = new JoinRoomFragment();
         Bundle args = new Bundle();
@@ -56,10 +49,6 @@ public class JoinRoomFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -89,13 +78,10 @@ public class JoinRoomFragment extends Fragment {
             Button availableRoomButton;
 
             availableRoomButton = new Button(getContext());
-            availableRoomButton.setText(r.getName()+"    ("+r.getCurrentPlayers()+"/"+r.getMaxPlayers()+")");
-            availableRoomButton.setOnClickListener((View v) -> {
+            availableRoomButton.setText(r.getName() + "    (" + r.getCurrentPlayers() + "/" + r.getMaxPlayers() + ")");
 
-                // open RoomFragment and pass the userName and the available room as an argument
-                getParentFragmentManager().beginTransaction().replace(R.id.container, RoomFragment.newInstance(userName, r)).addToBackStack("tag").commit();
-
-            });
+            // open RoomFragment and pass the userName and the available room as an argument
+            availableRoomButton.setOnClickListener((View v) -> getParentFragmentManager().beginTransaction().replace(R.id.container, RoomFragment.newInstance(userName, r)).addToBackStack("tag").commit());
 
             layout.addView(availableRoomButton);
         }
