@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.example.se2_gruppenphase_ss21.Player;
 import com.example.se2_gruppenphase_ss21.PlayerArrayAdapter;
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.game.Dice;
+import com.example.se2_gruppenphase_ss21.game.TimerView;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.GeneralGameListener;
@@ -157,7 +159,7 @@ public class LeaderboardFragment extends Fragment {
             }
         });
 
-        listView = (ListView) view.findViewById(R.id.listView);
+        listView = (ListView) view.findViewById(R.id.leaderboardList);
         playerArrayAdapter = new PlayerArrayAdapter(view.getContext(), R.layout.listview_row_layout);
         listView.setAdapter(playerArrayAdapter);
 
@@ -175,10 +177,25 @@ public class LeaderboardFragment extends Fragment {
             playerArrayAdapter.add(player);
         }
 
-
+        // start timer
+        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_leaderboard, null);
+        TimerView timer = (TimerView) root.findViewById(R.id.challengeTimer);
+        timer.setListener(this);
+        timer.start(5000);
 
         return view;
     }
+
+    /**
+     * Listener method called when timer runs out.
+     */
+    public void timeIsUp() {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() -> {
+            // recalculate points
+        });
+    }
+
 
     //List of players
     private List<String[]> readData(Map<String, Integer> map) {

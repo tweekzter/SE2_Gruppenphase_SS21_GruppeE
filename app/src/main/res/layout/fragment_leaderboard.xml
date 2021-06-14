@@ -7,11 +7,23 @@
     android:background="@drawable/menu_activity_background2"
     tools:context=".menu.LeaderboardFragment">
 
+    <com.example.se2_gruppenphase_ss21.game.TimerView
+        android:id="@+id/challengeTimer"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="90dp"
+        app:layout_constraintBottom_toTopOf="@+id/listView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/leaderboardList"
         android:layout_width="357dp"
-        android:layout_height="454dp"
-        android:layout_marginTop="90dp"
+        android:layout_height="364dp"
+        android:layout_marginTop="180dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
