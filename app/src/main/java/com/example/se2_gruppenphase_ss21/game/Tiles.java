@@ -3,10 +3,16 @@ package com.example.se2_gruppenphase_ss21.game;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
+
+import android.os.Vibrator;
+import android.view.PointerIcon;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -16,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
 
 
 import com.example.se2_gruppenphase_ss21.R;
@@ -64,7 +71,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     Button mirror;
     Button removetile;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,13 +90,22 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
         // get client instance + register in-round listener
         client = GameClient.getActiveGameClient();
         client.registerListener(this);
-
+        Bundle b = getIntent().getExtras();
+        pictures = b.getIntArray("key");
         setContentView(R.layout.activity_tiles);
         InputStream is = null;
         try {
             is = getAssets().open("maps.xml");
             //holt sich daten aus xml für das aussehen der map
-            map= XMLParser.parsexml("two","cardnumber", is);
+            System.out.println("This is the cardnumber");
+            map= XMLParser.parsexml(Maps.cardnumbers[pictures[6]], "cardnumber", is);
+            System.out.println("map");
+            for(boolean[] a:map){
+                for(boolean c:a){
+                    System.out.print(c);
+                }
+                System.out.println();
+            }
             currentmap=new Map(map);
 
             fillbuttonarray();
@@ -98,8 +113,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
             activateonclicklisteneronmapbuttons();
             //hole die bausteine und fuege die bilder zu den bausteinen ein
 
-            Bundle b = getIntent().getExtras();
-            pictures = b.getIntArray("key");
+
             ImageView firsttile = findViewById(R.id.firsttile);
             ImageView secondtile = findViewById(R.id.secondtile);
             ImageView thirdtile = findViewById(R.id.thirdtile);
@@ -131,6 +145,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
             removetile = findViewById(R.id.removetile);
 
             Button ubongo = findViewById(R.id.ubongo);
+            // testing: ubongo.setOnClickListener(v -> beginPuzzle(System.currentTimeMillis() + 60000));
             ubongo.setOnClickListener(v -> callUbongo());
 
 
@@ -140,10 +155,13 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
             e.printStackTrace();
 
         }
+
+
     }
 
     //befuellt das tile array. tylearray dient dazu zu überprüfen ob an stelle x,y ein baustein liegt und wenn ja welcher
     protected void filltylearray(){
+        Tile empty = new Tile();
         for (Tile[] tiles : tilearray) {
             Arrays.fill(tiles, empty);
         }
@@ -216,8 +234,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     //false=0=belegt
 
     private void movetiles(Tile tile, ImageView tileimage, int color){
-        setvisibilityofbuttonstrue();
-        addonclicklistener();
 
 
 
@@ -239,10 +255,20 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
                     tileimage.setBackgroundResource(0);
                     tileimage.setOnClickListener(null);
                     colorbuttons(i,j, tilepositions);
+                    setvisibilityofbuttonstrue();
+                    addonclicklistener();
                     currentpositionx=i;
                     currentpositiony = j;
                     break outerloop;
                 }
+            }
+            if(i == 4){
+                currenttile = null;
+                tilepositions=null;
+                System.out.println("Placing from tile not possible");
+                Toast.makeText(this, "No space for placing tile", Toast.LENGTH_SHORT).show();
+                Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                v.vibrate(100);
             }
         }
 
@@ -313,7 +339,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
             if (x + tileposition.getX() < 0 || y + tileposition.getY() < 0 || x + tileposition.getX() >= 5 || y + tileposition.getY() >= 5) {
                 return false;
             } else if (tilearray[y + tileposition.getY()][x + tileposition.getX()].getShape().length > 0) {
-                System.out.println("condition 246 went wrong");
                 return false;
             }
         }
@@ -482,15 +507,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
         drawmap();
     }
 
-    private boolean checkSolved() {
-        for(int y=0; y < tilearray.length; y++) {
-            for(int x=0; x < tilearray[0].length; x++) {
-                if(map[y][x] && tilearray[y][x] == empty)
-                    return false;
-            }
-        }
-        return true;
-    }
+
 
     public void showCheatingDialog() {
         DialogFragment newFragment = new CheatingDialogFragment();
@@ -513,6 +530,15 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     public void onCheatingCancelClick(DialogFragment dialog) {
 
     }
+    private boolean checkSolved() {
+        for(int y=0; y < tilearray.length; y++) {
+            for(int x=0; x < tilearray[0].length; x++) {
+                if(map[y][x] && tilearray[y][x] == empty)
+                    return false;
+            }
+        }
+        return true;
+    }
 
     private void callUbongo() {
         try {
@@ -531,6 +557,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     }
 
     private void detatchfromtilearray(){
+        Tile empty = new Tile();
         for(Position positions:currenttile.getShape()){
             tilearray[currentpositiony+positions.getY()][currentpositionx+positions.getX()] = empty;
         }
@@ -564,15 +591,16 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
      * Next roll request is received in approx. 10 seconds.
      * @param placements
      */
-    @Override
     public void placementsReceived(ArrayList<PlayerPlacement> placements) {
+
         Intent intent = new Intent(this, LeaderboardActivity.class);
+        System.out.println(placements);
+
         Bundle a = new Bundle();
-        System.out.println("test placementsre");
         a.putIntArray("key" , pictures);
         intent.putExtras(a);
         startActivity(intent);
-
+        // TODO: implement in accordance with Sabrina!!
     }
 
     @Override
