@@ -1,7 +1,5 @@
 package com.example.se2_gruppenphase_ss21.networking.client;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.Log;
 
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
