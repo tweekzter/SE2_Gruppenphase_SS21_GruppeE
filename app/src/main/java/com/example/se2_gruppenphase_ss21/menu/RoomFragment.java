@@ -55,7 +55,6 @@ public class RoomFragment extends Fragment {
      * @param param1 Parameter 1.
      * @return A new instance of fragment RoomFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static RoomFragment newInstance(String param1, AvailableRoom availableRoom) {
         RoomFragment fragment = new RoomFragment();
         Bundle args = new Bundle();
