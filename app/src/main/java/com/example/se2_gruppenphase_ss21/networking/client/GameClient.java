@@ -154,6 +154,8 @@ public class GameClient {
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
+                    socket.close();
+                    return;
                 }
             }
         }).start();
