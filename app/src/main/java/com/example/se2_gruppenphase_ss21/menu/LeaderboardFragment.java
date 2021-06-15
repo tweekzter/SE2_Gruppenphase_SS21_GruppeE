@@ -20,10 +20,9 @@ import com.example.se2_gruppenphase_ss21.Player;
 import com.example.se2_gruppenphase_ss21.PlayerArrayAdapter;
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.game.Dice;
-import com.example.se2_gruppenphase_ss21.game.TimerListener;
-import com.example.se2_gruppenphase_ss21.game.TimerView;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
+import com.example.se2_gruppenphase_ss21.networking.client.PlayerPlacement;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.GeneralGameListener;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.PostRoundListener;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreGameListener;
@@ -40,7 +39,7 @@ import java.util.Map;
  */
 
 public class LeaderboardFragment extends Fragment
-        implements PostRoundListener, TimerListener {
+        implements PostRoundListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String LEADERBOARD_ARG_PARAM1 = "param1";
@@ -67,6 +66,9 @@ public class LeaderboardFragment extends Fragment
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
+
+
+        ArrayList<PlayerPlacement> placements = getActivity().getIntent().getParcelableArrayListExtra("key");
 
         if (getArguments() != null) {
             leaderboardmParam1 = getArguments().getString(LEADERBOARD_ARG_PARAM1);
@@ -97,7 +99,7 @@ public class LeaderboardFragment extends Fragment
 
 
 
-        listView = (ListView) view.findViewById(R.id.leaderboardList);
+        listView = (ListView) view.findViewById(R.id.listView);
         playerArrayAdapter = new PlayerArrayAdapter(view.getContext(), R.layout.listview_row_layout);
         listView.setAdapter(playerArrayAdapter);
 
@@ -115,24 +117,9 @@ public class LeaderboardFragment extends Fragment
             playerArrayAdapter.add(player);
         }
 
-        // start timer
-        TimerView timer = (TimerView) view.findViewById(R.id.challengeTimer);
-        timer.setListener(this);
-        timer.start(5000);
 
         return view;
     }
-
-    /**
-     * Listener method called when timer runs out.
-     */
-    public void timeIsUp() {
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(() -> {
-            // recalculate points
-        });
-    }
-
 
     //List of players
     private List<String[]> readData(Map<String, Integer> map) {
