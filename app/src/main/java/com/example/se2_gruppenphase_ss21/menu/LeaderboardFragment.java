@@ -88,8 +88,7 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener {
         listView = (ListView) view.findViewById(R.id.listView);
         playerArrayAdapter = new PlayerArrayAdapter(view.getContext(), R.layout.listview_row_layout);
         listView.setAdapter(playerArrayAdapter);
-        //TODO: Implement
-        Map<String, Integer> usermap = null;
+
         List<String[]> playerList = readData(placements);
         for(String[] playerData:playerList){
             String position = playerData[0];
