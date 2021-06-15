@@ -621,9 +621,10 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     /**
      * Listener method called when timer runs out.
      */
-    public void timeIsUp() {
+    public void timeIsUp(TimerView timer) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(() -> {
+
             Button button = findViewById(R.id.ubongo);
             button.setClickable(false);
 
@@ -632,17 +633,8 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
             findViewById(R.id.thirdtile).setVisibility(View.INVISIBLE);
             findViewById(R.id.time_is_up).setVisibility(View.VISIBLE);
 
-            try {
-                System.out.println("TIMER IS UP");
-                GameClient client = GameClient.getActiveGameClient();
-                client.puzzleDone(false);
-            }
-            catch (IOException ex) {
-                Log.e("tiles", ex.toString());
-                Toast.makeText(this, "Connection to the server failed", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-            }
+            // reset normal state color
+            timer.setColor(Color.BLUE);
         });
     }
 
