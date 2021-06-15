@@ -20,6 +20,7 @@ import com.example.se2_gruppenphase_ss21.Player;
 import com.example.se2_gruppenphase_ss21.PlayerArrayAdapter;
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.game.Dice;
+import com.example.se2_gruppenphase_ss21.game.TimerListener;
 import com.example.se2_gruppenphase_ss21.game.TimerView;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
@@ -38,7 +39,8 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 
-public class LeaderboardFragment extends Fragment implements PostRoundListener {
+public class LeaderboardFragment extends Fragment
+        implements PostRoundListener, TimerListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String LEADERBOARD_ARG_PARAM1 = "param1";
@@ -114,8 +116,7 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener {
         }
 
         // start timer
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_leaderboard, null);
-        TimerView timer = (TimerView) root.findViewById(R.id.challengeTimer);
+        TimerView timer = (TimerView) view.findViewById(R.id.challengeTimer);
         timer.setListener(this);
         timer.start(5000);
 
