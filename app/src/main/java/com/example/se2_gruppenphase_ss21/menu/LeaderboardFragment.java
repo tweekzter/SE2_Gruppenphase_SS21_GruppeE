@@ -19,11 +19,9 @@ import com.example.se2_gruppenphase_ss21.game.Dice;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 import com.example.se2_gruppenphase_ss21.networking.client.PlayerPlacement;
-import com.example.se2_gruppenphase_ss21.networking.client.listeners.GeneralGameListener;
+
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.PostRoundListener;
-import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreGameListener;
-import com.example.se2_gruppenphase_ss21.networking.server.logic.GameLogicException;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
