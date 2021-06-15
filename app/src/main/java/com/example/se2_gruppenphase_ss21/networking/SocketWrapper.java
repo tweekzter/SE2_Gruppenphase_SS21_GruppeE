@@ -21,8 +21,12 @@ public class SocketWrapper {
         this.out = new DataOutputStream(new BufferedOutputStream(socket.getOutputStream()));
     }
 
-    public void close() throws IOException {
-        socket.close();
+    public void close() {
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

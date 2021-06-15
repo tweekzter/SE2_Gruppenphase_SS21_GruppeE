@@ -41,4 +41,5 @@
         android:text="4 Punkte"
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
+
 </RelativeLayout>

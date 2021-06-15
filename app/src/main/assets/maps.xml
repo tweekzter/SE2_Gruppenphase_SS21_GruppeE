@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <cards>
     <one>
-        <firstr firstc="0" secondc="1" thirdc="1" fourthc="0" fifth="0"></firstr>
-        <secondr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0" ></secondr>
-        <thirdr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
-        <fourthr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></fourthr>
-        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="1" fifth="0"></fifthr>
-        <sixtr firstc="0" secondc="0" thirdc="0" fourthc="1" fifth="0"></sixtr>
+        <firstr firstc="1" secondc="1" thirdc="1" fourthc="0" fifth="0"></firstr>
+        <secondr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></secondr>
+        <thirdr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="1"></thirdr>
+        <fourthr firstc="1" secondc="0" thirdc="0" fourthc="0" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
     </one>
     <two>
         <firstr firstc="1" secondc="1" thirdc="1" fourthc="0" fifth="0"></firstr>
@@ -17,7 +16,7 @@
     </two>
     <three>
         <firstr firstc="0" secondc="1" thirdc="1" fourthc="0" fifth="0"></firstr>
-        <secondr firstc="0" secondc="1" thirdc="1" fourthc="0" fifth="0"></secondr>
+        <secondr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></secondr>
         <thirdr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
         <fourthr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></fourthr>
         <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
@@ -52,7 +51,7 @@
     </seven>
     <eigth>
         <firstr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></firstr>
-        <secondr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="0"></secondr>
+        <secondr firstc="0" secondc="1" thirdc="1" fourthc="0" fifth="0"></secondr>
         <thirdr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
         <fourthr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></fourthr>
         <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
@@ -75,8 +74,8 @@
         <firstr firstc="1" secondc="1" thirdc="1" fourthc="0" fifth="0"></firstr>
         <secondr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></secondr>
         <thirdr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></thirdr>
-        <fourthr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></fourthr>
-        <fifthr firstc="0" secondc="1" thirdc="1" fourthc="0" fifth="0"></fifthr>
+        <fourthr firstc="0" secondc="1" thirdc="1" fourthc="0" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
     </eleven>
     <twelve>
         <firstr firstc="0" secondc="0" thirdc="1" fourthc="0" fifth="0"></firstr>
@@ -153,7 +152,7 @@
         <secondr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></secondr>
         <thirdr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
         <fourthr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="0"></fourthr>
-        <fifthr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="0"></fifthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
     </twentytwo>
     <twentythree>
         <firstr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></firstr>
@@ -174,7 +173,7 @@
         <secondr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></secondr>
         <thirdr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></thirdr>
         <fourthr firstc="0" secondc="1" thirdc="0" fourthc="0" fifth="0"></fourthr>
-        <fifthr firstc="0" secondc="1" thirdc="0" fourthc="0" fifth="0"></fifthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
     </twentyfive>
     <twentysix>
         <firstr firstc="0" secondc="1" thirdc="0" fourthc="0" fifth="0"></firstr>
@@ -191,12 +190,11 @@
         <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
     </twentyseven>
     <twentyeigth>
-        <firstr firstc="0" secondc="1" thirdc="0" fourthc="0" fifth="0"></firstr>
+        <firstr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></firstr>
         <secondr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></secondr>
         <thirdr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
-        <fourthr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></fourthr>
-        <fifthr firstc="0" secondc="0" thirdc="1" fourthc="0" fifth="0"></fifthr>
-        <sixtr firstc="0" secondc="0" thirdc="1" fourthc="0" fifth="0"></sixtr>
+        <fourthr firstc="0" secondc="1" thirdc="1" fourthc="0" fifth="0"></fourthr>
+        <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
     </twentyeigth>
     <twentynine>
         <firstr firstc="1" secondc="1" thirdc="1" fourthc="1" fifth="0"></firstr>
@@ -208,7 +206,7 @@
     <thirty>
         <firstr firstc="0" secondc="1" thirdc="1" fourthc="0" fifth="0"></firstr>
         <secondr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></secondr>
-        <thirdr firstc="0" secondc="0" thirdc="1" fourthc="1" fifth="1"></thirdr>
+        <thirdr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="0"></thirdr>
         <fourthr firstc="0" secondc="1" thirdc="1" fourthc="1" fifth="1"></fourthr>
         <fifthr firstc="0" secondc="0" thirdc="0" fourthc="0" fifth="0"></fifthr>
     </thirty>

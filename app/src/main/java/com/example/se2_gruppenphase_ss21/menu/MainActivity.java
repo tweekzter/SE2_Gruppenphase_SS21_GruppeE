@@ -8,8 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.se2_gruppenphase_ss21.R;
-import com.example.se2_gruppenphase_ss21.game.Dice;
-import com.example.se2_gruppenphase_ss21.game.alternativeGUI.Puzzle;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,9 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         gettingStartedButton = findViewById(R.id.button_getStarted);
 
-        gettingStartedButton.setOnClickListener((View v) -> {
-            openMenuActivity();
-        });
+        gettingStartedButton.setOnClickListener((View v) ->  openMenuActivity());
     }
 
     public void openMenuActivity() {

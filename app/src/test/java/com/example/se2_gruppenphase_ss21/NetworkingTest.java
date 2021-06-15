@@ -10,12 +10,12 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-public class NetworkingUnitTest {
+public class NetworkingTest {
 
     private static GameServer server;
 
     // Not runnable on GithubActions
-    /*
+
     @BeforeClass
     public static void startServer() throws IOException {
         server = new GameServer(6789);
@@ -51,5 +51,5 @@ public class NetworkingUnitTest {
         GameClient client3 = new GameClient("127.0.0.1",6789,"NotARoom","Tester 3");
         client3.connect();
     }
-    */
+
 }

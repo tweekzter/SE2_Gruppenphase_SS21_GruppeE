@@ -152,8 +152,18 @@ public class GameRoom {
                 handleDiceRoll();
 
                 Util.sleep(WAIT_FOR_ACTIVITY, 0);
+
                 long puzzleUntil = startPuzzle();
-                Util.sleep(0, puzzleUntil - System.currentTimeMillis());
+                while (System.currentTimeMillis() < puzzleUntil) {
+                    boolean stillWaiting = false;
+                    for(GameClientHandler handler : handlers)
+                        if(!handler.didFinnishPuzzle())
+                            stillWaiting = true;
+
+                    if(!stillWaiting)
+                        break;
+                    Util.sleep(0, 50);
+                }
 
                 sendPlacements(puzzleUntil - PUZZLE_DURATION);
 

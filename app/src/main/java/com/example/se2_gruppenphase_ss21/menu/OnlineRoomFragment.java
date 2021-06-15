@@ -37,14 +37,9 @@ public class OnlineRoomFragment extends Fragment {
     // Handler for creating post delay threads for updating ui
     Handler handler = new Handler();
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public OnlineRoomFragment() {
         // Required empty public constructor
@@ -58,7 +53,6 @@ public class OnlineRoomFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment OnlineRoomFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static OnlineRoomFragment newInstance(String param1, String param2) {
         OnlineRoomFragment fragment = new OnlineRoomFragment();
         Bundle args = new Bundle();
@@ -76,10 +70,6 @@ public class OnlineRoomFragment extends Fragment {
         StrictMode.setThreadPolicy(policy);
 
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -122,7 +112,7 @@ public class OnlineRoomFragment extends Fragment {
 
                 @Override
                 public void userDisconnect(String nickname) {
-
+                    // react on disconnection of user
                 }
 
                 @Override
@@ -132,16 +122,14 @@ public class OnlineRoomFragment extends Fragment {
 
                 @Override
                 public void unknownMessage(String message) {
-
+                    // react on unknown message from server
                 }
             };
 
             client.registerListener(preGameListener);
             client.startReceiveLoop();
 
-        } catch (GameLogicException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (GameLogicException | IOException e) {
             e.printStackTrace();
         }
 
@@ -211,7 +199,7 @@ public class OnlineRoomFragment extends Fragment {
 
                 Button readyData;
                 readyData = new Button(getContext());
-                readyData.setText(String.valueOf(current) + "/" + String.valueOf(max));
+                readyData.setText(current + "/" + max);
                 readyData.setClickable(false);
                 layout.addView(readyData);
 

@@ -1,6 +1,9 @@
 package com.example.se2_gruppenphase_ss21.networking.client;
 
-public class PlayerPlacement {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class PlayerPlacement implements Parcelable {
     public String nickname;
     public int placement, points;
     public long timeTaken;
@@ -14,6 +17,26 @@ public class PlayerPlacement {
         didFinnish = Boolean.parseBoolean(split[3]);
         timeTaken = Long.parseLong(split[4]);
     }
+
+    protected PlayerPlacement(Parcel in) {
+        nickname = in.readString();
+        placement = in.readInt();
+        points = in.readInt();
+        timeTaken = in.readLong();
+        didFinnish = in.readByte() != 0;
+    }
+
+    public static final Creator<PlayerPlacement> CREATOR = new Creator<PlayerPlacement>() {
+        @Override
+        public PlayerPlacement createFromParcel(Parcel in) {
+            return new PlayerPlacement(in);
+        }
+
+        @Override
+        public PlayerPlacement[] newArray(int size) {
+            return new PlayerPlacement[size];
+        }
+    };
 
     public String getNickname() {
         return nickname;
@@ -33,5 +56,19 @@ public class PlayerPlacement {
 
     public boolean isDidFinnish() {
         return didFinnish;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(nickname);
+        dest.writeInt(placement);
+        dest.writeInt(points);
+        dest.writeLong(timeTaken);
+        dest.writeByte((byte) (didFinnish ? 1 : 0));
     }
 }

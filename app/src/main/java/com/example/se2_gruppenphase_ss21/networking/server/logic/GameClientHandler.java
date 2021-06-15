@@ -83,7 +83,7 @@ public class GameClientHandler implements Comparable {
     }
 
     public boolean didFinnishPuzzle() {
-        return finishedPuzzleAt == Long.MAX_VALUE;
+        return finishedPuzzleAt != Long.MAX_VALUE;
     }
 
     public long getPuzzleFinishedAt() {
@@ -109,11 +109,7 @@ public class GameClientHandler implements Comparable {
     }
 
     public void close() {
-        try {
-            client.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        client.close();
     }
 
     @Override
