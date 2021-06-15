@@ -9,7 +9,7 @@
     <TableLayout
         android:id="@+id/table_tile1"
         android:layout_width="120dp"
-        android:layout_height="150dp"
+        android:layout_height="120dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:shrinkColumns="*"
@@ -24,23 +24,23 @@
 
             <View
                 android:id="@+id/view21"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view22"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view23"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view24"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </TableRow>
 
         <TableRow
@@ -50,23 +50,23 @@
 
             <View
                 android:id="@+id/view25"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view26"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view27"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view28"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </TableRow>
 
         <TableRow
@@ -76,23 +76,23 @@
 
             <View
                 android:id="@+id/view29"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view30"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view31"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view32"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </TableRow>
 
         <TableRow
@@ -102,56 +102,30 @@
 
             <View
                 android:id="@+id/view33"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view34"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view35"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view36"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-            <View
-                android:id="@+id/view37"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:id="@+id/view38"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:id="@+id/view39"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:id="@+id/view40"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </TableRow>
     </TableLayout>
 
     <TableLayout
         android:id="@+id/table_tile3"
         android:layout_width="120dp"
-        android:layout_height="150dp"
+        android:layout_height="120dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -166,23 +140,23 @@
 
             <View
                 android:id="@+id/view41"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view65"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view66"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view67"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </TableRow>
 
         <TableRow
@@ -192,23 +166,23 @@
 
             <View
                 android:id="@+id/view68"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view69"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view70"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view71"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </TableRow>
 
         <TableRow
@@ -218,23 +192,23 @@
 
             <View
                 android:id="@+id/view72"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view73"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view74"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view75"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </TableRow>
 
         <TableRow
@@ -244,56 +218,30 @@
 
             <View
                 android:id="@+id/view76"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view77"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view78"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view79"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" >
-
-            <View
-                android:id="@+id/view80"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:id="@+id/view81"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:id="@+id/view82"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:id="@+id/view83"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </TableRow>
     </TableLayout>
 
     <TableLayout
         android:id="@+id/table_tile2"
         android:layout_width="120dp"
-        android:layout_height="150dp"
+        android:layout_height="120dp"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toStartOf="@+id/table_tile3"
         app:layout_constraintStart_toEndOf="@+id/table_tile1"
@@ -308,23 +256,23 @@
 
             <View
                 android:id="@+id/view84"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view85"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view86"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view87"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </TableRow>
 
         <TableRow
@@ -334,23 +282,23 @@
 
             <View
                 android:id="@+id/view88"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view89"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view90"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view91"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </TableRow>
 
         <TableRow
@@ -360,23 +308,23 @@
 
             <View
                 android:id="@+id/view92"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view93"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view94"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view95"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </TableRow>
 
         <TableRow
@@ -386,49 +334,23 @@
 
             <View
                 android:id="@+id/view96"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view97"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view98"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
             <View
                 android:id="@+id/view99"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" >
-
-            <View
-                android:id="@+id/view100"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:id="@+id/view101"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:id="@+id/view102"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <View
-                android:id="@+id/view103"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </TableRow>
     </TableLayout>
 
@@ -632,18 +554,18 @@
         app:layout_constraintBottom_toTopOf="@+id/table_playfield"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/table_tile1"
-        app:layout_constraintVertical_bias="0.489" />
+        app:layout_constraintVertical_bias="0.696" />
 
     <Button
         android:id="@+id/remove"
         android:layout_width="125dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="148dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/remove_tile"
         app:backgroundTint="#2196F3"
         app:layout_constraintBottom_toTopOf="@+id/ubongo_button"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/mirror_vertical" />
 
     <Button
         android:id="@+id/rotate_right"
@@ -687,7 +609,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/mirror_horizontal"
         app:backgroundTint="#3F51B5"
         app:layout_constraintBottom_toTopOf="@+id/rotate_right"
@@ -698,7 +620,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/mirror_vertical"
         app:backgroundTint="#3F51B5"
         app:layout_constraintBottom_toTopOf="@+id/rotate_left"
