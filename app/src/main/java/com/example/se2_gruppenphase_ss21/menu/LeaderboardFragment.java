@@ -32,11 +32,11 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class LeaderboardFragment extends Fragment implements PostRoundListener {
-    // TODO: Rename parameter arguments, choose names that match
+
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String LEADERBOARD_ARG_PARAM1 = "param1";
     private static final String LEADERBOARD_ARG_PARAM2 = "param2";
-    // TODO: Rename and change types of parameters
+
     private String leaderboardmParam1;
     private String leaderboardmParam2;
 
