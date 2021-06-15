@@ -29,17 +29,6 @@
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
 
-    <CheckBox
-        android:id="@+id/checkBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
-        android:paddingRight="10dp"
-        android:textSize="18sp"
-        android:text="challenge" />
-
     <TextView
         android:id="@+id/points"
         android:layout_width="wrap_content"
@@ -51,7 +40,6 @@
         android:paddingRight="10dp"
         android:text="4 Punkte"
         android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        android:visibility="invisible"/>
+        android:textSize="18sp" />
 
 </RelativeLayout>
