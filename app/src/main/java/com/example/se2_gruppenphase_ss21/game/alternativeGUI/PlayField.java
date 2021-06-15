@@ -16,6 +16,8 @@ import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.Fragment;
 
 import com.example.se2_gruppenphase_ss21.R;
+import com.example.se2_gruppenphase_ss21.game.TimerListener;
+import com.example.se2_gruppenphase_ss21.game.TimerView;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Box;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Map;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Position;
@@ -26,7 +28,8 @@ import com.example.se2_gruppenphase_ss21.networking.client.listeners.InRoundList
 
 import java.util.ArrayList;
 
-public class PlayField extends Fragment implements InRoundListener, View.OnTouchListener {
+public class PlayField extends Fragment
+        implements InRoundListener, View.OnTouchListener, TimerListener {
     private GameClient client;
     private int[] tileIDs;
     private int mapID = 2;
@@ -92,7 +95,6 @@ public class PlayField extends Fragment implements InRoundListener, View.OnTouch
         registerTrayTileListener(trayTile3, tile3);
 
         setUpButtons();
-
     }
 
     private void setUpButtons() {
@@ -132,21 +134,9 @@ public class PlayField extends Fragment implements InRoundListener, View.OnTouch
             drawMap();
         });
 
-        getView().findViewById(R.id.remove).setOnClickListener(v -> {
-            if(active == null) return;
+        getView().findViewById(R.id.remove).setOnClickListener(v -> removeTileFromMap());
 
-            if(active == tile1)
-                addTileToTray(active, trayTile1);
-            else if(active == tile2)
-                addTileToTray(active, trayTile2);
-            else
-                addTileToTray(active, trayTile3);
-
-            detachTile(active);
-            active.removeTempFromMap();
-            drawMap();
-            active = null;
-        });
+        getView().findViewById(R.id.ubongo_button).setOnClickListener(v -> callUbongo());
     }
 
     private void setUpTiles() {
@@ -257,6 +247,27 @@ public class PlayField extends Fragment implements InRoundListener, View.OnTouch
         return true;
     }
 
+    private void callUbongo() {
+        if(map.checkSolved())
+            Log.d("puzzle", "see you in another life, brotha!");
+    }
+
+    private void removeTileFromMap() {
+        if(active == null) return;
+
+        if(active == tile1)
+            addTileToTray(active, trayTile1);
+        else if(active == tile2)
+            addTileToTray(active, trayTile2);
+        else
+            addTileToTray(active, trayTile3);
+
+        detachTile(active);
+        active.removeTempFromMap();
+        drawMap();
+        active = null;
+    }
+
     private boolean attachTile(Tile tile) {
         boolean attached = tile.attachToMap(map, tile.getHook());
         if(attached) {
@@ -310,7 +321,13 @@ public class PlayField extends Fragment implements InRoundListener, View.OnTouch
 
     @Override
     public void beginPuzzle(long finishUntil) {
-
+        trayTile1.setVisibility(View.VISIBLE);
+        trayTile2.setVisibility(View.VISIBLE);
+        trayTile3.setVisibility(View.VISIBLE);
+        drawMap();
+        TimerView timer = getView().findViewById(R.id.timer);
+        timer.setListener(this);
+        timer.start(finishUntil);
     }
 
     @Override
@@ -325,6 +342,11 @@ public class PlayField extends Fragment implements InRoundListener, View.OnTouch
 
     @Override
     public void unknownMessage(String message) {
+
+    }
+
+    @Override
+    public void timeIsUp() {
 
     }
 }

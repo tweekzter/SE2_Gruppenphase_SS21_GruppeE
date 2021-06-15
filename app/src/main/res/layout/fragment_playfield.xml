@@ -14,6 +14,7 @@
         android:layout_marginTop="16dp"
         android:shrinkColumns="*"
         android:stretchColumns="*"
+        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -128,15 +129,16 @@
         android:layout_height="120dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:shrinkColumns="*"
-        android:stretchColumns="*" >
+        android:stretchColumns="*"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <View
                 android:id="@+id/view41"
@@ -162,7 +164,7 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <View
                 android:id="@+id/view68"
@@ -188,7 +190,7 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <View
                 android:id="@+id/view72"
@@ -214,7 +216,7 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <View
                 android:id="@+id/view76"
@@ -243,16 +245,17 @@
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_marginTop="16dp"
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
+        android:visibility="invisible"
         app:layout_constraintEnd_toStartOf="@+id/table_tile3"
         app:layout_constraintStart_toEndOf="@+id/table_tile1"
-        app:layout_constraintTop_toTopOf="parent"
-        android:shrinkColumns="*"
-        android:stretchColumns="*" >
+        app:layout_constraintTop_toTopOf="parent">
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <View
                 android:id="@+id/view84"
@@ -278,7 +281,7 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <View
                 android:id="@+id/view88"
@@ -304,7 +307,7 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <View
                 android:id="@+id/view92"
@@ -330,7 +333,7 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" >
+            android:layout_weight="1">
 
             <View
                 android:id="@+id/view96"
@@ -560,12 +563,14 @@
         android:id="@+id/remove"
         android:layout_width="125dp"
         android:layout_height="40dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/remove_tile"
         app:backgroundTint="#2196F3"
         app:layout_constraintBottom_toTopOf="@+id/ubongo_button"
-        app:layout_constraintEnd_toStartOf="@+id/mirror_vertical" />
+        app:layout_constraintEnd_toStartOf="@+id/mirror_vertical"
+        app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintStart_toEndOf="@+id/timerView2" />
 
     <Button
         android:id="@+id/rotate_right"
