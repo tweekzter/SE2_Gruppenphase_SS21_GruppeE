@@ -57,10 +57,7 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener {
         super.onCreate(savedInstanceState);
 
         placements = getActivity().getIntent().getParcelableArrayListExtra("key");
-        for(PlayerPlacement a : placements) {
-            System.out.println("These are the placements");
-            System.out.println(a.points);
-        }
+
         if (getArguments() != null) {
             leaderboardmParam1 = getArguments().getString(LEADERBOARD_ARG_PARAM1);
             leaderboardmParam2 = getArguments().getString(LEADERBOARD_ARG_PARAM2);
