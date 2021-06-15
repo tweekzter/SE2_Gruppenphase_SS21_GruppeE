@@ -596,11 +596,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
         timer.abort();
 
         Intent intent = new Intent(this, LeaderboardActivity.class);
-        System.out.println(placements);
-
-        Bundle a = new Bundle();
-        a.putIntArray("key" , pictures);
-        intent.putExtras(a);
+        intent.putExtra("key", placements);
         startActivity(intent);
         // TODO: implement in accordance with Sabrina!!
     }

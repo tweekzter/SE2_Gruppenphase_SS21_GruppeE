@@ -22,6 +22,7 @@ import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.game.Dice;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
+import com.example.se2_gruppenphase_ss21.networking.client.PlayerPlacement;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.GeneralGameListener;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.PostRoundListener;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreGameListener;
@@ -64,6 +65,9 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
+
+
+        ArrayList<PlayerPlacement> placements = getActivity().getIntent().getParcelableArrayListExtra("key");
 
         if (getArguments() != null) {
             leaderboardmParam1 = getArguments().getString(LEADERBOARD_ARG_PARAM1);
