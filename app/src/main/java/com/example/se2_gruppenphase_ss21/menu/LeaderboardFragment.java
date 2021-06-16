@@ -35,11 +35,6 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener {
     private static final String LEADERBOARD_ARG_PARAM1 = "param1";
     private static final String LEADERBOARD_ARG_PARAM2 = "param2";
 
-    private String leaderboardmParam1;
-    private String leaderboardmParam2;
-
-    private PlayerArrayAdapter playerArrayAdapter;
-    private ListView listView;
     static AvailableRoom room;
     static Map<String, Integer> nicknamesMap;
     static boolean isReady = false;
@@ -57,8 +52,8 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener {
         placements = getActivity().getIntent().getParcelableArrayListExtra("key");
 
         if (getArguments() != null) {
-            leaderboardmParam1 = getArguments().getString(LEADERBOARD_ARG_PARAM1);
-            leaderboardmParam2 = getArguments().getString(LEADERBOARD_ARG_PARAM2);
+            String leaderboardmParam1 = getArguments().getString(LEADERBOARD_ARG_PARAM1);
+            String leaderboardmParam2 = getArguments().getString(LEADERBOARD_ARG_PARAM2);
         }
     }
     @Override
@@ -75,8 +70,8 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener {
         gameClient.registerListener(this);
 
 
-        listView = (ListView) view.findViewById(R.id.listView);
-        playerArrayAdapter = new PlayerArrayAdapter(view.getContext(), R.layout.listview_row_layout);
+        ListView listView = (ListView) view.findViewById(R.id.listView);
+        PlayerArrayAdapter playerArrayAdapter = new PlayerArrayAdapter(view.getContext(), R.layout.listview_row_layout);
         listView.setAdapter(playerArrayAdapter);
 
         List<String[]> playerList = readData(placements);
