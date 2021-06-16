@@ -1,6 +1,8 @@
 package com.example.se2_gruppenphase_ss21.menu;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -16,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.se2_gruppenphase_ss21.R;
+import com.example.se2_gruppenphase_ss21.game.Dice;
 import com.example.se2_gruppenphase_ss21.game.alternativeGUI.Puzzle;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
@@ -105,7 +108,12 @@ public class RoomFragment extends Fragment {
 
                 @Override
                 public void onGameStart() {
-                    Intent intent = new Intent(getActivity(), Puzzle.class);
+                    SharedPreferences prefs = getActivity()
+                            .getSharedPreferences("prefs", Context.MODE_PRIVATE);
+                    boolean altGUI = prefs.getBoolean("altGUI", false);
+
+                    Class toLoad = altGUI ? Puzzle.class : Dice.class;
+                    Intent intent = new Intent(getActivity(), toLoad);
                     startActivity(intent);
                 }
 

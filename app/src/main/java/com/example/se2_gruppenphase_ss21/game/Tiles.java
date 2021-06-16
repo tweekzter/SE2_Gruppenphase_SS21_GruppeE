@@ -593,7 +593,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
         timer.abort();
 
         Intent intent = new Intent(this, LeaderboardActivity.class);
-        intent.putExtra("key", placements);
+        intent.putExtra("placements", placements);
         startActivity(intent);
 
         // TODO: implement in accordance with Sabrina!!

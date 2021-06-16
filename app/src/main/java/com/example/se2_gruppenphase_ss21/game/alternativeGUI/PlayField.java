@@ -1,6 +1,7 @@
 package com.example.se2_gruppenphase_ss21.game.alternativeGUI;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import com.example.se2_gruppenphase_ss21.logic.tetris.Box;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Map;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Position;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Tile;
+import com.example.se2_gruppenphase_ss21.menu.LeaderboardActivity;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 import com.example.se2_gruppenphase_ss21.networking.client.PlayerPlacement;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.InRoundListener;
@@ -350,13 +352,21 @@ public class PlayField extends Fragment
 
     @Override
     public void placementsReceived(ArrayList<PlayerPlacement> placements) {
+        TimerView timer = getView().findViewById(R.id.timerView2);
+        timer.abort();
+
+        Intent intent = new Intent(getActivity(), LeaderboardActivity.class);
+        intent.putExtra("placements", placements);
+        Handler handler = new Handler(Looper.getMainLooper());
+        getActivity().startActivity(intent);
     }
 
     @Override
     public void userDisconnect(String nickname) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(() ->
-                Toast.makeText(getActivity(), "Player "+nickname+" disconnected!", Toast.LENGTH_LONG).show()
+                Toast.makeText(getActivity(), 
+                        "Player "+nickname+" disconnected!", Toast.LENGTH_LONG).show()
         );
     }
 
@@ -364,23 +374,27 @@ public class PlayField extends Fragment
     public void unknownMessage(String message) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(() ->
-                Toast.makeText(getActivity(), "Network error: "+message, Toast.LENGTH_LONG).show()
+                Toast.makeText(getActivity(),
+                        "Network error: "+message, Toast.LENGTH_LONG).show()
         );
     }
 
     @Override
     public void timeIsUp(TimerView timer) {
-        getView().findViewById(R.id.ubongo_button).setClickable(false);
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() -> {
+            getView().findViewById(R.id.ubongo_button).setClickable(false);
 
-        trayTile1.setVisibility(View.INVISIBLE);
-        trayTile2.setVisibility(View.INVISIBLE);
-        trayTile3.setVisibility(View.INVISIBLE);
+            trayTile1.setVisibility(View.INVISIBLE);
+            trayTile2.setVisibility(View.INVISIBLE);
+            trayTile3.setVisibility(View.INVISIBLE);
 
-        TextView infobox = getView().findViewById(R.id.infobox);
-        infobox.setVisibility(View.VISIBLE);
-        infobox.setText(R.string.time_is_up);
+            TextView infobox = getView().findViewById(R.id.infobox);
+            infobox.setVisibility(View.VISIBLE);
+            infobox.setText(R.string.time_is_up);
 
-        // reset timer color for next round
-        timer.setColor(Color.BLUE);
+            // reset timer color for next round
+            timer.setColor(Color.BLUE);
+        });
     }
 }

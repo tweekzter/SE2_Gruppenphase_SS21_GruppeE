@@ -1,5 +1,7 @@
 package com.example.se2_gruppenphase_ss21.menu;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -16,6 +18,7 @@ import com.example.se2_gruppenphase_ss21.Player;
 import com.example.se2_gruppenphase_ss21.PlayerArrayAdapter;
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.game.Dice;
+import com.example.se2_gruppenphase_ss21.game.alternativeGUI.Puzzle;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 import com.example.se2_gruppenphase_ss21.networking.client.PlayerPlacement;
@@ -55,7 +58,7 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener {
         StrictMode.setThreadPolicy(policy);
         super.onCreate(savedInstanceState);
 
-        placements = getActivity().getIntent().getParcelableArrayListExtra("key");
+        placements = getActivity().getIntent().getParcelableArrayListExtra("placements");
 
         if (getArguments() != null) {
             leaderboardmParam1 = getArguments().getString(LEADERBOARD_ARG_PARAM1);
@@ -120,7 +123,12 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener {
     }
     @Override
     public void transitionToDice() {
-        Intent intent = new Intent(getActivity(), Dice.class);
+        SharedPreferences prefs = getActivity()
+                .getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        boolean altGUI = prefs.getBoolean("altGUI", false);
+
+        Class toLoad = altGUI ? Puzzle.class : Dice.class;
+        Intent intent = new Intent(getActivity(), toLoad);
         startActivity(intent);
     }
     @Override

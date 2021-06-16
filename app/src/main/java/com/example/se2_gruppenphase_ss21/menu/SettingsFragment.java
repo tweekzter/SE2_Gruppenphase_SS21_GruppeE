@@ -7,7 +7,9 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -22,7 +24,7 @@ import com.example.se2_gruppenphase_ss21.R;
  */
 public class SettingsFragment extends Fragment {
 
-    private static String myPrefs = "switch_prefs";
+    private static String myPrefs = "prefs";
     private static String switchStatus = "switchOn";
 
     boolean switchOn;
@@ -69,7 +71,7 @@ public class SettingsFragment extends Fragment {
         Switch soundSwitch = view.findViewById(R.id.switch_sound);
 
         myPreferences = getActivity().getSharedPreferences(myPrefs, Context.MODE_PRIVATE);
-        myEditor = getActivity().getSharedPreferences(myPrefs, Context.MODE_PRIVATE).edit();
+        myEditor = myPreferences.edit();
         switchOn = myPreferences.getBoolean(switchStatus, true);
         soundSwitch.setChecked(switchOn);
 
@@ -89,6 +91,22 @@ public class SettingsFragment extends Fragment {
                 myEditor.apply();
                 soundSwitch.setChecked(false);
             }
+        });
+
+        Switch altPuzzleGUI = view.findViewById(R.id.switch_altGUI);
+        altPuzzleGUI.setChecked(myPreferences.getBoolean("altGUI", false));
+
+        altPuzzleGUI.setOnCheckedChangeListener((compoundButton, isChecked) -> {
+            myEditor.putBoolean("altGUI", isChecked);
+            myEditor.apply();
+        });
+
+        view.findViewById(R.id.back).setOnClickListener(v -> {
+            Fragment menu = new MenuFragment();
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container, new MenuFragment())
+                    .commit();
         });
 
         return view;
