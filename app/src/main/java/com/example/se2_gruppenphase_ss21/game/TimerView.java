@@ -42,8 +42,7 @@ public class TimerView extends View {
     // refresh-rate in ms - default of 50ms resembles 20fps
     private int delta = 50;
 
-    private Thread timerThread;
-
+    private volatile boolean abort;
     private TimerListener listener;
 
 
@@ -117,11 +116,11 @@ public class TimerView extends View {
 
         long totalTime = finishUntil - System.currentTimeMillis();
 
-        timerThread = new Thread(() -> {
+        Thread timer = new Thread(() -> {
             // Handler is not necessary in this case, but it's good practise
             Handler handler = new Handler(Looper.getMainLooper());
 
-            while(System.currentTimeMillis() < finishUntil) {
+            while(System.currentTimeMillis() < finishUntil && !abort) {
                 handler.post(() -> {
                     long remainTime = finishUntil - System.currentTimeMillis();
                     if(remainTime < ALERT_TIME)
@@ -130,19 +129,18 @@ public class TimerView extends View {
                     angleSpan = -360f * ((float)remainTime / (float)totalTime);
                     invalidate();
                 });
+
                 try {
                     Thread.sleep(delta);
                 } catch (InterruptedException ex) {
                     Log.e("timer", ex.toString());
-                    Log.e("timer", "Timer interrupted!");
-                    return;
                 }
             }
 
-            listener.timeIsUp();
+            listener.timeIsUp(this);
         });
 
-        timerThread.start();
+        timer.start();
     }
 
     /**
@@ -170,7 +168,7 @@ public class TimerView extends View {
     }
 
     public void abort() {
-        timerThread.interrupt();
+        abort = true;
         System.out.println("Timer " + this + " aborted!");
     }
 }
