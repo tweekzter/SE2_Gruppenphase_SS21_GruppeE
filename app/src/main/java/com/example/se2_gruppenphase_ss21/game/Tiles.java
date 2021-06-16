@@ -3,8 +3,6 @@ package com.example.se2_gruppenphase_ss21.game;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -12,7 +10,6 @@ import android.os.Bundle;
 
 
 import android.os.Vibrator;
-import android.view.PointerIcon;
 
 import android.os.Handler;
 import android.os.Looper;

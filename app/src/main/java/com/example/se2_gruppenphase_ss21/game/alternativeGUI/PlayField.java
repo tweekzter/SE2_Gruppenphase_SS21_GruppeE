@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -11,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.graphics.ColorUtils;
 import androidx.fragment.app.Fragment;
@@ -28,8 +32,10 @@ import com.example.se2_gruppenphase_ss21.networking.client.listeners.InRoundList
 
 import java.util.ArrayList;
 
+
 public class PlayField extends Fragment
         implements InRoundListener, View.OnTouchListener, TimerListener {
+
     private GameClient client;
     private int[] tileIDs;
     private int mapID = 2;
@@ -82,7 +88,7 @@ public class PlayField extends Fragment
 
         mapTable = getView().findViewById(R.id.table_playfield);
         map = new Map(getContext().getAssets(), mapID, "5x5");
-        drawMap();
+        // map will get drawn once server signals to start round
 
         setUpTiles();
 
@@ -184,7 +190,6 @@ public class PlayField extends Fragment
         setOriginalColor(tile);
         drawTrayTile(trayTile, matrix, tile.getColor());
         trayTile.setClickable(true);
-        trayTile.setVisibility(View.VISIBLE);
     }
 
     private void drawTrayTile(TableLayout table, boolean[][] matrix, int color) {
@@ -194,20 +199,24 @@ public class PlayField extends Fragment
 
         clearTrayTileMap(table);
         for(int y=0; y < matrix.length; y++)
-            for(int x=0; x < matrix[0].length; x++)
-                if(matrix[y][x] && (x+offsetX) < 4 && (x+offsetX) >= 0
-                        && (y+offsetY) < 4 && (y+offsetY) >=0) {
+            for(int x=0; x < matrix[0].length; x++) {
+                boolean validPos = (x + offsetX) < 4 && (x + offsetX) >= 0
+                        && (y + offsetY) < 4 && (y + offsetY) >= 0;
 
+                if (matrix[y][x] && validPos) {
                     View box = getBox(table, x + offsetX, y + offsetY);
-                    box.setAlpha(1);
                     box.setBackgroundColor(color);
                 }
+            }
     }
 
     private void clearTrayTileMap(TableLayout table) {
-        for(int y=0; y < 4; y++)
-            for(int x=0; x < 4; x++)
-                getBox(table, x, y).setAlpha(0);
+        int yLength = table.getChildCount();
+        int xLength = ((TableRow)table.getChildAt(0)).getChildCount();
+
+        for(int y=0; y < yLength; y++)
+            for(int x=0; x < xLength; x++)
+                getBox(table, x, y).setBackgroundColor(Color.TRANSPARENT);
     }
 
     @Override
@@ -301,13 +310,13 @@ public class PlayField extends Fragment
         return row.getChildAt(x);
     }
 
-    private void registerTrayTileListener(View trayTile, Tile tile) {
+    private void registerTrayTileListener(TableLayout trayTile, Tile tile) {
         trayTile.setOnClickListener(v -> {
             active = tile;
             active.placeTempOnMap(map, new Position(2,2));
             drawMap();
             v.setClickable(false);
-            v.setVisibility(View.INVISIBLE);
+            clearTrayTileMap(trayTile);
         });
     }
 
@@ -321,32 +330,57 @@ public class PlayField extends Fragment
 
     @Override
     public void beginPuzzle(long finishUntil) {
-        trayTile1.setVisibility(View.VISIBLE);
-        trayTile2.setVisibility(View.VISIBLE);
-        trayTile3.setVisibility(View.VISIBLE);
-        drawMap();
-        TimerView timer = getView().findViewById(R.id.timer);
-        timer.setListener(this);
-        timer.start(finishUntil);
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() -> {
+            // show tray icons
+            getView().findViewById(R.id.infobox).setVisibility(View.INVISIBLE);
+            trayTile1.setVisibility(View.VISIBLE);
+            trayTile2.setVisibility(View.VISIBLE);
+            trayTile3.setVisibility(View.VISIBLE);
+
+            // reveal map
+            drawMap();
+
+            //start timer
+            TimerView timer = getView().findViewById(R.id.timerView2);
+            timer.setListener(this);
+            timer.start(finishUntil);
+        });
     }
 
     @Override
     public void placementsReceived(ArrayList<PlayerPlacement> placements) {
-
     }
 
     @Override
     public void userDisconnect(String nickname) {
-
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() ->
+                Toast.makeText(getActivity(), "Player "+nickname+" disconnected!", Toast.LENGTH_LONG).show()
+        );
     }
 
     @Override
     public void unknownMessage(String message) {
-
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() ->
+                Toast.makeText(getActivity(), "Network error: "+message, Toast.LENGTH_LONG).show()
+        );
     }
 
     @Override
-    public void timeIsUp() {
+    public void timeIsUp(TimerView timer) {
+        getView().findViewById(R.id.ubongo_button).setClickable(false);
 
+        trayTile1.setVisibility(View.INVISIBLE);
+        trayTile2.setVisibility(View.INVISIBLE);
+        trayTile3.setVisibility(View.INVISIBLE);
+
+        TextView infobox = getView().findViewById(R.id.infobox);
+        infobox.setVisibility(View.VISIBLE);
+        infobox.setText(R.string.time_is_up);
+
+        // reset timer color for next round
+        timer.setColor(Color.BLUE);
     }
 }

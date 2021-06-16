@@ -631,4 +631,19 @@
         app:layout_constraintBottom_toTopOf="@+id/rotate_left"
         app:layout_constraintEnd_toStartOf="@+id/mirror_horizontal" />
 
+    <TextView
+        android:id="@+id/infobox"
+        android:layout_width="378dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/architects_daughter"
+        android:gravity="center_horizontal"
+        android:text="@string/wait_for_server"
+        android:textColor="#FFFFFF"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

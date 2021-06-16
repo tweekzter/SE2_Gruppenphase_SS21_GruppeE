@@ -137,7 +137,7 @@ public class TimerView extends View {
                 }
             }
 
-            listener.timeIsUp(this);
+            handler.post(() -> listener.timeIsUp(this));
         });
 
         timer.start();
