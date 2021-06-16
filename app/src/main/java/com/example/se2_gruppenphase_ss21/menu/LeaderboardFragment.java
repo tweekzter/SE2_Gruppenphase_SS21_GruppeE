@@ -64,6 +64,7 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener {
         Button quitGameButton = view.findViewById(R.id.buttonQuitGame);
         quitGameButton.setOnClickListener((View v) ->{
             getParentFragmentManager().beginTransaction().replace(R.id.container, new MenuFragment()).addToBackStack("tag").commit();
+
         });
 
         GameClient gameClient = GameClient.getActiveGameClient();
