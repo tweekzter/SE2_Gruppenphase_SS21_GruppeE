@@ -2,6 +2,7 @@ package com.example.se2_gruppenphase_ss21.menu;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -60,6 +61,17 @@ public class JoinRoomFragment extends Fragment {
         String userName = getArguments().getString(ARG_PARAM1);
 
         updateRooms(view, userName);
+
+        /**
+         * overrides behaviour of 'back-button'; client should be removed from room when clicking back button
+         */
+        requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                getParentFragmentManager().beginTransaction().replace(R.id.container, LocalGameFragment.newInstance(userName)).addToBackStack("tag").commit();
+            }
+        });
+
 
         return view;
     }

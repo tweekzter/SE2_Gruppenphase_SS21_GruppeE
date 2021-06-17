@@ -78,7 +78,7 @@ public class CreateRoomFragment extends Fragment {
                 } else {
                     startServer(roomName, maxUsers);
                     Toast.makeText(getActivity(), R.string.room_successfully_created, Toast.LENGTH_SHORT).show();
-                    getParentFragmentManager().beginTransaction().replace(R.id.container, LocalGameFragment.newInstance(userName)).addToBackStack("tag").commit();
+                    getParentFragmentManager().beginTransaction().replace(R.id.container, JoinRoomFragment.newInstance(userName)).addToBackStack("tag").commit();
                 }
 
             } catch (Exception e) {
