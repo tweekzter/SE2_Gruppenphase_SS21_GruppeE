@@ -11,6 +11,9 @@ public class Puzzle extends AppCompatActivity {
         setContentView(R.layout.activity_puzzle);
         Objects.requireNonNull(getSupportActionBar()).hide();
 
-        getSupportFragmentManager().beginTransaction().add(R.id.puzzle_container, new Dice()).commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.puzzle_container, new Dice())
+                .commit();
     }
 }

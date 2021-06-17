@@ -1,6 +1,7 @@
 package com.example.se2_gruppenphase_ss21.game.alternativeGUI;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -18,9 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.graphics.ColorUtils;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.example.se2_gruppenphase_ss21.R;
+import com.example.se2_gruppenphase_ss21.game.CheatingDialogFragment;
 import com.example.se2_gruppenphase_ss21.game.TimerListener;
 import com.example.se2_gruppenphase_ss21.game.TimerView;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Box;
@@ -28,15 +31,17 @@ import com.example.se2_gruppenphase_ss21.logic.tetris.Map;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Position;
 import com.example.se2_gruppenphase_ss21.logic.tetris.Tile;
 import com.example.se2_gruppenphase_ss21.menu.LeaderboardActivity;
+import com.example.se2_gruppenphase_ss21.menu.MainActivity;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 import com.example.se2_gruppenphase_ss21.networking.client.PlayerPlacement;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.InRoundListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
-public class PlayField extends Fragment
-        implements InRoundListener, View.OnTouchListener, TimerListener {
+public class PlayField extends Fragment implements InRoundListener,
+        View.OnTouchListener, TimerListener, CheatingDialogFragment.CheatingDialogListener {
 
     private GameClient client;
     private int[] tileIDs;
@@ -58,6 +63,9 @@ public class PlayField extends Fragment
     private TableLayout trayTile1;
     private TableLayout trayTile2;
     private TableLayout trayTile3;
+
+    private static final boolean BLUFF = true;
+    private static final boolean NO_BLUFF = false;
 
 
 
@@ -259,8 +267,39 @@ public class PlayField extends Fragment
     }
 
     private void callUbongo() {
-        if(map.checkSolved())
-            Log.d("puzzle", "see you in another life, brotha!");
+        if(map.checkSolved()) {
+            try {
+                client.puzzleDone(NO_BLUFF);
+            } catch(IOException ex) {
+                Log.e("puzzle", "error while trying to send puzzleDone message to client");
+                Log.e("puzzle", ex.toString());
+                Toast.makeText(getActivity(), "Connection to the server failed", Toast.LENGTH_LONG).show();
+            }
+        }
+        else
+            showCheatingDialog();
+    }
+
+    private void showCheatingDialog() {
+        DialogFragment newFragment = new CheatingDialogFragment();
+        newFragment.show(getChildFragmentManager(), "CheatingDialogFragment");
+    }
+
+    @Override
+    public void onCheatingPositiveClick(DialogFragment dialog) {
+        try {
+            client.puzzleDone(BLUFF);
+        } catch(IOException ex) {
+            Log.e("tiles", ex.toString());
+            Toast.makeText(getActivity(), "Connection to the server failed", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(getActivity(), MainActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onCheatingCancelClick(DialogFragment dialog) {
+        // do nix
     }
 
     private void removeTileFromMap() {
@@ -365,7 +404,7 @@ public class PlayField extends Fragment
     public void userDisconnect(String nickname) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(() ->
-                Toast.makeText(getActivity(), 
+                Toast.makeText(getActivity(),
                         "Player "+nickname+" disconnected!", Toast.LENGTH_LONG).show()
         );
     }

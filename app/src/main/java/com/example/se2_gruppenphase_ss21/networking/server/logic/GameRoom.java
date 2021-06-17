@@ -11,7 +11,7 @@ public class GameRoom {
     private static final int DEFAULT_MAX_USERS = 4;
     private static final int ROUND_COUNT = 5;
     private static final int PUZZLE_DURATION = 2 * 60 * 1000;
-    private static final int WAIT_FOR_ACTIVITY = 1;
+    private static final int WAIT_FOR_ACTIVITY = 2;
 
     private ArrayList<GameClientHandler> handlers = new ArrayList<>();
 
@@ -154,7 +154,7 @@ public class GameRoom {
                 Util.sleep(WAIT_FOR_ACTIVITY, 0);
 
                 long puzzleUntil = startPuzzle();
-                while (System.currentTimeMillis() < puzzleUntil) {
+                while (System.currentTimeMillis() < (puzzleUntil + 2000)) {
                     boolean stillWaiting = false;
                     for(GameClientHandler handler : handlers)
                         if(!handler.didFinnishPuzzle())
