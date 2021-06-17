@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.se2_gruppenphase_ss21.R;
-import com.example.se2_gruppenphase_ss21.logic.tetris.Map;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreRoundListener;
 
@@ -63,22 +62,15 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
         imagesAnimationtiles2.start();
         imagesAnimationtiles3.start();
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                imagesAnimation.stop();
-                imagesAnimationtiles.stop();
-                imagesAnimationtiles2.stop();
-                imagesAnimationtiles3.stop();
-                try {
-                    test(result);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (SAXException e) {
-                    e.printStackTrace();
-                } catch (ParserConfigurationException e) {
-                    e.printStackTrace();
-                }
+        handler.postDelayed(() -> {
+            imagesAnimation.stop();
+            imagesAnimationtiles.stop();
+            imagesAnimationtiles2.stop();
+            imagesAnimationtiles3.stop();
+            try {
+                test(result);
+            } catch (IOException | SAXException | ParserConfigurationException e) {
+                e.printStackTrace();
             }
         }, 3000);
     }
@@ -126,10 +118,12 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
                 bildergebnis.setBackgroundResource(R.drawable.bug);
                 tiles("Bug",cardnumber);
                 break;
+            default:
+
 
         }
     }
-    private void tiles(String value, int cardnumber) throws ParserConfigurationException, IOException, SAXException {
+    private void tiles(String value, int cardnumber) throws IOException {
         ImageView tileone= findViewById(R.id.tile1);
         ImageView tiletwo = findViewById(R.id.tile2);
         ImageView tilethree = findViewById(R.id.tile3);
@@ -145,13 +139,12 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
             String cardnumberinwords = Maps.cardnumbers[cardnumber];
             String[] result = processParsing(parser, value, cardnumberinwords);
 
-            int test1 = getpicturetotilenumber(result[0],tileone);
-            int test2 = getpicturetotilenumber(result[1],tiletwo);
-            int test3 = getpicturetotilenumber(result[2],tilethree);
+            int test1 = getpicturetotilenumber(result[0]);
+            int test2 = getpicturetotilenumber(result[1]);
+            int test3 = getpicturetotilenumber(result[2]);
             tileone.setBackgroundResource(test1);
             tiletwo.setBackgroundResource(test2);
             tilethree.setBackgroundResource(test3);
-            System.out.println("This is the cardnumber" + cardnumber);
             pictures = new int[7];
             pictures[0]= test1;
             pictures[1]=test2;
@@ -160,11 +153,9 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
             pictures[4] = Integer.parseInt(result[1]);
             pictures[5] = Integer.parseInt(result[2]);
             pictures[6] = cardnumber;
-        } catch (XmlPullParserException e) {
+        } catch (XmlPullParserException | IOException e) {
 
-
-        } catch (IOException e) {
-
+            e.printStackTrace();
         } finally {
             if(is != null)
                 is.close();
@@ -172,7 +163,7 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
 
     }
 
-    private int getpicturetotilenumber (String tilenumber, ImageView tilepicture) {
+    private int getpicturetotilenumber (String tilenumber) {
 
         switch (tilenumber) {
             case "1":
@@ -199,10 +190,11 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
                 return R.drawable.blue;
             case "12":
                 return R.drawable.darkblue;
+            default:
+                return 0;
 
         }
 
-        return 0;
     }
 
     private String[] processParsing(XmlPullParser parser, String dice, String cardnumber) throws XmlPullParserException, IOException {
@@ -237,9 +229,7 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
                         tiles[1] = parser.getAttributeValue(1);
                         tiles[2] = parser.getAttributeValue(2);
 
-
-                        card = false;
-                        dicetype=false;
+                        
                         return tiles;
                     }
 
@@ -248,7 +238,7 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
             }
             eventType = parser.next();
         }
-        return null;
+        return tiles;
     }
     public void opentiles() {
         Intent intent = new Intent(this,Tiles.class);
