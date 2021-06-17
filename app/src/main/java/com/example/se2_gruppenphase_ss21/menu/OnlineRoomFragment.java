@@ -3,6 +3,7 @@ package com.example.se2_gruppenphase_ss21.menu;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -145,6 +146,18 @@ public class OnlineRoomFragment extends Fragment {
                 e.printStackTrace();
             }
         });
+
+        /**
+         * overrides behaviour of 'back-button'; client should be removed from room when clicking back button
+         */
+        requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                client.close();
+                getParentFragmentManager().beginTransaction().replace(R.id.container, OnlineGameFragment.newInstance(userName)).addToBackStack("tag").commit();
+            }
+        });
+
 
 
         return view;
