@@ -4,6 +4,8 @@ public class Player {
     String name;
     String points;
 
+    public Player(){}
+
     public Player(String position, String name, String points) {
         this.position = position;
         this.name = name;
