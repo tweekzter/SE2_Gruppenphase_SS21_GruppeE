@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
@@ -16,7 +15,6 @@ import com.example.se2_gruppenphase_ss21.Player;
 import com.example.se2_gruppenphase_ss21.PlayerArrayAdapter;
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.game.Dice;
-import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 import com.example.se2_gruppenphase_ss21.networking.client.PlayerPlacement;
 
@@ -24,14 +22,14 @@ import com.example.se2_gruppenphase_ss21.networking.client.listeners.PostRoundLi
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
 /**
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
 
 public class LeaderboardFragment extends Fragment implements PostRoundListener {
-    
+
     ArrayList<PlayerPlacement> placements;
     public LeaderboardFragment() {
         // Required empty public constructor
