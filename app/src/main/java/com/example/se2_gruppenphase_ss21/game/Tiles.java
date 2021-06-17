@@ -91,7 +91,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
         Bundle b = getIntent().getExtras();
         pictures = b.getIntArray("key");
         setContentView(R.layout.activity_tiles);
-        InputStream is = null;
+        InputStream is;
         try {
             is = getAssets().open("maps.xml");
             //holt sich daten aus xml für das aussehen der map
@@ -537,8 +537,10 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
             if(currentmap.checkSolved()) {
                 Log.d("tiles", "you're done mate");
                 client.puzzleDone(false);
+                System.out.println("Das Puzzle wurde korrekt gelöst");
             } else {
                 showCheatingDialog();
+                System.out.println("Du hast geschummelt");
             }
         } catch(IOException ex) {
             Log.e("tiles", ex.toString());
