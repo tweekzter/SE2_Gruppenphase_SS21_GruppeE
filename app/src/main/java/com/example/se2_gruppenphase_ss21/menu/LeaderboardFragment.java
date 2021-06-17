@@ -31,11 +31,7 @@ import java.util.Map;
  */
 
 public class LeaderboardFragment extends Fragment implements PostRoundListener {
-
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    /*private static final String LEADERBOARD_ARG_PARAM1 = "param1";
-    private static final String LEADERBOARD_ARG_PARAM2 = "param2";*/
-
+    
     ArrayList<PlayerPlacement> placements;
     public LeaderboardFragment() {
         // Required empty public constructor
@@ -48,10 +44,6 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener {
 
         placements = getActivity().getIntent().getParcelableArrayListExtra("key");
 
-        /*if (getArguments() != null) {
-            String leaderboardmParam1 = getArguments().getString(LEADERBOARD_ARG_PARAM1);
-            String leaderboardmParam2 = getArguments().getString(LEADERBOARD_ARG_PARAM2);
-        }*/
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
