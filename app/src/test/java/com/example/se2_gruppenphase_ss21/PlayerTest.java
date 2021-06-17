@@ -20,7 +20,7 @@ public class PlayerTest {
         player.setName("Player2");
         player.setPoints("1 points");
         assertEquals("2", player.position);
-        assertEquals("Player1", player.getName());
+        assertEquals("Player2", player.getName());
         assertEquals("1 points", player.getPoints());
     }
 
