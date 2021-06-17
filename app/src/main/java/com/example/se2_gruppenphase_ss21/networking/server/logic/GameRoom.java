@@ -184,7 +184,7 @@ public class GameRoom {
 
     private void sendPlacements(long puzzleStart) {
         assignPoints();
-        Collections.sort(handlers);
+        Collections.sort(handlers, Collections.reverseOrder());
         String[] foo = new String[handlers.size()];
 
         for(int i = 0; i < handlers.size(); i++) {
