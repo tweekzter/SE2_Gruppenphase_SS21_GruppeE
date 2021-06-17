@@ -64,8 +64,10 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener {
         View view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
         Button quitGameButton = view.findViewById(R.id.buttonQuitGame);
         quitGameButton.setOnClickListener((View v) ->{
-            getParentFragmentManager().beginTransaction().replace(R.id.container, new MenuFragment()).addToBackStack("tag").commit();
+            GameClient gameClient = GameClient.getActiveGameClient();
+            gameClient.close();
 
+            getParentFragmentManager().beginTransaction().replace(R.id.container, new MenuFragment()).addToBackStack("tag").commit();
         });
 
         GameClient gameClient = GameClient.getActiveGameClient();
