@@ -228,8 +228,6 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
                         tiles[0] = parser.getAttributeValue(0);
                         tiles[1] = parser.getAttributeValue(1);
                         tiles[2] = parser.getAttributeValue(2);
-
-                        
                         return tiles;
                     }
 
