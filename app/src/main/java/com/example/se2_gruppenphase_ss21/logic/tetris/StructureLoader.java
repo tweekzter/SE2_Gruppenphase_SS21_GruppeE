@@ -60,8 +60,11 @@ public class StructureLoader {
         boolean[][] structure = null;
 
         try {
-            if(json == null)
-                loadStructurePool(mgr);
+            if(json == null) {
+                boolean success = loadStructurePool(mgr);
+                if (!success)
+                    return standardStructure;
+            }
 
             JSONObject obj = new JSONObject(json);
             JSONObject tp = obj.getJSONObject(type);
@@ -85,7 +88,7 @@ public class StructureLoader {
             if(structure == null || structure[0] == null)
                 throw new NullPointerException("loading structure failed");
 
-        } catch(JSONException | NullPointerException | IOException ex) {
+        } catch(JSONException | NullPointerException ex) {
             Log.e("pool", ex.toString());
             return standardStructure;
         }
@@ -135,16 +138,21 @@ public class StructureLoader {
      *
      * @param mgr AssetManager needed to read JSON file.
      */
-    private static void loadStructurePool(AssetManager mgr) throws IOException {
-        InputStream is = mgr.open("structures.json");
-        int size = is.available();
-        byte[] buffer = new byte[size];
-        int read = is.read(buffer);
-        if(size != read)
-            throw new IOException("failure at reading correct file size");
-        is.close();
+    private static boolean loadStructurePool(AssetManager mgr) {
+        try(InputStream is = mgr.open("structures.json")) {
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            int read = is.read(buffer);
+            if (size != read)
+                throw new IOException("failure at reading file");
+            is.close();
 
-        json = new String(buffer, StandardCharsets.UTF_8);
+            json = new String(buffer, StandardCharsets.UTF_8);
+        }
+        catch(IOException ex) {
+            return false;
+        }
+        return true;
     }
 
     static boolean[][] getStandardStructure() {

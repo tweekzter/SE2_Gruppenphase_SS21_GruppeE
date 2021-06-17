@@ -1,7 +1,6 @@
 package com.example.se2_gruppenphase_ss21.game;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -14,14 +13,9 @@ import android.os.Looper;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.se2_gruppenphase_ss21.R;
-import com.example.se2_gruppenphase_ss21.menu.MainActivity;
-import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 
-import java.io.IOException;
 
 /**
  * A TIMER as a VIEW.
@@ -38,7 +32,7 @@ public class TimerView extends View {
     private final Paint paint;
     private RectF bounds;
     private float angleSpan = -360f;
-    private final int ALERT_TIME = 15000;
+    private int alertTime = 15000;
     // refresh-rate in ms - default of 50ms resembles 20fps
     private int delta = 50;
 
@@ -79,6 +73,7 @@ public class TimerView extends View {
      * @param oldW Views old width
      * @param oldH Views old height
      */
+    @Override
     protected void onSizeChanged(int w, int h, int oldW, int oldH) {
         super.onSizeChanged(w, h, oldW, oldH);
         if (w != oldW || h != oldH) {
@@ -92,9 +87,10 @@ public class TimerView extends View {
     }
 
     /**
-     * Draws the pie with the current Views state.
+     * Draws the pie timer with the current Views state.
      * @param c Canvas to draw on.
      */
+    @Override
     protected void onDraw(Canvas c) {
         canvas.drawColor(0, PorterDuff.Mode.CLEAR);
         canvas.drawArc(bounds, -90f, angleSpan, true, paint);
@@ -123,7 +119,7 @@ public class TimerView extends View {
             while(System.currentTimeMillis() < finishUntil && !abort) {
                 handler.post(() -> {
                     long remainTime = finishUntil - System.currentTimeMillis();
-                    if(remainTime < ALERT_TIME)
+                    if(remainTime < alertTime && getColor() != Color.RED)
                         setColor(Color.RED);
                     // update angleSpan with remaining time
                     angleSpan = -360f * ((float)remainTime / (float)totalTime);
@@ -134,6 +130,7 @@ public class TimerView extends View {
                     Thread.sleep(delta);
                 } catch (InterruptedException ex) {
                     Log.e("timer", ex.toString());
+                    Thread.currentThread().interrupt();
                 }
             }
 
@@ -152,11 +149,36 @@ public class TimerView extends View {
     }
 
     /**
-     * Sets the base color of the pie shape.
+     * Sets the color of the timer.
      * @param color color to be set.
      */
     public void setColor(int color) {
         paint.setColor(color);
+    }
+
+    /**
+     * Returns the current color of the timer.
+     * @return the current color of the timer.
+     */
+    public int getColor() {
+        return paint.getColor();
+    }
+
+    /**
+     * Lets you set the alert time. The alert time is the remaining time at which the timer
+     * will switch to the alert-color to indicate minimal remaining time.
+     * @param alertTime remaining time in ms at which timer will turn red.
+     */
+    public void setAlertTime(int alertTime) {
+        this.alertTime = alertTime;
+    }
+
+    /**
+     * Gets the remaining time at which the timer will turn red to indicate minimal time left.
+     * @return remaining time in ms at which timer will turn red.
+     */
+    public int getAlertTime() {
+        return alertTime;
     }
 
     /**
@@ -169,6 +191,6 @@ public class TimerView extends View {
 
     public void abort() {
         abort = true;
-        System.out.println("Timer " + this + " aborted!");
+        Log.d("timer", "Timer " + this + " aborted!");
     }
 }

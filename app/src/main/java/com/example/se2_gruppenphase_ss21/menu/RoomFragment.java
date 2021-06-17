@@ -83,7 +83,9 @@ public class RoomFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_room, container, false);
 
         TextView roomNameTextView = view.findViewById(R.id.textView_roomName);
-        roomNameTextView.setText(room.getName() + "\n\n current Players:");
+        if(roomNameTextView != null) {
+            roomNameTextView.setText(room.getName() + "\n\n current Players:");
+        }
 
         String userName = getArguments().getString(ARG_PARAM1);
 

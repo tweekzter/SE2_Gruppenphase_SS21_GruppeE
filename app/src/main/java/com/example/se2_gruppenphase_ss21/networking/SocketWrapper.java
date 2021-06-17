@@ -23,6 +23,9 @@ public class SocketWrapper {
 
     public void close() {
         try {
+            out.flush();
+            out.close();
+            in.close();
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();

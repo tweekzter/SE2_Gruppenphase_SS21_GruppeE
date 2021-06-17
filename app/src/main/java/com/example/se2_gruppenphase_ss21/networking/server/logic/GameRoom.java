@@ -38,8 +38,8 @@ public class GameRoom {
             throw new GameLogicException("Room already full");
         } else if (hasNickname(nickname)) {
             throw new GameLogicException("Nickname taken");
-        } else if (nickname.contains(",") || nickname.contains(":") || nickname.contains("&") || nickname.contains(";")) {
-            throw new GameLogicException("Nickname contains forbidden characters \",:&;\"");
+        } else if (nickname.contains(",") || nickname.contains(":") || nickname.contains("&") || nickname.contains(";") || nickname.contains(" ")) {
+            throw new GameLogicException("Nickname contains forbidden characters \",:&;[SPACE]\"");
         } else {
             GameClientHandler handler = new GameClientHandler(client, nickname);
             handler.startGameLoop(this);

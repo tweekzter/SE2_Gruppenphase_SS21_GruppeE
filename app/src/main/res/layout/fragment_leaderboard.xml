@@ -17,14 +17,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!--Could be used as cheat button-->
     <Button
-        android:id="@+id/buttonNextRound"
+        android:id="@+id/buttonCheat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="79dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="95dp"
-        android:text="Next Round"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/buttonQuitGame"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,6 +40,6 @@
         android:text="Quit Game"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonNextRound"
+        app:layout_constraintStart_toEndOf="@+id/buttonCheat"
         app:layout_constraintTop_toBottomOf="@+id/listView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -595,8 +595,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
         Intent intent = new Intent(this, LeaderboardActivity.class);
         intent.putExtra("placements", placements);
         startActivity(intent);
-
-        // TODO: implement in accordance with Sabrina!!
     }
 
     @Override
