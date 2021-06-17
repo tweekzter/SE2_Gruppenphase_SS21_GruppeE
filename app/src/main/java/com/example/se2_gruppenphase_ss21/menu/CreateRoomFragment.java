@@ -2,6 +2,7 @@ package com.example.se2_gruppenphase_ss21.menu;
 
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -78,7 +79,7 @@ public class CreateRoomFragment extends Fragment {
                 } else {
                     startServer(roomName, maxUsers);
                     Toast.makeText(getActivity(), R.string.room_successfully_created, Toast.LENGTH_SHORT).show();
-                    getParentFragmentManager().beginTransaction().replace(R.id.container, LocalGameFragment.newInstance(userName)).addToBackStack("tag").commit();
+                    getParentFragmentManager().beginTransaction().replace(R.id.container, JoinRoomFragment.newInstance(userName)).addToBackStack("tag").commit();
                 }
 
             } catch (Exception e) {
@@ -87,6 +88,17 @@ public class CreateRoomFragment extends Fragment {
             }
 
         });
+
+        /**
+         * overrides behaviour of 'back-button'
+         */
+        requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                getParentFragmentManager().beginTransaction().replace(R.id.container, LocalGameFragment.newInstance(userName)).addToBackStack("tag").commit();
+            }
+        });
+
 
         return view;
     }
