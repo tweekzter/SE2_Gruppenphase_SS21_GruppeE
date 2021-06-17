@@ -117,6 +117,7 @@ public class TimerView extends View {
             Handler handler = new Handler(Looper.getMainLooper());
 
             while(System.currentTimeMillis() < finishUntil && !abort) {
+
                 handler.post(() -> {
                     long remainTime = finishUntil - System.currentTimeMillis();
                     if(remainTime < alertTime && getColor() != Color.RED)

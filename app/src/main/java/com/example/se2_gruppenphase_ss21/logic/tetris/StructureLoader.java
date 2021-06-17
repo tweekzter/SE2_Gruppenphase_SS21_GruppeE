@@ -125,7 +125,7 @@ public class StructureLoader {
                 }
             }
 
-        } catch(JSONException | NullPointerException | IOException ex) {
+        } catch(JSONException | NullPointerException ex) {
             Log.e("pool", ex.toString());
             return tiles;
         }
