@@ -20,7 +20,7 @@ public class GameClient {
     private String roomName;
     private boolean isConnected;
 
-    private GeneralGameListener listener;
+    private volatile GeneralGameListener listener;
 
     private static GameClient activeGameClient;
 
@@ -111,7 +111,6 @@ public class GameClient {
                             break;
                         case PLAY_DICE_ANIMATION:
                             int result = Integer.parseInt(params[1]);
-                            Log.d("dice", "in need");
 
                             if(listener instanceof PreRoundListener)
                                 ((PreRoundListener) listener).playDiceAnimation(result);
