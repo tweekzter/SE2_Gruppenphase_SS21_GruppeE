@@ -50,7 +50,7 @@ public class NetworkingTest {
 
     @Test(expected = GameLogicException.class)
     public void clientWithWrongRoomTest() throws IOException, GameLogicException {
-        if(System.getenv("CI") != null) return;
+        if(System.getenv("CI") != null) throw new GameLogicException("Tests are skipped on CI");
 
         GameClient client3 = new GameClient("127.0.0.1",6789,"NotARoom","Tester3");
         client3.connect();
