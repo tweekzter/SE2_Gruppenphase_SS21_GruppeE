@@ -5,7 +5,7 @@ on:
       - master
 jobs:
   test:
-    name: Run Unit Tests
+    name: Build APK
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -16,20 +16,9 @@ jobs:
           java-version: 11
       - name: Run Tests
         run: bash ./gradlew test --stacktrace
-  apk:
-    name: Generate APK
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Setup JDK
-        uses: actions/setup-java@v1
-        with:
-          java-version: 11
       - name: Build APK
         run: |
-          bash ./gradlew assembleDebug --stacktrace
+          bash ./gradlew clean assembleDebug --stacktrace
           mv ./app/build/outputs/apk/debug/app-debug.apk ./ubongo-debug.apk
       - name: Release
         uses: marvinpinto/action-automatic-releases@latest
