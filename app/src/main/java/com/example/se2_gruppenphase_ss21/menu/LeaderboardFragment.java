@@ -117,7 +117,25 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
     }
     @Override
     public void accusationResult(String accuser, String accused, boolean wasCheating, int pointLoss) {
+        for (int i = 0; i < listView.getCount(); i++) {
+            View row = listView.getChildAt(i);
+            TextView name = (TextView) row.findViewById(R.id.playerName);
+            TextView points = (TextView) row.findViewById(R.id.points);
 
+            if (wasCheating) {
+                if (name.getText().equals(accused)) {
+                    int p = Integer.valueOf(String.valueOf(points.getText()));
+                    p -= pointLoss;
+                    points.setText(p);
+                }
+            } else {
+                if (name.getText().equals(accuser)) {
+                    int p = Integer.valueOf(String.valueOf(points.getText()));
+                    p -= 1;
+                    points.setText(p);
+                }
+            }
+        }
     }
     @Override
     public void userDisconnect(String nickname) {
