@@ -17,7 +17,7 @@ public class GameRoom {
 
     private int maxUsers;
 
-    public GameRoomState state;
+    private GameRoomState state;
 
     public GameRoom() {
         this(DEFAULT_MAX_USERS);
@@ -140,7 +140,7 @@ public class GameRoom {
             while (true) {
                 if(round >= ROUND_COUNT) {
                     break;
-                }else if(handlers.size() == 0) {
+                }else if(handlers.isEmpty()) {
                     System.err.println("Room was empty when starting round, closing room!");
                     break;
                 }
@@ -247,5 +247,9 @@ public class GameRoom {
                 res = handler;
 
         return res;
+    }
+
+    public GameRoomState currentState() {
+        return state;
     }
 }

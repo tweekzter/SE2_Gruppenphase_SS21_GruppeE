@@ -5,14 +5,15 @@ import com.example.se2_gruppenphase_ss21.networking.SocketWrapper;
 
 import java.io.IOException;
 
-public class GameClientHandler implements Comparable {
+public class GameClientHandler implements Comparable<GameClientHandler> {
 
     private SocketWrapper client;
     private String nickname;
     private boolean isReady;
     private long finishedPuzzleAt;
     private boolean bluff;
-    private int points, lastPointIncrease;
+    private int points;
+    private int lastPointIncrease;
 
     public GameClientHandler(SocketWrapper client, String nickname) {
         this.client = client;
@@ -22,7 +23,7 @@ public class GameClientHandler implements Comparable {
     public void startGameLoop(GameRoom room) {
         new Thread(() -> {
             try {
-                if(room.state == GameRoomState.WAITING) {
+                if(room.currentState() == GameRoomState.WAITING) {
                     client.sendString("ok");
                 }else {
                     client.sendString("Room not accepting new players!");
@@ -113,8 +114,7 @@ public class GameClientHandler implements Comparable {
     }
 
     @Override
-    public int compareTo(Object o) {
-        GameClientHandler other = (GameClientHandler) o;
-        return Integer.compare(getPoints(), other.getPoints());
+    public int compareTo(GameClientHandler o) {
+        return Integer.compare(getPoints(), o.getPoints());
     }
 }
