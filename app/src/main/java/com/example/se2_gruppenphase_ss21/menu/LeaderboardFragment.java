@@ -88,7 +88,10 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
         // start timer
         TimerView timer = view.findViewById(R.id.challengeTimer);
         timer.setListener(this);
-        timer.start(CHALLENGE_TIMEOUT);
+
+        long finishUntil = CHALLENGE_TIMEOUT + System.currentTimeMillis();
+
+        timer.start(finishUntil);
 
         return view;
     }
