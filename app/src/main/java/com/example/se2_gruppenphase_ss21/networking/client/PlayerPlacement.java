@@ -4,10 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class PlayerPlacement implements Parcelable {
-    public String nickname;
-    public int placement, points;
-    public long timeTaken;
-    public boolean didFinnish;
+    private String nickname;
+    private int placement;
+    private int points;
+    private long timeTaken;
+    private boolean didFinnish;
 
     public PlayerPlacement(String serialized) {
         String[] split = serialized.split(":");

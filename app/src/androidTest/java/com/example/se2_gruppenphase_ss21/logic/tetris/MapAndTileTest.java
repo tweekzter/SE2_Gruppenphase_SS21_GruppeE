@@ -66,4 +66,19 @@ public class MapAndTileTest {
         Position[] shape = tile.getShape();
         assertArrayEquals(expected, shape);
     }
+
+    @Test
+    public void testGetTiles() {
+        int[] actual = StructureLoader.getTiles(appContext.getAssets(), "lion", 3);
+        int[] expected = { 9, 10, 5 };
+        assertArrayEquals(expected, actual);
+
+        actual = StructureLoader.getTiles(appContext.getAssets(), "hand", 5);
+        int[] expected2 = { 6, 5, 7 };
+        assertArrayEquals(expected2, actual);
+
+        actual = StructureLoader.getTiles(appContext.getAssets(), "bug", 21);
+        int[] expected3 = { 2, 6, 5 };
+        assertArrayEquals(expected3, actual);
+    }
 }

@@ -41,8 +41,8 @@ public class TimerView extends View {
 
 
     /**
-     * Takes context and attributes. Sets the paint properties by reading the View attributes.
-     * At the moment this is limited to the pies standard color.
+     * Sets the properties by reading this Views attributes.
+     * At the moment this is limited to the timers standard color.
      * @param ctx context
      * @param attrs attributes of the view
      */
@@ -117,6 +117,7 @@ public class TimerView extends View {
             Handler handler = new Handler(Looper.getMainLooper());
 
             while(System.currentTimeMillis() < finishUntil && !abort) {
+
                 handler.post(() -> {
                     long remainTime = finishUntil - System.currentTimeMillis();
                     if(remainTime < alertTime && getColor() != Color.RED)

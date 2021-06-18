@@ -11,13 +11,13 @@ public class GameRoom {
     private static final int DEFAULT_MAX_USERS = 4;
     private static final int ROUND_COUNT = 5;
     private static final int PUZZLE_DURATION = 2 * 60 * 1000;
-    private static final int WAIT_FOR_ACTIVITY = 1;
+    private static final int WAIT_FOR_ACTIVITY = 2;
 
     private ArrayList<GameClientHandler> handlers = new ArrayList<>();
 
     private int maxUsers;
 
-    public GameRoomState state;
+    private GameRoomState state;
 
     public GameRoom() {
         this(DEFAULT_MAX_USERS);
@@ -140,7 +140,7 @@ public class GameRoom {
             while (true) {
                 if(round >= ROUND_COUNT) {
                     break;
-                }else if(handlers.size() == 0) {
+                }else if(handlers.isEmpty()) {
                     System.err.println("Room was empty when starting round, closing room!");
                     break;
                 }
@@ -154,7 +154,7 @@ public class GameRoom {
                 Util.sleep(WAIT_FOR_ACTIVITY, 0);
 
                 long puzzleUntil = startPuzzle();
-                while (System.currentTimeMillis() < puzzleUntil) {
+                while (System.currentTimeMillis() < (puzzleUntil + 2000)) {
                     boolean stillWaiting = false;
                     for(GameClientHandler handler : handlers)
                         if(!handler.didFinnishPuzzle())
@@ -247,5 +247,9 @@ public class GameRoom {
                 res = handler;
 
         return res;
+    }
+
+    public GameRoomState currentState() {
+        return state;
     }
 }

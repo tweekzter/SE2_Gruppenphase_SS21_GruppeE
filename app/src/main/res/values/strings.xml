@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SE2_Gruppenphase_SS21</string>
+    <string name="app_name">Ubongo</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_rules">RulesActivity</string>
@@ -21,8 +21,10 @@
     <string name="cheating_dialog_positive">Klar doch!</string>
     <string name="cheating_dialog_cancel">Besser nicht!</string>
     <string name="wait_for_server">Warte auf Server …</string>
+    <string name="diceroll">Würfeln !</string>
     <string name="time_is_up">Zeit abgelaufen !!</string>
     <string name="room_more_than_one_player">room should have at least two players!</string>
     <string name="room_successfully_created">room successfully created!</string>
     <string name="room_create_info">please enter max players and name!</string>
+    <string name="remove_tile">Entfernen</string>
 </resources>

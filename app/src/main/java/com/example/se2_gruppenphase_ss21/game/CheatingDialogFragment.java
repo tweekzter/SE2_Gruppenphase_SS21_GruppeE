@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
@@ -26,7 +27,9 @@ public class CheatingDialogFragment extends DialogFragment {
         // Verify that the host activity implements the callback interface
         try {
             // Instantiate the CheatingDialogListener so we can send events to the host
-            listener = (CheatingDialogListener) context;
+            SharedPreferences prefs = getActivity().getSharedPreferences("prefs", Context.MODE_PRIVATE);
+            boolean altGUI = prefs.getBoolean("altGUI", false);
+            listener = (CheatingDialogListener) (altGUI ? getParentFragment() : context);
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(getActivity().toString()

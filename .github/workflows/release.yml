@@ -1,0 +1,31 @@
+name: Release
+on:
+  push:
+    branches:
+      - master
+jobs:
+  test:
+    name: Build APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Run Tests
+        run: bash ./gradlew test --stacktrace
+      - name: Build APK
+        run: |
+          bash ./gradlew clean assembleDebug --stacktrace
+          mv ./app/build/outputs/apk/debug/app-debug.apk ./ubongo-debug.apk
+      - name: Release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
+          files: |
+            ./ubongo-debug.apk

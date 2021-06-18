@@ -1,6 +1,8 @@
 package com.example.se2_gruppenphase_ss21.logic.tetris;
 
 import org.junit.Test;
+import static org.junit.Assert.*;
+
 
 public class MapAndTileTests {
 
@@ -133,5 +135,25 @@ public class MapAndTileTests {
             }
             System.out.println();
         }
+    }
+
+    @Test
+    public void testToMatrix() {
+        Tile tile = new Tile();
+        tile.addPoint(-2,0);
+        tile.addPoint(-1,0);
+        tile.addPoint(0,1);
+
+        boolean[][] expected = {
+                { true, true, false },
+                { false, false, true }
+        };
+        boolean[][] actual = tile.getShapeMatrix();
+        for(boolean[] row : actual) {
+            for(boolean val : row)
+                System.out.print(val+", ");
+            System.out.println();
+        }
+        assertArrayEquals(expected, actual);
     }
 }
