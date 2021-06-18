@@ -1,6 +1,7 @@
 package com.example.se2_gruppenphase_ss21.networking;
 
 import java.net.InetAddress;
+import java.util.Objects;
 
 public class AvailableRoom {
 
@@ -40,8 +41,18 @@ public class AvailableRoom {
 
     @Override
     public boolean equals(Object o) {
+        if(o == null)
+            return false;
+        if(this.getClass() != o.getClass())
+            return false;
+
         AvailableRoom room = (AvailableRoom) o;
         return getPort() == room.getPort() && getAddress().equals(room.getAddress()) && getName().equals(room.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(port, currentPlayers, maxPlayers, name, address);
     }
 
     public int getPort() {
