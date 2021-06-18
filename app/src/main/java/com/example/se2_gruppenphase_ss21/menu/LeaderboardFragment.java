@@ -154,25 +154,21 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
 
     @Override
     public void timeIsUp(TimerView timer) {
-        Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(() -> {
-            for (int i = 0; i < listView.getCount(); i++) {
-                View row = listView.getChildAt(i);
-                TextView name = (TextView) row.findViewById(R.id.playerName);
-                CheckBox challenge = (CheckBox) row.findViewById(R.id.challenge);
+        for (int i = 0; i < listView.getCount(); i++) {
+            View row = listView.getChildAt(i);
+            TextView name = (TextView) row.findViewById(R.id.playerName);
+            CheckBox challenge = (CheckBox) row.findViewById(R.id.challenge);
 
-                if (challenge.isActivated()) {
-                    try {
-                        gameClient.accuseOfCheating(String.valueOf(name.getText()));
-                    } catch(IOException ex) {
-                        Log.e("leaderboard", ex.toString());
-                        Toast.makeText(this.getActivity(), "Connection to the server failed", Toast.LENGTH_LONG).show();
-                    }
+            if (challenge.isChecked()) {
+                try {
+                    gameClient.accuseOfCheating(String.valueOf(name.getText()));
+                } catch (IOException ex) {
+                    Log.e("leaderboard", ex.toString());
+                    Toast.makeText(this.getActivity(), "Connection to the server failed", Toast.LENGTH_LONG).show();
                 }
-
-                challenge.setVisibility(View.INVISIBLE);
             }
 
-        });
+            challenge.setVisibility(View.INVISIBLE);
+        }
     }
 }
