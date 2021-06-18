@@ -163,8 +163,8 @@ public class RoomFragment extends Fragment {
         requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                // TODO: client.disconnect()
-                getParentFragmentManager().beginTransaction().replace(R.id.container, JoinRoomFragment.newInstance(userName)).commit();
+                client.close();
+                getParentFragmentManager().beginTransaction().replace(R.id.container, JoinRoomFragment.newInstance(userName)).addToBackStack("tag").commit();
             }
         });
 
