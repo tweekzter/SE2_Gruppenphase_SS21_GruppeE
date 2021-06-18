@@ -3,7 +3,6 @@ package com.example.se2_gruppenphase_ss21.networking.client.listeners;
 import com.example.se2_gruppenphase_ss21.networking.client.PlayerPlacement;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public interface InRoundListener extends GeneralGameListener {
     /**
