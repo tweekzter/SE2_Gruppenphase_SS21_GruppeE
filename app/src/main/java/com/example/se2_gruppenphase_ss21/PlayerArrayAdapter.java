@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player> {
         TextView position;
         TextView name;
         TextView points;
+        CheckBox challenge;
     }
 
     public PlayerArrayAdapter(Context context, int textViewResourceId){
@@ -52,6 +54,7 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player> {
             viewHolder.position = (TextView) row.findViewById(R.id.position);
             viewHolder.name = (TextView) row.findViewById(R.id.playerName);
             viewHolder.points = (TextView) row.findViewById(R.id.points);
+            viewHolder.challenge = (CheckBox) row.findViewById(R.id.challenge);
             row.setTag(viewHolder);
         }else {
             viewHolder = (PlayerViewHolder) row.getTag();
@@ -60,6 +63,7 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player> {
         viewHolder.position.setText(player.getPosition());
         viewHolder.name.setText(player.getName());
         viewHolder.points.setText(player.getPoints());
+        viewHolder.challenge.setChecked(false);
         return row;
     }
 

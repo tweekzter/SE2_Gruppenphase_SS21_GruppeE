@@ -29,6 +29,15 @@
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
 
+    <CheckBox
+        android:id="@+id/challenge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dp"
+        android:layout_toStartOf="@+id/points"
+        android:text="challenge"/>
+
     <TextView
         android:id="@+id/points"
         android:layout_width="wrap_content"
