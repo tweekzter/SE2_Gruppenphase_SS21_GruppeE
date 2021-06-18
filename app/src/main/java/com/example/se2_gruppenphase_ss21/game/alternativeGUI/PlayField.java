@@ -39,7 +39,23 @@ import com.example.se2_gruppenphase_ss21.networking.client.listeners.InRoundList
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+/**
+ * GUI representation of the Puzzle.
+ *
+ * This representation allows moving the TILES by touch inputs.
+ *
+ * It utilizes the MAP & TILES logic from the logic.tetris package for TILE placement
+ * and MAP computations (eg. if the puzzle is solved correctly, keeping track
+ * where tiles are positioned, etc).
+ *
+ * The Puzzle consists of a MAP, three TILES which are initially positioned in the
+ * top tray bar and can be selected to be positioned inside the MAP.
+ * TILEs can be moved via touch inputs and be rotated or mirrored with respective buttons.
+ *
+ * A timer will run out, indicating the remaining time to solve the Puzzle.
+ *
+ * @author Manuel Simon #00326348
+ */
 public class PlayField extends Fragment implements InRoundListener,
         View.OnTouchListener, TimerListener, CheatingDialogFragment.CheatingDialogListener {
 
@@ -94,6 +110,13 @@ public class PlayField extends Fragment implements InRoundListener,
         setUpPuzzle();
     }
 
+    /**
+     * Does the main initialization work for the Puzzle.
+     * Method names should be self-explanatory.
+     *
+     * For detailed information about the concept of the Puzzle,
+     * refer to the class description.
+     */
     private void setUpPuzzle() {
 
         mapTable = getView().findViewById(R.id.table_playfield);
@@ -257,7 +280,11 @@ public class PlayField extends Fragment implements InRoundListener,
                 drawMap();
         }
         else if(event.getAction() == MotionEvent.ACTION_MOVE) {
-            if(active != null && (active.getHook().getX() != x || active.getHook().getY() != y)) {
+            int prevX = active.getHook().getX() - cursorOffsetX;
+            int prevY = active.getHook().getY() - cursorOffsetY;
+            boolean posChanged = prevX != x || prevY != y;
+
+            if(active != null && posChanged) {
                 active.placeTempOnMap(map, new Position(x + cursorOffsetX,y + cursorOffsetY));
                 drawMap();
             }
