@@ -37,6 +37,7 @@ import java.util.List;
 public class LeaderboardFragment extends Fragment implements PostRoundListener, TimerListener {
 
     ArrayList<PlayerPlacement> placements;
+    private View view;
     private ListView listView;
     private GameClient gameClient;
 
@@ -59,7 +60,7 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
+        view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
         Button quitGameButton = view.findViewById(R.id.buttonQuitGame);
         quitGameButton.setOnClickListener((View v) ->{
             GameClient gameClient = GameClient.getActiveGameClient();
@@ -120,25 +121,29 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
     }
     @Override
     public void accusationResult(String accuser, String accused, boolean wasCheating, int pointLoss) {
-        for (int i = 0; i < listView.getCount(); i++) {
-            View row = listView.getChildAt(i);
-            TextView name = (TextView) row.findViewById(R.id.playerName);
-            TextView points = (TextView) row.findViewById(R.id.points);
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() -> {
 
-            if (wasCheating) {
-                if (name.getText().equals(accused)) {
-                    int p = Integer.valueOf(String.valueOf(points.getText()));
-                    p -= pointLoss;
-                    points.setText(p);
-                }
-            } else {
-                if (name.getText().equals(accuser)) {
-                    int p = Integer.valueOf(String.valueOf(points.getText()));
-                    p -= 1;
-                    points.setText(p);
+            for (int i = 0; i < listView.getCount(); i++) {
+                View row = listView.getChildAt(i);
+                TextView name = (TextView) row.findViewById(R.id.playerName);
+                TextView points = (TextView) row.findViewById(R.id.points);
+
+                if (wasCheating) {
+                    if (name.getText().equals(accused)) {
+                        int p = Integer.valueOf(String.valueOf(points.getText()).split(" ",2)[0]);
+                        p -= pointLoss;
+                        points.setText(String.valueOf(p) + " points");
+                    }
+                } else {
+                    if (name.getText().equals(accuser)) {
+                        int p = Integer.valueOf(String.valueOf(points.getText()).split(" ",2)[0]);
+                        p -= 1;
+                        points.setText(String.valueOf(p) + " points");
+                    }
                 }
             }
-        }
+        });
     }
     @Override
     public void userDisconnect(String nickname) {
@@ -157,21 +162,26 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
 
     @Override
     public void timeIsUp(TimerView timer) {
-        for (int i = 0; i < listView.getCount(); i++) {
-            View row = listView.getChildAt(i);
-            TextView name = (TextView) row.findViewById(R.id.playerName);
-            CheckBox challenge = (CheckBox) row.findViewById(R.id.challenge);
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() -> {
 
-            if (challenge.isChecked()) {
-                try {
-                    gameClient.accuseOfCheating(String.valueOf(name.getText()));
-                } catch (IOException ex) {
-                    Log.e("leaderboard", ex.toString());
-                    Toast.makeText(this.getActivity(), "Connection to the server failed", Toast.LENGTH_LONG).show();
+            for (int i = 0; i < listView.getCount(); i++) {
+                View row = listView.getChildAt(i);
+                TextView name = (TextView) row.findViewById(R.id.playerName);
+                CheckBox challenge = (CheckBox) row.findViewById(R.id.challenge);
+
+                if (challenge.isChecked()) {
+                    try {
+                        gameClient.accuseOfCheating(String.valueOf(name.getText()));
+                    } catch (IOException ex) {
+                        Log.e("leaderboard", ex.toString());
+                        Toast.makeText(this.getActivity(), "Connection to the server failed", Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
 
-            challenge.setVisibility(View.INVISIBLE);
-        }
+                challenge.setVisibility(View.INVISIBLE);
+            }
+            view.findViewById(R.id.challengeTimer).setVisibility(View.INVISIBLE);
+        });
     }
 }
