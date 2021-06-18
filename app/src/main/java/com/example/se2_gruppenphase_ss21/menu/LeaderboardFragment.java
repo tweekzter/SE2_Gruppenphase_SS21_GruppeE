@@ -4,11 +4,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import com.example.se2_gruppenphase_ss21.Player;
@@ -22,6 +25,7 @@ import com.example.se2_gruppenphase_ss21.networking.client.PlayerPlacement;
 
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.PostRoundListener;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +37,10 @@ import java.util.List;
 public class LeaderboardFragment extends Fragment implements PostRoundListener, TimerListener {
 
     ArrayList<PlayerPlacement> placements;
+    private ListView listView;
+    private GameClient gameClient;
+
+
     private static final long CHALLENGE_TIMEOUT = 5000; // 5 seconds
 
     public LeaderboardFragment() {
@@ -60,11 +68,11 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
             getParentFragmentManager().beginTransaction().replace(R.id.container, new MenuFragment()).addToBackStack("tag").commit();
         });
 
-        GameClient gameClient = GameClient.getActiveGameClient();
+        gameClient = GameClient.getActiveGameClient();
         gameClient.registerListener(this);
 
 
-        ListView listView = (ListView) view.findViewById(R.id.listView);
+        listView = (ListView) view.findViewById(R.id.listView);
         PlayerArrayAdapter playerArrayAdapter = new PlayerArrayAdapter(view.getContext(), R.layout.listview_row_layout);
         listView.setAdapter(playerArrayAdapter);
 
@@ -128,6 +136,25 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
 
     @Override
     public void timeIsUp(TimerView timer) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() -> {
+            for (int i = 0; i < listView.getCount(); i++) {
+                View row = listView.getChildAt(i);
+                TextView name = (TextView) row.findViewById(R.id.playerName);
+                CheckBox challenge = (CheckBox) row.findViewById(R.id.challenge);
 
+                if (challenge.isActivated()) {
+                    try {
+                        gameClient.accuseOfCheating(String.valueOf(name.getText()));
+                    } catch(IOException ex) {
+                        Log.e("leaderboard", ex.toString());
+                        Toast.makeText(this.getActivity(), "Connection to the server failed", Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                challenge.setVisibility(View.INVISIBLE);
+            }
+
+        });
     }
 }
