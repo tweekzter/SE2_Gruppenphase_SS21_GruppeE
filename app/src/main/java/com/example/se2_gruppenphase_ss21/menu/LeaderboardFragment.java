@@ -15,6 +15,8 @@ import com.example.se2_gruppenphase_ss21.Player;
 import com.example.se2_gruppenphase_ss21.PlayerArrayAdapter;
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.game.Dice;
+import com.example.se2_gruppenphase_ss21.game.TimerListener;
+import com.example.se2_gruppenphase_ss21.game.TimerView;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 import com.example.se2_gruppenphase_ss21.networking.client.PlayerPlacement;
 
@@ -28,9 +30,11 @@ import java.util.List;
  * create an instance of this fragment.
  */
 
-public class LeaderboardFragment extends Fragment implements PostRoundListener {
+public class LeaderboardFragment extends Fragment implements PostRoundListener, TimerListener {
 
     ArrayList<PlayerPlacement> placements;
+    private static final long CHALLENGE_TIMEOUT = 5000; // 5 seconds
+
     public LeaderboardFragment() {
         // Required empty public constructor
     }
@@ -72,6 +76,11 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener {
             Player player = new Player(position, playername, points);
             playerArrayAdapter.add(player);
         }
+
+        // start timer
+        TimerView timer = view.findViewById(R.id.challengeTimer);
+        timer.setListener(this);
+        timer.start(CHALLENGE_TIMEOUT);
 
         return view;
     }
@@ -115,5 +124,10 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener {
         handler.post(() ->
                 Toast.makeText(getActivity(), "Network error: "+message, Toast.LENGTH_LONG).show()
         );
+    }
+
+    @Override
+    public void timeIsUp(TimerView timer) {
+
     }
 }
