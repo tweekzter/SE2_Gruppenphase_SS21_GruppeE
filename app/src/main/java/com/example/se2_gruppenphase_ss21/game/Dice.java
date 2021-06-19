@@ -15,7 +15,6 @@ import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreRoundListener;
 
-import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -23,7 +22,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.xml.parsers.ParserConfigurationException;
+
 
 public class Dice extends AppCompatActivity implements PreRoundListener {
 
@@ -214,19 +213,18 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
 
 
             String eltName = null;
-            switch(eventType){
-                case XmlPullParser.START_TAG:
+            if(eventType == XmlPullParser.START_TAG){
                     eltName = parser.getName();
 
                     if(cardnumber.equals(eltName)) {
                         card = true;
-                        eventType = parser.next();
+                        parser.next();
                         eltName = parser.getName();
                     }
 
                     if(dice.equals(eltName)&&card) {
                         dicetype = true;
-                        eventType = parser.next();
+                        parser.next();
                         eltName = parser.getName();
                     }
                     if("Tile".equals(eltName)&&dicetype&&card){
@@ -240,7 +238,6 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
 
 
                     break;
-                default:
             }
             eventType = parser.next();
         }
