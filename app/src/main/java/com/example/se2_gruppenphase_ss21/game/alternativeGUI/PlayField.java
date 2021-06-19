@@ -35,6 +35,8 @@ import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 import com.example.se2_gruppenphase_ss21.networking.client.PlayerPlacement;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.InRoundListener;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -135,49 +137,58 @@ public class PlayField extends Fragment implements InRoundListener,
         registerTrayTileListener(trayTile2, tile2);
         registerTrayTileListener(trayTile3, tile3);
 
+        TextView infobox = getView().findViewById(R.id.infobox);
+        infobox.setText(R.string.wait_for_server);
+
         setUpButtons();
     }
 
     private void setUpButtons() {
-        getView().findViewById(R.id.rotate_right).setOnClickListener(v -> {
-            if(active == null) return;
-            if(active.detachFromMap())
-                setOriginalColor(active);
-            active.rotateRightAndPlace(map);
-            attachTile(active);
-            drawMap();
-        });
 
-        getView().findViewById(R.id.rotate_left).setOnClickListener(v -> {
-            if(active == null) return;
-            if(active.detachFromMap())
-                setOriginalColor(active);
-            active.rotateLeftAndPlace(map);
-            attachTile(active);
-            drawMap();
-        });
-
-        getView().findViewById(R.id.mirror_horizontal).setOnClickListener(v -> {
-            if(active == null) return;
-            if(active.detachFromMap())
-                setOriginalColor(active);
-            active.mirrorHorizontallyAndPlace(map);
-            attachTile(active);
-            drawMap();
-        });
-
-        getView().findViewById(R.id.mirror_vertical).setOnClickListener(v -> {
-            if(active == null) return;
-            if(active.detachFromMap())
-                setOriginalColor(active);
-            active.mirrorVerticallyAndPlace(map);
-            attachTile(active);
-            drawMap();
-        });
+        getView().findViewById(R.id.rotate_right).setOnClickListener(v -> rotateRight());
+        getView().findViewById(R.id.rotate_left).setOnClickListener(v -> rotateLeft());
+        getView().findViewById(R.id.mirror_horizontal).setOnClickListener(v -> mirrorHorizontally());
+        getView().findViewById(R.id.mirror_vertical).setOnClickListener(v -> mirrorVertically());
 
         getView().findViewById(R.id.remove).setOnClickListener(v -> removeTileFromMap());
-
         getView().findViewById(R.id.ubongo_button).setOnClickListener(v -> callUbongo(v));
+        getView().findViewById(R.id.ubongo_button).setClickable(false);
+    }
+
+    private void rotateRight() {
+        if(active == null) return;
+        if(active.detachFromMap())
+            setOriginalColor(active);
+        active.rotateRightAndPlace(map);
+        attachTile(active);
+        drawMap();
+    }
+
+    private void rotateLeft() {
+        if(active == null) return;
+        if(active.detachFromMap())
+            setOriginalColor(active);
+        active.rotateLeftAndPlace(map);
+        attachTile(active);
+        drawMap();
+    }
+
+    private void mirrorHorizontally() {
+        if(active == null) return;
+        if(active.detachFromMap())
+            setOriginalColor(active);
+        active.mirrorHorizontallyAndPlace(map);
+        attachTile(active);
+        drawMap();
+    }
+
+    private void mirrorVertically() {
+        if(active == null) return;
+        if(active.detachFromMap())
+            setOriginalColor(active);
+        active.mirrorVerticallyAndPlace(map);
+        attachTile(active);
+        drawMap();
     }
 
     private void setUpTiles() {
@@ -233,12 +244,13 @@ public class PlayField extends Fragment implements InRoundListener,
         int offsetY = (4 - matrix.length) / 2;
 
         clearTrayTileMap(table);
+
         for(int y=0; y < matrix.length; y++)
             for(int x=0; x < matrix[0].length; x++) {
                 boolean validPos = (x + offsetX) < 4 && (x + offsetX) >= 0
                         && (y + offsetY) < 4 && (y + offsetY) >= 0;
 
-                if (matrix[y][x] && validPos) {
+                if(matrix[y][x] && validPos) {
                     View box = getBox(table, x + offsetX, y + offsetY);
                     box.setBackgroundColor(color);
                 }
@@ -282,11 +294,13 @@ public class PlayField extends Fragment implements InRoundListener,
                 drawMap();
         }
         else if(event.getAction() == MotionEvent.ACTION_MOVE) {
+            if(active == null)
+                return true;
             int prevX = active.getHook().getX() - cursorOffsetX;
             int prevY = active.getHook().getY() - cursorOffsetY;
             boolean posChanged = prevX != x || prevY != y;
 
-            if(active != null && posChanged) {
+            if(posChanged) {
                 active.placeTempOnMap(map, new Position(x + cursorOffsetX,y + cursorOffsetY));
                 drawMap();
             }
@@ -299,9 +313,7 @@ public class PlayField extends Fragment implements InRoundListener,
         if(map.checkSolved()) {
             v.setClickable(false);
 
-            trayTile1.setVisibility(View.INVISIBLE);
-            trayTile2.setVisibility(View.INVISIBLE);
-            trayTile3.setVisibility(View.INVISIBLE);
+            setTrayBarVisibility(View.INVISIBLE);
             TextView infobox = getView().findViewById(R.id.infobox);
             infobox.setVisibility(View.VISIBLE);
             infobox.setText(R.string.puzzle_solved);
@@ -316,9 +328,7 @@ public class PlayField extends Fragment implements InRoundListener,
 
                 v.setClickable(true);
                 infobox.setVisibility(View.INVISIBLE);
-                trayTile1.setVisibility(View.VISIBLE);
-                trayTile2.setVisibility(View.VISIBLE);
-                trayTile3.setVisibility(View.VISIBLE);
+                setTrayBarVisibility(View.VISIBLE);
             }
         }
         else
@@ -332,8 +342,16 @@ public class PlayField extends Fragment implements InRoundListener,
 
     @Override
     public void onCheatingPositiveClick(DialogFragment dialog) {
+        getView().findViewById(R.id.ubongo_button).setClickable(false);
+
+        setTrayBarVisibility(View.INVISIBLE);
+        TextView infobox = getView().findViewById(R.id.infobox);
+        infobox.setVisibility(View.VISIBLE);
+        infobox.setText(R.string.solved_cheating);
+
         try {
             client.puzzleDone(BLUFF);
+
         } catch(IOException ex) {
             Log.e("tiles", ex.toString());
             Toast.makeText(getActivity(), "Connection to the server failed", Toast.LENGTH_LONG).show();
@@ -345,6 +363,12 @@ public class PlayField extends Fragment implements InRoundListener,
     @Override
     public void onCheatingCancelClick(DialogFragment dialog) {
         // do nix
+    }
+
+    private void setTrayBarVisibility(int visibility) {
+        trayTile1.setVisibility(visibility);
+        trayTile2.setVisibility(visibility);
+        trayTile3.setVisibility(visibility);
     }
 
     private void removeTileFromMap() {
@@ -420,11 +444,9 @@ public class PlayField extends Fragment implements InRoundListener,
         handler.post(() -> {
             // show tray icons
             getView().findViewById(R.id.infobox).setVisibility(View.INVISIBLE);
-            trayTile1.setVisibility(View.VISIBLE);
-            trayTile2.setVisibility(View.VISIBLE);
-            trayTile3.setVisibility(View.VISIBLE);
+            setTrayBarVisibility(View.VISIBLE);
 
-            // reveal map and activate button
+            // reveal map and activate Ubongo button
             drawMap();
             getView().findViewById(R.id.ubongo_button).setClickable(true);
 
@@ -469,9 +491,7 @@ public class PlayField extends Fragment implements InRoundListener,
         handler.post(() -> {
             getView().findViewById(R.id.ubongo_button).setClickable(false);
 
-            trayTile1.setVisibility(View.INVISIBLE);
-            trayTile2.setVisibility(View.INVISIBLE);
-            trayTile3.setVisibility(View.INVISIBLE);
+            setTrayBarVisibility(View.INVISIBLE);
 
             TextView infobox = getView().findViewById(R.id.infobox);
             infobox.setVisibility(View.VISIBLE);
