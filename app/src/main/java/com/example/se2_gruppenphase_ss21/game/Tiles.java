@@ -514,7 +514,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     private boolean checkSolved() {
         for(int y=0; y < tilearray.length; y++) {
             for(int x=0; x < tilearray[0].length; x++) {
-                if(map[y][x] && tilearray[y][x] == empty)
+                if(map[y][x] && tilearray[y][x].getShape().length == 0)
                     return false;
             }
         }
@@ -523,11 +523,13 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
 
     private void callUbongo() {
         try {
-            placetilesintilesarray(currenttile,currentpositionx,currentpositiony);
+            if(currenttile!=null) {
+                placetilesintilesarray(currenttile, currentpositionx, currentpositiony);
+            }
             if(checkSolved()) {
                 Log.d("tiles", "you're done mate");
                 client.puzzleDone(false);
-                System.out.println("Das Puzzle wurde korrekt gelöst");
+                
             } else {
                 showCheatingDialog();
 

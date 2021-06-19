@@ -141,8 +141,9 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(is, null);
             String cardnumberinwords = Maps.cardnumbers[cardnumber];
+            System.out.println(cardnumberinwords + value);
             String[] result = processParsing(parser, value, cardnumberinwords);
-
+            System.out.println(result.toString());
             int test1 = getpicturetotilenumber(result[0]);
             int test2 = getpicturetotilenumber(result[1]);
             int test3 = getpicturetotilenumber(result[2]);
@@ -213,18 +214,19 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
 
 
             String eltName = null;
-            if(eventType == XmlPullParser.START_TAG){
+            switch(eventType){
+                case XmlPullParser.START_TAG:
                     eltName = parser.getName();
 
                     if(cardnumber.equals(eltName)) {
                         card = true;
-                        parser.next();
+                        eventType = parser.next();
                         eltName = parser.getName();
                     }
 
                     if(dice.equals(eltName)&&card) {
                         dicetype = true;
-                        parser.next();
+                        eventType = parser.next();
                         eltName = parser.getName();
                     }
                     if("Tile".equals(eltName)&&dicetype&&card){
@@ -238,6 +240,7 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
 
 
                     break;
+                default:
             }
             eventType = parser.next();
         }
