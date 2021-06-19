@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import android.os.Vibrator;
 
+
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -90,19 +91,13 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
         Bundle b = getIntent().getExtras();
         pictures = b.getIntArray("key");
         setContentView(R.layout.activity_tiles);
-        InputStream is = null;
+        InputStream is;
         try {
             is = getAssets().open("maps.xml");
             //holt sich daten aus xml für das aussehen der map
-            System.out.println("This is the cardnumber");
+
             map= XMLParser.parsexml(Maps.cardnumbers[pictures[6]], "cardnumber", is);
-            System.out.println("map");
-            for(boolean[] a:map){
-                for(boolean c:a){
-                    System.out.print(c);
-                }
-                System.out.println();
-            }
+
             currentmap=new Map(map);
 
             fillbuttonarray();
@@ -221,7 +216,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     private void activateonclicklisteneronmapbuttons(){
         for (Button[] buttons : buttonarray) {
             for (Button button : buttons) {
-                System.out.println("tile was klicked");
                 button.setOnClickListener(v -> gettilefromid(v.getId()));
             }
         }
@@ -235,7 +229,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
 
 
         if(currenttile!=null){
-
+            currenttile.detachFromMap();
             currenttile.attachToMap(currentmap, currentpositionx, currentpositiony);
             placetilesintilesarray(currenttile, currentpositionx, currentpositiony);
             currentpositiony=0;
@@ -285,7 +279,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
         for(int i = 0; i<buttonarray.length; i++){
             for(int j = 0; j<buttonarray[i].length; j++){
                 if(buttonarray[i][j].getId()==id){
-                    System.out.println("Id found");
                     checkifthereisatile( i,  j);
                 }
             }
@@ -299,8 +292,10 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     private void checkifthereisatile(int i, int j){
         if(tilearray[i][j].getShape().length<=0){
 
-        }else {
+        }
+        else {
             if(currenttile!=null) {
+                currenttile.detachFromMap();
                 currenttile.attachToMap(currentmap, currentpositionx, currentpositiony);
                 placetilesintilesarray(currenttile, currentpositionx, currentpositiony);
             }else{
@@ -308,14 +303,12 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
                 addonclicklistener();
             }
             currenttile = tilearray[i][j];
-            System.out.println("this is the currenttile" + currenttile.getShape().toString());
-
             tilepositions= currenttile.getShape();
 
             currentpositionx = currenttile.getHook().getX();
             currentpositiony = currenttile.getHook().getY();
             detatchfromtilearray();
-            System.out.println(currentpositionx+"+" +currentpositiony);
+
 
         }
     }
@@ -331,6 +324,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
 
 
     private boolean checkifplacable(int x, int y, Position[] tilepositions){
+        //fix
         currenttile.setMap(currentmap);
         for (Position tileposition : tilepositions) {
             if (x + tileposition.getX() < 0 || y + tileposition.getY() < 0 || x + tileposition.getX() >= 5 || y + tileposition.getY() >= 5) {
@@ -530,20 +524,28 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     private boolean checkSolved() {
         for(int y=0; y < tilearray.length; y++) {
             for(int x=0; x < tilearray[0].length; x++) {
+                System.out.print(map[y][x]);
+                System.out.print(tilearray[y][x].getShape().length);
                 if(map[y][x] && tilearray[y][x] == empty)
                     return false;
             }
+            System.out.println();
         }
         return true;
     }
 
     private void callUbongo() {
         try {
+            placetilesintilesarray(currenttile,currentpositionx,currentpositiony);
+            currenttile.detachFromMap();
+            currenttile.attachToMap(currentmap,currentpositionx,currentpositiony);
             if(checkSolved()) {
                 Log.d("tiles", "you're done mate");
                 client.puzzleDone(false);
+                System.out.println("Das Puzzle wurde korrekt gelöst");
             } else {
                 showCheatingDialog();
+                System.out.println("Du hast geschummelt");
             }
         } catch(IOException ex) {
             Log.e("tiles", ex.toString());
@@ -554,10 +556,17 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     }
 
     private void detatchfromtilearray(){
+        for(Tile[] a: tilearray){
+            for(Tile j:a){
+                System.out.print(j.getShape().length);
+            }
+            System.out.println();
+        }
         Tile empty = new Tile();
         for(Position positions:currenttile.getShape()){
             tilearray[currentpositiony+positions.getY()][currentpositionx+positions.getX()] = empty;
         }
+        currenttile.detachFromMap();
     }
 
     /**
@@ -589,19 +598,18 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
      * @param placements
      */
     public void placementsReceived(ArrayList<PlayerPlacement> placements) {
-        TimerView timer = findViewById(R.id.timer);
-        timer.abort();
 
         Intent intent = new Intent(this, LeaderboardActivity.class);
-        intent.putExtra("placements", placements);
+        intent.putExtra("key", placements);
         startActivity(intent);
+        // TODO: implement in accordance with Sabrina!!
     }
 
     @Override
     public void userDisconnect(String nickname) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(() ->
-                Toast.makeText(this, "Player "+nickname+" disconnected!", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Player "+nickname+" disconnected!", Toast.LENGTH_LONG).show()
         );
     }
 
@@ -616,10 +624,9 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     /**
      * Listener method called when timer runs out.
      */
-    public void timeIsUp(TimerView timer) {
+    public void timeIsUp() {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(() -> {
-
             Button button = findViewById(R.id.ubongo);
             button.setClickable(false);
 
@@ -628,8 +635,16 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
             findViewById(R.id.thirdtile).setVisibility(View.INVISIBLE);
             findViewById(R.id.time_is_up).setVisibility(View.VISIBLE);
 
-            // reset normal state color
-            timer.setColor(Color.BLUE);
+            try {
+                GameClient client = GameClient.getActiveGameClient();
+                client.puzzleDone(false);
+            }
+            catch (IOException ex) {
+                Log.e("tiles", ex.toString());
+                Toast.makeText(this, "Connection to the server failed", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+            }
         });
     }
 
