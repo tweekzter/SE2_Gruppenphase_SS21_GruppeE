@@ -2,6 +2,7 @@ package com.example.se2_gruppenphase_ss21.menu;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -106,8 +107,8 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
             String[] player = new String[3];
             player[0] = Integer.toString(placements.get(i).getPlacement());
             player[1] = placements.get(i).getNickname();
-            if (placements.get(i).getPoints() > 1) player[2] = placements.get(i).getPoints() + " pts";
-            else player[2] = placements.get(i).getPoints() + " pt";
+            Resources res = getResources();
+            player[2] = res.getQuantityString(R.plurals.points, placements.get(i).getPoints());
             resultList.add(player);
         }
         return resultList;
@@ -138,17 +139,19 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
                 TextView name = (TextView) row.findViewById(R.id.playerName);
                 TextView points = (TextView) row.findViewById(R.id.points);
 
+                Resources res = getResources();
+
                 if (wasCheating) {
                     if (name.getText().equals(accused)) {
                         int p = Integer.valueOf(String.valueOf(points.getText()).split(" ",2)[0]);
                         p -= pointLoss;
-                        points.setText(String.valueOf(p) + " points");
+                        points.setText(res.getQuantityString(R.plurals.points, p));
                     }
                 } else {
                     if (name.getText().equals(accuser)) {
                         int p = Integer.valueOf(String.valueOf(points.getText()).split(" ",2)[0]);
                         p -= 1;
-                        points.setText(String.valueOf(p) + " points");
+                        points.setText(res.getQuantityString(R.plurals.points, p));
                     }
                 }
             }
