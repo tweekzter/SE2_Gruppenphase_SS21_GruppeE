@@ -1,7 +1,6 @@
 package com.example.se2_gruppenphase_ss21.game.alternativeGUI;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.media.MediaPlayer;
@@ -85,6 +84,7 @@ public class PlayField extends Fragment implements InRoundListener,
 
 
 
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         client = GameClient.getActiveGameClient();
@@ -96,6 +96,7 @@ public class PlayField extends Fragment implements InRoundListener,
     }
 
     @SuppressLint("ClickableViewAccessibility")
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup puzzleContainer,
                              Bundle savedInstanceState) {
 
@@ -105,6 +106,7 @@ public class PlayField extends Fragment implements InRoundListener,
         return view;
     }
 
+    @Override
     public void onStart() {
         super.onStart();
         setUpPuzzle();
@@ -175,7 +177,7 @@ public class PlayField extends Fragment implements InRoundListener,
 
         getView().findViewById(R.id.remove).setOnClickListener(v -> removeTileFromMap());
 
-        getView().findViewById(R.id.ubongo_button).setOnClickListener(v -> callUbongo());
+        getView().findViewById(R.id.ubongo_button).setOnClickListener(v -> callUbongo(v));
     }
 
     private void setUpTiles() {
@@ -293,7 +295,7 @@ public class PlayField extends Fragment implements InRoundListener,
         return true;
     }
 
-    private void callUbongo() {
+    private void callUbongo(View v) {
         if(map.checkSolved()) {
             try {
                 client.puzzleDone(NO_BLUFF);
@@ -302,6 +304,10 @@ public class PlayField extends Fragment implements InRoundListener,
                 Log.e("puzzle", ex.toString());
                 Toast.makeText(getActivity(), "Connection to the server failed", Toast.LENGTH_LONG).show();
             }
+
+            v.setClickable(false);
+            TextView infobox = (TextView)getView().findViewById(R.id.infobox);
+            infobox.setText(R.string.puzzle_solved);
         }
         else
             showCheatingDialog();
@@ -406,8 +412,9 @@ public class PlayField extends Fragment implements InRoundListener,
             trayTile2.setVisibility(View.VISIBLE);
             trayTile3.setVisibility(View.VISIBLE);
 
-            // reveal map
+            // reveal map and activate button
             drawMap();
+            getView().findViewById(R.id.ubongo_button).setClickable(true);
 
             //start timer
             TimerView timer = getView().findViewById(R.id.timerView2);
@@ -423,7 +430,6 @@ public class PlayField extends Fragment implements InRoundListener,
 
         Intent intent = new Intent(getActivity(), LeaderboardActivity.class);
         intent.putExtra("placements", placements);
-        Handler handler = new Handler(Looper.getMainLooper());
         getActivity().startActivity(intent);
     }
 

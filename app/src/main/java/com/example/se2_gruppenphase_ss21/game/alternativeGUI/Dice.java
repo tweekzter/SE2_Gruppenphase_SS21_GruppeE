@@ -39,18 +39,20 @@ public class Dice extends Fragment implements PreRoundListener {
     private static final int ELEPHANT_ID = 3;
     private static final int BUG_ID = 4;
     private static final int HAND_ID = 5;
-    private static final int SNAKE_ID = 6;
+    //private static final int SNAKE_ID = 6;
 
     private int diceResultID = ANTILOPE_ID;
     private int animationTime = 5000;
 
 
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         client = GameClient.getActiveGameClient();
         client.registerListener(this);
     }
 
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup puzzleContainer,
                              Bundle savedInstanceState) {
 
