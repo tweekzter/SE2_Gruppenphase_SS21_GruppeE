@@ -1,7 +1,10 @@
 package com.example.se2_gruppenphase_ss21.game;
 
 public class Maps {
-    public static String[] cardnumbers = new String[37];
+    private Maps(){
+        
+    }
+    protected final static String[] cardnumbers = new String[37];
     public static void setcardnumbers(){
         cardnumbers[1] = "one";
         cardnumbers[2] = "two";
