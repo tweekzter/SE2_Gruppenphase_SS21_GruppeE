@@ -524,18 +524,22 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     private boolean checkSolved() {
         for(int y=0; y < tilearray.length; y++) {
             for(int x=0; x < tilearray[0].length; x++) {
+                System.out.print(map[y][x]);
+                System.out.print(tilearray[y][x].getShape().length);
                 if(map[y][x] && tilearray[y][x] == empty)
                     return false;
             }
+            System.out.println();
         }
         return true;
     }
 
     private void callUbongo() {
         try {
+            placetilesintilesarray(currenttile,currentpositionx,currentpositiony);
             currenttile.detachFromMap();
             currenttile.attachToMap(currentmap,currentpositionx,currentpositiony);
-            if(currentmap.checkSolved()) {
+            if(checkSolved()) {
                 Log.d("tiles", "you're done mate");
                 client.puzzleDone(false);
                 System.out.println("Das Puzzle wurde korrekt gelöst");
@@ -552,6 +556,12 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     }
 
     private void detatchfromtilearray(){
+        for(Tile[] a: tilearray){
+            for(Tile j:a){
+                System.out.print(j.getShape().length);
+            }
+            System.out.println();
+        }
         Tile empty = new Tile();
         for(Position positions:currenttile.getShape()){
             tilearray[currentpositiony+positions.getY()][currentpositionx+positions.getX()] = empty;
