@@ -303,14 +303,12 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
                 addonclicklistener();
             }
             currenttile = tilearray[i][j];
-            System.out.println("this is the currenttile" + currenttile.getShape().toString());
-
             tilepositions= currenttile.getShape();
 
             currentpositionx = currenttile.getHook().getX();
             currentpositiony = currenttile.getHook().getY();
             detatchfromtilearray();
-            System.out.println(currentpositionx+"+" +currentpositiony);
+
 
         }
     }
@@ -326,6 +324,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
 
 
     private boolean checkifplacable(int x, int y, Position[] tilepositions){
+        //fix
         currenttile.setMap(currentmap);
         for (Position tileposition : tilepositions) {
             if (x + tileposition.getX() < 0 || y + tileposition.getY() < 0 || x + tileposition.getX() >= 5 || y + tileposition.getY() >= 5) {
@@ -534,6 +533,8 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
 
     private void callUbongo() {
         try {
+            currenttile.detachFromMap();
+            currenttile.attachToMap(currentmap,currentpositionx,currentpositiony);
             if(currentmap.checkSolved()) {
                 Log.d("tiles", "you're done mate");
                 client.puzzleDone(false);
