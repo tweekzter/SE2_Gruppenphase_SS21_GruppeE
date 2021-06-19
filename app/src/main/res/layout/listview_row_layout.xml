@@ -45,10 +45,12 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="15dp"
+        android:drawableLeft="@drawable/diamond"
+        android:drawablePadding="5dp"
         android:paddingTop="10dp"
         android:paddingRight="10dp"
         android:text="4 Punkte"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textColor="#FFFFFF"/>
 
 </RelativeLayout>
