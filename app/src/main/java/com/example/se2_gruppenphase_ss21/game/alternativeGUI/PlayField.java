@@ -94,7 +94,7 @@ public class PlayField extends Fragment implements InRoundListener,
 
         tileIDs = getArguments().getIntArray("tiles");
         mapID = getArguments().getInt("mapID");
-        Log.d("dice", "mapID "+mapID);
+        Log.d("puzzle", "mapID "+mapID);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -136,9 +136,6 @@ public class PlayField extends Fragment implements InRoundListener,
         registerTrayTileListener(trayTile1, tile1);
         registerTrayTileListener(trayTile2, tile2);
         registerTrayTileListener(trayTile3, tile3);
-
-        TextView infobox = getView().findViewById(R.id.infobox);
-        infobox.setText(R.string.wait_for_server);
 
         setUpButtons();
     }
