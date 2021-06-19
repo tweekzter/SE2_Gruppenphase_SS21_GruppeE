@@ -27,4 +27,5 @@
     <string name="room_successfully_created">room successfully created!</string>
     <string name="room_create_info">please enter max players and name!</string>
     <string name="remove_tile">Entfernen</string>
+    <string name="puzzle_solved">Gut gemacht!</string>
 </resources>
