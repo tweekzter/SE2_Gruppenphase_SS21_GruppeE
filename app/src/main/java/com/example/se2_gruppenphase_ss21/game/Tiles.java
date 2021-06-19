@@ -97,7 +97,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
             System.out.println("This is the cardnumber");
             map= XMLParser.parsexml(Maps.cardnumbers[pictures[6]], "cardnumber", is);
             System.out.println("map");
-            
+
             currentmap=new Map(map);
 
             fillbuttonarray();
@@ -538,8 +538,10 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
             if(checkSolved()) {
                 Log.d("tiles", "you're done mate");
                 client.puzzleDone(false);
+                System.out.println("Das Puzzle wurde korrekt gelöst");
             } else {
                 showCheatingDialog();
+                
             }
         } catch(IOException ex) {
             Log.e("tiles", ex.toString());

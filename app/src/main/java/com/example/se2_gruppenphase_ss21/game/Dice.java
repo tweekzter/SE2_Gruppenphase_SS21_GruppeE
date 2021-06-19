@@ -69,7 +69,7 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
             imagesAnimationtiles3.stop();
             try {
                 test(result);
-            } catch (IOException | SAXException | ParserConfigurationException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }, 3000);
@@ -77,7 +77,7 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
 
 
 
-    private void test(int result) throws IOException, SAXException, ParserConfigurationException {
+    private void test(int result) throws IOException {
         TextView ergebnis = findViewById(R.id.Ergebnis);
         ImageView bildergebnis = findViewById(R.id.diceresult);
         int cardnumber = (int)(Math.random() * 36) + 1;
@@ -235,17 +235,16 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
                         tiles[2] = parser.getAttributeValue(2);
 
 
-                        card = false;
-                        dicetype=false;
                         return tiles;
                     }
 
 
                     break;
+                default:
             }
             eventType = parser.next();
         }
-        return null;
+        return tiles;
     }
     public void opentiles() {
         Intent intent = new Intent(this,Tiles.class);
