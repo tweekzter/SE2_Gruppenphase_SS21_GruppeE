@@ -106,8 +106,8 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
             String[] player = new String[3];
             player[0] = Integer.toString(placements.get(i).getPlacement());
             player[1] = placements.get(i).getNickname();
-            if (placements.get(i).getPoints() > 1) player[2] = placements.get(i).getPoints() + " points";
-            else player[2] = placements.get(i).getPoints() + " point";
+            if (placements.get(i).getPoints() > 1) player[2] = placements.get(i).getPoints() + " pts";
+            else player[2] = placements.get(i).getPoints() + " pt";
             resultList.add(player);
         }
         return resultList;
