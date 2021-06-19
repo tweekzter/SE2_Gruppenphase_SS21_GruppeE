@@ -297,17 +297,29 @@ public class PlayField extends Fragment implements InRoundListener,
 
     private void callUbongo(View v) {
         if(map.checkSolved()) {
+            v.setClickable(false);
+
+            trayTile1.setVisibility(View.INVISIBLE);
+            trayTile2.setVisibility(View.INVISIBLE);
+            trayTile3.setVisibility(View.INVISIBLE);
+            TextView infobox = getView().findViewById(R.id.infobox);
+            infobox.setVisibility(View.VISIBLE);
+            infobox.setText(R.string.puzzle_solved);
+
             try {
                 client.puzzleDone(NO_BLUFF);
+
             } catch(IOException ex) {
                 Log.e("puzzle", "error while trying to send puzzleDone message to client");
                 Log.e("puzzle", ex.toString());
                 Toast.makeText(getActivity(), "Connection to the server failed", Toast.LENGTH_LONG).show();
-            }
 
-            v.setClickable(false);
-            TextView infobox = (TextView)getView().findViewById(R.id.infobox);
-            infobox.setText(R.string.puzzle_solved);
+                v.setClickable(true);
+                infobox.setVisibility(View.INVISIBLE);
+                trayTile1.setVisibility(View.VISIBLE);
+                trayTile2.setVisibility(View.VISIBLE);
+                trayTile3.setVisibility(View.VISIBLE);
+            }
         }
         else
             showCheatingDialog();
