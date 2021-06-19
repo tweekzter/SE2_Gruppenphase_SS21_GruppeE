@@ -28,4 +28,5 @@
     <string name="room_create_info">please enter max players and name!</string>
     <string name="remove_tile">Entfernen</string>
     <string name="puzzle_solved">Gut gemacht!</string>
+    <string name="solved_cheating">No risk - no fun …</string>
 </resources>
