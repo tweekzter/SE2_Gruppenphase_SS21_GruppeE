@@ -97,12 +97,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
             System.out.println("This is the cardnumber");
             map= XMLParser.parsexml(Maps.cardnumbers[pictures[6]], "cardnumber", is);
             System.out.println("map");
-            for(boolean[] a:map){
-                for(boolean c:a){
-                    System.out.print(c);
-                }
-                System.out.println();
-            }
+            
             currentmap=new Map(map);
 
             fillbuttonarray();
@@ -539,6 +534,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
 
     private void callUbongo() {
         try {
+            placetilesintilesarray(currenttile,currentpositionx,currentpositiony);
             if(checkSolved()) {
                 Log.d("tiles", "you're done mate");
                 client.puzzleDone(false);
