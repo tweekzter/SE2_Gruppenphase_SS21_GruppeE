@@ -62,22 +62,15 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
         imagesAnimationtiles2.start();
         imagesAnimationtiles3.start();
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                imagesAnimation.stop();
-                imagesAnimationtiles.stop();
-                imagesAnimationtiles2.stop();
-                imagesAnimationtiles3.stop();
-                try {
-                    test(result);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (SAXException e) {
-                    e.printStackTrace();
-                } catch (ParserConfigurationException e) {
-                    e.printStackTrace();
-                }
+        handler.postDelayed(() -> {
+            imagesAnimation.stop();
+            imagesAnimationtiles.stop();
+            imagesAnimationtiles2.stop();
+            imagesAnimationtiles3.stop();
+            try {
+                test(result);
+            } catch (IOException | SAXException | ParserConfigurationException e) {
+                e.printStackTrace();
             }
         }, 3000);
     }
@@ -88,47 +81,55 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
         TextView ergebnis = findViewById(R.id.Ergebnis);
         ImageView bildergebnis = findViewById(R.id.diceresult);
         int cardnumber = (int)(Math.random() * 36) + 1;
+        String lion = "Lion";
+        String hand = "Hand";
+        String antilope = "Antilope";
+        String snake = "Snake";
+        String elefant = "Elefant";
+        String bug = "Bug";
+
         switch (result) {
             case 1:
-                ergebnis.setText("Löwe");
-                Toast.makeText(this, "Lion", Toast.LENGTH_SHORT).show();
+                ergebnis.setText(lion);
+                Toast.makeText(this, lion, Toast.LENGTH_SHORT).show();
                 bildergebnis.setBackgroundResource(R.drawable.lion);
-                tiles("Lion",cardnumber);
+                tiles(lion,cardnumber);
                 break;
             case 2:
-                ergebnis.setText("Hand");
-                Toast.makeText(this, "Hand", Toast.LENGTH_SHORT).show();
+                ergebnis.setText(hand);
+                Toast.makeText(this, hand, Toast.LENGTH_SHORT).show();
                 bildergebnis.setBackgroundResource(R.drawable.hand);
-                tiles("Hand",cardnumber);
+                tiles(hand,cardnumber);
                 break;
             case 3:
-                ergebnis.setText("Antilope");
-                Toast.makeText(this, "Antilope", Toast.LENGTH_SHORT).show();
+                ergebnis.setText(antilope);
+                Toast.makeText(this, antilope, Toast.LENGTH_SHORT).show();
                 bildergebnis.setBackgroundResource(R.drawable.antilope);
-                tiles("Antilope",cardnumber);
+                tiles(antilope,cardnumber);
                 break;
             case 4:
-                ergebnis.setText("Schlange");
-                Toast.makeText(this, "Schlange", Toast.LENGTH_SHORT).show();
+                ergebnis.setText(snake);
+                Toast.makeText(this, snake, Toast.LENGTH_SHORT).show();
                 bildergebnis.setBackgroundResource(R.drawable.snake);
-                tiles("Snake",cardnumber);
+                tiles(snake,cardnumber);
                 break;
             case 5:
-                ergebnis.setText("Elefant");
-                Toast.makeText(this, "Elefant", Toast.LENGTH_SHORT).show();
+                ergebnis.setText(elefant);
+                Toast.makeText(this, elefant, Toast.LENGTH_SHORT).show();
                 bildergebnis.setBackgroundResource(R.drawable.elefant);
-                tiles("Elefant",cardnumber);
+                tiles(elefant,cardnumber);
                 break;
             case 6:
-                ergebnis.setText("Käfer");
-                Toast.makeText(this, "Käfer", Toast.LENGTH_SHORT).show();
+                ergebnis.setText(bug);
+                Toast.makeText(this, bug, Toast.LENGTH_SHORT).show();
                 bildergebnis.setBackgroundResource(R.drawable.bug);
-                tiles("Bug",cardnumber);
+                tiles(bug,cardnumber);
                 break;
+            default:
 
         }
     }
-    private void tiles(String value, int cardnumber) throws ParserConfigurationException, IOException, SAXException {
+    private void tiles(String value, int cardnumber) throws IOException{
         ImageView tileone= findViewById(R.id.tile1);
         ImageView tiletwo = findViewById(R.id.tile2);
         ImageView tilethree = findViewById(R.id.tile3);
@@ -140,17 +141,15 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
             is = getAssets().open("solutions.xml");
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(is, null);
-            System.out.println("This is the cardnumber" + cardnumber);
             String cardnumberinwords = Maps.cardnumbers[cardnumber];
             String[] result = processParsing(parser, value, cardnumberinwords);
 
-            int test1 = getpicturetotilenumber(result[0],tileone);
-            int test2 = getpicturetotilenumber(result[1],tiletwo);
-            int test3 = getpicturetotilenumber(result[2],tilethree);
+            int test1 = getpicturetotilenumber(result[0]);
+            int test2 = getpicturetotilenumber(result[1]);
+            int test3 = getpicturetotilenumber(result[2]);
             tileone.setBackgroundResource(test1);
             tiletwo.setBackgroundResource(test2);
             tilethree.setBackgroundResource(test3);
-            System.out.println("This is the cardnumber" + cardnumber);
             pictures = new int[7];
             pictures[0]= test1;
             pictures[1]=test2;
@@ -159,10 +158,8 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
             pictures[4] = Integer.parseInt(result[1]);
             pictures[5] = Integer.parseInt(result[2]);
             pictures[6] = cardnumber;
-        } catch (XmlPullParserException e) {
-
-
-        } catch (IOException e) {
+        } catch (XmlPullParserException | IOException e) {
+            e.printStackTrace();
 
         } finally {
             if(is != null)
@@ -171,7 +168,7 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
 
     }
 
-    private int getpicturetotilenumber (String tilenumber, ImageView tilepicture) {
+    private int getpicturetotilenumber (String tilenumber) {
 
         switch (tilenumber) {
             case "1":
@@ -198,6 +195,7 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
                 return R.drawable.blue;
             case "12":
                 return R.drawable.darkblue;
+            default:
 
         }
 
