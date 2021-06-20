@@ -3,6 +3,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -16,6 +17,8 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import com.example.se2_gruppenphase_ss21.Player;
 import com.example.se2_gruppenphase_ss21.PlayerArrayAdapter;
@@ -31,6 +34,7 @@ import com.example.se2_gruppenphase_ss21.networking.client.listeners.PostRoundLi
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -44,6 +48,8 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
     private View view;
     private ListView listView;
     private GameClient gameClient;
+    private List<String[]> playerList;
+    PlayerArrayAdapter playerArrayAdapter;
 
 
     private static final long CHALLENGE_TIMEOUT = 5000; // 5 seconds
@@ -78,10 +84,10 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
 
 
         listView = (ListView) view.findViewById(R.id.listView);
-        PlayerArrayAdapter playerArrayAdapter = new PlayerArrayAdapter(view.getContext(), R.layout.listview_row_layout);
+        playerArrayAdapter = new PlayerArrayAdapter(view.getContext(), R.layout.listview_row_layout);
         listView.setAdapter(playerArrayAdapter);
 
-        List<String[]> playerList = readData(placements);
+        playerList = readData(placements);
         for(String[] playerData:playerList){
             String position = playerData[0];
             String playername = playerData[1];
@@ -105,7 +111,7 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
         List<String[]> resultList = new ArrayList<>();
         for (int i = 0; i < placements.size(); i++) {
             String[] player = new String[3];
-            player[0] = Integer.toString(placements.get(i).getPlacement());
+            player[0] = Integer.toString(i+1);
             player[1] = placements.get(i).getNickname();
             Resources res = getResources();
             player[2] = res.getQuantityString(R.plurals.points, placements.get(i).getPoints(), placements.get(i).getPoints());
@@ -143,13 +149,13 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
 
                 if (wasCheating) {
                     if (name.getText().equals(accused)) {
-                        int p = Integer.valueOf(String.valueOf(points.getText()).split(" ",2)[0]);
+                        int p = Integer.parseInt(String.valueOf(points.getText()).split(" ",2)[0]);
                         p -= pointLoss;
                         points.setText(res.getQuantityString(R.plurals.points, p, p));
                     }
                 } else {
                     if (name.getText().equals(accuser)) {
-                        int p = Integer.valueOf(String.valueOf(points.getText()).split(" ",2)[0]);
+                        int p = Integer.parseInt(String.valueOf(points.getText()).split(" ",2)[0]);
                         p -= 1;
                         points.setText(res.getQuantityString(R.plurals.points, p, p));
                     }
@@ -172,6 +178,7 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
         );
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void timeIsUp(TimerView timer) {
         Handler handler = new Handler(Looper.getMainLooper());
@@ -194,6 +201,32 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
                 challenge.setVisibility(View.INVISIBLE);
             }
             view.findViewById(R.id.challengeTimer).setVisibility(View.INVISIBLE);
+            updateList();
         });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void updateList(){
+        ArrayList <PlayerPlacement> newPlayerslist = new ArrayList<>();
+        for (int i = 0; i < listView.getCount(); i++) {
+            View row = listView.getChildAt(i);
+            TextView name = (TextView) row.findViewById(R.id.playerName);
+            TextView points = (TextView) row.findViewById(R.id.points);
+            newPlayerslist.add(new PlayerPlacement(i, name.getText().toString(), Integer.parseInt(String.valueOf(points.getText()).split(" ",2)[0])));
+        }
+
+        newPlayerslist.sort(Comparator.comparingInt(PlayerPlacement::getPoints));
+
+        PlayerArrayAdapter newplayarray = new PlayerArrayAdapter(view.getContext(), R.layout.listview_row_layout);
+        playerList = readData(newPlayerslist);
+
+        for (String[] playerData:playerList){
+            String position = playerData[0];
+            String playername = playerData[1];
+            String points = playerData[2];
+            Player player = new Player(position, playername, points);
+            newplayarray.add(player);
+        }
+        listView.setAdapter(newplayarray);
     }
 }

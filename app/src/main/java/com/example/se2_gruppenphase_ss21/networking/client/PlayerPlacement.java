@@ -10,6 +10,12 @@ public class PlayerPlacement implements Parcelable {
     private long timeTaken;
     private boolean didFinnish;
 
+    public PlayerPlacement(int placement, String nickname, int points){
+        this.placement = placement;
+        this.nickname = nickname;
+        this.points = points;
+    }
+
     public PlayerPlacement(String serialized) {
         String[] split = serialized.split(":");
         nickname = split[0];
