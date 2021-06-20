@@ -190,12 +190,15 @@ public class PlayField extends Fragment implements InRoundListener,
 
     private void setUpTiles() {
         tile1 = new Tile(getContext().getAssets(), tileIDs[0], "standard");
+        tile1.setMap(map);
         setOriginalColor(tile1);
 
         tile2 = new Tile(getContext().getAssets(), tileIDs[1], "standard");
+        tile2.setMap(map);
         setOriginalColor(tile2);
 
         tile3 = new Tile(getContext().getAssets(), tileIDs[2], "standard");
+        tile3.setMap(map);
         setOriginalColor(tile3);
     }
 
@@ -263,6 +266,24 @@ public class PlayField extends Fragment implements InRoundListener,
                 getBox(table, x, y).setBackgroundColor(Color.TRANSPARENT);
     }
 
+    /**
+     * Handles touch events to position the TILEs.
+     *
+     * TILEs can be selected by touch and be dragged around. If a TILE comes to a stop on
+     * a valid position, it will automatically snap to the puzzle. This is displayed by
+     * a darker color tone. It will automatically detach by touch again.
+     *
+     * This implementation uses TempTiles for presentation only. This allows us to always show
+     * the TILE on top that has been moved recently. Although it might sound better to
+     * place an attached TILE at the bottom (as it sticks to the puzzle), it has turned out
+     * to be more ergonomic, to have the recently used TILE on top - even if attached.
+     * An attached TILE will always have a TempTile representation at the same position.
+     * So it will also be displayed accurately.
+     *
+     * @param v The view this touch event is called upon.
+     * @param event The touch event.
+     * @return true
+     */
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         int boxWidth = (int)(convertPixelsToDp(mapTable.getWidth()) / 5);
@@ -275,12 +296,10 @@ public class PlayField extends Fragment implements InRoundListener,
         y = Math.max(y, 0);
 
 
-        Box box = map.getBox(x,y);
-        Tile onLocation = box.getTempTile();
-
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
+            Box box = map.getBox(x,y);
             if(box.isCoveredByTempTile()) {
-                active = onLocation;
+                active = box.getTempTile();
                 detachTile(active);
                 cursorOffsetX = active.getHook().getX() - x;
                 cursorOffsetY = active.getHook().getY() - y;
@@ -298,7 +317,7 @@ public class PlayField extends Fragment implements InRoundListener,
             boolean posChanged = prevX != x || prevY != y;
 
             if(posChanged) {
-                active.placeTempOnMap(map, new Position(x + cursorOffsetX,y + cursorOffsetY));
+                active.placeTempOnMap(new Position(x + cursorOffsetX,y + cursorOffsetY));
                 drawMap();
             }
         }
@@ -385,7 +404,7 @@ public class PlayField extends Fragment implements InRoundListener,
     }
 
     private boolean attachTile(Tile tile) {
-        boolean attached = tile.attachToMap(map, tile.getHook());
+        boolean attached = tile.attachToMap();
         if(attached) {
             int attachedColor = ColorUtils.blendARGB(
                     tile.getColor(), Color.BLACK, 0.3f);
@@ -420,7 +439,7 @@ public class PlayField extends Fragment implements InRoundListener,
     private void registerTrayTileListener(TableLayout trayTile, Tile tile) {
         trayTile.setOnClickListener(v -> {
             active = tile;
-            active.placeTempOnMap(map, new Position(2,2));
+            active.placeTempOnMap(new Position(2,2));
             drawMap();
             v.setClickable(false);
             clearTrayTileMap(trayTile);
