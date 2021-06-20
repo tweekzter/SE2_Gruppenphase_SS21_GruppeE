@@ -142,6 +142,7 @@ public class OnlineRoomFragment extends Fragment {
             e.printStackTrace();
         }
 
+
         Button startGameButton = view.findViewById(R.id.button_ready_online);
         GameClient finalClient = client;
         startGameButton.setOnClickListener((View v) -> {
