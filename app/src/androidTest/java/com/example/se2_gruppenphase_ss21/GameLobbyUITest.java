@@ -7,8 +7,11 @@ import androidx.test.rule.ActivityTestRule;
 import com.example.se2_gruppenphase_ss21.menu.JoinRoomFragment;
 import com.example.se2_gruppenphase_ss21.menu.LocalGameFragment;
 import com.example.se2_gruppenphase_ss21.menu.MenuActivity;
+import com.example.se2_gruppenphase_ss21.menu.OnlineGameFragment;
+import com.example.se2_gruppenphase_ss21.menu.OnlineRoomFragment;
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
 import com.example.se2_gruppenphase_ss21.networking.MulticastReceiver;
+import com.example.se2_gruppenphase_ss21.networking.Util;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -30,9 +33,9 @@ public class GameLobbyUITest {
     private String userName;
     private String roomName;
 
+    // the activity that is tested
     @Rule
-    public ActivityTestRule<MenuActivity> mActivityRule =
-            new ActivityTestRule<>(MenuActivity.class);
+    public ActivityTestRule<MenuActivity> mActivityRule = new ActivityTestRule<>(MenuActivity.class);
 
     @Before
     public void initValidString() {
@@ -48,6 +51,7 @@ public class GameLobbyUITest {
     @Test
     public void testLocalGame() throws Exception {
 
+        // set up
         onView(withId(R.id.button_startGame)).perform(click());
         onView(withId(R.id.editTextUserName)).perform(typeText(userName));
         onView(withId(R.id.editTextUserName)).check(matches(withText("name")));
@@ -78,6 +82,43 @@ public class GameLobbyUITest {
         if (!(availableRoom.equals(roomName))) {
             throw new Exception();
         }
+    }
+
+    @Test
+    public void testOnlineGame() throws Exception {
+
+        // set up
+        onView(withId(R.id.button_startGame)).perform(click());
+        onView(withId(R.id.editTextUserName)).perform(typeText(userName));
+        onView(withId(R.id.editTextUserName)).check(matches(withText("name")));
+
+        onView(withId(R.id.button_onlineGame)).perform(click());
+
+        Fragment onlineGameFragment = OnlineGameFragment.newInstance(userName);
+        String nameFromOnlineGame = onlineGameFragment.getArguments().getString("param1");
+        onView(withId(R.id.editTextRoomNameOnline)).perform(typeText(roomName));
+
+        Util.sleep(1, 0);
+        onView(withId(R.id.button_createOnlineGame)).perform(click());
+        Util.sleep(1, 0);
+
+        Fragment onlineRoomFragment = OnlineRoomFragment.newInstance(nameFromOnlineGame, roomName);
+
+        String roomFromOnlineRoom = onlineRoomFragment.getArguments().getString("param2");
+        String nameFromOnlineRoom = onlineRoomFragment.getArguments().getString("param1");
+
+        if (!(nameFromOnlineGame.equals(userName))) {
+            throw new Exception();
+        }
+
+        if (!(roomFromOnlineRoom.equals(roomName))) {
+            throw new Exception();
+        }
+
+        if (!(nameFromOnlineRoom.equals(nameFromOnlineGame))) {
+            throw new Exception();
+        }
+
     }
 
 
