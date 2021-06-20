@@ -101,10 +101,19 @@ public class Tile {
     }
 
     /**
+     * Same as attachToMap(Map map, Position posOnMap)
+     * but with this objects current map and hook properties.
+     * @return true if successfully attached, false otherwise
+     */
+    public boolean attachToMap() {
+        return attachToMap(map, hook);
+    }
+
+    /**
      * Description see attachToMap(Position posOnMap)
      * @param x x-coordinate of map-hook
      * @param y y-coordinate of map-hook
-     * @return true if placed - false if not
+     * @return true if successfully attached, false otherwise
      */
     public boolean attachToMap(Map map, int x, int y) {
         return attachToMap(map, new Position(x,y));
@@ -120,7 +129,7 @@ public class Tile {
      * respective boxes (absolute position of the map boxes is calculated by using the hook point).
      *
      * @param posOnMap map-hook
-     * @return true if successful - false if not
+     * @return true if successfully attached, false otherwise
      */
     public boolean attachToMap(Map map, Position posOnMap) {
         if(isAttached) {
@@ -132,6 +141,10 @@ public class Tile {
         // check if tile is allowed to be placed
         if(!checkPlaceable(posOnMap))
             return false;
+
+        // match the TempTiles position
+        if(isPlaced && (posOnMap.x != hook.x || posOnMap.y != hook.y))
+            placeTempOnMap(map, posOnMap);
 
         // set absolute reference point of map
         hook = posOnMap;
@@ -149,6 +162,23 @@ public class Tile {
         return true;
     }
 
+    /**
+     * Same as placeTempOnMap(Map map, Position posOnMap) but with the current
+     * property for the map.
+     * @param posOnMap the reference position on the MAP.
+     * @return true if successfully placed, false otherwise.
+     */
+    public boolean placeTempOnMap(Position posOnMap) {
+        return placeTempOnMap(map, posOnMap);
+    }
+
+    /**
+     * Places a temporary TILE on the MAP. This is used to freely position the TILE.
+     * It is not relevant to the solution of the puzzle.
+     * @param map the MAP to be placed on.
+     * @param posOnMap the reference position on the MAP.
+     * @return true if successfully placed, false otherwise.
+     */
     public boolean placeTempOnMap(Map map, Position posOnMap) {
         if(isAttached) {
             Log.e("tile", "Tile must be detached before attaching!");
