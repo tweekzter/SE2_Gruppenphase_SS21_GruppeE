@@ -106,7 +106,10 @@ public class GameClientHandler implements Comparable<GameClientHandler> {
 
     public int undoLastPointGain() {
         points -= lastPointIncrease;
-        return lastPointIncrease;
+
+        int foo = lastPointIncrease;
+        lastPointIncrease = 0;
+        return foo;
     }
 
     public void close() {
