@@ -95,7 +95,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
             is = getAssets().open("maps.xml");
             //holt sich daten aus xml für das aussehen der map
 
-            map= XMLParser.parsexml(Maps.cardnumbers[pictures[6]], "cardnumber", is);
+            map= XMLParser.parsexml(Maps.cardnumbers[pictures[6]], is);
 
             currentmap=new Map(map);
 
@@ -152,9 +152,9 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
 
     //befuellt das tile array. tylearray dient dazu zu überprüfen ob an stelle x,y ein baustein liegt und wenn ja welcher
     protected void filltylearray(){
-        Tile empty = new Tile();
+        Tile none = new Tile();
         for (Tile[] tiles : tilearray) {
-            Arrays.fill(tiles, empty);
+            Arrays.fill(tiles, none);
         }
 
     }

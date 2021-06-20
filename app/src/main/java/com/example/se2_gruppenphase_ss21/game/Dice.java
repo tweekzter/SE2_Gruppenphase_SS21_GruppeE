@@ -141,9 +141,7 @@ public class Dice extends AppCompatActivity implements PreRoundListener {
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(is, null);
             String cardnumberinwords = Maps.cardnumbers[cardnumber];
-            System.out.println(cardnumberinwords + value);
             String[] result = processParsing(parser, value, cardnumberinwords);
-            System.out.println(result.toString());
             int test1 = getpicturetotilenumber(result[0]);
             int test2 = getpicturetotilenumber(result[1]);
             int test3 = getpicturetotilenumber(result[2]);
