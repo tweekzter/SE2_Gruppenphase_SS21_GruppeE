@@ -108,7 +108,7 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
             player[0] = Integer.toString(placements.get(i).getPlacement());
             player[1] = placements.get(i).getNickname();
             Resources res = getResources();
-            player[2] = res.getQuantityString(R.plurals.points, placements.get(i).getPoints());
+            player[2] = res.getQuantityString(R.plurals.points, placements.get(i).getPoints(), placements.get(i).getPoints());
             resultList.add(player);
         }
         return resultList;
@@ -145,13 +145,13 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
                     if (name.getText().equals(accused)) {
                         int p = Integer.valueOf(String.valueOf(points.getText()).split(" ",2)[0]);
                         p -= pointLoss;
-                        points.setText(res.getQuantityString(R.plurals.points, p));
+                        points.setText(res.getQuantityString(R.plurals.points, p, p));
                     }
                 } else {
                     if (name.getText().equals(accuser)) {
                         int p = Integer.valueOf(String.valueOf(points.getText()).split(" ",2)[0]);
                         p -= 1;
-                        points.setText(res.getQuantityString(R.plurals.points, p));
+                        points.setText(res.getQuantityString(R.plurals.points, p, p));
                     }
                 }
             }

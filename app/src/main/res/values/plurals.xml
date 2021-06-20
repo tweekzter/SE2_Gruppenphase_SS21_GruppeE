@@ -2,8 +2,7 @@
 <resources>
     <plurals
         name="points">
-        <item quantity="zero">0 pts </item>
-        <item quantity="one">1 pt </item>
+        <item quantity="one">%d pt </item>
         <item quantity="other">%d pts</item>
     </plurals>
 </resources>
