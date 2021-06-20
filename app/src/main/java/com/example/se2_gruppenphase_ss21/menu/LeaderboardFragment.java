@@ -207,7 +207,7 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void updateList(){
-        ArrayList newPlayerslist = new ArrayList();
+        ArrayList <PlayerPlacement> newPlayerslist = new ArrayList<PlayerPlacement>();
         for (int i = 0; i < listView.getCount(); i++) {
             View row = listView.getChildAt(i);
             TextView name = (TextView) row.findViewById(R.id.playerName);
