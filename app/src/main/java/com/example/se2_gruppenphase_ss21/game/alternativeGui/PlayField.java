@@ -1,4 +1,4 @@
-package com.example.se2_gruppenphase_ss21.game.alternativeGUI;
+package com.example.se2_gruppenphase_ss21.game.alternativeGui;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -95,14 +96,11 @@ public class PlayField extends Fragment implements InRoundListener,
         Log.d("puzzle", "mapID "+mapID);
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup puzzleContainer,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_playfield, puzzleContainer, false);
-        view.findViewById(R.id.table_playfield).setOnTouchListener(this);
-
         return view;
     }
 
@@ -119,9 +117,11 @@ public class PlayField extends Fragment implements InRoundListener,
      * For detailed information about the concept of the Puzzle,
      * refer to the class description.
      */
+    @SuppressLint("ClickableViewAccessibility")
     private void setUpPuzzle() {
 
         mapTable = getView().findViewById(R.id.table_playfield);
+        mapTable.setOnTouchListener(this);
         map = new Map(getContext().getAssets(), mapID, "5x5");
         // map will get drawn once server signals to start round
 
@@ -187,15 +187,17 @@ public class PlayField extends Fragment implements InRoundListener,
     }
 
     private void setUpTiles() {
-        tile1 = new Tile(getContext().getAssets(), tileIDs[0], "standard");
+        String category = "standard";
+
+        tile1 = new Tile(getContext().getAssets(), tileIDs[0], category);
         tile1.setMap(map);
         setOriginalColor(tile1);
 
-        tile2 = new Tile(getContext().getAssets(), tileIDs[1], "standard");
+        tile2 = new Tile(getContext().getAssets(), tileIDs[1], category);
         tile2.setMap(map);
         setOriginalColor(tile2);
 
-        tile3 = new Tile(getContext().getAssets(), tileIDs[2], "standard");
+        tile3 = new Tile(getContext().getAssets(), tileIDs[2], category);
         tile3.setMap(map);
         setOriginalColor(tile3);
     }
@@ -325,9 +327,8 @@ public class PlayField extends Fragment implements InRoundListener,
 
     private void callUbongo(View v) {
         if(map.checkSolved()) {
-            v.setClickable(false);
+            lockPuzzle();
 
-            setTrayBarVisibility(View.INVISIBLE);
             TextView infobox = getView().findViewById(R.id.infobox);
             infobox.setVisibility(View.VISIBLE);
             infobox.setText(R.string.puzzle_solved);
@@ -356,9 +357,8 @@ public class PlayField extends Fragment implements InRoundListener,
 
     @Override
     public void onCheatingPositiveClick(DialogFragment dialog) {
-        getView().findViewById(R.id.ubongo_button).setClickable(false);
+        lockPuzzle();
 
-        setTrayBarVisibility(View.INVISIBLE);
         TextView infobox = getView().findViewById(R.id.infobox);
         infobox.setVisibility(View.VISIBLE);
         infobox.setText(R.string.solved_cheating);
@@ -377,6 +377,17 @@ public class PlayField extends Fragment implements InRoundListener,
     @Override
     public void onCheatingCancelClick(DialogFragment dialog) {
         // do nix
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void lockPuzzle() {
+        Button ubongo = getView().findViewById(R.id.ubongo_button);
+        ubongo.setClickable(false);
+        ubongo.setBackgroundColor(Color.parseColor("#FFA6A6"));
+
+        setTrayBarVisibility(View.INVISIBLE);
+
+        mapTable.setOnTouchListener((v, e) -> false);
     }
 
     private void setTrayBarVisibility(int visibility) {
@@ -503,9 +514,7 @@ public class PlayField extends Fragment implements InRoundListener,
     public void timeIsUp(TimerView timer) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(() -> {
-            getView().findViewById(R.id.ubongo_button).setClickable(false);
-
-            setTrayBarVisibility(View.INVISIBLE);
+            lockPuzzle();
 
             TextView infobox = getView().findViewById(R.id.infobox);
             infobox.setVisibility(View.VISIBLE);

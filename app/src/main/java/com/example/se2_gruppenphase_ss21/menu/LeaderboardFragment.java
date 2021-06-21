@@ -17,7 +17,7 @@ import com.example.se2_gruppenphase_ss21.Player;
 import com.example.se2_gruppenphase_ss21.PlayerArrayAdapter;
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.game.Dice;
-import com.example.se2_gruppenphase_ss21.game.alternativeGUI.Puzzle;
+import com.example.se2_gruppenphase_ss21.game.alternativeGui.Puzzle;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 import com.example.se2_gruppenphase_ss21.networking.client.PlayerPlacement;
 
