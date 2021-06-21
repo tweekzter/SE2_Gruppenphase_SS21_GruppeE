@@ -9,5 +9,5 @@ Rollen:
 - **UI / Design** - lead: Pia | sub: Sabrina
 - **QA / Testing** - lead: Manfred | sub: Pia
 - **Developer** - lead: Alexander | sub: Manuel, Sören
-- **Dokumetation** - lead: Manuel | sub: Sabrina
+- **Dokumentation** - lead: Manuel | sub: Sabrina
 - **Creative Content** - lead: Sabrina

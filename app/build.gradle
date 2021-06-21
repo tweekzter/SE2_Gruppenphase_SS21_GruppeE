@@ -52,7 +52,7 @@ sonarqube {
         property "sonar.projectKey", "SE2_Gruppenphase_SS21"
         property "sonar.organization", "se2-gruppenphase-ss21"
         property "sonar.host.url", "https://sonarcloud.io"
-        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/coverage/debug/report.xml"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"
     }
 }
 
@@ -70,4 +70,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.esotericsoftware:kryonet:2.22.0-RC1'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
 }

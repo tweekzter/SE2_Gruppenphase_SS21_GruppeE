@@ -7,39 +7,36 @@
     android:background="@drawable/menu_activity_background2"
     tools:context=".menu.LeaderboardFragment">
 
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="357dp"
-        android:layout_height="454dp"
-        android:layout_marginTop="90dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+    <com.example.se2_gruppenphase_ss21.game.TimerView
+        android:id="@+id/challengeTimer"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="85dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!--Could be used as cheat button-->
-    <Button
-        android:id="@+id/buttonCheat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="79dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="95dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/buttonQuitGame"
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="357dp"
+        android:layout_height="354dp"
+        app:layout_constraintBottom_toTopOf="@+id/buttonQuitGame"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listView" />
+        app:layout_constraintTop_toBottomOf="@+id/challengeTimer" />
+
+    <!--Could be used as cheat button-->
 
     <Button
         android:id="@+id/buttonQuitGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="83dp"
         android:layout_marginBottom="95dp"
         android:text="Quit Game"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonCheat"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/listView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

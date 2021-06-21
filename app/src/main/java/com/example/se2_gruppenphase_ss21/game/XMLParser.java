@@ -8,8 +8,11 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class XMLParser {
+    private XMLParser(){
 
-    public static boolean[][] parsexml(String value, String cardnumber, InputStream is){
+    }
+
+    public static boolean[][] parsexml(String value, InputStream is){
         XmlPullParserFactory parserFactory;
         try {
             parserFactory = XmlPullParserFactory.newInstance();
@@ -21,13 +24,11 @@ public class XMLParser {
             boolean[][] result = processParsing(parser, value);
             return result;
 
-        } catch (XmlPullParserException e) {
-
-
-        } catch (IOException e) {
+        } catch (XmlPullParserException | IOException e) {
+             e.printStackTrace();
 
         }
-        return null;
+        return new boolean[0][0];
     }
 
 
@@ -35,11 +36,8 @@ public class XMLParser {
         int eventType = parser.getEventType();
         boolean card = false;
         boolean[][] map = new boolean[5][5];
-
-
+        
         while(eventType != XmlPullParser.END_DOCUMENT){
-
-
             String eltName = null;
             switch(eventType){
                 case XmlPullParser.START_TAG:
@@ -71,12 +69,6 @@ public class XMLParser {
 
                             eltName = parser.getName();
 
-                        }
-                        for(boolean[] x : map){
-                            for(Boolean y: x){
-                                System.out.print(y);
-                            }
-                            System.out.println();
                         }
 
                         return map;

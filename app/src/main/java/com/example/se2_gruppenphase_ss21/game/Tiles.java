@@ -94,15 +94,9 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
         try {
             is = getAssets().open("maps.xml");
             //holt sich daten aus xml für das aussehen der map
-            System.out.println("This is the cardnumber");
-            map= XMLParser.parsexml(Maps.cardnumbers[pictures[6]], "cardnumber", is);
-            System.out.println("map");
-            for(boolean[] a:map){
-                for(boolean c:a){
-                    System.out.print(c);
-                }
-                System.out.println();
-            }
+
+            map= XMLParser.parsexml(Maps.cardnumbers[pictures[6]], is);
+
             currentmap=new Map(map);
 
             fillbuttonarray();
@@ -115,9 +109,10 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
             ImageView secondtile = findViewById(R.id.secondtile);
             ImageView thirdtile = findViewById(R.id.thirdtile);
 
-            Tile tileone = new Tile(getApplicationContext().getAssets(), pictures[3], "standard");
-            Tile tiletwo = new Tile(getApplicationContext().getAssets(), pictures[4], "standard");
-            Tile tilethree = new Tile(getApplicationContext().getAssets(), pictures[5], "standard");
+            String categroy = "standard";
+            Tile tileone = new Tile(getApplicationContext().getAssets(), pictures[3], categroy);
+            Tile tiletwo = new Tile(getApplicationContext().getAssets(), pictures[4], categroy);
+            Tile tilethree = new Tile(getApplicationContext().getAssets(), pictures[5], categroy);
 
             firsttile.setBackgroundResource(pictures[0]);
             secondtile.setBackgroundResource(pictures[1]);
@@ -142,7 +137,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
             removetile = findViewById(R.id.removetile);
 
             Button ubongo = findViewById(R.id.ubongo);
-            // testing: ubongo.setOnClickListener(v -> beginPuzzle(System.currentTimeMillis() + 60000));
             ubongo.setOnClickListener(v -> callUbongo());
 
 
@@ -158,9 +152,9 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
 
     //befuellt das tile array. tylearray dient dazu zu überprüfen ob an stelle x,y ein baustein liegt und wenn ja welcher
     protected void filltylearray(){
-        Tile empty = new Tile();
+        Tile none = new Tile();
         for (Tile[] tiles : tilearray) {
-            Arrays.fill(tiles, empty);
+            Arrays.fill(tiles, none);
         }
 
     }
@@ -221,7 +215,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     private void activateonclicklisteneronmapbuttons(){
         for (Button[] buttons : buttonarray) {
             for (Button button : buttons) {
-                System.out.println("tile was klicked");
                 button.setOnClickListener(v -> gettilefromid(v.getId()));
             }
         }
@@ -262,7 +255,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
             if(i == 4){
                 currenttile = null;
                 tilepositions=null;
-                System.out.println("Placing from tile not possible");
                 Toast.makeText(this, "No space for placing tile", Toast.LENGTH_SHORT).show();
                 Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                 v.vibrate(100);
@@ -272,9 +264,9 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     }
 
     private void placetilesintilesarray(Tile tile, int x, int y){
-        Position[] tilepositions = tile.getShape();
+        Position[] positionsoftiles = tile.getShape();
         tile.setHook(new Position(x,y));
-        for(Position c : tilepositions){
+        for(Position c : positionsoftiles ){
             tilearray[y+c.getY()][x+c.getX()]=tile;
         }
     }
@@ -285,7 +277,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
         for(int i = 0; i<buttonarray.length; i++){
             for(int j = 0; j<buttonarray[i].length; j++){
                 if(buttonarray[i][j].getId()==id){
-                    System.out.println("Id found");
                     checkifthereisatile( i,  j);
                 }
             }
@@ -297,9 +288,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     // sets the currenttile, the positions and the coordinates
 
     private void checkifthereisatile(int i, int j){
-        if(tilearray[i][j].getShape().length<=0){
-
-        }else {
+        if(tilearray[i][j].getShape().length>0){
             if(currenttile!=null) {
                 currenttile.attachToMap(currentmap, currentpositionx, currentpositiony);
                 placetilesintilesarray(currenttile, currentpositionx, currentpositiony);
@@ -308,14 +297,13 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
                 addonclicklistener();
             }
             currenttile = tilearray[i][j];
-            System.out.println("this is the currenttile" + currenttile.getShape().toString());
+
 
             tilepositions= currenttile.getShape();
 
             currentpositionx = currenttile.getHook().getX();
             currentpositiony = currenttile.getHook().getY();
             detatchfromtilearray();
-            System.out.println(currentpositionx+"+" +currentpositiony);
 
         }
     }
@@ -414,13 +402,9 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     }
     private void movetileleft(){
         if(checkifplacable(currentpositionx-1, currentpositiony, tilepositions)){
-            System.out.println("its placable");
             drawmap();
             colorbuttons(currentpositionx-1, currentpositiony, tilepositions);
             currentpositionx--;
-
-        } else{
-            System.out.println("its not placable");
 
         }
 
@@ -530,7 +514,7 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     private boolean checkSolved() {
         for(int y=0; y < tilearray.length; y++) {
             for(int x=0; x < tilearray[0].length; x++) {
-                if(map[y][x] && tilearray[y][x] == empty)
+                if(map[y][x] && tilearray[y][x].getShape().length == 0)
                     return false;
             }
         }
@@ -539,11 +523,16 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
 
     private void callUbongo() {
         try {
+            if(currenttile!=null) {
+                placetilesintilesarray(currenttile, currentpositionx, currentpositiony);
+            }
             if(checkSolved()) {
                 Log.d("tiles", "you're done mate");
                 client.puzzleDone(false);
+                
             } else {
                 showCheatingDialog();
+
             }
         } catch(IOException ex) {
             Log.e("tiles", ex.toString());
