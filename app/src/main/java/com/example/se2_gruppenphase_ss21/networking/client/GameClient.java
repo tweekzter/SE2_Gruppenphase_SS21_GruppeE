@@ -3,6 +3,7 @@ package com.example.se2_gruppenphase_ss21.networking.client;
 import android.util.Log;
 
 import com.example.se2_gruppenphase_ss21.networking.AvailableRoom;
+import com.example.se2_gruppenphase_ss21.networking.ClientMessage;
 import com.example.se2_gruppenphase_ss21.networking.ServerMessage;
 import com.example.se2_gruppenphase_ss21.networking.SocketWrapper;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.*;
@@ -170,7 +171,7 @@ public class GameClient {
             throw new RuntimeException("Client is not connected");
         }
 
-        socket.sendString("ready " + isReady);
+        sendMessage(ClientMessage.READY, isReady);
     }
 
     /**
@@ -183,7 +184,7 @@ public class GameClient {
             throw new RuntimeException("Client is not connected");
         }
 
-        socket.sendString("finish_puzzle " + bluff);
+        sendMessage(ClientMessage.FINISHED_PUZZLE, bluff);
     }
 
     public void accuseOfCheating(String nick) throws IOException {
@@ -191,16 +192,29 @@ public class GameClient {
             throw new RuntimeException("Client is not connected");
         }
 
-        socket.sendString("accuse " + nick);
+        sendMessage(ClientMessage.ACCUSE, nick);
     }
 
     public void close() {
         try {
-            socket.sendString("disconnect");
+            sendMessage(ClientMessage.DISCONNECT);
             socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void sendMessage(ClientMessage type) throws IOException {
+        sendMessage(type, null);
+    }
+    public void sendMessage(ClientMessage type, Object arg) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        sb.append(type.name());
+        if(arg != null) {
+            sb.append(" ");
+            sb.append(arg);
+        }
+        socket.sendString(sb.toString());
     }
 
     /**

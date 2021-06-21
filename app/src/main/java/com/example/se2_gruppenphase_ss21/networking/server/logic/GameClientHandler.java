@@ -1,5 +1,6 @@
 package com.example.se2_gruppenphase_ss21.networking.server.logic;
 
+import com.example.se2_gruppenphase_ss21.networking.ClientMessage;
 import com.example.se2_gruppenphase_ss21.networking.ServerMessage;
 import com.example.se2_gruppenphase_ss21.networking.SocketWrapper;
 
@@ -36,23 +37,25 @@ public class GameClientHandler implements Comparable<GameClientHandler> {
                 while(true) {
                     String fromUser = client.readString();
                     String[] params = fromUser.split("\\s");
-                    switch (params[0]) {
-                        case "ready":
+
+                    ClientMessage type = Enum.valueOf(ClientMessage.class, params[0]);
+                    switch (type) {
+                        case READY:
                             isReady = Boolean.parseBoolean(params[1]);
                             room.broadcastReadyCount();
                             room.broadcastIfGameStart();
                             break;
-                        case "finish_puzzle":
+                        case FINISHED_PUZZLE:
                             finishedPuzzleAt = System.currentTimeMillis();
                             bluff = Boolean.parseBoolean(params[1]);
                             break;
-                        case "accuse":
+                        case ACCUSE:
                             GameClientHandler accused = room.getUserByNickname(params[1]);
                             if(!accused.didBluff())
                                 points--;
                             room.broadcastMessage(ServerMessage.ACCUSATION_RESULT, getNickname(), accused.getNickname(), accused.didBluff(), accused.didBluff() ? accused.undoLastPointGain() : 0);
                             break;
-                        case "disconnect":
+                        case DISCONNECT:
                             room.removeUser(this);
                             break;
                         default:
