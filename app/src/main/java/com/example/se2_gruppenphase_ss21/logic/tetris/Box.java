@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 /**
  * A BOX is the fundamental element that a MAP consists of.
- * A BOX can be part of the play field and can also be covered by a tile.
+ * A BOX can be part of the play field and be covered by an attached or an temporary placed TILE.
  *
  * @author Manuel Simon #00326348
  */

@@ -1,4 +1,4 @@
-package com.example.se2_gruppenphase_ss21.game.alternativeGUI;
+package com.example.se2_gruppenphase_ss21.game.alternativeGui;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,6 +6,8 @@ import com.example.se2_gruppenphase_ss21.R;
 import java.util.Objects;
 
 public class Puzzle extends AppCompatActivity {
+
+    @Override
     public void onCreate(Bundle savedInstances) {
         super.onCreate(savedInstances);
         setContentView(R.layout.activity_puzzle);

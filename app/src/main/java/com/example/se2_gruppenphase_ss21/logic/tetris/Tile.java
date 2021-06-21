@@ -13,23 +13,25 @@ import java.util.Arrays;
  * !! PLEASE do not make fundamental changes to the logic, without coordinating with the team !!
  *
  * The shape of a TILE is defined by Position data.
- * These positions are relative to a self defined reference point (0,0).
+ * These positions are relative to a defined reference point (0,0).
  * For example a vertical I-Element consisting of 3 blocks could look like that:
  * 0,0 - 0,1 - 0,2
- * But the same shape may also be achieved by - just locally displaced:
+ * But the same shape may also be achieved locally displaced by adding it to a MAP
+ * on a certain insert-position (hook), say (3,1):
  * 3,1 - 3,2 - 3,3
  *
- * A TILE always needs to be associated with a map. It also needs a map-hook
- * (absolute position on the map) to be placed on the map.
- *
- * The reference point is used to place the tile on the map. This means, it is the point
- * that will be attached to the hook point of the map (absolute coordinate of the map).
- * To place a TILE centric on the hook point, it is recommended to define the shape as follows:
+ * To place a TILE centric around the hook point, it is recommended to define the shape as follows:
  * 0,-1 - 0,0 - 0,1
  *
- * Furthermore the TILE can be attached to a map (or be removed).
- * It will check if the placement is valid and attach it if so.
- * You can also check the validity of a placement manually.
+ * A TILE always needs to be associated with a map. It also needs a map-hook
+ * (absolute insert position on the map) to be placed on the map.
+ *
+ * Furthermore the TILE can be attached to a map (or removed).
+ * It will check if placement is valid and attach it if so.
+ * TILEs can also be placed without respect to the puzzle-solution.
+ * This is achieved with the methods that refer to TempTimes (temporary placed TILEs).
+ * The position of TempTiles will always match the one of an optional attachment -
+ * to not have two separate placements on the MAP. The attach method takes care of that.
  *
  *
  * @author Manuel Simon #00326348
@@ -434,6 +436,7 @@ public class Tile {
      * Sets the absolute position of the map on which this TILE is inserted (with shape Position 0,0).
      * @param hook absolute position of map where tile is placed
      */
+    @Deprecated
     public void setHook(Position hook) {
         if(isAttached)
             detachFromMap();

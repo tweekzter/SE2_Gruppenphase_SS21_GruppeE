@@ -1,4 +1,4 @@
-package com.example.se2_gruppenphase_ss21.game.alternativeGUI;
+package com.example.se2_gruppenphase_ss21.game.alternativeGui;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -63,17 +63,18 @@ public class Dice extends Fragment implements PreRoundListener {
     private void animateDiceRoll(int diceResultPos) {
         TableLayout frame = getView().findViewById(R.id.frame_roll);
         float distance = frame.getWidth();
+        String animationType = "translationX";
 
-        ObjectAnimator rollAnimation = ObjectAnimator.ofFloat(frame, "translationX", distance);
+        ObjectAnimator rollAnimation = ObjectAnimator.ofFloat(frame, animationType, distance);
         rollAnimation.setInterpolator(new LinearInterpolator());
         rollAnimation.setDuration(animationTime/2);
 
-        ObjectAnimator reset = ObjectAnimator.ofFloat(frame, "translationX", 0f);
+        ObjectAnimator reset = ObjectAnimator.ofFloat(frame, animationType, 0f);
         reset.setInterpolator(new LinearInterpolator());
         reset.setDuration(0);
 
         float target = convertDpToPixels(diceResultPos);
-        ObjectAnimator stop = ObjectAnimator.ofFloat(frame, "translationX", target);
+        ObjectAnimator stop = ObjectAnimator.ofFloat(frame, animationType, target);
         stop.setInterpolator(new DecelerateInterpolator());
         stop.setDuration(animationTime/2);
 

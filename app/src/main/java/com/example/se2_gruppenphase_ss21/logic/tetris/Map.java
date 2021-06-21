@@ -15,12 +15,13 @@ import java.util.ArrayList;
  *
  * The functionality of this class includes:
  * -> setting up the play field
- * -> checking if a tile can be placed on a field
- * -> validating if riddle was solved successfully
+ * -> storing the placements of TILEs on the MAP (via a BOX array).
+ * -> checking if a TILE can be placed on a field
+ * -> validating if puzzle was solved successfully
  *
  * The indices of the map are defined as follows:
- * -> X represents horizontal axis (beginning with 0)
- * -> Y represents vertical axis (beginning with 0)
+ * -> X represents horizontal axis (starting with 0)
+ * -> Y represents vertical axis (starting with 0)
  *
  *
  * @author Manuel Simon #00326348
