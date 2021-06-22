@@ -3,12 +3,15 @@ package com.example.se2_gruppenphase_ss21;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -72,20 +75,17 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player> {
         return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
-    public void sort() {
-        sort(new MostPointsComparator());
-    }
-
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void notifyDataSetChanged() {
-        sort();
+        playerList.sort(new MostPointsComparator());
         super.notifyDataSetChanged();
     }
 
     class MostPointsComparator implements Comparator<Player> {
         @Override
         public int compare(Player p1, Player p2) {
-            return (Integer.valueOf(p2.getPoints()) - Integer.valueOf(p1.getPoints()));
+            return (Integer.valueOf(p2.getPoints().split(" ", 2)[0]) - Integer.valueOf(p1.getPoints().split(" ", 2)[0]));
         }
     }
 

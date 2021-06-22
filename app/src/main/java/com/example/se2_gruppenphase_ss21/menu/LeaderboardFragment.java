@@ -136,6 +136,7 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
         startActivity(intent);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void accusationResult(String accuser, String accused, boolean wasCheating, int pointLoss) {
         Handler handler = new Handler(Looper.getMainLooper());
