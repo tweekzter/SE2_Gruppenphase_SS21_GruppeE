@@ -41,6 +41,7 @@ public class OnlineRoomFragment extends Fragment {
     // Handler for creating post delay threads for updating ui
     Handler handler = new Handler();
 
+
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -166,7 +167,6 @@ public class OnlineRoomFragment extends Fragment {
                 getParentFragmentManager().beginTransaction().replace(R.id.container, OnlineGameFragment.newInstance(userName)).addToBackStack("tag").commit();
             }
         });
-
 
 
         return view;
