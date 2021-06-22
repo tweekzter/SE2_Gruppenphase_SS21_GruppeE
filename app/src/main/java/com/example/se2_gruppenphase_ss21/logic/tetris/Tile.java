@@ -51,13 +51,13 @@ public class Tile {
     public Tile() {
         super();
     }
+
     /**
-     * Initializes a TILE and creates its shape with the given parameters.
+     * Initializes a TILE and creates its shape with the given POSITION parameters.
      * @param pos Shape coordinates
      */
     public Tile(Position... pos) {
-        for(Position p : pos)
-            shape.add(p);
+        shape.addAll(Arrays.asList(pos));
     }
 
     /**
@@ -85,8 +85,7 @@ public class Tile {
      * @param pos
      */
     public void addPoints(Position... pos) {
-        for(Position p : pos)
-            shape.add(p);
+        shape.addAll(Arrays.asList(pos));
     }
 
     /**
@@ -298,7 +297,7 @@ public class Tile {
      * Has no effect if TILE is already attached to a MAP.
      */
     public void rotateRight() {
-        if(shape.size() == 0 || isAttached)
+        if(shape.isEmpty() || isAttached)
             return;
 
         invertY();
@@ -310,7 +309,7 @@ public class Tile {
      * Has no effect if TILE is already attached to a MAP.
      */
     public void rotateLeft() {
-        if(shape.size() == 0 || isAttached)
+        if(shape.isEmpty() || isAttached)
             return;
 
         invertX();
@@ -321,7 +320,7 @@ public class Tile {
      * Mirrors the TILE vertically
      */
     public void mirrorVertically() {
-        if(shape.size() == 0 || isAttached)
+        if(shape.isEmpty() || isAttached)
             return;
 
         invertY();
@@ -331,7 +330,7 @@ public class Tile {
      * Mirrors the TILE horizontally
      */
     public void mirrorHorizontally() {
-        if(shape.size() == 0 || isAttached)
+        if(shape.isEmpty() || isAttached)
             return;
 
         invertX();
@@ -342,7 +341,7 @@ public class Tile {
      * @param map
      */
     public void rotateRightAndPlace(Map map) {
-        if(shape.size() == 0 || isAttached)
+        if(shape.isEmpty() || isAttached)
             return;
         removeTempFromMap();
         rotateRight();
@@ -354,7 +353,7 @@ public class Tile {
      * @param map
      */
     public void rotateLeftAndPlace(Map map) {
-        if(shape.size() == 0 || isAttached)
+        if(shape.isEmpty() || isAttached)
             return;
         removeTempFromMap();
         rotateLeft();
@@ -366,7 +365,7 @@ public class Tile {
      * @param map
      */
     public void mirrorHorizontallyAndPlace(Map map) {
-        if(shape.size() == 0 || isAttached)
+        if(shape.isEmpty() || isAttached)
             return;
         removeTempFromMap();
         mirrorHorizontally();
@@ -378,7 +377,7 @@ public class Tile {
      * @param map
      */
     public void mirrorVerticallyAndPlace(Map map) {
-        if(shape.size() == 0 || isAttached)
+        if(shape.isEmpty() || isAttached)
             return;
         removeTempFromMap();
         mirrorVertically();
@@ -433,6 +432,7 @@ public class Tile {
     }
 
     /**
+     * @deprecated hook shall only be assigned via place and attach methods
      * Sets the absolute position of the map on which this TILE is inserted (with shape Position 0,0).
      * @param hook absolute position of map where tile is placed
      */
@@ -548,12 +548,12 @@ public class Tile {
         if(!shape.isEmpty())
             shape = new ArrayList<>();
 
-        boolean[][] shape = StructureLoader.getStructure(mgr, id, "tile", category);
-        int midY = shape.length / 2;
-        int midX = shape[0].length / 2;
-        for(int y=0; y < shape.length; y++) {
-            for(int x=0; x < shape[y].length; x++) {
-                if(shape[y][x])
+        boolean[][] shapeMatrix = StructureLoader.getStructure(mgr, id, "tile", category);
+        int midY = shapeMatrix.length / 2;
+        int midX = shapeMatrix[0].length / 2;
+        for(int y=0; y < shapeMatrix.length; y++) {
+            for(int x=0; x < shapeMatrix[y].length; x++) {
+                if(shapeMatrix[y][x])
                     addPoint(x-midX,y-midY);
             }
         }

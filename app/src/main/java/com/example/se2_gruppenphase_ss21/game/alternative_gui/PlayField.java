@@ -1,4 +1,4 @@
-package com.example.se2_gruppenphase_ss21.game.alternativeGui;
+package com.example.se2_gruppenphase_ss21.game.alternative_gui;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -48,11 +48,11 @@ import java.util.ArrayList;
  * and MAP computations (eg. if the puzzle is solved correctly, keeping track
  * where tiles are positioned, etc).
  *
- * The Puzzle consists of a MAP, three TILES which are initially positioned in the
- * top tray bar and can be selected to be positioned inside the MAP.
+ * The Puzzle consists of a MAP and three TILES which are initially positioned in the
+ * top tray bar and can be selected to be placed inside the MAP.
  * TILEs can be moved via touch inputs and be rotated or mirrored with respective buttons.
  *
- * A timer will run out, indicating the remaining time to solve the Puzzle.
+ * A timer indicates the remaining time to solve the Puzzle.
  *
  * @author Manuel Simon #00326348
  */

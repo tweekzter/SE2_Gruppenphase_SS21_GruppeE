@@ -1,4 +1,4 @@
-package com.example.se2_gruppenphase_ss21.game.alternativeGui;
+package com.example.se2_gruppenphase_ss21.game.alternative_gui;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
