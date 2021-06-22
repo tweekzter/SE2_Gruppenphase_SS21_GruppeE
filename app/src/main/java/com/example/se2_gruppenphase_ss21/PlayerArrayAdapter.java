@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class PlayerArrayAdapter extends ArrayAdapter<Player> {
@@ -70,4 +71,22 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player> {
     public Bitmap decodeToBitmap(byte[] decodedByte){
         return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
+
+    public void sort() {
+        sort(new MostPointsComparator());
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        sort();
+        super.notifyDataSetChanged();
+    }
+
+    class MostPointsComparator implements Comparator<Player> {
+        @Override
+        public int compare(Player p1, Player p2) {
+            return (Integer.valueOf(p2.getPoints()) - Integer.valueOf(p1.getPoints()));
+        }
+    }
+
 }

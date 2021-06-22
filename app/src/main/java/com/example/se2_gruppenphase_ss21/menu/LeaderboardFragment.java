@@ -82,7 +82,6 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
         gameClient = GameClient.getActiveGameClient();
         gameClient.registerListener(this);
 
-
         listView = (ListView) view.findViewById(R.id.listView);
         playerArrayAdapter = new PlayerArrayAdapter(view.getContext(), R.layout.listview_row_layout);
         listView.setAdapter(playerArrayAdapter);
@@ -106,6 +105,7 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
 
         return view;
     }
+
     //List of players
     private List<String[]> readData(ArrayList<PlayerPlacement> placements) {
         List<String[]> resultList = new ArrayList<>();
@@ -135,6 +135,7 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
         Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
     }
+
     @Override
     public void accusationResult(String accuser, String accused, boolean wasCheating, int pointLoss) {
         Handler handler = new Handler(Looper.getMainLooper());
@@ -161,6 +162,8 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
                     }
                 }
             }
+
+            playerArrayAdapter.notifyDataSetChanged();
         });
     }
     @Override
