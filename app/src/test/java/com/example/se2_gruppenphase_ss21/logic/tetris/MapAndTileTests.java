@@ -188,7 +188,7 @@ public class MapAndTileTests {
     }
 
     @Test
-    public void testAttachToMap() {
+    public void testAttachToMapValid() {
         boolean[][] standardStructure = {
                 { false, false, false, false },
                 { false, true,  true,  false },
@@ -235,5 +235,107 @@ public class MapAndTileTests {
 
         assertFalse(tile.attachToMap(map, 3,1));
         assertNotEquals(tile, map.getBox(3,1).getTile());
+    }
+
+    @Test
+    public void testAttachToMapOutOfBoundsWithNegativeHook() {
+        boolean[][] standardStructure = {
+                { false, false, false, false },
+                { false, true,  true,  false },
+                { false, true,  true,  false },
+                { false, false, false, false }
+        };
+
+        Map map = new Map(standardStructure);
+        Tile tile = new Tile(new Position(0,0), new Position(1,0));
+
+        assertFalse(tile.attachToMap(map, -1,1));
+        assertNotEquals(tile, map.getBox(0,1).getTile());
+    }
+
+    @Test
+    public void testPlaceTempOnMapWithNegativeHook() {
+        boolean[][] standardStructure = {
+                { false, false, false, false },
+                { false, true,  true,  false },
+                { false, true,  true,  false },
+                { false, false, false, false }
+        };
+
+        Map map = new Map(standardStructure);
+        Tile tile = new Tile(new Position(0,0), new Position(1,0));
+
+        assertTrue(tile.placeTempOnMap(map, new Position(-1,1)));
+        assertEquals(tile, map.getBox(0,1).getTempTile());
+    }
+
+    @Test
+    public void testPlaceOnMapBlocked() {
+        boolean[][] standardStructure = {
+                { false, false, false, false },
+                { false, true,  true,  false },
+                { false, true,  true,  false },
+                { false, false, false, false }
+        };
+
+        Map map = new Map(standardStructure);
+        Tile tile = new Tile(new Position(0,0), new Position(1,0));
+
+        assertTrue(tile.placeTempOnMap(map, new Position(0,1)));
+        assertEquals(tile, map.getBox(0,1).getTempTile());
+        assertEquals(tile, map.getBox(1,1).getTempTile());
+    }
+
+    @Test
+    public void testPlaceOnMapWithinPlayField() {
+        boolean[][] standardStructure = {
+                { false, false, false, false },
+                { false, true,  true,  false },
+                { false, true,  true,  false },
+                { false, false, false, false }
+        };
+
+        Map map = new Map(standardStructure);
+        Tile tile = new Tile(new Position(0,0), new Position(1,0));
+
+        assertTrue(tile.placeTempOnMap(map, new Position(1,1)));
+        assertEquals(tile, map.getBox(1,1).getTempTile());
+        assertEquals(tile, map.getBox(2,1).getTempTile());
+    }
+
+    @Test
+    public void testRemoveToMapValid() {
+        boolean[][] standardStructure = {
+                { false, false, false, false },
+                { false, true,  true,  false },
+                { false, true,  true,  false },
+                { false, false, false, false }
+        };
+
+        Map map = new Map(standardStructure);
+        Tile tile = new Tile(new Position(0,0), new Position(1,0));
+
+        assertTrue(tile.attachToMap(map, 1,1));
+        assertTrue(tile.detachFromMap());
+        assertNotEquals(tile, map.getBox(1,1).getTile());
+
+    }
+
+    @Test
+    public void testPlaceOnMapAndRemove() {
+        boolean[][] standardStructure = {
+                { false, false, false, false },
+                { false, true,  true,  false },
+                { false, true,  true,  false },
+                { false, false, false, false }
+        };
+
+        Map map = new Map(standardStructure);
+        Tile tile = new Tile(new Position(0,0), new Position(1,0));
+
+        assertTrue(tile.placeTempOnMap(map, new Position(1,1)));
+        assertTrue(tile.removeTempFromMap());
+        assertNotEquals(tile, map.getBox(1,1).getTempTile());
+        assertNotEquals(tile, map.getBox(2,1).getTempTile());
     }
 }

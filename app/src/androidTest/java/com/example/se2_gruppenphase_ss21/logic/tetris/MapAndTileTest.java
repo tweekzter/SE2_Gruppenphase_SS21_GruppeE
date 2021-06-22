@@ -8,7 +8,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
@@ -72,6 +71,20 @@ public class MapAndTileTest {
     }
 
     @Test
+    public void testInvalidStructureLoad() {
+        boolean[][] standardStructure = {
+                { false, false, false, false },
+                { false, true,  true,  false },
+                { false, true,  true,  false },
+                { false, false, false, false }
+        };
+
+        boolean[][] actual = StructureLoader.getStructure(appContext.getAssets(), -12, "map", "5x5");
+
+        assertArrayEquals(standardStructure, actual);
+    }
+
+    @Test
     public void testCenterTile() {
         Tile tile = new Tile();
         tile.addPoint(0,0); tile.addPoint(1,1);
@@ -106,17 +119,4 @@ public class MapAndTileTest {
         assertArrayEquals(expected3, actual);
     }
 
-    @Test
-    public void testInvalidStructureLoad() {
-        boolean[][] standardStructure = {
-                { false, false, false, false },
-                { false, true,  true,  false },
-                { false, true,  true,  false },
-                { false, false, false, false }
-        };
-
-        boolean[][] actual = StructureLoader.getStructure(appContext.getAssets(), -12, "map", "5x5");
-
-        assertArrayEquals(standardStructure, actual);
-    }
 }
