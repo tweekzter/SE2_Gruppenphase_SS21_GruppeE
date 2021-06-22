@@ -68,20 +68,7 @@ public class StructureLoader {
             JSONObject tp = obj.getJSONObject(type);
             JSONArray cat = tp.getJSONArray(category);
 
-            for(int i=0; i < cat.length(); i++) {
-                JSONObject struct = cat.getJSONObject(i);
-                if(struct.getInt("id") == id) {
-                    JSONArray line = struct.getJSONArray("shape");
-                    for(int y = 0; y < line.length(); y++) {
-                        JSONArray row = line.getJSONArray(y);
-                        for(int x = 0; x < row.length(); x++) {
-                            if(structure == null)
-                                structure = new boolean[line.length()][row.length()];
-                            structure[y][x] = row.getBoolean(x);
-                        }
-                    }
-                }
-            }
+            structure = extractStructureFromJSON(cat, id);
 
             if(structure == null || structure[0] == null)
                 throw new NullPointerException("loading structure failed");
@@ -89,6 +76,27 @@ public class StructureLoader {
         } catch(JSONException | NullPointerException ex) {
             Log.e("pool", ex.toString());
             return standardStructure;
+        }
+
+        return structure;
+    }
+
+    private static boolean[][] extractStructureFromJSON(JSONArray cat, int id) throws JSONException {
+        boolean[][] structure = null;
+
+        for(int i=0; i < cat.length(); i++) {
+            JSONObject struct = cat.getJSONObject(i);
+            if(struct.getInt("id") == id) {
+                JSONArray line = struct.getJSONArray("shape");
+                for(int y = 0; y < line.length(); y++) {
+                    JSONArray row = line.getJSONArray(y);
+                    for(int x = 0; x < row.length(); x++) {
+                        if(structure == null)
+                            structure = new boolean[line.length()][row.length()];
+                        structure[y][x] = row.getBoolean(x);
+                    }
+                }
+            }
         }
 
         return structure;
