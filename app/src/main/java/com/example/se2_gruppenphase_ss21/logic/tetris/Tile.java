@@ -259,7 +259,7 @@ public class Tile {
         for(Position pos : shape) {
             int x = posOnMap.x + pos.x;
             int y = posOnMap.y + pos.y;
-            if(x > map.getMaxX() || y > map.getMaxY())
+            if(x > map.getMaxX() || y > map.getMaxY() || x < 0 || y < 0)
                 return true;
         }
         return false;

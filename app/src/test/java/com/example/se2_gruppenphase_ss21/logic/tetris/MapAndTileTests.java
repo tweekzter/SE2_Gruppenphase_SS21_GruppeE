@@ -304,7 +304,7 @@ public class MapAndTileTests {
     }
 
     @Test
-    public void testRemoveToMapValid() {
+    public void testDetachFromMapValid() {
         boolean[][] standardStructure = {
                 { false, false, false, false },
                 { false, true,  true,  false },
@@ -337,5 +337,68 @@ public class MapAndTileTests {
         assertTrue(tile.removeTempFromMap());
         assertNotEquals(tile, map.getBox(1,1).getTempTile());
         assertNotEquals(tile, map.getBox(2,1).getTempTile());
+    }
+
+    @Test
+    public void testCollidesWithBorderTrue() {
+        boolean[][] standardStructure = {
+                { false, false, false, false },
+                { false, true,  true,  false },
+                { false, true,  true,  false },
+                { false, false, false, false }
+        };
+
+        Map map = new Map(standardStructure);
+        Tile tile = new Tile(new Position(0,0), new Position(1,1));
+        tile.setMap(map);
+
+        assertTrue(tile.collidesWithMapBorder(new Position(-1,1)));
+        assertTrue(tile.collidesWithMapBorder(new Position(3,1)));
+        assertTrue(tile.collidesWithMapBorder(new Position(1,-1)));
+        assertTrue(tile.collidesWithMapBorder(new Position(1,3)));
+    }
+
+    @Test
+    public void testRotateRight() {
+        Tile tile = new Tile(new Position(-1,0), new Position(0,0),
+                new Position(1,0), new Position(1,1));
+        Position[] expected = { new Position(1,-1), new Position(1,0),
+                new Position(1,1), new Position(0,1) };
+
+        tile.rotateRight();
+        assertArrayEquals(expected, tile.getShape());
+    }
+
+    @Test
+    public void testRotateLeft() {
+        Tile tile = new Tile(new Position(1,-1), new Position(1,0),
+                new Position(1,1), new Position(0,1));
+        Position[] expected = { new Position(-1,0), new Position(0,0),
+                new Position(1,0), new Position(1,1) };
+
+        tile.rotateLeft();
+        assertArrayEquals(expected, tile.getShape());
+    }
+
+    @Test
+    public void testMirrorHorizontally() {
+        Tile tile = new Tile(new Position(-1,0), new Position(0,0),
+                new Position(1,0), new Position(1,1));
+        Position[] expected = { new Position(1,0), new Position(0,0),
+                new Position(-1,0), new Position(-1,1) };
+
+        tile.mirrorHorizontally();
+        assertArrayEquals(expected, tile.getShape());
+    }
+
+    @Test
+    public void testMirrorVertically() {
+        Tile tile = new Tile(new Position(-1,0), new Position(0,0),
+                new Position(1,0), new Position(1,1));
+        Position[] expected = { new Position(-1,1), new Position(0,1),
+                new Position(1,1), new Position(1,0) };
+
+        tile.mirrorVertically();
+        assertArrayEquals(expected, tile.getShape());
     }
 }
