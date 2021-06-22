@@ -39,7 +39,7 @@ public class Dice extends Fragment implements PreRoundListener {
     private static final int ELEPHANT_ID = 3;
     private static final int BUG_ID = 4;
     private static final int HAND_ID = 5;
-    //private static final int SNAKE_ID = 6;
+    private static final int SNAKE_ID = 6;
 
     private int diceResultID = ANTILOPE_ID;
     private int animationTime = 5000;
@@ -108,7 +108,7 @@ public class Dice extends Fragment implements PreRoundListener {
         }
     }
 
-    private String getResultName() {
+    private String getDiceResultName() {
         switch(diceResultID) {
             case(ANTILOPE_ID):
                 return "antilope";
@@ -140,7 +140,7 @@ public class Dice extends Fragment implements PreRoundListener {
 
             int mapID = new Random().nextInt(35) + 2;
             int[] tiles = StructureLoader.getTiles(getContext().getAssets(),
-                    getResultName(), mapID);
+                    getDiceResultName(), mapID);
 
             Bundle bundle = new Bundle();
             bundle.putIntArray("tiles", tiles);
