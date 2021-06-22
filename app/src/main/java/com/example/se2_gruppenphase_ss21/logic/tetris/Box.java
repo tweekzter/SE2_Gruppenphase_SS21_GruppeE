@@ -115,11 +115,8 @@ public class Box extends Position {
 
         Box compare = (Box) o;
 
-        if(compare.x != x || compare.y != y
-                || compare.tile != tile || !tempTiles.equals(compare.tempTiles))
-            return false;
-
-        return true;
+        return compare.x == x && compare.y == y
+                && compare.tile == tile && tempTiles.equals(compare.tempTiles);
     }
 
     /**
@@ -129,8 +126,8 @@ public class Box extends Position {
     @Override
     public int hashCode() {
         int hashTemps = 0;
-        for(Tile tile : tempTiles)
-            hashTemps += tile.hashCode();
+        for(Tile t : tempTiles)
+            hashTemps += t.hashCode();
 
         return super.hashCode() + tile.hashCode() + hashTemps;
     }

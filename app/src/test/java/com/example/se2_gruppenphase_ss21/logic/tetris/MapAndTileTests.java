@@ -5,6 +5,12 @@ import static org.junit.Assert.*;
 
 
 public class MapAndTileTests {
+    private static final boolean[][] standardStructure = {
+            { false, false, false, false },
+            { false, true,  true,  false },
+            { false, true,  true,  false },
+            { false, false, false, false }
+    };
 
     /**
      * visual test
@@ -189,12 +195,6 @@ public class MapAndTileTests {
 
     @Test
     public void testAttachToMapValid() {
-        boolean[][] standardStructure = {
-                { false, false, false, false },
-                { false, true,  true,  false },
-                { false, true,  true,  false },
-                { false, false, false, false }
-        };
 
         Map map = new Map(standardStructure);
         Tile tile = new Tile(new Position(0,0), new Position(1,0));
@@ -202,16 +202,11 @@ public class MapAndTileTests {
         assertTrue(tile.attachToMap(map, 1,1));
         assertEquals(tile, map.getBox(1,1).getTile());
         assertEquals(tile, map.getBox(2,1).getTile());
+        assertTrue(tile.isAttached());
     }
 
     @Test
     public void testAttachToMapBlocked() {
-        boolean[][] standardStructure = {
-                { false, false, false, false },
-                { false, true,  true,  false },
-                { false, true,  true,  false },
-                { false, false, false, false }
-        };
 
         Map map = new Map(standardStructure);
         Tile tile = new Tile(new Position(0,0), new Position(1,0));
@@ -219,16 +214,11 @@ public class MapAndTileTests {
         assertFalse(tile.attachToMap(map, 2,1));
         assertNotEquals(tile, map.getBox(2,1).getTile());
         assertNotEquals(tile, map.getBox(3,1).getTile());
+        assertFalse(tile.isAttached());
     }
 
     @Test
     public void testAttachToMapOutOfBounds() {
-        boolean[][] standardStructure = {
-                { false, false, false, false },
-                { false, true,  true,  false },
-                { false, true,  true,  false },
-                { false, false, false, false }
-        };
 
         Map map = new Map(standardStructure);
         Tile tile = new Tile(new Position(0,0), new Position(1,0));
@@ -239,12 +229,6 @@ public class MapAndTileTests {
 
     @Test
     public void testAttachToMapOutOfBoundsWithNegativeHook() {
-        boolean[][] standardStructure = {
-                { false, false, false, false },
-                { false, true,  true,  false },
-                { false, true,  true,  false },
-                { false, false, false, false }
-        };
 
         Map map = new Map(standardStructure);
         Tile tile = new Tile(new Position(0,0), new Position(1,0));
@@ -255,28 +239,17 @@ public class MapAndTileTests {
 
     @Test
     public void testPlaceTempOnMapWithNegativeHook() {
-        boolean[][] standardStructure = {
-                { false, false, false, false },
-                { false, true,  true,  false },
-                { false, true,  true,  false },
-                { false, false, false, false }
-        };
 
         Map map = new Map(standardStructure);
         Tile tile = new Tile(new Position(0,0), new Position(1,0));
 
         assertTrue(tile.placeTempOnMap(map, new Position(-1,1)));
         assertEquals(tile, map.getBox(0,1).getTempTile());
+
     }
 
     @Test
     public void testPlaceOnMapBlocked() {
-        boolean[][] standardStructure = {
-                { false, false, false, false },
-                { false, true,  true,  false },
-                { false, true,  true,  false },
-                { false, false, false, false }
-        };
 
         Map map = new Map(standardStructure);
         Tile tile = new Tile(new Position(0,0), new Position(1,0));
@@ -288,12 +261,6 @@ public class MapAndTileTests {
 
     @Test
     public void testPlaceOnMapWithinPlayField() {
-        boolean[][] standardStructure = {
-                { false, false, false, false },
-                { false, true,  true,  false },
-                { false, true,  true,  false },
-                { false, false, false, false }
-        };
 
         Map map = new Map(standardStructure);
         Tile tile = new Tile(new Position(0,0), new Position(1,0));
@@ -307,12 +274,6 @@ public class MapAndTileTests {
 
     @Test
     public void testNoTileAttachedOrPlacedInBox() {
-        boolean[][] standardStructure = {
-                { false, false, false, false },
-                { false, true,  true,  false },
-                { false, true,  true,  false },
-                { false, false, false, false }
-        };
 
         Map map = new Map(standardStructure);
 
@@ -322,15 +283,13 @@ public class MapAndTileTests {
 
     @Test
     public void testDetachFromMapValid() {
-        boolean[][] standardStructure = {
-                { false, false, false, false },
-                { false, true,  true,  false },
-                { false, true,  true,  false },
-                { false, false, false, false }
-        };
 
         Map map = new Map(standardStructure);
         Tile tile = new Tile(new Position(0,0), new Position(1,0));
+
+        assertFalse(tile.detachFromMap());
+        tile.placeTempOnMap(map, new Position(1,1));
+        assertFalse(tile.detachFromMap());
 
         assertTrue(tile.attachToMap(map, 1,1));
         assertTrue(tile.detachFromMap());
@@ -341,12 +300,6 @@ public class MapAndTileTests {
 
     @Test
     public void testDetachFromMapInvalid() {
-        boolean[][] standardStructure = {
-                { false, false, false, false },
-                { false, true,  true,  false },
-                { false, true,  true,  false },
-                { false, false, false, false }
-        };
 
         Map map = new Map(standardStructure);
         Tile tile = new Tile(new Position(0,0), new Position(1,0));
@@ -360,12 +313,6 @@ public class MapAndTileTests {
 
     @Test
     public void testPlaceOnMapAndRemove() {
-        boolean[][] standardStructure = {
-                { false, false, false, false },
-                { false, true,  true,  false },
-                { false, true,  true,  false },
-                { false, false, false, false }
-        };
 
         Map map = new Map(standardStructure);
         Tile tile = new Tile(new Position(0,0), new Position(1,0));
@@ -378,12 +325,6 @@ public class MapAndTileTests {
 
     @Test
     public void testCollidesWithBorderTrue() {
-        boolean[][] standardStructure = {
-                { false, false, false, false },
-                { false, true,  true,  false },
-                { false, true,  true,  false },
-                { false, false, false, false }
-        };
 
         Map map = new Map(standardStructure);
         Tile tile = new Tile(new Position(0,0), new Position(1,1));
@@ -404,6 +345,12 @@ public class MapAndTileTests {
 
         tile.rotateRight();
         assertArrayEquals(expected, tile.getShape());
+
+        Tile tile2 = new Tile(new Position(0,0), new Position(0,1));
+        tile2.attachToMap(new Map(standardStructure), 1,1);
+        tile.rotateRight();
+        Position[] expected2 = { new Position(0,0), new Position(0,1) };
+        assertArrayEquals(expected2, tile2.getShape());
     }
 
     @Test
@@ -415,6 +362,12 @@ public class MapAndTileTests {
 
         tile.rotateLeft();
         assertArrayEquals(expected, tile.getShape());
+
+        Tile tile2 = new Tile(new Position(0,0), new Position(0,1));
+        tile2.attachToMap(new Map(standardStructure), 1,1);
+        tile.rotateLeft();
+        Position[] expected2 = { new Position(0,0), new Position(0,1) };
+        assertArrayEquals(expected2, tile2.getShape());
     }
 
     @Test
@@ -426,6 +379,13 @@ public class MapAndTileTests {
 
         tile.mirrorHorizontally();
         assertArrayEquals(expected, tile.getShape());
+
+        Tile tile2 = new Tile(new Position(0,0), new Position(0,1));
+        tile2.attachToMap(new Map(standardStructure), 1,1);
+        tile.mirrorHorizontally();
+        Position[] expected2 = { new Position(0,0), new Position(0,1) };
+        assertArrayEquals(expected2, tile2.getShape());
+        tile2.detachFromMap();
     }
 
     @Test
@@ -437,6 +397,13 @@ public class MapAndTileTests {
 
         tile.mirrorVertically();
         assertArrayEquals(expected, tile.getShape());
+
+        Tile tile2 = new Tile(new Position(0,0), new Position(0,1));
+        tile2.attachToMap(new Map(standardStructure), 1,1);
+        tile.mirrorVertically();
+        Position[] expected2 = { new Position(0,0), new Position(0,1) };
+        assertArrayEquals(expected2, tile2.getShape());
+        tile2.detachFromMap();
     }
 
     @Test
@@ -454,14 +421,8 @@ public class MapAndTileTests {
 
     @Test
     public void testSetUpMap() {
-        boolean[][] setup = {
-                { false, false, false, false },
-                { false, true,  true,  false },
-                { false, true,  true,  false },
-                { false, false, false, false }
-        };
 
-        Map map = new Map(setup);
+        Map map = new Map(standardStructure);
 
         boolean[][] actual = new boolean[map.getSizeY()][map.getSizeX()];
         for(int y=0; y < map.getSizeY(); y++) {
@@ -471,18 +432,13 @@ public class MapAndTileTests {
             }
         }
 
-        assertArrayEquals(setup, actual);
+        assertArrayEquals(standardStructure, actual);
     }
 
     @Test
     public void testCheckSolved() {
-        boolean[][] mapMatrix = {
-                { false, false, false, false },
-                { false, true,  true,  false },
-                { false, true,  true,  false },
-                { false, false, false, false }
-        };
-        Map map = new Map(mapMatrix);
+
+        Map map = new Map(standardStructure);
 
         assertFalse(map.checkSolved());
 
@@ -499,13 +455,8 @@ public class MapAndTileTests {
 
     @Test
     public void testTempTileOverlappingAndRemoving() {
-        boolean[][] mapMatrix = {
-                { false, false, false, false },
-                { false, true,  true,  false },
-                { false, true,  true,  false },
-                { false, false, false, false }
-        };
-        Map map = new Map(mapMatrix);
+
+        Map map = new Map(standardStructure);
 
         Tile tile1 = new Tile(new Position(1,1));
         Tile tile2 = new Tile(new Position(1,1));
@@ -523,5 +474,18 @@ public class MapAndTileTests {
         assertTrue(tile2.removeTempFromMap());
         assertFalse(tile1.removeTempFromMap());
         assertNull(map.getBox(1,1).getTempTile());
+    }
+
+    @Test
+    public void testPlaceableNull() {
+        Map map = new Map(standardStructure);
+        Tile tile = new Tile(new Position(0,0), new Position(1,1));
+        tile.setMap(map);
+        assertFalse(tile.checkPlaceable(new Position(-1,0)));
+        assertFalse(tile.checkPlaceable(new Position(3,0)));
+        assertFalse(tile.checkPlaceable(new Position(0,-1)));
+        assertFalse(tile.checkPlaceable(new Position(0,3)));
+        tile.setMap(null);
+        assertFalse(tile.checkPlaceable(new Position(-1,0)));
     }
 }
