@@ -301,6 +301,23 @@ public class MapAndTileTests {
         assertTrue(tile.placeTempOnMap(map, new Position(1,1)));
         assertEquals(tile, map.getBox(1,1).getTempTile());
         assertEquals(tile, map.getBox(2,1).getTempTile());
+        assertTrue(map.getBox(1,1).isCoveredByTempTile());
+        assertTrue(map.getBox(2,1).isCoveredByTempTile());
+    }
+
+    @Test
+    public void testNoTileAttachedOrPlacedInBox() {
+        boolean[][] standardStructure = {
+                { false, false, false, false },
+                { false, true,  true,  false },
+                { false, true,  true,  false },
+                { false, false, false, false }
+        };
+
+        Map map = new Map(standardStructure);
+
+        assertFalse(map.getBox(0,0).isCoveredByTile());
+        assertFalse(map.getBox(0,0).isCoveredByTempTile());
     }
 
     @Test
@@ -318,6 +335,26 @@ public class MapAndTileTests {
         assertTrue(tile.attachToMap(map, 1,1));
         assertTrue(tile.detachFromMap());
         assertNotEquals(tile, map.getBox(1,1).getTile());
+        assertFalse(map.getBox(1,1).isCoveredByTile());
+
+    }
+
+    @Test
+    public void testDetachFromMapInvalid() {
+        boolean[][] standardStructure = {
+                { false, false, false, false },
+                { false, true,  true,  false },
+                { false, true,  true,  false },
+                { false, false, false, false }
+        };
+
+        Map map = new Map(standardStructure);
+        Tile tile = new Tile(new Position(0,0), new Position(1,0));
+
+        assertTrue(tile.placeTempOnMap(map, new Position(1,1)));
+        assertFalse(tile.detachFromMap());
+        assertNotEquals(tile, map.getBox(1,1).getTile());
+        assertFalse(map.getBox(1,1).isCoveredByTile());
 
     }
 
@@ -458,5 +495,33 @@ public class MapAndTileTests {
         tile2.detachFromMap();
         tile2.attachToMap(map,1,2);
         assertTrue(map.checkSolved());
+    }
+
+    @Test
+    public void testTempTileOverlappingAndRemoving() {
+        boolean[][] mapMatrix = {
+                { false, false, false, false },
+                { false, true,  true,  false },
+                { false, true,  true,  false },
+                { false, false, false, false }
+        };
+        Map map = new Map(mapMatrix);
+
+        Tile tile1 = new Tile(new Position(1,1));
+        Tile tile2 = new Tile(new Position(1,1));
+        Tile tile3 = new Tile(new Position(1,1));
+
+        tile1.placeTempOnMap(map, new Position(0,0));
+        tile2.placeTempOnMap(map, new Position(0,0));
+        tile3.placeTempOnMap(map, new Position(0,0));
+
+        assertEquals(tile3, map.getBox(1,1).getTempTile());
+        assertTrue(tile1.removeTempFromMap());
+        assertEquals(tile3, map.getBox(1,1).getTempTile());
+        assertTrue(tile3.removeTempFromMap());
+        assertEquals(tile2, map.getBox(1,1).getTempTile());
+        assertTrue(tile2.removeTempFromMap());
+        assertFalse(tile1.removeTempFromMap());
+        assertNull(map.getBox(1,1).getTempTile());
     }
 }
