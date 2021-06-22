@@ -401,4 +401,62 @@ public class MapAndTileTests {
         tile.mirrorVertically();
         assertArrayEquals(expected, tile.getShape());
     }
+
+    @Test
+    public void testCenterTile() {
+        Tile tile = new Tile();
+        tile.addPoint(0,0);
+        tile.addPoint(1,1);
+        tile.addPoint(2,2);
+
+        Position[] expected = { new Position(-1,-1), new Position(0,0), new Position(1,1) };
+        tile.centerTile();
+
+        assertArrayEquals(expected, tile.getShape());
+    }
+
+    @Test
+    public void testSetUpMap() {
+        boolean[][] setup = {
+                { false, false, false, false },
+                { false, true,  true,  false },
+                { false, true,  true,  false },
+                { false, false, false, false }
+        };
+
+        Map map = new Map(setup);
+
+        boolean[][] actual = new boolean[map.getSizeY()][map.getSizeX()];
+        for(int y=0; y < map.getSizeY(); y++) {
+            for(int x=0; x < map.getSizeX(); x++) {
+                if(map.getBox(x,y).isField())
+                    actual[y][x] = true;
+            }
+        }
+
+        assertArrayEquals(setup, actual);
+    }
+
+    @Test
+    public void testCheckSolved() {
+        boolean[][] mapMatrix = {
+                { false, false, false, false },
+                { false, true,  true,  false },
+                { false, true,  true,  false },
+                { false, false, false, false }
+        };
+        Map map = new Map(mapMatrix);
+
+        assertFalse(map.checkSolved());
+
+        Tile tile1 = new Tile(new Position(0,0), new Position(1,0));
+        Tile tile2 = new Tile(new Position(0,0), new Position(1,0));
+        tile1.attachToMap(map, 1,1);
+        assertFalse(map.checkSolved());
+        tile2.attachToMap(map,2,2);
+        assertFalse(map.checkSolved());
+        tile2.detachFromMap();
+        tile2.attachToMap(map,1,2);
+        assertTrue(map.checkSolved());
+    }
 }
