@@ -49,6 +49,25 @@ public class MapAndTileTest {
     }
 
     @Test
+    public void loadTile() {
+        Tile tile = new Tile(appContext.getAssets(), 0, "standard");
+
+        assertEquals(-1, tile.getShape()[0].x);
+        assertEquals(0, tile.getShape()[1].x);
+
+        tile.setTileByID(appContext.getAssets(), 2, "standard");
+
+        assertEquals(0, tile.getShape()[0].x);
+        assertEquals(-1, tile.getShape()[0].y);
+        assertEquals(-1, tile.getShape()[1].x);
+        assertEquals(0, tile.getShape()[1].y);
+        assertEquals(0, tile.getShape()[2].x);
+        assertEquals(0, tile.getShape()[2].y);
+        assertEquals(1, tile.getShape()[3].x);
+        assertEquals(0, tile.getShape()[3].y);
+    }
+
+    @Test
     public void testMapLoad() {
         Map map = new Map(appContext.getAssets(), -1, "5x5");
 
