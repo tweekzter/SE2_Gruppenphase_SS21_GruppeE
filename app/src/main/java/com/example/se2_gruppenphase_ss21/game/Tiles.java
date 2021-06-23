@@ -56,7 +56,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
     int[] pictures;
 
     Tile[][] tilearray = new Tile[5][5];
-    Tile empty = new Tile();
 
     Button up;
     Button down;
@@ -163,8 +162,6 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
 
         for(int i=0; i<map.length;i++){
             for(int j=0; j<map[i].length; j++){
-                // hier eventuell ein oder einfügen wenn die farbe eines gewissen tiles entspricht
-                //durch buttonarray ersetzten
                 if(tilearray[i][j].getShape().length<=0){
                     if(map[i][j]){
                         buttonarray[i][j].setBackgroundColor(Color.WHITE);
@@ -509,8 +506,10 @@ public class Tiles extends AppCompatActivity implements InRoundListener,
 
     @Override
     public void onCheatingCancelClick(DialogFragment dialog) {
-
+        //USELESS?
     }
+
+
     private boolean checkSolved() {
         for(int y=0; y < tilearray.length; y++) {
             for(int x=0; x < tilearray[0].length; x++) {
