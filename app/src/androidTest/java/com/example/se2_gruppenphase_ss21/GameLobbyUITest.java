@@ -34,6 +34,7 @@ public class GameLobbyUITest {
     @Rule
     public ActivityTestRule<MenuActivity> mActivityRule = new ActivityTestRule<>(MenuActivity.class);
 
+
     @Before
     public void initValidString() {
         userName = "name";

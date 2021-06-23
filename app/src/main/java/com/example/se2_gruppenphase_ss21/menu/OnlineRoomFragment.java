@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.example.se2_gruppenphase_ss21.R;
 import com.example.se2_gruppenphase_ss21.game.Dice;
-import com.example.se2_gruppenphase_ss21.game.alternativeGui.Puzzle;
+import com.example.se2_gruppenphase_ss21.game.alternative_gui.Puzzle;
 import com.example.se2_gruppenphase_ss21.networking.client.GameClient;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.GeneralGameListener;
 import com.example.se2_gruppenphase_ss21.networking.client.listeners.PreGameListener;

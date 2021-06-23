@@ -8,6 +8,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+
 import static org.junit.Assert.*;
 
 /**
@@ -35,16 +36,71 @@ public class MapAndTileTest {
 
     @Test
     public void testGetStructure() {
-        boolean[][] result = StructureLoader.getStructure(appContext.getAssets(), -1, "map", "5x6");
+        boolean[][] result = StructureLoader.getStructure(appContext.getAssets(), -1, "map", "5x5");
 
         boolean[][] expected = {
-                { false, false, false, false },
+                { false, true,  true,  false },
                 { false, true,  true,  false },
                 { false, true,  true,  false },
                 { false, false, false, false }
         };
 
         assertArrayEquals(expected, result);
+    }
+
+    @Test
+    public void loadTile() {
+        Tile tile = new Tile(appContext.getAssets(), 0, "standard");
+
+        assertEquals(-1, tile.getShape()[0].x);
+        assertEquals(0, tile.getShape()[1].x);
+
+        tile.setTileByID(appContext.getAssets(), 2, "standard");
+
+        assertEquals(0, tile.getShape()[0].x);
+        assertEquals(-1, tile.getShape()[0].y);
+        assertEquals(-1, tile.getShape()[1].x);
+        assertEquals(0, tile.getShape()[1].y);
+        assertEquals(0, tile.getShape()[2].x);
+        assertEquals(0, tile.getShape()[2].y);
+        assertEquals(1, tile.getShape()[3].x);
+        assertEquals(0, tile.getShape()[3].y);
+    }
+
+    @Test
+    public void testMapLoad() {
+        Map map = new Map(appContext.getAssets(), -1, "5x5");
+
+        boolean[][] expected = {
+                { false, true,  true,  false },
+                { false, true,  true,  false },
+                { false, true,  true,  false },
+                { false, false, false, false }
+        };
+
+        boolean[][] actual = new boolean[map.getSizeY()][map.getSizeX()];
+        for(int y=0; y < map.getSizeY(); y++) {
+            for(int x=0; x < map.getSizeX(); x++) {
+                if(map.getBox(x,y).isField())
+                    actual[y][x] = true;
+            }
+        }
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void testInvalidStructureLoad() {
+        boolean[][] standardStructure = {
+                { false, false, false, false },
+                { false, true,  true,  false },
+                { false, true,  true,  false },
+                { false, false, false, false }
+        };
+
+        boolean[][] actual = StructureLoader.getStructure(appContext.getAssets(), -12, "map", "5x5");
+
+        assertArrayEquals(standardStructure, actual);
     }
 
     @Test
@@ -81,4 +137,5 @@ public class MapAndTileTest {
         int[] expected3 = { 2, 6, 5 };
         assertArrayEquals(expected3, actual);
     }
+
 }

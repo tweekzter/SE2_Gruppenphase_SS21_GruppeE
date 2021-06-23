@@ -101,4 +101,34 @@ public class Box extends Position {
     public boolean removeTempTile(Tile tile) {
         return tempTiles.remove(tile);
     }
+
+    /**
+     * Checks if two BOXes share the same attribute values.
+     * This could be useful, if you design a second layer of boxes.
+     * @param o Box to compare with
+     * @return true if attributes match, otherwise false
+     */
+    @Override
+    public boolean equals(Object o) {
+        if(!(o instanceof Box))
+            return false;
+
+        Box compare = (Box) o;
+
+        return compare.x == x && compare.y == y
+                && compare.tile == tile && tempTiles.equals(compare.tempTiles);
+    }
+
+    /**
+     * Produces some hashcode based on its superclass and attributes.
+     * @return the same value if objects are equal.
+     */
+    @Override
+    public int hashCode() {
+        int hashTemps = 0;
+        for(Tile t : tempTiles)
+            hashTemps += t.hashCode();
+
+        return super.hashCode() + tile.hashCode() + hashTemps;
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.se2_gruppenphase_ss21.game.alternativeGui;
+package com.example.se2_gruppenphase_ss21.game.alternative_gui;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -48,11 +48,11 @@ import java.util.ArrayList;
  * and MAP computations (eg. if the puzzle is solved correctly, keeping track
  * where tiles are positioned, etc).
  *
- * The Puzzle consists of a MAP, three TILES which are initially positioned in the
- * top tray bar and can be selected to be positioned inside the MAP.
+ * The Puzzle consists of a MAP and three TILES which are initially positioned in the
+ * top tray bar and can be selected to be placed inside the MAP.
  * TILEs can be moved via touch inputs and be rotated or mirrored with respective buttons.
  *
- * A timer will run out, indicating the remaining time to solve the Puzzle.
+ * A timer indicates the remaining time to solve the Puzzle.
  *
  * @author Manuel Simon #00326348
  */
@@ -325,6 +325,13 @@ public class PlayField extends Fragment implements InRoundListener,
         return true;
     }
 
+    /**
+     * Checks if the Puzzle has been solved.
+     * If so, it sends a message to the server. Otherwise a popup appears,
+     * asking if you want to cheat.
+     *
+     * @param v Reference to the button.
+     */
     private void callUbongo(View v) {
         if(map.checkSolved()) {
             lockPuzzle();
@@ -463,6 +470,12 @@ public class PlayField extends Fragment implements InRoundListener,
         return pixels / getContext().getResources().getDisplayMetrics().density;
     }
 
+    /**
+     * This listener-method is called when the server is ready to start the round.
+     * It sets up the view to allow the user to interact with the puzzle.
+     *
+     * @param finishUntil the time until the puzzle should be finished
+     */
     @Override
     public void beginPuzzle(long finishUntil) {
         Handler handler = new Handler(Looper.getMainLooper());
@@ -482,6 +495,11 @@ public class PlayField extends Fragment implements InRoundListener,
         });
     }
 
+    /**
+     * Called by the server when round is over and results have been distributed.
+     *
+     * @param placements an ArrayList that holds the player placements.
+     */
     @Override
     public void placementsReceived(ArrayList<PlayerPlacement> placements) {
         TimerView timer = getView().findViewById(R.id.timerView2);
@@ -510,6 +528,12 @@ public class PlayField extends Fragment implements InRoundListener,
         );
     }
 
+    /**
+     * Called by the TIMER when time is up.
+     * Sets the view to prevent further interaction.
+     *
+     * @param timer A reference to the Timer instance.
+     */
     @Override
     public void timeIsUp(TimerView timer) {
         Handler handler = new Handler(Looper.getMainLooper());

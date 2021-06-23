@@ -10,8 +10,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Loader class for JSON data structure file.
@@ -70,20 +68,7 @@ public class StructureLoader {
             JSONObject tp = obj.getJSONObject(type);
             JSONArray cat = tp.getJSONArray(category);
 
-            for(int i=0; i < cat.length(); i++) {
-                JSONObject struct = cat.getJSONObject(i);
-                if(struct.getInt("id") == id) {
-                    JSONArray line = struct.getJSONArray("shape");
-                    for(int y = 0; y < line.length(); y++) {
-                        JSONArray row = line.getJSONArray(y);
-                        for(int x = 0; x < row.length(); x++) {
-                            if(structure == null)
-                                structure = new boolean[line.length()][row.length()];
-                            structure[y][x] = row.getBoolean(x);
-                        }
-                    }
-                }
-            }
+            structure = extractStructureFromJSON(cat, id);
 
             if(structure == null || structure[0] == null)
                 throw new NullPointerException("loading structure failed");
@@ -91,6 +76,27 @@ public class StructureLoader {
         } catch(JSONException | NullPointerException ex) {
             Log.e("pool", ex.toString());
             return standardStructure;
+        }
+
+        return structure;
+    }
+
+    private static boolean[][] extractStructureFromJSON(JSONArray cat, int id) throws JSONException {
+        boolean[][] structure = null;
+
+        for(int i=0; i < cat.length(); i++) {
+            JSONObject struct = cat.getJSONObject(i);
+            if(struct.getInt("id") == id) {
+                JSONArray line = struct.getJSONArray("shape");
+                for(int y = 0; y < line.length(); y++) {
+                    JSONArray row = line.getJSONArray(y);
+                    for(int x = 0; x < row.length(); x++) {
+                        if(structure == null)
+                            structure = new boolean[line.length()][row.length()];
+                        structure[y][x] = row.getBoolean(x);
+                    }
+                }
+            }
         }
 
         return structure;
@@ -105,7 +111,7 @@ public class StructureLoader {
      * @return the IDs of the Tiles as an int-array
      */
     public static int[] getTiles(AssetManager mgr, String diceResult, int mapID) {
-        int tiles[] = { 2, 3, 4 };
+        int[] tiles = { 2, 3, 4 };
 
         try {
             if(json == null)
@@ -145,7 +151,6 @@ public class StructureLoader {
             int read = is.read(buffer);
             if (size != read)
                 throw new IOException("failure at reading file");
-            is.close();
 
             json = new String(buffer, StandardCharsets.UTF_8);
         }

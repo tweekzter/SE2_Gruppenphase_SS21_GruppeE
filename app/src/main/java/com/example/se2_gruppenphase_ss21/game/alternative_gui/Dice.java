@@ -1,4 +1,4 @@
-package com.example.se2_gruppenphase_ss21.game.alternativeGui;
+package com.example.se2_gruppenphase_ss21.game.alternative_gui;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
@@ -22,7 +22,14 @@ import com.example.se2_gruppenphase_ss21.logic.tetris.StructureLoader;
 
 import java.util.Random;
 
-
+/**
+ * This class represents the DICE.
+ * It receives a result from the server and displays it via an roll animation.
+ * Then a random map will be picked and the corresponding TILEs
+ * (according to dice) will be selected and passed to the PlayField.
+ *
+ * @author Manuel Simon #00326348
+ */
 public class Dice extends Fragment implements PreRoundListener {
 
     private GameClient client;
@@ -39,7 +46,7 @@ public class Dice extends Fragment implements PreRoundListener {
     private static final int ELEPHANT_ID = 3;
     private static final int BUG_ID = 4;
     private static final int HAND_ID = 5;
-    //private static final int SNAKE_ID = 6;
+    private static final int SNAKE_ID = 6;
 
     private int diceResultID = ANTILOPE_ID;
     private int animationTime = 5000;
@@ -108,7 +115,7 @@ public class Dice extends Fragment implements PreRoundListener {
         }
     }
 
-    private String getResultName() {
+    private String getDiceResultName() {
         switch(diceResultID) {
             case(ANTILOPE_ID):
                 return "antilope";
@@ -140,7 +147,7 @@ public class Dice extends Fragment implements PreRoundListener {
 
             int mapID = new Random().nextInt(35) + 2;
             int[] tiles = StructureLoader.getTiles(getContext().getAssets(),
-                    getResultName(), mapID);
+                    getDiceResultName(), mapID);
 
             Bundle bundle = new Bundle();
             bundle.putIntArray("tiles", tiles);
