@@ -5,6 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.se2_gruppenphase_ss21.R;
 import java.util.Objects;
 
+/**
+ * Represents the Puzzle and contains of the DICE and the PLAYFIELD itself.
+ * Dice & PlayField are represented in separate fragments.
+ *
+ * @author Manuel Simon #00326348
+ */
 public class Puzzle extends AppCompatActivity {
 
     @Override

@@ -392,6 +392,8 @@ public class PlayField extends Fragment implements InRoundListener,
         ubongo.setClickable(false);
         ubongo.setBackgroundColor(Color.parseColor("#FFA6A6"));
 
+        getView().findViewById(R.id.remove).setClickable(false);
+
         setTrayBarVisibility(View.INVISIBLE);
 
         mapTable.setOnTouchListener((v, e) -> false);
