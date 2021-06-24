@@ -567,10 +567,8 @@
 
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="380dp"
         android:layout_height="95dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/table_playfield"
         app:layout_constraintEnd_toEndOf="parent"
