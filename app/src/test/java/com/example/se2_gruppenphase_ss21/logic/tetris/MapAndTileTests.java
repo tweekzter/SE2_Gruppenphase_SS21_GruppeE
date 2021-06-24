@@ -570,4 +570,17 @@ public class MapAndTileTests {
         Position[] expected2 = { new Position(0,0), new Position(0,1) };
         assertArrayEquals(expected2, tile2.getShape());
     }
+
+    @Test
+    public void testGetTilesOnMap() {
+        Map map = new Map(standardStructure);
+        Tile t1 = new Tile(new Position(0,0));
+        Tile t2 = new Tile(new Position(0,1));
+        Tile t3 = new Tile(new Position(1,0));
+        t1.attachToMap(map, 1,1);
+        t2.attachToMap(map, 1,1);
+        t3.attachToMap(map, 1,1);
+        Tile[] expected = { t1, t2, t3 };
+        assertArrayEquals(expected, map.getTile());
+    }
 }
