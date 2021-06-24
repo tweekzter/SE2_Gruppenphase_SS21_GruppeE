@@ -34,6 +34,7 @@ import com.example.se2_gruppenphase_ss21.networking.client.listeners.PostRoundLi
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -220,6 +221,8 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
         }
 
         newPlayerslist.sort(Comparator.comparingInt(PlayerPlacement::getPoints));
+
+        Collections.reverse(newPlayerslist);
 
         PlayerArrayAdapter newplayarray = new PlayerArrayAdapter(view.getContext(), R.layout.listview_row_layout);
         playerList = readData(newPlayerslist);
