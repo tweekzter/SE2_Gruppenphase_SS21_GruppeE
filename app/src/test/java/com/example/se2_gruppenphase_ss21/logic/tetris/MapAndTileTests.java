@@ -270,6 +270,12 @@ public class MapAndTileTests {
         assertEquals(tile, map.getBox(2,1).getTempTile());
         assertTrue(map.getBox(1,1).isCoveredByTempTile());
         assertTrue(map.getBox(2,1).isCoveredByTempTile());
+
+        assertTrue(tile.placeTempOnMap(map, new Position(0,0)));
+        assertTrue(map.getBox(0,0).isCoveredByTempTile());
+        assertTrue(map.getBox(1,0).isCoveredByTempTile());
+        assertFalse(map.getBox(2,1).isCoveredByTempTile());
+
     }
 
     @Test
@@ -328,6 +334,7 @@ public class MapAndTileTests {
 
         Map map = new Map(standardStructure);
         Tile tile = new Tile(new Position(0,0), new Position(1,1));
+        assertTrue(tile.collidesWithMapBorder(new Position(0,0)));
         tile.setMap(map);
 
         assertTrue(tile.collidesWithMapBorder(new Position(-1,1)));
@@ -582,5 +589,34 @@ public class MapAndTileTests {
         t3.attachToMap(map, 1,1);
         Tile[] expected = { t1, t2, t3 };
         assertArrayEquals(expected, map.getTile());
+    }
+
+    @Test
+    public void testSetHook() {
+        Map map = new Map(standardStructure);
+        Tile t1 = new Tile(new Position(0,0));
+        Position pos = new Position(1,1);
+        t1.setHook(pos);
+        assertEquals(pos, t1.getHook());
+        t1.attachToMap();
+        Position pos2 = new Position(1,1);
+        t1.setHook(pos2);
+        assertFalse(t1.isAttached());
+        assertEquals(pos2, t1.getHook());
+    }
+
+    @Test
+    public void testGetMaxX() {
+        Map map = new Map();
+        assertEquals(0, map.getMaxX());
+        assertEquals(0, map.getMaxY());
+        assertEquals(0, map.getSizeX());
+        assertEquals(0, map.getSizeY());
+
+        map.setUpMap(standardStructure);
+        assertEquals(3, map.getMaxX());
+        assertEquals(3, map.getMaxY());
+        assertEquals(4, map.getSizeX());
+        assertEquals(4, map.getSizeY());
     }
 }
