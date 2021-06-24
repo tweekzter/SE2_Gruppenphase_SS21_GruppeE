@@ -47,6 +47,7 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player> {
         return this.playerList.get(index);
     }
 
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         View row = convertView;
