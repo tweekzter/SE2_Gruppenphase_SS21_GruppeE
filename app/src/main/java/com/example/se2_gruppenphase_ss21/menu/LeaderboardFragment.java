@@ -232,5 +232,14 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
             newplayarray.add(player);
         }
         listView.setAdapter(newplayarray);
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() -> {
+            for (int i = 0; i < listView.getCount(); i++) {
+                View row = listView.getChildAt(i);
+                CheckBox challenge = (CheckBox) row.findViewById(R.id.challenge);
+                challenge.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 }
