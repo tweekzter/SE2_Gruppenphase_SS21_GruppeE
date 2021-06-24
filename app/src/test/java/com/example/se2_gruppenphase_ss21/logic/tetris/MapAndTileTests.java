@@ -604,4 +604,19 @@ public class MapAndTileTests {
         assertFalse(t1.isAttached());
         assertEquals(pos2, t1.getHook());
     }
+
+    @Test
+    public void testGetMaxX() {
+        Map map = new Map();
+        assertEquals(0, map.getMaxX());
+        assertEquals(0, map.getMaxY());
+        assertEquals(0, map.getSizeX());
+        assertEquals(0, map.getSizeY());
+
+        map.setUpMap(standardStructure);
+        assertEquals(3, map.getMaxX());
+        assertEquals(3, map.getMaxY());
+        assertEquals(4, map.getSizeX());
+        assertEquals(4, map.getSizeY());
+    }
 }
