@@ -488,4 +488,86 @@ public class MapAndTileTests {
         tile.setMap(null);
         assertFalse(tile.checkPlaceable(new Position(-1,0)));
     }
+
+    @Test
+    public void testRotateRightAndPlace() {
+        Tile tile = new Tile(new Position(-1,0), new Position(0,0),
+                new Position(1,0), new Position(1,1));
+
+        Map map = new Map(standardStructure);
+        tile.placeTempOnMap(map, new Position(1,1));
+        tile.rotateRightAndPlace(map);
+        assertTrue(map.getBox(2,0).isCoveredByTempTile());
+        assertTrue(map.getBox(2,1).isCoveredByTempTile());
+        assertTrue(map.getBox(2,2).isCoveredByTempTile());
+        assertTrue(map.getBox(1,2).isCoveredByTempTile());
+
+
+        Tile tile2 = new Tile(new Position(0,0), new Position(0,1));
+        tile2.attachToMap(new Map(standardStructure), 1,1);
+        tile.rotateRight();
+    }
+
+    @Test
+    public void testRotateLeftAndPlace() {
+        Tile tile = new Tile(new Position(1,-1), new Position(1,0),
+                new Position(1,1), new Position(0,1));
+
+        Map map = new Map(standardStructure);
+        tile.placeTempOnMap(map, new Position(1,1));
+        tile.rotateLeftAndPlace(map);
+        assertTrue(map.getBox(0,1).isCoveredByTempTile());
+        assertTrue(map.getBox(1,1).isCoveredByTempTile());
+        assertTrue(map.getBox(2,1).isCoveredByTempTile());
+        assertTrue(map.getBox(2,2).isCoveredByTempTile());
+
+
+        Tile tile2 = new Tile(new Position(0,0), new Position(0,1));
+        tile2.attachToMap(new Map(standardStructure), 1,1);
+        tile.rotateLeft();
+        Position[] expected2 = { new Position(0,0), new Position(0,1) };
+        assertArrayEquals(expected2, tile2.getShape());
+    }
+
+    @Test
+    public void mirrorHorizontallyAndPlace() {
+        Tile tile = new Tile(new Position(-1,0), new Position(0,0),
+                new Position(1,0), new Position(1,1));
+
+        Map map = new Map(standardStructure);
+        tile.placeTempOnMap(map, new Position(1,1));
+        tile.mirrorHorizontallyAndPlace(map);
+        assertTrue(map.getBox(2,1).isCoveredByTempTile());
+        assertTrue(map.getBox(1,1).isCoveredByTempTile());
+        assertTrue(map.getBox(0,1).isCoveredByTempTile());
+        assertTrue(map.getBox(0,2).isCoveredByTempTile());
+
+
+        Tile tile2 = new Tile(new Position(0,0), new Position(0,1));
+        tile2.attachToMap(new Map(standardStructure), 1,1);
+        tile.rotateLeft();
+        Position[] expected2 = { new Position(0,0), new Position(0,1) };
+        assertArrayEquals(expected2, tile2.getShape());
+    }
+
+    @Test
+    public void mirrorVerticallyAndPlace() {
+        Tile tile = new Tile(new Position(-1,0), new Position(0,0),
+                new Position(1,0), new Position(1,1));
+
+        Map map = new Map(standardStructure);
+        tile.placeTempOnMap(map, new Position(1,1));
+        tile.mirrorVerticallyAndPlace(map);
+        assertTrue(map.getBox(0,2).isCoveredByTempTile());
+        assertTrue(map.getBox(1,2).isCoveredByTempTile());
+        assertTrue(map.getBox(2,2).isCoveredByTempTile());
+        assertTrue(map.getBox(2,1).isCoveredByTempTile());
+
+
+        Tile tile2 = new Tile(new Position(0,0), new Position(0,1));
+        tile2.attachToMap(new Map(standardStructure), 1,1);
+        tile.rotateLeft();
+        Position[] expected2 = { new Position(0,0), new Position(0,1) };
+        assertArrayEquals(expected2, tile2.getShape());
+    }
 }
