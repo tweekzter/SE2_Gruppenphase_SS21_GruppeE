@@ -68,7 +68,16 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player> {
         viewHolder.name.setText(player.getName());
         viewHolder.points.setText(player.getPoints());
         viewHolder.challenge.setChecked(false);
+        viewHolder.challenge.setVisibility(player.isCanChallenge() ? View.VISIBLE : View.INVISIBLE);
         return row;
+    }
+
+    // stops challenging for all players
+    // should disable all connected checkboxes.
+    public void stopChallenging() {
+        for (Player p : playerList) {
+            p.setCanChallenge(false);
+        }
     }
 
     public Bitmap decodeToBitmap(byte[] decodedByte){

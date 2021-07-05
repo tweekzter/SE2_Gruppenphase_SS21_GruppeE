@@ -203,10 +203,13 @@ public class LeaderboardFragment extends Fragment implements PostRoundListener, 
                     }
                 }
 
+                playerArrayAdapter.stopChallenging();
                 challenge.setVisibility(View.INVISIBLE);
             }
+
+
             view.findViewById(R.id.challengeTimer).setVisibility(View.INVISIBLE);
-            updateList();
+            //updateList();
         });
     }
 

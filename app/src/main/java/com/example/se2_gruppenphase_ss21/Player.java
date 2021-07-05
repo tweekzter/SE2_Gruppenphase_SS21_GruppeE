@@ -3,6 +3,7 @@ public class Player {
     String position;
     String name;
     String points;
+    boolean canChallenge;
 
     public Player(){}
 
@@ -10,6 +11,7 @@ public class Player {
         this.position = position;
         this.name = name;
         this.points = points;
+        this.canChallenge = true;
     }
 
     public String getPosition() {
@@ -34,6 +36,14 @@ public class Player {
 
     public void setPoints(String points) {
         this.points = points;
+    }
+
+    public boolean isCanChallenge() {
+        return canChallenge;
+    }
+
+    public void setCanChallenge(boolean canChallenge) {
+        this.canChallenge = canChallenge;
     }
 
     @Override
