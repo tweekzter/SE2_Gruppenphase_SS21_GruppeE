@@ -87,7 +87,7 @@ public class TimerView extends View {
     }
 
     /**
-     * Draws the pie timer with the current Views state.
+     * Draws the pie timer with the Views current state.
      * @param c Canvas to draw on.
      */
     @Override

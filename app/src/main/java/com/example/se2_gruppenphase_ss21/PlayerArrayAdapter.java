@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -78,7 +79,7 @@ public class PlayerArrayAdapter extends ArrayAdapter<Player> {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void notifyDataSetChanged() {
-        playerList.sort(new MostPointsComparator());
+        Collections.sort(playerList, new MostPointsComparator());
         super.notifyDataSetChanged();
     }
 
