@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
@@ -68,7 +69,7 @@ public class Dice extends Fragment implements PreRoundListener {
     }
 
     private void animateDiceRoll(int diceResultPos) {
-        TableLayout frame = getView().findViewById(R.id.frame_roll);
+        LinearLayout frame = getView().findViewById(R.id.frame_roll);
         float distance = frame.getWidth();
         String animationType = "translationX";
 
