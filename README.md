@@ -6,7 +6,7 @@ Rollen:
 
 - **Architekten** - lead: Alexander | sub: Sören, Manfred
 - **Netzwerk** - lead: Sören | sub: Alexander
-- **UI / Design** - lead: Pia | sub: Sabrina
+- **UI / Design** - lead: Manuel | sub: Pia
 - **QA / Testing** - lead: Manfred | sub: Pia
 - **Developer** - lead: Alexander | sub: Manuel, Sören
 - **Dokumentation** - lead: Manuel | sub: Sabrina
